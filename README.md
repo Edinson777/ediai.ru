@@ -27,7 +27,7 @@
   - `work/site-src/tmp/smoke.js` — функциональные тесты (jsdom), `tmp/shots.py` — скриншоты и замеры вёрстки (Playwright);
   - `work/uploads/` — исходные страницы-доноры, из которых извлечены промпты;
   - `work/audit-i-plan-razvitiya.md`, `work/strategiya-ediai-2026.md` — аудит и маркетинговая стратегия;
-  - `work/site-ediai-ru-upload.zip` — архив сайта для хостинга ediai.ru.
+  - `work/site-ediai-ru-upload.zip` — архив сайта для хостинга ediai.ru (собирается локально, в git не хранится).
 
 ## Репозиторий и GitHub Pages
 
