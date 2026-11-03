@@ -463,6 +463,38 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
   .page-link-banner{flex-wrap:wrap}
 }
 
+/* ===== БАЗА ЗНАНИЙ: know-nav, таблицы, путеводитель, глоссарий ===== */
+.know-nav{font-size:13px;color:var(--muted);margin:0 0 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;text-align:center}
+.know-nav a{color:var(--accent-ink);font-weight:600}
+.hero .hub-sub{color:var(--muted);font-size:16px;max-width:760px;margin:12px auto 0;line-height:1.55}
+.hero .hub-meta{color:var(--faint);font-size:12.5px;margin-top:12px;letter-spacing:.02em}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);margin:0 0 12px;-webkit-overflow-scrolling:touch}
+table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
+.cmp th{background:#eef0f8;color:var(--muted);font-size:11.8px;text-transform:uppercase;letter-spacing:.06em;text-align:left}
+.cmp th,.cmp td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+.cmp tr:last-child td{border-bottom:none}
+.cmp td:first-child{font-weight:600}
+.cmp td:nth-child(3){color:var(--accent2)}
+.mini-more{font-size:13.5px;margin:0 0 20px}
+.mini-more a{color:var(--accent-ink);font-weight:700}
+.guide{margin-bottom:14px}
+.gstep{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:10px}
+.gstep h3{font-size:15.5px;margin-bottom:6px}
+.gstep p{font-size:13.6px;color:var(--muted);line-height:1.55}
+.gstep .p-go{display:inline-block;margin-top:8px}
+.gstep .p-go a{color:var(--accent2);font-weight:700;font-size:13.5px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:14px}
+.term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:15px 17px;box-shadow:var(--shadow)}
+.term b{font-size:15px;color:var(--accent-ink)}
+.term p{font-size:13.4px;color:var(--muted);line-height:1.5;margin-top:5px}
+.term .ex{font-size:12.6px;color:var(--faint);font-style:italic;margin-top:6px}
+.sc-all{border-color:rgba(14,116,144,.45);background:linear-gradient(160deg,rgba(14,116,144,.08),#fff 70%)}
+.start-grid{margin-bottom:8px}
+@media (max-width:640px){
+  .cmp th,.cmp td{padding:9px 11px}
+  .gstep{padding:14px 15px}
+}
+
 </style>
 </head>
 <body>
@@ -504,6 +536,31 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
   <h2 class="hub-h">⚡ Как пользоваться</h2>
   <div class="steps"><div class="step"><span class="s-n" aria-hidden="true">1</span><b>Выберите раздел</b><p>Шесть разделов: переделка фото, генерация изображений, тексты, ИИ в личной жизни, Qwen и основы промптинга — всего 181 шаблонов.</p></div><div class="step"><span class="s-n" aria-hidden="true">2</span><b>Найдите промпт</b><p>Поиском (клавиша «/»), категорией или подразделом. Нажмите на карточку, чтобы раскрыть текст промпта и совет.</p></div><div class="step"><span class="s-n" aria-hidden="true">3</span><b>Скопируйте и примените</b><p>Кнопка «Копировать», замените <span style="color:var(--ph)">[данные в скобках]</span> на свои. Для переделки фото прикрепите снимок к запросу в нейроредактор.</p></div></div>
   <div class="strips"><div class="info-strip"><span class="ic" aria-hidden="true">🛡️</span><span><b>Этика:</b> переделывайте свои фото или те, на которые получено явное согласие человека; не создавайте дипфейки реальных людей — во многих странах это незаконно; маркируйте изображения, созданные или изменённые ИИ, в рекламе и СМИ. Памятка — в подразделе «Справочник» раздела <a href="photo.html" style="color:#4b3ecf">«Переделка фото»</a>.</span></div></div>
+  <h2 class="hub-h">🧭 С чего начать</h2>
+  <div class="pop-grid start-grid">
+    <a class="pop sc" href="basics.html?q=роль"><span class="p-cat">День 1</span><h3>Поговорите как с человеком</h3><p>Формула «Роль → Контекст → Задача → Формат» закрывает 90% задач: попросите роль («ты опытный редактор»), дайте факты и скажите, каким нужен ответ.</p><span class="p-go">Открыть промпт →</span></a>
+    <a class="pop sc" href="life.html?q=холодильник"><span class="p-cat">День 2</span><h3>Ужин из того, что есть</h3><p>Сфотографируйте полки холодильника и попросите три ужина плюс список покупок — первый опыт «ИИ видит мой мир».</p><span class="p-go">Открыть промпт →</span></a>
+    <a class="pop sc" href="texts.html?q=письмо"><span class="p-cat">День 3</span><h3>Письмо, которое откладывали</h3><p>Черновик деликатного письма или ответа руководителю: ИИ предложит тон и структуру, факты останутся ваши.</p><span class="p-go">Открыть промпт →</span></a>
+    <a class="pop sc" href="photo.html?q=хедшот"><span class="p-cat">День 4</span><h3>Деловой портрет из селфи</h3><p>Прикрепите фото и попросите хедшот для резюме: свет, фон, стиль — лицо без изменений.</p><span class="p-go">Открыть промпт →</span></a>
+    <a class="pop sc" href="life.html?q=план"><span class="p-cat">День 5</span><h3>Неделя под контролем</h3><p>Опишите дела и часы — ИИ соберёт реалистичный план недели с буферами, а не список желаний.</p><span class="p-go">Открыть промпт →</span></a>
+    <a class="pop sc" href="life.html?q=договор"><span class="p-cat">День 6</span><h3>Переводчик с канцелярского</h3><p>Договор, инструкция или анализы «человеческим языком»: что подписывать, что опасно, что уточнить.</p><span class="p-go">Открыть промпт →</span></a>
+    <a class="pop sc" href="basics.html?q=критик"><span class="p-cat">День 7</span><h3>Пусть проверит себя</h3><p>Цикл «критик → улучшение»: попросите ИИ найти слабые места собственного ответа и исправить их.</p><span class="p-go">Открыть промпт →</span></a>
+    <a class="pop sc sc-all" href="start.html"><span class="p-cat">Путеводитель</span><h3>Первая неделя с ИИ</h3><p>Семь шагов-сценариев: от формулы промпта до привычки спрашивать. Проверки и типовые ошибки новичков.</p><span class="p-go">Открыть путеводитель →</span></a>
+  </div>
+  <h2 class="hub-h">🎯 Какая нейросеть для чего</h2>
+  <div class="table-wrap">
+    <table class="cmp">
+      <tr><th>Задача</th><th>Чем решать</th><th>Бесплатный вариант</th></tr>
+      <tr><td>Тексты на русском: статьи, письма, редактура</td><td>Qwen Chat · DeepSeek-V3 · GigaChat · ChatGPT</td><td>Qwen Chat и GigaChat — бесплатно</td></tr>
+      <tr><td>Разбор и редактирование фото по инструкции</td><td>Qwen-Image-Edit · Gemini · ChatGPT</td><td>Qwen-Image-Edit бесплатно в Qwen Chat</td></tr>
+      <tr><td>Изображения с нуля: постеры, логотипы, персонажи</td><td>Qwen-Image · Midjourney · DALL·E · Stable Diffusion</td><td>Qwen-Image бесплатно; SD — локально</td></tr>
+      <tr><td>Код и разбор ошибок</td><td>Qwen-Coder · DeepSeek-R1 · ChatGPT</td><td>Qwen-Coder и DeepSeek — бесплатно</td></tr>
+      <tr><td>Анализ: таблицы, документы, решения</td><td>DeepSeek-R1 (DeepThink) · Qwen thinking · ChatGPT</td><td>У DeepSeek — переключатель DeepThink</td></tr>
+      <tr><td>Очень длинные документы</td><td>Qwen (до 1M токенов) · ChatGPT · DeepSeek (до 128K — частями)</td><td>Qwen Chat — бесплатно</td></tr>
+      <tr><td>Строгий JSON для интеграций</td><td>DeepSeek-V3 + response_format · Qwen API · OpenAI API</td><td>У API есть бесплатные лимиты</td></tr>
+    </table>
+  </div>
+  <p class="mini-more"><a href="models.html">Полное сравнение: бесплатные тарифы, русский язык, замены →</a> · <a href="glossary.html">Глоссарий терминов →</a></p>
   <h2 class="hub-h">🔥 Популярные промпты</h2>
   <div class="pop-grid"><a class="pop" href="photo.html?q=%D1%85%D0%B5%D0%B4%D1%88%D0%BE%D1%82"><span class="p-cat">📸 Переделка фото</span><h3>Деловой хедшот (LinkedIn)</h3><p>Профессиональный портрет для резюме и LinkedIn из обычного селфи.</p><span class="p-go">Открыть промпт →</span></a><a class="pop" href="photo.html?q=%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B"><span class="p-cat">📸 Переделка фото</span><h3>Фото на документы</h3><p>Ровный свет и нейтральный фон — заготовка для паспорта и визы.</p><span class="p-go">Открыть промпт →</span></a><a class="pop" href="photo.html?q=%D1%80%D0%B5%D1%81%D1%82%D0%B0%D0%B2%D1%80%D0%B0%D1%86%D0%B8%D1%8F"><span class="p-cat">📸 Переделка фото</span><h3>Реставрация старого снимка</h3><p>Царапины, желтизна и заломы — убрать, аутентичность сохранить.</p><span class="p-go">Открыть промпт →</span></a><a class="pop" href="photo.html?q=%D0%BA%D0%BE%D0%BB%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F"><span class="p-cat">📸 Переделка фото</span><h3>Колоризация ч/б фотографии</h3><p>Раскрасить снимок из семейного архива естественно.</p><span class="p-go">Открыть промпт →</span></a><a class="pop" href="generate.html?q=%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF"><span class="p-cat">🎨 Генерация изображений</span><h3>Минималистичный логотип</h3><p>Векторный знак с негативным пространством для бренда.</p><span class="p-go">Открыть промпт →</span></a><a class="pop" href="texts.html?q=aida"><span class="p-cat">✍️ Тексты</span><h3>Продающий текст по AIDA</h3><p>Внимание → Интерес → Желание → Действие.</p><span class="p-go">Открыть промпт →</span></a><a class="pop" href="life.html?q=%D1%85%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA"><span class="p-cat">🏡 Личная жизнь</span><h3>Меню из того, что есть в холодильнике</h3><p>Фото полок → три ужина на вечер и список покупок.</p><span class="p-go">Открыть промпт →</span></a><a class="pop" href="life.html?q=%D0%B2%D1%8B%D1%87%D0%B5%D1%82"><span class="p-cat">🏡 Личная жизнь</span><h3>Налоги и вычеты</h3><p>ИИ объяснит, какие вычеты вам положены и как их оформить.</p><span class="p-go">Открыть промпт →</span></a></div>
   <h2 class="hub-h">❓ Частые вопросы</h2>
@@ -512,6 +569,7 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
 <footer>
   <div class="wrap">
     <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html" aria-current="page">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
+    <div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a></div>
     <details class="sources"><summary><h2>📖 Источники</h2><span class="src-hint">показать список</span></summary><div class="sources-in"><p class="note">Шаблоны не скопированы дословно — они адаптированы и скомпилированы на основе практик из перечисленных ниже руководств, а также классических фреймворков копирайтинга (AIDA, PAS) и методов промпт-инжиниринга (role prompting, chain-of-thought). Проверено поиском: ноябрь 2026.</p><div class="sources-grid"><div><h3>🎨 Генерация изображений</h3><ul>
             <li><a href="https://medium.com/@inchristiely/midjourney-prompt-formula-the-exact-structure-behind-every-stunning-image-f2872ed3fcc0" target="_blank" rel="noopener">Midjourney Prompt Formula (Medium)</a><span class="what">формула: субъект + действие + окружение + настроение + свет + стиль + камера + параметры</span></li>
             <li><a href="https://coursiv.io/blog/how-to-write-effective-midjourney-prompts" target="_blank" rel="noopener">Coursiv — How to Write Effective Midjourney Prompts</a><span class="what">порядок описания: subject → medium → light → framing, типичные ошибки</span></li>

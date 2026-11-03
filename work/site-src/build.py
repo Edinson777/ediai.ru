@@ -38,6 +38,16 @@ SITE_NAME = cfg['site_name']
 SITE_DESC = cfg['site_description']
 LASTMOD   = cfg['lastmod']
 UPDATED   = cfg['updated_label']
+MONTH_YEAR = UPDATED  # alias для страниц базы знаний
+START_TITLE = 'С чего начать: первая неделя с ИИ — 7 шагов-сценариев | Ediai'
+START_DESC  = ('Путеводитель для новичков: семь ежедневных сценариев работы с нейросетью — от формулы промпта '
+               'до привычки спрашивать. Готовые промпты, проверки и правила безопасности.')
+MODELS_TITLE = 'Какая нейросеть для чего: сравнение задач и моделей | Ediai'
+MODELS_DESC  = ('Тексты, фото, изображения с нуля, код, анализ и строгий JSON: какими моделями решать и где '
+                'бесплатные тарифы. Замены Midjourney и качество русского языка.')
+GLOSS_TITLE = 'Глоссарий терминов ИИ простыми словами | Ediai'
+GLOSS_DESC  = ('16 понятий нейросетей с примерами из практики: промпт, токен, контекстное окно, галлюцинация, '
+               'агент, RAG, few-shot и другие — без формул и маркетинга.')
 GA_ID     = cfg.get('ga_id', '').strip()   # Google Analytics 4 Measurement ID (G-…)
 
 PROMPTS = data['prompts']
@@ -197,6 +207,10 @@ def nav_html(current):
         cur = ' aria-current="page"' if f == current else ''
         links.append('<a href="' + f + '"' + cur + '>' + label + '</a>')
     return '<nav class="sections-nav" aria-label="Разделы сайта">' + ''.join(links) + '</nav>'
+
+# База знаний: сквозная перелинковка во всех футерах
+KNOW_NAV = ('<div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · '
+            '<a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a></div>')
 
 # ---------------------------------------------------------------- конфиг разделов
 PHOTO_STRIPS = (
@@ -557,6 +571,7 @@ def build_section(key):
       '</main>\n'
       '<footer>\n  <div class="wrap">\n'
       '    ' + nav_html(sec['file']) + '\n'
+      '    ' + KNOW_NAV + '\n'
       '    ' + sources + '\n'
       '    ' + sec['foot'] + '\n'
       '  </div>\n</footer>\n'
@@ -618,6 +633,178 @@ FAQ = [
  ('Какая нейросеть подойдёт для бытовых задач?',
   'Любой чат-бот: ChatGPT, Qwen Chat (бесплатно), DeepSeek, GigaChat, YandexGPT, Gemini. Для задач с фото и документами (меню из холодильника, разбор договора, техника упражнений) используйте мультимодальные — Qwen Chat, ChatGPT, Gemini — и прикрепляйте снимок к запросу. Не отправляйте в боты паспортные данные и номера карт, перепроверяйте суммы и юридические формулировки.'),
 ]
+
+# ---------------------------------------------------------------- база знаний
+START_STEPS = [
+ ('День 1','Поговорите как с человеком','Формула «Роль → Контекст → Задача → Формат» закрывает 90% задач: попросите роль («ты опытный редактор»), дайте факты и скажите, каким нужен ответ.','basics.html','роль'),
+ ('День 2','Ужин из того, что есть','Сфотографируйте полки холодильника и попросите три ужина плюс список покупок — первый опыт «ИИ видит мой мир».','life.html','холодильник'),
+ ('День 3','Письмо, которое откладывали','Черновик деликатного письма или ответа руководителю: ИИ предложит тон и структуру, факты останутся ваши.','texts.html','письмо'),
+ ('День 4','Деловой портрет из селфи','Прикрепите фото и попросите хедшот для резюме: свет, фон, стиль — лицо без изменений.','photo.html','хедшот'),
+ ('День 5','Неделя под контролем','Опишите дела и часы — ИИ соберёт реалистичный план недели с буферами, а не список желаний.','life.html','план'),
+ ('День 6','Переводчик с канцелярского','Договор, инструкция или анализы «человеческим языком»: что подписывать, что опасно, что уточнить.','life.html','договор'),
+ ('День 7','Пусть проверит себя','Цикл «критик → улучшение»: попросите ИИ найти слабые места собственного ответа и исправить их.','basics.html','критик'),
+]
+
+MODELS_MINI = [
+ ('Тексты на русском: статьи, письма, редактура','Qwen Chat · DeepSeek-V3 · GigaChat · ChatGPT','Qwen Chat и GigaChat — бесплатно'),
+ ('Разбор и редактирование фото по инструкции','Qwen-Image-Edit · Gemini · ChatGPT','Qwen-Image-Edit бесплатно в Qwen Chat'),
+ ('Изображения с нуля: постеры, логотипы, персонажи','Qwen-Image · Midjourney · DALL·E · Stable Diffusion','Qwen-Image бесплатно; SD — локально'),
+ ('Код и разбор ошибок','Qwen-Coder · DeepSeek-R1 · ChatGPT','Qwen-Coder и DeepSeek — бесплатно'),
+ ('Анализ: таблицы, документы, решения','DeepSeek-R1 (DeepThink) · Qwen thinking · ChatGPT','У DeepSeek — переключатель DeepThink'),
+ ('Очень длинные документы','Qwen (до 1M токенов) · ChatGPT · DeepSeek (до 128K — частями)','Qwen Chat — бесплатно'),
+ ('Строгий JSON для интеграций','DeepSeek-V3 + response_format · Qwen API · OpenAI API','У API есть бесплатные лимиты'),
+]
+
+MODELS_FAQ = [
+ ('Какая нейросеть лучше пишет по-русски?',
+  'Qwen Chat, GigaChat и YandexGPT сильны в русском; DeepSeek-V3 и ChatGPT не отстают. Для официальных писем давайте примеры тона прямо в промпте (приём few-shot).'),
+ ('Где бесплатно редактировать фотографии?',
+  'Qwen-Image-Edit в Qwen Chat — бесплатно и понимает русский. Альтернативы с бесплатными лимитами: Gemini (Nano Banana) и FLUX.1 Kontext.'),
+ ('Чем заменить платный Midjourney?',
+  'Qwen-Image (бесплатно, точные надписи на картинках) и Stable Diffusion локально. Описательную часть Midjourney-промптов можно переносить в Qwen-Image без параметров --ar и --niji.'),
+ ('Что выбрать для анализа большого документа?',
+  'Qwen с контекстом до 1M токенов примет документ целиком; DeepSeek (до 128K) — частями с промежуточными выжимками. Включайте режим рассуждений: /think или DeepThink.'),
+]
+
+GLOSSARY = [
+ ('Промпт','Текстовая инструкция для нейросети. Чем конкретнее роль, контекст и формат ответа, тем лучше результат.','«Ты нутрициолог. Составь меню на неделю без лактозы. Таблицей».'),
+ ('Токен','Кусочек текста, который модель читает как единицу (в русском примерно 3–4 символа). Токенами меряют контекст и цену.','1000 токенов ≈ 150–200 слов.'),
+ ('Контекстное окно','Объём текста, который модель держит «в голове» за один заход: переписка плюс загруженные файлы.','Qwen — до 1M токенов, DeepSeek — до 128K.'),
+ ('Галлюцинация','Уверенно выдуманный факт: несуществующая ссылка, дата, норма закона. Лечится проверкой по первоисточнику.','Всегда сверяйте суммы, дозировки и пункты договоров.'),
+ ('LLM','Большая языковая модель (large language model) — класс моделей, на котором работают чат-боты.','Qwen, GPT, Gemini, DeepSeek — всё это LLM.'),
+ ('Мультимодальность','Умение модели понимать не только текст: фото, видео, голос, файлы.','«Вот видео моего приседа — разбери технику».'),
+ ('Системный промпт','Скрытая установка, задающая роли и правила поведения ассистента до начала диалога.','В API задаётся полем system.'),
+ ('Агент','ИИ, который не только отвечает, но и делает: вызывает инструменты, браузер, код — по шагам достигает цели.','Агент сам соберёт отчёт или забронирует стол.'),
+ ('Few-shot','Приём «обучи примерами»: 2–3 образца желаемого формата прямо в промпте.','«Вот три примера моих постов — напиши в этом стиле».'),
+ ('Цепочка рассуждений','Режим, когда модель сначала рассуждает пошагово, потом отвечает: сильнее в логике и математике.','/think у Qwen, DeepThink у DeepSeek.'),
+ ('Негативный промпт','Перечисление того, чего НЕ должно быть на картинке: лишние пальцы, надписи, водяные знаки.','--no text, watermark в Midjourney.'),
+ ('Апскейлер','Инструмент повышения разрешения и резкости готового изображения.','Topaz Photo AI; GFPGAN и CodeFormer — для лиц.'),
+ ('Маркировка ИИ-контента','Пометка, что текст или фото созданы ИИ: требование площадок и зарождающихся законов.','В рекламе и СМИ обязательна во многих юрисдикциях.'),
+ ('RAG','Ответ по вашим документам: поиск по базе плюс генерация — меньше выдумок.','Чат по договорам компании или конспектам.'),
+ ('Дообучение (fine-tune)','Тренировка готовой модели на своих примерах, когда промптов уже мало.','Дорого: сначала попробуйте few-shot и RAG.'),
+ ('Температура','Настройка случайности ответа: выше — креативнее, ниже — точнее и суше.','Для фактов 0.2–0.5, для идей 0.8–1.0.'),
+]
+
+def build_start():
+    return ('''<section class="hero">
+  <h1>Первая неделя с ИИ: путеводитель по семи шагам</h1>
+  <p class="hub-sub">Каждый день — один сценарий на пять минут. Ссылки открывают готовый промпт в разделе сайта: копируйте, подставляйте свои детали, отмечайте, что сработало.</p>
+  <p class="hub-meta">Обновлено ''' + MONTH_YEAR + ''' · Бесплатные чат-боты · Проверено на русском языке</p>
+</section>
+<div class="strip">
+  <h2>Как идти</h2>
+  <div class="guide">
+''')
+def _start_body():
+    s = ''
+    for i, (day, t, txt, pg, q) in enumerate(START_STEPS):
+        s += ('    <div class="gstep"><span class="s-n">' + str(i + 1) + '</span><div><h3>' + day + ' · ' + t +
+              '</h3><p>' + txt + '</p><p class="p-go"><a href="' + pg + '?q=' + q + '">Открыть промпт в разделе →</a></p></div></div>\n')
+    return s
+def _start_tail():
+    return ('''  </div>
+  <h2>Правила безопасности — коротко</h2>
+  <ul>
+    <li>Не отправляйте в чат-боты паспортные данные, номера карт и пароли.</li>
+    <li>Перепроверяйте суммы, дозировки и юридические формулировки по первоисточнику.</li>
+    <li>Не публикуйте переписку с личными данными.</li>
+  </ul>
+  <p class="p-go"><a href="index.html#razdely">Все сценарии по разделам →</a> · <a href="models.html">Какая нейросеть для чего →</a></p>
+</div>
+''')
+def build_models():
+    return ('''<section class="hero">
+  <h1>Какая нейросеть для чего: сравнение задач и моделей</h1>
+  <p class="hub-sub">Тексты, фотографии, изображения с нуля, код, анализ и строгий JSON — с бесплатными вариантами и заменами. Тарифы меняются: сверяйте даты обновлений.</p>
+  <p class="hub-meta">Обновлено ''' + MONTH_YEAR + ''' · Бесплатные тарифы · Русский язык</p>
+</section>
+<div class="strip">
+  <h2>Задача → модель</h2>
+  <div class="table-wrap">
+    <table class="cmp">
+      <tr><th>Задача</th><th>Чем решать</th><th>Бесплатный вариант</th></tr>
+''')
+def _models_body():
+    s = ''
+    for task, models, free in MODELS_MINI:
+        s += '      <tr><td>' + task + '</td><td>' + models + '</td><td>' + free + '</td></tr>\n'
+    return s
+def _models_faq():
+    s = '  </table>\n  </div>\n  <h2>Частые вопросы</h2>\n  <div class="faq">\n'
+    for q, a in MODELS_FAQ:
+        s += ('    <details><summary>' + q + '</summary><p>' + a + '</p></details>\n')
+    s += ('  </div>\n  <p class="p-go"><a href="glossary.html">Глоссарий терминов →</a> · <a href="start.html">С чего начать →</a></p>\n</div>\n')
+    return s
+def build_glossary():
+    return ('''<section class="hero">
+  <h1>Глоссарий терминов ИИ простыми словами</h1>
+  <p class="hub-sub">Шестнадцать понятий, которые встречаются в статьях и подсказках чат-ботов, — с короткими примерами из практики. Без формул и маркетинга.</p>
+  <p class="hub-meta">Обновлено ''' + MONTH_YEAR + ''' · Простыми словами · С примерами</p>
+</section>
+<div class="strip">
+  <h2>Термины</h2>
+  <div class="gloss">
+''')
+def _gloss_body():
+    s = ''
+    for term, d, ex in GLOSSARY:
+        s += '    <div class="term"><b>' + term + '</b><p>' + d + '</p><p class="ex">' + ex + '</p></div>\n'
+    return s
+def _gloss_tail():
+    return ('''  </div>
+  <p class="p-go"><a href="models.html">Какая нейросеть для чего →</a> · <a href="start.html">С чего начать →</a></p>
+</div>
+''')
+def know_page(path, title, desc, ogimg, ldgraph, content, navcur):
+    return ('<!DOCTYPE html>\n<html lang="ru">\n<head>\n' +
+      head_html(title, desc, path, ogimg, ld(ldgraph)) +
+      '\n</head>\n<body>\n' + METRIKA + gtag_snippet() +
+      '<a class="skip-link" href="#main">Перейти к содержимому</a>\n'
+      '<main class="wrap" id="main" tabindex="-1">\n'
+      '  <div class="know-nav">' + KNOW_NAV + '</div>\n' + content + '\n</main>\n'
+      '<footer>\n  <div class="wrap">\n    ' + nav_html(navcur) + '\n'
+      '    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей и глоссарий.<br>\n'
+      '    Тарифы и возможности нейросетей меняются — сверяйте дату обновления; важные решения проверяйте по первоисточникам.\n'
+      '  </div>\n</footer>\n'
+      '<div id="toast" role="status" aria-live="polite"></div>\n'
+      '</body>\n</html>\n')
+
+def know_start():
+    ld = {"@context":"https://schema.org","@graph":[
+      WEBSITE_LD,
+      {"@type":"WebPage","@id":SITE_URL+"/start.html","url":SITE_URL+"/start.html",
+       "name":"Первая неделя с ИИ: путеводитель по семи шагам","description":START_DESC,
+       "inLanguage":"ru","isPartOf":{"@id":SITE_URL+"/#website"}},
+      {"@type":"HowTo","name":"Первая неделя с ИИ",
+       "step":[{"@type":"HowToStep","position":i+1,"name":day+" · "+t,"text":txt,
+                "url":SITE_URL+"/"+pg+"?q="+q} for i,(day,t,txt,pg,q) in enumerate(START_STEPS)]},
+    ]}
+    return know_page('start.html', START_TITLE, START_DESC, 'og/og-start.png', ld,
+                     build_start() + _start_body() + _start_tail(), 'start.html')
+
+def know_models():
+    ld = {"@context":"https://schema.org","@graph":[
+      WEBSITE_LD,
+      {"@type":"WebPage","@id":SITE_URL+"/models.html","url":SITE_URL+"/models.html",
+       "name":"Какая нейросеть для чего: сравнение задач и моделей","description":MODELS_DESC,
+       "inLanguage":"ru","isPartOf":{"@id":SITE_URL+"/#website"}},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,
+        "acceptedAnswer":{"@type":"Answer","text":a}} for q,a in MODELS_FAQ]},
+    ]}
+    return know_page('models.html', MODELS_TITLE, MODELS_DESC, 'og/og-models.png', ld,
+                     build_models() + _models_body() + _models_faq(), 'models.html')
+
+def know_glossary():
+    ld = {"@context":"https://schema.org","@graph":[
+      WEBSITE_LD,
+      {"@type":"WebPage","@id":SITE_URL+"/glossary.html","url":SITE_URL+"/glossary.html",
+       "name":"Глоссарий терминов ИИ простыми словами","description":GLOSS_DESC,
+       "inLanguage":"ru","isPartOf":{"@id":SITE_URL+"/#website"}},
+      {"@type":"DefinedTermSet","name":"Глоссарий терминов ИИ",
+       "hasPart":[{"@type":"DefinedTerm","name":t,"description":d} for t,d,ex in GLOSSARY]},
+    ]}
+    return know_page('glossary.html', GLOSS_TITLE, GLOSS_DESC, 'og/og-glossary.png', ld,
+                     build_glossary() + _gloss_body() + _gloss_tail(), 'glossary.html')
 
 def build_index():
     tiles = []
@@ -695,6 +882,23 @@ def build_index():
       'не создавайте дипфейки реальных людей — во многих странах это незаконно; маркируйте изображения, '
       'созданные или изменённые ИИ, в рекламе и СМИ. Памятка — в подразделе «Справочник» раздела '
       '<a href="photo.html" style="color:#4b3ecf">«Переделка фото»</a>.</span></div></div>\n'
+      '  <h2 class="hub-h">🧭 С чего начать</h2>\n'
+      '  <div class="pop-grid start-grid">\n' + ''.join(
+          '    <a class="pop sc" href="' + pg + '?q=' + q + '"><span class="p-cat">' + day + '</span><h3>' + t +
+          '</h3><p>' + txt + '</p><span class="p-go">Открыть промпт →</span></a>\n'
+          for day, t, txt, pg, q in START_STEPS) +
+      '    <a class="pop sc sc-all" href="start.html"><span class="p-cat">Путеводитель</span><h3>Первая неделя с ИИ</h3>'
+      '<p>Семь шагов-сценариев: от формулы промпта до привычки спрашивать. Проверки и типовые ошибки новичков.</p>'
+      '<span class="p-go">Открыть путеводитель →</span></a>\n'
+      '  </div>\n'
+      '  <h2 class="hub-h">🎯 Какая нейросеть для чего</h2>\n'
+      '  <div class="table-wrap">\n    <table class="cmp">\n'
+      '      <tr><th>Задача</th><th>Чем решать</th><th>Бесплатный вариант</th></tr>\n' + ''.join(
+          '      <tr><td>' + task + '</td><td>' + models + '</td><td>' + free + '</td></tr>\n'
+          for task, models, free in MODELS_MINI) +
+      '    </table>\n  </div>\n'
+      '  <p class="mini-more"><a href="models.html">Полное сравнение: бесплатные тарифы, русский язык, замены →</a> · '
+      '<a href="glossary.html">Глоссарий терминов →</a></p>\n'
       '  <h2 class="hub-h">🔥 Популярные промпты</h2>\n'
       '  <div class="pop-grid">' + ''.join(pops) + '</div>\n'
       '  <h2 class="hub-h">❓ Частые вопросы</h2>\n'
@@ -702,6 +906,7 @@ def build_index():
       '</main>\n'
       '<footer>\n  <div class="wrap">\n'
       '    ' + nav_html('index.html') + '\n'
+      '    ' + KNOW_NAV + '\n'
       '    ' + sources_grid + '\n'
       '    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · ' + str(TOTAL) + ' проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.<br>\n'
       '    Шаблоны основаны на общепризнанных практиках промпт-инжиниринга и официальных гайдах; лучшие результаты даёт итерация: сгенерировали → уточнили → повторили.\n'
@@ -726,7 +931,8 @@ def robots_txt():
     return ('User-agent: *\nAllow: /\nClean-param: q\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n')
 
 def sitemap_xml():
-    pages = [('index.html','1.0')] + [(SECTIONS[k]['file'],'0.8') for k in SECTION_ORDER]
+    pages = [('index.html','1.0')] + [(SECTIONS[k]['file'],'0.8') for k in SECTION_ORDER] + \
+            [('start.html','0.7'),('models.html','0.7'),('glossary.html','0.6')]
     urls = ''.join(
       '  <url><loc>' + SITE_URL + '/' + f + '</loc><lastmod>' + LASTMOD + '</lastmod>'
       '<changefreq>weekly</changefreq><priority>' + pr + '</priority></url>\n'
@@ -763,7 +969,17 @@ def og_images():
             d.text((x, y), ch, font=font, fill=fill)
             x += d.textlength(ch, font=font) + spacing
 
-    specs = [('og-index.png', 'EDIAI.RU · ПРАКТИЧЕСКИЙ ИИ', 'ИИ в личной жизни и работе',
+    specs = [
+      ('og-start.png', 'EDIAI.RU · БАЗА ЗНАНИЙ', 'Первая неделя с ИИ',
+       'Семь шагов-сценариев: от формулы промпта до привычки спрашивать',
+       'путеводитель · 7 шагов', (52,186,134), (139,124,248)),
+      ('og-models.png', 'EDIAI.RU · БАЗА ЗНАНИЙ', 'Какая нейросеть для чего',
+       'Задача → модель: тексты, фото, изображения, код, анализ, JSON',
+       'сравнение · бесплатные тарифы', (139,124,248), (76,201,240)),
+      ('og-glossary.png', 'EDIAI.RU · БАЗА ЗНАНИЙ', 'Глоссарий терминов ИИ',
+       '16 понятий простыми словами: промпт, токен, галлюцинация, агент, RAG',
+       'словарь · с примерами', (76,201,240), (139,124,248)),
+      ('og-index.png', 'EDIAI.RU · ПРАКТИЧЕСКИЙ ИИ', 'ИИ в личной жизни и работе',
               str(TOTAL) + ' готовых промптов, гиды и сравнения нейросетей',
               str(TOTAL) + ' промптов · 6 разделов', (139,124,248), (76,201,240))]
     for k in SECTION_ORDER:
@@ -811,6 +1027,9 @@ def main():
     w('index.html', build_index())
     for k in SECTION_ORDER:
         w(SECTIONS[k]['file'], build_section(k))
+    w('start.html', know_start())
+    w('models.html', know_models())
+    w('glossary.html', know_glossary())
     w('prompt-base.html', redirect_page('index.html', 'ИИ в личной жизни и работе'))
     w('photo-edit-prompts.html', redirect_page('photo.html', 'Переделка фото нейросетью'))
     w('robots.txt', robots_txt())

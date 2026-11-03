@@ -18,6 +18,9 @@
 (WebSite, CollectionPage, ItemList, FAQPage + 181 материал `Article` для контентной
 аналитики Метрики), WCAG AA, мобильная липкая панель фильтров, deep-link `?q=`,
 события `prompt_copy` / `empty_search` в Яндекс.Метрику и Google Analytics 4.
+База знаний: `start.html` (путеводитель «Первая неделя с ИИ», HowTo), `models.html`
+(сравнение задач и моделей, FAQPage), `glossary.html` (16 терминов, DefinedTermSet) —
+ссылки на них есть в хабе («С чего начать», «Какая нейросеть для чего») и в футерах всех страниц.
 
 ## Структура репозитория
 

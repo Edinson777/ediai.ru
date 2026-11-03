@@ -13,11 +13,17 @@ function ok(cond, msg){
 
 function load(file, query){
   const html = fs.readFileSync(path.join(SITE, file), 'utf8');
-  return new JSDOM(html, {
+  const dom = new JSDOM(html, {
     runScripts: 'dangerously',
     pretendToBeVisual: true,
     url: 'http://localhost/' + file + (query || ''),
   });
+  /* jsdom не реализует matchMedia — стабим, как в реальном браузере */
+  if (!dom.window.matchMedia) {
+    dom.window.matchMedia = q => ({ matches: false, media: q, onchange: null,
+      addEventListener(){}, removeEventListener(){}, addListener(){}, removeListener(){} });
+  }
+  return dom;
 }
 const tick = ms => new Promise(r => setTimeout(r, ms));
 
@@ -32,7 +38,10 @@ console.log('index.html');
   ok(d.querySelectorAll('.tile').length === 6, 'bento: 6 плиток разделов');
   ok(d.querySelector('.tile-big') !== null, 'крупная плитка «Переделка фото»');
   ok(d.querySelector('.tile-life') !== null, 'крупная плитка «ИИ в личной жизни» (tile-life)');
-  ok(d.querySelectorAll('.pop').length === 8, '8 популярных промптов');
+  ok(d.querySelectorAll('.pop:not(.sc)').length === 8, '8 популярных промптов');
+  ok(d.querySelectorAll('.pop.sc').length === 8, 'блок «С чего начать»: 7 шагов + путеводитель');
+  ok(d.querySelectorAll('.cmp tr').length === 8, 'блок «Какая нейросеть для чего»: таблица 7 задач');
+  ok(d.querySelector('.know-nav') !== null, 'know-nav в футере главной');
   ok(d.querySelectorAll('.faq details').length === 5, 'FAQ: 5 вопросов');
   ok([...d.querySelectorAll('script')].filter(x=>!x.type && !x.src && !x.textContent.includes('metrika') && !x.textContent.includes('gtag')).length === 0, 'главная: код только Метрика/GA4 + ld+json');
   ok(d.documentElement.innerHTML.includes('googletagmanager.com/gtag/js?id=G-NXPYMMXH35') && d.documentElement.innerHTML.includes("gtag('config', 'G-NXPYMMXH35')"), 'GA4 G-NXPYMMXH35 на главной');
@@ -172,6 +181,35 @@ console.log('life.html');
   const allChip = [...d.querySelectorAll('#chips .chip')].find(t => t.textContent === 'Все подразделы');
   allChip.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
   ok(d.querySelectorAll('#grid .card').length === 56, 'возврат в «Все подразделы»: снова 56');
+}
+
+/* ---------- 4c. База знаний: start / models / glossary ---------- */
+console.log('start.html / models.html / glossary.html');
+for (const [file, h1part, checks] of [
+  ['start.html', 'Первая неделя с ИИ', d => ({
+    '7 шагов-сценариев': d.querySelectorAll('.gstep').length === 7,
+    'ссылки ведут на промпты разделов': [...d.querySelectorAll('.gstep a')].every(a => /\?q=/.test(a.getAttribute('href'))),
+    'HowTo в JSON-LD': JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent)['@graph'].some(n => n['@type'] === 'HowTo'),
+  })],
+  ['models.html', 'Какая нейросеть для чего', d => ({
+    'таблица: 7 задач': d.querySelectorAll('.cmp tr').length === 8,
+    'FAQ: 4 вопроса': d.querySelectorAll('.faq details').length === 4,
+    'FAQPage в JSON-LD': JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent)['@graph'].some(n => n['@type'] === 'FAQPage'),
+  })],
+  ['glossary.html', 'Глоссарий терминов ИИ', d => ({
+    '16 терминов': d.querySelectorAll('.term').length === 16,
+    'у каждого термина пример': [...d.querySelectorAll('.term')].every(t => t.querySelector('.ex')),
+    'DefinedTermSet в JSON-LD': JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent)['@graph'].some(n => n['@type'] === 'DefinedTermSet'),
+  })],
+]) {
+  const dom = load(file);
+  const w = dom.window, d = w.document;
+  await tick(50);
+  ok(d.querySelectorAll('h1').length === 1 && d.querySelector('h1').textContent.includes(h1part), file + ': один h1 «' + h1part + '»');
+  ok(d.documentElement.innerHTML.includes('G-NXPYMMXH35'), file + ': GA4');
+  ok(d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), file + ': Метрика');
+  ok(d.querySelector('.know-nav') !== null && d.querySelector('footer nav') !== null, file + ': know-nav и навигация разделов');
+  for (const [msg, cond] of Object.entries(checks(d))) ok(cond, file + ': ' + msg);
 }
 
 /* ---------- 5. Редиректы ---------- */

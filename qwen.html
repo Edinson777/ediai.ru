@@ -463,6 +463,38 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
   .page-link-banner{flex-wrap:wrap}
 }
 
+/* ===== БАЗА ЗНАНИЙ: know-nav, таблицы, путеводитель, глоссарий ===== */
+.know-nav{font-size:13px;color:var(--muted);margin:0 0 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;text-align:center}
+.know-nav a{color:var(--accent-ink);font-weight:600}
+.hero .hub-sub{color:var(--muted);font-size:16px;max-width:760px;margin:12px auto 0;line-height:1.55}
+.hero .hub-meta{color:var(--faint);font-size:12.5px;margin-top:12px;letter-spacing:.02em}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);margin:0 0 12px;-webkit-overflow-scrolling:touch}
+table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
+.cmp th{background:#eef0f8;color:var(--muted);font-size:11.8px;text-transform:uppercase;letter-spacing:.06em;text-align:left}
+.cmp th,.cmp td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+.cmp tr:last-child td{border-bottom:none}
+.cmp td:first-child{font-weight:600}
+.cmp td:nth-child(3){color:var(--accent2)}
+.mini-more{font-size:13.5px;margin:0 0 20px}
+.mini-more a{color:var(--accent-ink);font-weight:700}
+.guide{margin-bottom:14px}
+.gstep{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:10px}
+.gstep h3{font-size:15.5px;margin-bottom:6px}
+.gstep p{font-size:13.6px;color:var(--muted);line-height:1.55}
+.gstep .p-go{display:inline-block;margin-top:8px}
+.gstep .p-go a{color:var(--accent2);font-weight:700;font-size:13.5px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:14px}
+.term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:15px 17px;box-shadow:var(--shadow)}
+.term b{font-size:15px;color:var(--accent-ink)}
+.term p{font-size:13.4px;color:var(--muted);line-height:1.5;margin-top:5px}
+.term .ex{font-size:12.6px;color:var(--faint);font-style:italic;margin-top:6px}
+.sc-all{border-color:rgba(14,116,144,.45);background:linear-gradient(160deg,rgba(14,116,144,.08),#fff 70%)}
+.start-grid{margin-bottom:8px}
+@media (max-width:640px){
+  .cmp th,.cmp td{padding:9px 11px}
+  .gstep{padding:14px 15px}
+}
+
 </style>
 </head>
 <body>
@@ -709,6 +741,7 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
 <footer>
   <div class="wrap">
     <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="qwen.html" aria-current="page">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
+    <div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a></div>
     <details class="sources"><summary><h2>📖 Источники</h2><span class="src-hint">показать список</span></summary><div class="sources-in"><p class="note">Шаблоны основаны на официальных гайдах Alibaba и документированных практиках. Проверено поиском: ноябрь 2026.</p><ul>
             <li><a href="https://www.alibabacloud.com/help/en/model-studio/prompt-engineering-guide" target="_blank" rel="noopener">Alibaba Cloud Model Studio — Text-to-text prompt guide</a><span class="what">официальный гайд: шестиблочный фреймворк #Context#…#Response#, разделители, примеры вывода</span></li>
             <li><a href="https://docs.qwencloud.com/developer-guides/accuracy-tuning/text-generation.md" target="_blank" rel="noopener">QwenCloud Docs — Text-to-text (Accuracy tuning)</a><span class="what">тот же фреймворк + управление языком ответа, prompt chaining vs CoT</span></li>
