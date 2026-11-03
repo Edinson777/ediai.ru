@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Генератор многостраничного сайта «База промптов для ИИ».
+Генератор многостраничного сайта «Ediai — ИИ в личной жизни и работе».
 
 Единый источник данных: data.json (181 промпт, извлечён из исходных страниц).
 Генерирует в ../site/:
@@ -82,6 +82,15 @@ def gtag_snippet():
             '<!-- /Google tag -->\n')
 
 # ---------------------------------------------------------------- helpers
+def plural(n, f1, f2, f5):
+    """Русские формы: plural(181,'готовый промпт','готовых промпта','готовых промптов')."""
+    n = abs(int(n)) % 100
+    if 11 <= n <= 14: return f5
+    m = n % 10
+    if m == 1: return f1
+    if 2 <= m <= 4: return f2
+    return f5
+
 def esc(s):
     return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
@@ -638,7 +647,7 @@ def build_index():
     ldgraph = {"@context":"https://schema.org","@graph":[
         WEBSITE_LD,
         {"@type":"WebPage","@id":SITE_URL+"/","url":SITE_URL+"/",
-         "name":"База промптов для ИИ — " + str(TOTAL) + " промптов","description":SITE_DESC,
+         "name":"ИИ в личной жизни и работе — " + str(TOTAL) + " готовых промптов, гиды и сравнения","description":SITE_DESC,
          "inLanguage":"ru","isPartOf":{"@id":SITE_URL+"/#website"}},
         {"@type":"ItemList","name":"Разделы базы промптов","numberOfItems":len(SECTION_ORDER),
          "itemListElement":[{"@type":"ListItem","position":i+1,"name":SECTIONS[k]['plain'],
@@ -647,7 +656,7 @@ def build_index():
             "acceptedAnswer":{"@type":"Answer","text":a}} for q,a in FAQ]},
     ]}
 
-    idx_title = 'База промптов для ИИ — ' + str(TOTAL) + ' промптов: фото, изображения, тексты, жизнь, Qwen'
+    idx_title = 'ИИ в личной жизни и работе — готовые промпты, гиды, сравнения | Ediai'
 
     sources_grid = (
       '<details class="sources"><summary><h2>📖 Источники</h2>'
@@ -667,9 +676,9 @@ def build_index():
       '\n</head>\n<body>\n' + METRIKA + gtag_snippet() +
       '<a class="skip-link" href="#main">Перейти к содержимому</a>\n'
       '<header class="hero">\n  <div class="wrap">\n'
-      '    <span class="logo">⚡ PROMPT LIBRARY · проверенные шаблоны</span>\n'
-      '    <h1>База промптов для ИИ</h1>\n'
-      '    <p class="sub">Бесплатная коллекция из ' + str(TOTAL) + ' готовых промптов для нейросетей: переделка фото, генерация изображений, тексты, ИИ в личной жизни, Qwen и основы промптинга. Скопируйте шаблон, подставьте свои данные вместо <span style="color:var(--ph);font-weight:600">[скобок]</span> — и получите результат.</p>\n'
+      '    <span class="logo">⚡ EDIAI.RU · практический ИИ</span>\n'
+      '    <h1>ИИ в личной жизни и работе: ' + str(TOTAL) + ' ' + plural(TOTAL, 'готовый промпт', 'готовых промпта', 'готовых промптов') + ', гиды и сравнения</h1>\n'
+      '    <p class="sub">Готовые промпты, путеводитель для новичков и честные сравнения нейросетей: переделка фото, генерация изображений, тексты, ИИ в личной жизни, Qwen и основы промптинга. Скопируйте сценарий, подставьте свои данные вместо <span style="color:var(--ph);font-weight:600">[скобок]</span> — и получите результат за минуты.</p>\n'
       '    <div class="stats">'
       '<div class="stat">📚 Всего промптов: <b>' + str(TOTAL) + '</b></div>'
       '<div class="stat">🗂 Разделов: <b>6</b></div>'
@@ -694,7 +703,7 @@ def build_index():
       '<footer>\n  <div class="wrap">\n'
       '    ' + nav_html('index.html') + '\n'
       '    ' + sources_grid + '\n'
-      '    <b>⚡ База промптов для ИИ</b> · ' + str(TOTAL) + ' проверенных шаблонов для изображений, текстов и редактирования фото.<br>\n'
+      '    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · ' + str(TOTAL) + ' проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.<br>\n'
       '    Шаблоны основаны на общепризнанных практиках промпт-инжиниринга и официальных гайдах; лучшие результаты даёт итерация: сгенерировали → уточнили → повторили.\n'
       '  </div>\n</footer>\n'
       '</body>\n</html>\n')
@@ -754,8 +763,8 @@ def og_images():
             d.text((x, y), ch, font=font, fill=fill)
             x += d.textlength(ch, font=font) + spacing
 
-    specs = [('og-index.png', 'БАЗА ПРОМПТОВ ДЛЯ ИИ', 'База промптов для ИИ',
-              str(TOTAL) + ' готовых шаблонов: фото, изображения, тексты, жизнь, Qwen',
+    specs = [('og-index.png', 'EDIAI.RU · ПРАКТИЧЕСКИЙ ИИ', 'ИИ в личной жизни и работе',
+              str(TOTAL) + ' готовых промптов, гиды и сравнения нейросетей',
               str(TOTAL) + ' промптов · 6 разделов', (139,124,248), (76,201,240))]
     for k in SECTION_ORDER:
         og = SECTIONS[k]['og']
@@ -802,7 +811,7 @@ def main():
     w('index.html', build_index())
     for k in SECTION_ORDER:
         w(SECTIONS[k]['file'], build_section(k))
-    w('prompt-base.html', redirect_page('index.html', 'База промптов для ИИ'))
+    w('prompt-base.html', redirect_page('index.html', 'ИИ в личной жизни и работе'))
     w('photo-edit-prompts.html', redirect_page('photo.html', 'Переделка фото нейросетью'))
     w('robots.txt', robots_txt())
     w('sitemap.xml', sitemap_xml())
