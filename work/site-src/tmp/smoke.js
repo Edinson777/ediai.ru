@@ -50,7 +50,7 @@ console.log('index.html');
   ok(!!ld, 'JSON-LD присутствует');
   const src = d.querySelector('details.sources');
   ok(!!src && !src.open, 'источники на главной: спойлер, свёрнут по умолчанию');
-  ok(src.querySelectorAll('.sources-grid > div').length === 5, 'в спойлере 5 колонок источников');
+  ok(src.querySelectorAll('.sources-grid > div').length === 6, 'в спойлере 6 колонок источников');
   const nav = d.querySelector('.sections-nav');
   ok(nav && nav.querySelectorAll('a').length === 8, 'навигация по 8 адресам');
 }
