@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Промпты для Qwen — 23 шаблона: Chat, Image, Image-Edit, Coder</title>
+<meta name="description" content="Официальная формула промптов Alibaba (6 блоков), режимы /think и /no_think, контекст 1M токенов, JSON для API, генерация и редактирование изображений, промпты для Qwen-Coder.">
+<link rel="canonical" href="https://ediai.ru/qwen.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="База промптов для ИИ">
+<meta property="og:title" content="Промпты для Qwen — 23 шаблона: Chat, Image, Image-Edit, Coder">
+<meta property="og:description" content="Официальная формула промптов Alibaba (6 блоков), режимы /think и /no_think, контекст 1M токенов, JSON для API, генерация и редактирование изображений, промпты для Qwen-Coder.">
+<meta property="og:url" content="https://ediai.ru/qwen.html">
+<meta property="og:image" content="https://ediai.ru/og/og-qwen.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Промпты для Qwen — 23 шаблона: Chat, Image, Image-Edit, Coder">
+<meta name="twitter:description" content="Официальная формула промптов Alibaba (6 блоков), режимы /think и /no_think, контекст 1M токенов, JSON для API, генерация и редактирование изображений, промпты для Qwen-Coder.">
+<meta name="twitter:image" content="https://ediai.ru/og/og-qwen.png">
+<meta name="theme-color" content="#f5f6fa">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://ediai.ru/#website", "name": "База промптов для ИИ", "url": "https://ediai.ru/", "description": "Бесплатная коллекция из 181 проверенного промпта для нейросетей: переделка фото, генерация изображений, тексты, ИИ в личной жизни, Qwen и основы промптинга.", "inLanguage": "ru"}, {"@type": "CollectionPage", "@id": "https://ediai.ru/qwen.html", "url": "https://ediai.ru/qwen.html", "name": "Промпты для Qwen — 23 шаблона", "description": "Официальная формула промптов Alibaba (6 блоков), режимы /think и /no_think, контекст 1M токенов, JSON для API, генерация и редактирование изображений, промпты для Qwen-Coder.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "isPartOf": {"@id": "https://ediai.ru/#website"}}, {"@type": "ItemList", "name": "Промпты для Qwen — 23 шаблона", "numberOfItems": 23, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Официальная формула Qwen (6 блоков)", "url": "https://ediai.ru/qwen.html#p97"}, {"@type": "ListItem", "position": 2, "name": "Режимы мышления: /think и /no_think", "url": "https://ediai.ru/qwen.html#p98"}, {"@type": "ListItem", "position": 3, "name": "Анализ огромного документа (1M контекст)", "url": "https://ediai.ru/qwen.html#p99"}, {"@type": "ListItem", "position": 4, "name": "Контроль языка ответа", "url": "https://ediai.ru/qwen.html#p100"}, {"@type": "ListItem", "position": 5, "name": "Строгий JSON для интеграций", "url": "https://ediai.ru/qwen.html#p101"}, {"@type": "ListItem", "position": 6, "name": "Исследование темы (Deep Research)", "url": "https://ediai.ru/qwen.html#p102"}, {"@type": "ListItem", "position": 7, "name": "Веб-приложение одним файлом (Artifacts)", "url": "https://ediai.ru/qwen.html#p103"}, {"@type": "ListItem", "position": 8, "name": "Формула Qwen-Image: субъект в начале", "url": "https://ediai.ru/qwen.html#p104"}, {"@type": "ListItem", "position": 9, "name": "Постер с читаемым текстом", "url": "https://ediai.ru/qwen.html#p105"}, {"@type": "ListItem", "position": 10, "name": "Фотореалистичное лицо без «пластика»", "url": "https://ediai.ru/qwen.html#p106"}, {"@type": "ListItem", "position": 11, "name": "Надписи на любом языке (RU / ZH / EN)", "url": "https://ediai.ru/qwen.html#p107"}, {"@type": "ListItem", "position": 12, "name": "Единый стиль серии изображений", "url": "https://ediai.ru/qwen.html#p108"}, {"@type": "ListItem", "position": 13, "name": "Точечное изменение объекта на фото", "url": "https://ediai.ru/qwen.html#p109"}, {"@type": "ListItem", "position": 14, "name": "Перенос стиля (style transfer)", "url": "https://ediai.ru/qwen.html#p110"}, {"@type": "ListItem", "position": 15, "name": "Замена текста на изображении", "url": "https://ediai.ru/qwen.html#p111"}, {"@type": "ListItem", "position": 16, "name": "Персонаж в новых сценах", "url": "https://ediai.ru/qwen.html#p112"}, {"@type": "ListItem", "position": 17, "name": "Фича: код + тесты + обоснование", "url": "https://ediai.ru/qwen.html#p113"}, {"@type": "ListItem", "position": 18, "name": "Поиск корневой причины бага", "url": "https://ediai.ru/qwen.html#p114"}, {"@type": "ListItem", "position": 19, "name": "Код-ревью с приоритетами", "url": "https://ediai.ru/qwen.html#p115"}, {"@type": "ListItem", "position": 20, "name": "Безопасный рефакторинг", "url": "https://ediai.ru/qwen.html#p116"}, {"@type": "ListItem", "position": 21, "name": "Объяснение кода для новичка", "url": "https://ediai.ru/qwen.html#p117"}, {"@type": "ListItem", "position": 22, "name": "Миграция кода и апгрейд стека", "url": "https://ediai.ru/qwen.html#p118"}, {"@type": "ListItem", "position": 23, "name": "SQL-запрос из обычного языка", "url": "https://ediai.ru/qwen.html#p119"}]}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p97", "headline": "Официальная формула Qwen (6 блоков)", "articleBody": "#Context#\n[ситуация и данные, которые модель не может угадать: предыстория, ограничения]\n\n#Objective#\n[одна задача в повелительной форме: что именно сделать]\n\n#Style#\n[стиль изложения: деловая статья / разговорный пост / научный обзор]\n\n#Tone#\n[тональность: формальная / дружелюбная / уверенная / поддерживающая]\n\n#Audience#\n[кто читает результат: что уже знает, чего ожидает]\n\n#Response#\n[точный формат ответа: структура, объём, таблица/список/текст]", "description": "Документированный Alibaba фреймворк: шесть именованных блоков с #-разделителями. Работает и в chat.qwen.ai, и через API.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen, формула, co-star, официальный гайд", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p98", "headline": "Режимы мышления: /think и /no_think", "articleBody": "Для сложных задач (анализ, расчёты, архитектура, планирование):\n/think\n[задача]\n\nДля простых задач (перевод, переформулировка, короткий ответ):\n/no_think\n[задача]", "description": "Гибридные модели Qwen умеют «думать» перед ответом. Включайте режим для сложных задач и выключайте для быстрых.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen, thinking, режимы, api", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p99", "headline": "Анализ огромного документа (1M контекст)", "articleBody": "Я передаю тебе документ:\n===[вставить текст или прикрепить файл]===\n\nВыполни по порядку:\n1. Резюме сути в 5 предложениях;\n2. Таблица ключевых фактов, цифр и выводов;\n3. Найди противоречия, слабые аргументы и пробелы в материале;\n4. Ответь на мои вопросы по тексту: [вопросы];\n5. Что стоит изучить дополнительно по этой теме.\n\nПравило: ничего не додумывай — если ответа нет в документе, прямо скажи об этом.", "description": "Хостовые модели Qwen принимают до ~1 млн токенов — целые книги, отчёты и кодовые базы за один запрос.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen, контекст, документы, анализ", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p100", "headline": "Контроль языка ответа", "articleBody": "#Language#\nВсегда отвечай на русском языке. Технические термины можно оставлять в оригинале, но при первом упоминании давай перевод в скобках.\n\n#Objective#\n[ваша задача]\n\n#Response#\n[формат ответа]", "description": "Qwen полиязычен и иногда «соскальзывает» на английский или китайский. Официальная рекомендация — вынести язык в отдельный именованный блок.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen, язык, русский, локализация", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p101", "headline": "Строгий JSON для интеграций", "articleBody": "Отвечай ТОЛЬКО валидным JSON, без комментариев и markdown-обёрток.\n\nСхема: объект \"result\" содержит массив \"items\"; каждый элемент: \"title\" (строка), \"summary\" (строка до 200 знаков), \"tags\" (массив строк), \"score\" (число от 1 до 10).\n\nЗадача: [что проанализировать и разложить на элементы].\nДанные: ===[данные]===\n\nВажно: ответ должен быть JSON от первого до последнего символа.", "description": "Структурированный вывод для скриптов, ботов и автоматизации — без лишнего текста вокруг.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen, json, api, автоматизация, код", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p102", "headline": "Исследование темы (Deep Research)", "articleBody": "Проведи исследование темы «[тема]».\n\n1. Разбей тему на 4–6 подвопросов и перечисли их;\n2. Ответь на каждый: данные, примеры, альтернативные точки зрения;\n3. Пометь каждый вывод уровнем достоверности: факт / вероятное суждение / гипотеза;\n4. Отдельно — что осталось спорным или непроверенным;\n5. Финал: 5 главных выводов и рекомендации, что изучить дальше.\n\nФормат: структурированный отчёт с заголовками, без воды.", "description": "Глубокий разбор темы с оценкой достоверности. В Qwen Chat для этого есть режим Deep Research — промпт даёт тот же результат в обычном чате.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen, research, исследование, анализ, достоверность", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p103", "headline": "Веб-приложение одним файлом (Artifacts)", "articleBody": "Создай веб-приложение в одном файле: [что за приложение, например «трекер привычек»].\n\nТребования:\n- HTML + CSS + JavaScript в одном файле, без внешних библиотек и CDN;\n- Функциональность: [список функций по пунктам];\n- Данные сохраняются в localStorage браузера;\n- Современный минималистичный дизайн, тёмная и светлая темы, адаптив под смартфон;\n- Интерфейс полностью на русском языке;\n- Обработай пустые состояния и ошибки ввода.\n\nПосле кода — короткая инструкция, какие константы в начале скрипта можно настроить под себя.", "description": "Qwen Chat умеет сразу собирать работающие приложения (режимы Artifacts / Web Dev). Промпт для качественного результата с первого раза.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen, artifacts, код, веб, приложение", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p104", "headline": "Формула Qwen-Image: субъект в начале", "articleBody": "[субъект: максимально конкретно, кто/что], [стиль: editorial photography / 3D render / watercolor / flat vector], [детали: текстуры, одежда, материалы], [композиция: close-up / wide shot / centered / rule of thirds], [освещение: golden hour / soft studio light / dramatic rim light]", "description": "Архитектура MMDiT придаёт больше веса словам в начале промпта. Проверенный порядок: Субъект → Стиль → Детали → Композиция → Свет.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-image, формула, генерация, структура", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p105", "headline": "Постер с читаемым текстом", "articleBody": "Event poster for «[название события/бренда]», bold headline text saying \"[точный текст надписи]\" across the top third, [жанр/эстетика: art deco / modern minimal / retro 90s], [цветовая палитра], textured background, sharp clean readable letterforms, professional graphic design, portrait orientation", "description": "Киллер-фича Qwen-Image — точный рендер надписей на картинке (то, с чем остальные модели справляются хуже всего).", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-image, текст на изображении, постер, типографика", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p106", "headline": "Фотореалистичное лицо без «пластика»", "articleBody": "Professional headshot of [возраст] [who: мужчина-врач / женщина-предприниматель / пожилой рыбак], [одежда], natural skin texture with visible pores, realistic age-appropriate features, no airbrushed look, [фон: neutral gray / офисное боке / улица], soft studio lighting, 85mm lens, shallow depth of field, candid natural expression", "description": "Свежие версии Qwen-Image специально улучшали естественность кожи и возрастные черты — используйте это.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-image, портрет, фотореализм, лицо", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p107", "headline": "Надписи на любом языке (RU / ZH / EN)", "articleBody": "[носитель дизайна: вывеска кофейни / обложка книги / меню на меловой доске / упаковка чая] with text \"[точный текст на русском / китайском / английском]\", correct legible letterforms, [стиль надписи: modern sans-serif / hand-lettered / elegant calligraphy], [окружение и свет], sharp text edges, professional design", "description": "Qwen-Image лучше большинства моделей рендерит нелатинские шрифты — кириллицу и особенно сложные китайские иероглифы.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-image, кириллица, китайский, текст, мультиязычность", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p108", "headline": "Единый стиль серии изображений", "articleBody": "Стилевой шаблон (неизменный для всех кадров): [editorial photography, natural lighting, muted warm palette, film grain, 35mm].\n\nКадр 1: [субъект и сцена].\nКадр 2: [субъект и сцена].\nКадр 3: [субъект и сцена].\n\nГенерируй каждый кадр строго в стилевом шаблоне.", "description": "Один визуальный язык для всех картинок блога, презентации или витрины магазина.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-image, серия, стиль, seed, консистентность", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p109", "headline": "Точечное изменение объекта на фото", "articleBody": "Измени на этой фотографии [что именно: цвет рубашки на бордовый / убери прохожих на заднем плане / добавь чашку кофе на стол]. Всё остальное сохрани без изменений: композицию, освещение, лицо, фон. Фотореалистичный результат, без видимых следов редактирования.", "description": "Изменить деталь, не перерисовывая весь кадр: цвет, предметы, лишние объекты.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-image-edit, ретушь, правка, фото", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p110", "headline": "Перенос стиля (style transfer)", "articleBody": "Перерисуй это изображение в стиле [акварель / аниме Studio Ghibli / киберпанк-иллюстрация / масляная живопись / пиксель-арт], сохранив [что важно: позу и черты лица / композицию и расположение объектов / узнаваемость бренда]. Уровень детализации — [высокий / плакатно-упрощённый].", "description": "Превратить фото в акварель, аниме или киберпанк, сохранив композицию и узнаваемость.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-image-edit, стиль, арт, трансформация", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p111", "headline": "Замена текста на изображении", "articleBody": "Замени текст \"[старая надпись]\" на \"[новая надпись]\" на этом изображении. Сохрани тот же шрифт, кегль, цвет, наклон и положение букв, а также тени и освещение вокруг надписи. Больше ничего не меняй.", "description": "Поменять надпись на вывеске, этикетке или баннере — с сохранением шрифта и освещения.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-image-edit, текст, вывеска, замена", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p112", "headline": "Персонаж в новых сценах", "articleBody": "Используя персонажа с этого изображения, создай новую сцену: [персонаж] [действие] в [локация], [время суток и освещение]. Строго сохрани лицо, причёску, пропорции тела и стиль одежды. Фотореалистично / в той же технике, что и оригинал.", "description": "Тот же герой в других обстоятельствах — для комиксов, сторис и брендовых маскотов.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-image-edit, персонаж, серия, консистентность", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p113", "headline": "Фича: код + тесты + обоснование", "articleBody": "Действуй как senior [язык/стек]-разработчик.\n\nЗадача: реализовать [функция/фича] в [проект/файл].\nКонтекст: [стек, соглашения проекта, ограничения, как устроен соседний код].\n\nВыдай по порядку:\n1. Код по конвенциям проекта ([именование, стиль, структура]);\n2. Unit-тесты: основные случаи + минимум 3 краевых;\n3. Обоснование архитектурных решений: почему так и какие были альтернативы;\n4. Чек-лист: что обновить в зависимых файлах и что проверить вручную.\n\nНе переписывай код, не относящийся к задаче. Если ТЗ допускает двоякое толкование — сначала задай уточняющие вопросы.", "description": "Разработка по-взрослому: код по конвенциям проекта, unit-тесты с краевыми случаями и объяснение решений.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-coder, код, тесты, разработка", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p114", "headline": "Поиск корневой причины бага", "articleBody": "Найди причину бага и исправь её.\n\nСимптом: [что происходит: ошибка, стектрейс, неожиданное поведение].\nОжидаемое поведение: [как должно быть].\nКогда появилось: [после какого изменения, если известно].\nКод: ===[вставить код / фрагменты файлов]===\n\nПорядок работы:\n1. Проследи путь данных от входа до места падения;\n2. Назови КОРНЕВУЮ причину, а не симптом;\n3. Минимальный фикс — ничего постороннего не рефакторь;\n4. Регрессионный тест: падает на старом коде, проходит на новом;\n5. Где ещё в кодовой базе может быть такая же проблема.", "description": "Диагностика от симптома к первопричине: минимальный фикс + регрессионный тест.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-coder, баг, отладка, тесты", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p115", "headline": "Код-ревью с приоритетами", "articleBody": "Проведи код-ревью:\n===[код]===\n\nКонтекст: [что это за код, где запускается, требования к надёжности].\n\nФормат отчёта — замечания по категориям, каждое с важностью (критично / важно / мелочь):\n1. Баги и необработанные краевые случаи;\n2. Безопасность: инъекции, утечки данных, небезопасные зависимости;\n3. Производительность: сложность алгоритмов, память, лишние запросы;\n4. Читаемость и сопровождаемость.\n\nДля каждого замечания: место (функция/строка), в чём проблема, как исправить — с примером кода.\nВ конце: общая оценка и топ-3 приоритетных правок. Стиль, который проверяет линтер, не комментируй.", "description": "Структурированный отчёт по серьёзности: баги, безопасность, производительность, читаемость.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-coder, ревью, безопасность, качество", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p116", "headline": "Безопасный рефакторинг", "articleBody": "Отрефактори код:\n===[код]===\n\nЦель: [улучшить читаемость / убрать дублирование / разбить класс-монолит / подготовить к расширению].\nОграничение: внешнее API и наблюдаемое поведение не меняются.\n\nПорядок:\n1. Характеристические тесты, фиксирующие ТЕКУЩЕЕ поведение (включая его странности);\n2. План рефакторинга: маленькие шаги, после каждого все тесты проходят;\n3. Выполняй по одному шагу за раз, показывая код после каждого;\n4. Финал: итоговая версия и что улучшилось (дублирование, связность, размер функций).\n\nШаг 1 и план выдай сразу, дальнейшие шаги — по одному, дожидаясь моего подтверждения.", "description": "Поведение не меняется: сначала характеристические тесты, потом маленькие шаги с подтверждениями.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-coder, рефакторинг, тесты, пошагово", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p117", "headline": "Объяснение кода для новичка", "articleBody": "Объясни этот код junior-разработчику, который видит его впервые:\n===[код]===\n\n1. Какую задачу решает — 2 предложения без жаргона;\n2. Архитектура: основные части и как они взаимодействуют (текстовая схема со стрелками);\n3. Пошаговый разбор: что происходит при типичном вызове;\n4. Неочевидные места: почему написано именно так, какие грабли заложены;\n5. 3 вопроса для самопроверки понимания (ответы — в конце).\n\nСложные концепции объясняй через аналогии из жизни.", "description": "Разбор чужого кода по полочкам: от назначения до вопросов для самопроверки.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-coder, обучение, объяснение, junior", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p118", "headline": "Миграция кода и апгрейд стека", "articleBody": "Спланируй и начни миграцию: [откуда → куда: Python 2→3 / JS→TypeScript / Vue 2→3 / старый фреймворк → новый].\n\nКод: ===[код или структура файлов]===\nЗависимости: [список с версиями].\n\n1. Список breaking changes, которые задевают именно наш код;\n2. План миграции по шагам — от наименее рискованных к наиболее;\n3. Для каждого шага: изменённый код + чем проверить;\n4. Таблица зависимостей: что обновляется, что заменяется аналогами, что блокирует миграцию.\n\nВыполни только шаг 1 и остановись — жди подтверждения перед следующим.", "description": "Переезд на новую версию языка или фреймворка — поэтапно, от низкого риска к высокому.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-coder, миграция, typescript, апгрейд", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}, {"@type": "Article", "@id": "https://ediai.ru/qwen.html#p119", "headline": "SQL-запрос из обычного языка", "articleBody": "Напиши SQL-запрос ([СУБД: PostgreSQL / MySQL / ClickHouse]) для задачи: [что нужно получить — простыми словами].\n\nСхема таблиц:\n===[таблицы, колонки, типы, связи]===\nОбъём данных: [примерные размеры таблиц — влияет на оптимизацию].\n\nВыдай:\n1. Запрос с комментариями к каждой логической части;\n2. Какие индексы нужны для быстрого выполнения на больших данных;\n3. Пример результата таблицей на 2–3 строках;\n4. Краевые случаи: NULL, дубликаты, пустые периоды — как обработаны.\n\nЕсли задача допускает разные трактовки — перечисли допущения, которые ты сделал.", "description": "Запрос к базе по описанию задачи: с пояснениями, индексами и примером результата.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "qwen-coder, sql, база данных, запросы", "isPartOf": {"@id": "https://ediai.ru/qwen.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/qwen.html"}}]}</script>
+<style>
+/* =====================================================================
+   «База промптов для ИИ» — общий стиль всех страниц. СВЕТЛАЯ ТЕМА.
+   Контрасты мелкого текста подобраны под WCAG AA на светлом фоне.
+   Мобильная панель: табы в один скроллящийся ряд, подразделы под кнопку,
+   input 16px (iOS не зумит); prefers-reduced-motion, :focus-visible,
+   skip-link; кнопка «Копировать» не перекрывает текст промпта.
+   ===================================================================== */
+:root{
+  --bg:#f5f6fa;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card-hover:#fcfcff;
+  --border:#e4e8f1;
+  --border-strong:#c9d2e3;
+  --text:#182135;
+  --muted:#57627a;      /* 6.1:1 на белом */
+  --accent:#6a5ae0;
+  --accent-ink:#4b3ecf; /* акцент для текста/ссылок на светлом */
+  --accent2:#0e7490;    /* cyan-700 — читаемые ссылки */
+  --accent2-bright:#22b8cf;
+  --prompt-bg:#f6f7fb;
+  --ph:#9a5b00;         /* плейсхолдеры [в скобках] */
+  --ok:#15803d;
+  --faint:#667085;      /* 4.9:1 на белом */
+  --dim:#667085;
+  --shadow:0 1px 2px rgba(23,32,58,.05);
+  --shadow-lift:0 10px 28px rgba(23,32,58,.10);
+  --radius:14px;
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% -5%, rgba(106,90,224,.09), transparent),
+    radial-gradient(ellipse 50% 35% at 85% 0%, rgba(34,184,207,.08), transparent);
+}
+::selection{background:rgba(106,90,224,.22)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* ===== a11y: skip-link и фокус ===== */
+.skip-link{
+  position:absolute;left:-9999px;top:8px;z-index:200;
+  background:var(--accent);color:#fff;font-weight:700;font-size:14px;
+  padding:10px 18px;border-radius:10px;text-decoration:none
+}
+.skip-link:focus{left:12px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ===== HERO ===== */
+header.hero{padding:48px 0 26px;text-align:center}
+.hero .logo{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--border);
+  padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.7);
+  margin-bottom:22px;text-decoration:none
+}
+.hero a.logo:hover{color:var(--text);border-color:var(--accent)}
+.back-link{
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+  font-size:13px;color:var(--muted);border:1px solid var(--border);
+  padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.7);
+  margin-bottom:20px;transition:all .2s
+}
+.back-link:hover{color:var(--text);border-color:var(--accent)}
+.hero h1{
+  font-size:clamp(28px,4.8vw,48px);font-weight:800;line-height:1.13;letter-spacing:-.02em;
+  background:linear-gradient(100deg,#111c33 18%,var(--accent) 58%,var(--accent2) 92%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  margin-bottom:14px;
+}
+.hero h1.gold{background:linear-gradient(100deg,#17203a 15%,#b45309 50%,var(--accent) 85%);-webkit-background-clip:text;background-clip:text}
+.hero p.sub{color:var(--muted);font-size:16.5px;max-width:660px;margin:0 auto 22px;line-height:1.55}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.stat{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:8px 16px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow)
+}
+.stat b{color:var(--text);font-weight:700}
+
+/* ===== STICKY CONTROLS ===== */
+.controls{
+  position:sticky;top:0;z-index:50;
+  background:rgba(245,246,250,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:14px 0 12px;margin-bottom:26px;
+}
+.search-row{display:flex;gap:10px;margin-bottom:12px}
+.search-box{position:relative;flex:1}
+.search-box svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--muted)}
+#search{
+  width:100%;padding:12px 16px 12px 42px;font-size:15px;font-family:inherit;
+  background:var(--bg2);border:1px solid #dbe1ec;border-radius:11px;
+  color:var(--text);outline:none;transition:border .2s, box-shadow .2s;
+}
+#search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(106,90,224,.15)}
+#search::placeholder{color:#8a94a6}
+#search::-webkit-search-cancel-button{cursor:pointer}
+kbd{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  font-size:11px;color:var(--muted);border:1px solid #dbe1ec;
+  border-radius:5px;padding:2px 7px;background:var(--bg);font-family:inherit
+}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tab{
+  padding:9px 18px;border-radius:99px;font-size:14px;font-weight:600;cursor:pointer;
+  background:#eef1f7;border:1px solid #e0e5ef;color:var(--muted);
+  transition:all .18s;user-select:none;white-space:nowrap;
+  font-family:inherit;line-height:1.25;appearance:none
+}
+.tab:hover{color:var(--text);border-color:var(--border-strong)}
+.tab.active{
+  background:linear-gradient(100deg,rgba(106,90,224,.14),rgba(34,184,207,.12));
+  border-color:var(--accent);color:var(--accent-ink)
+}
+.tab .cnt{opacity:.7;font-weight:500;font-size:12.5px;margin-left:4px}
+.chips-row{display:flex;align-items:flex-start;gap:8px;position:relative}
+.chips-row.no-sub{display:none}
+.chips-toggle{
+  display:none;align-items:center;gap:6px;flex-shrink:0;
+  font-size:12.8px;font-weight:600;padding:6px 13px;border-radius:99px;
+  background:var(--bg2);border:1px solid #dbe1ec;color:var(--muted);
+  cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s
+}
+.chips-toggle:hover{color:var(--text);border-color:var(--border-strong)}
+.chips{
+  display:flex;gap:7px;flex:1;flex-wrap:nowrap;overflow-x:auto;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px;
+  mask-image:linear-gradient(90deg,#000 92%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);
+}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  padding:6px 13px;border-radius:99px;font-size:12.8px;cursor:pointer;
+  background:transparent;border:1px solid #dbe1ec;color:var(--muted);
+  transition:all .15s;user-select:none;font-family:inherit;line-height:1.35;appearance:none;
+  flex:0 0 auto;white-space:nowrap
+}
+.chip:hover{color:var(--text);border-color:var(--border-strong)}
+.chip.active{background:rgba(106,90,224,.10);border-color:rgba(106,90,224,.5);color:var(--accent-ink)}
+.results-line{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.8px;color:var(--dim);margin-top:10px}
+.mini-btns{display:flex;gap:6px}
+.mini-btn{
+  font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;cursor:pointer;
+  background:var(--bg2);border:1px solid #dbe1ec;color:var(--muted);
+  transition:all .15s;font-family:inherit
+}
+.mini-btn:hover{color:var(--accent-ink);border-color:var(--accent);background:rgba(106,90,224,.07)}
+
+/* ===== INFO STRIPS ===== */
+.strips{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.info-strip{
+  display:flex;gap:12px;align-items:flex-start;
+  background:#fff8ec;border:1px solid #f0dcae;
+  border-radius:var(--radius);padding:14px 18px;
+  font-size:13.8px;color:#7c5a12;line-height:1.55;box-shadow:var(--shadow)
+}
+.info-strip b{color:#5f4708}
+.info-strip a{color:var(--accent-ink)}
+.info-strip .ic{font-size:17px;line-height:1.4}
+.qwen-strip{background:#f3f1ff;border-color:#d6cdff;color:#4b3fb0}
+.qwen-strip b{color:#3c31a0}
+.warn-strip{background:#fff0f3;border-color:#f3c4cf;color:#8f2440}
+.warn-strip b{color:#6f1630}
+.fact-strip{background:#edfaf4;border-color:#bfe8d6;color:#0f5c46}
+.fact-strip b{color:#0a4535}
+.qwen-strip b{color:#372a9c}
+.qwen-strip code,.info-strip code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:rgba(23,32,58,.06);padding:1px 6px;border-radius:4px;color:#44506a}
+.page-link-banner{
+  display:flex;gap:12px;align-items:center;text-decoration:none;
+  background:linear-gradient(100deg,rgba(106,90,224,.08),rgba(34,184,207,.06));
+  border:1px solid rgba(106,90,224,.35);border-radius:var(--radius);
+  padding:14px 18px;margin-bottom:26px;color:#4b3fb0;font-size:13.8px;line-height:1.5;
+  transition:border-color .2s, transform .2s, box-shadow .2s;box-shadow:var(--shadow)
+}
+.page-link-banner:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.page-link-banner b{color:var(--text)}
+.plb-ic{font-size:20px}
+.plb-go{color:var(--accent2);font-weight:700;white-space:nowrap;margin-left:auto}
+
+/* ===== GRID & CARDS ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;padding-bottom:40px}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);
+  transition:transform .18s, border-color .18s, box-shadow .18s;
+  scroll-margin-top:150px;
+}
+.card:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow-lift)}
+.card-head{display:flex;gap:10px;align-items:flex-start;cursor:pointer;user-select:none}
+.card-head:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.head-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:9px}
+.card:not(.open) .head-main .desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chev{flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#98a2b3;transition:transform .2s,color .2s;margin-top:2px}
+.chev svg{width:16px;height:16px}
+.card.open .chev{transform:rotate(180deg);color:var(--accent)}
+.card-body{display:none;flex-direction:column;gap:12px}
+.card.open .card-body{display:flex}
+.card-head:hover h3{color:var(--accent-ink)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card h3{font-size:16.5px;font-weight:700;line-height:1.3}
+.card .sub-name{font-size:11.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;font-weight:600}
+.badge{
+  flex-shrink:0;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;
+  letter-spacing:.02em;white-space:nowrap;border:1px solid
+}
+.badge.mj{color:#7c3aed;border-color:#e2d4ff;background:#f5eeff}
+.badge.dalle{color:#047857;border-color:#bfe8d6;background:#ecfdf5}
+.badge.sd{color:#c2570b;border-color:#fbd9b8;background:#fff4e8}
+.badge.any{color:#1d6fb8;border-color:#c9e2f8;background:#eef7ff}
+.badge.text{color:#be185d;border-color:#f8c9dd;background:#fdf0f6}
+.badge.qwen{color:#5b4bd6;border-color:#d4ccff;background:#f3f1ff}
+.badges{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.qpill{font-size:10.3px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;cursor:help;letter-spacing:.01em}
+.qpill.full{color:var(--accent-ink);background:rgba(106,90,224,.12);border:1px solid rgba(106,90,224,.45)}
+.qpill.core{color:var(--faint);background:transparent;border:1px dashed #b9c2d4}
+.dspill{font-size:10.3px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;cursor:help;letter-spacing:.01em}
+.dspill.full{color:#3552e0;background:rgba(77,107,254,.10);border:1px solid rgba(77,107,254,.45)}
+.dspill.note{color:var(--faint);background:transparent;border:1px dashed #b9c2d4}
+.card .desc{font-size:13.8px;color:var(--muted);line-height:1.55}
+.prompt-wrap{position:relative}
+pre.prompt{
+  background:var(--prompt-bg);border:1px solid var(--border);border-radius:10px;
+  padding:42px 14px 14px; /* верхний отступ — кнопка «Копировать» не перекрывает текст */
+  font-size:12.9px;line-height:1.6;color:#33415c;
+  white-space:pre-wrap;word-break:break-word;
+  font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  max-height:320px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#cdd5e4 transparent
+}
+pre.prompt::-webkit-scrollbar{width:6px}
+pre.prompt::-webkit-scrollbar-thumb{background:#cdd5e4;border-radius:3px}
+.ph{color:var(--ph);background:rgba(180,83,9,.10);border-radius:4px;padding:0 3px;font-weight:600}
+.copy-btn{
+  position:absolute;top:8px;right:8px;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;padding:6px 12px;border-radius:8px;cursor:pointer;
+  background:rgba(255,255,255,.94);border:1px solid #dbe1ec;color:var(--muted);
+  transition:all .15s;font-family:inherit;box-shadow:var(--shadow)
+}
+.copy-btn:hover{color:var(--accent-ink);border-color:var(--accent);background:rgba(106,90,224,.08)}
+.copy-btn.done{color:var(--ok);border-color:rgba(21,128,61,.4);background:rgba(21,128,61,.08)}
+.copy-btn svg{width:13px;height:13px}
+.tip{
+  font-size:12.8px;color:#44606e;line-height:1.5;
+  background:#edf8fb;border-left:3px solid var(--accent2-bright);
+  padding:9px 12px;border-radius:0 8px 8px 0
+}
+.tip b{color:var(--accent2)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.tag{font-size:11.3px;color:var(--faint);background:rgba(23,32,58,.05);padding:3px 9px;border-radius:99px}
+
+.section-head{grid-column:1/-1;display:flex;align-items:center;gap:14px;margin:14px 0 -4px}
+.section-head h2{font-size:19px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.section-head .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border-strong),transparent)}
+
+.empty{display:none;text-align:center;padding:70px 20px;color:var(--muted)}
+.empty .big{font-size:44px;margin-bottom:14px}
+.empty p{font-size:15px}
+
+#toast{
+  position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:#1d2536;border:1px solid #33405c;color:#f2f5fa;
+  padding:11px 22px;border-radius:11px;font-size:14px;font-weight:600;
+  opacity:0;transition:all .3s;z-index:99;pointer-events:none;
+  box-shadow:0 10px 30px rgba(23,32,58,.35);max-width:90vw
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ===== HUB: BENTO ===== */
+.hub-h{font-size:21px;font-weight:800;letter-spacing:-.01em;margin:36px 0 14px}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px}
+.tile{
+  grid-column:span 2;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;gap:9px;text-decoration:none;color:var(--text);
+  transition:transform .18s,border-color .18s,box-shadow .18s;text-align:left;box-shadow:var(--shadow)
+}
+.tile:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow-lift)}
+.tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tile-big{
+  grid-row:span 2;border-color:rgba(106,90,224,.35);
+  background:linear-gradient(160deg,rgba(106,90,224,.08),rgba(180,83,9,.05) 55%,#fff 100%)
+}
+.tile-big:hover{border-color:var(--accent)}
+.tile-life{
+  border-color:rgba(14,116,144,.35);
+  background:linear-gradient(160deg,rgba(14,116,144,.08),rgba(62,207,142,.07) 55%,#fff 100%)
+}
+.tile-life:hover{border-color:#0e7490}
+.t-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.t-ic{font-size:30px;line-height:1}
+.tile-big .t-ic{font-size:40px}
+.t-count{font-size:11.5px;font-weight:700;color:var(--accent-ink);background:rgba(106,90,224,.10);border:1px solid rgba(106,90,224,.35);padding:4px 11px;border-radius:99px;white-space:nowrap}
+.tile h2{font-size:18px;font-weight:800;letter-spacing:-.01em}
+.tile-big h2{font-size:25px;margin-top:6px}
+.tile p{color:var(--muted);font-size:13.6px;line-height:1.55}
+.t-subs{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0}
+.t-subs li{font-size:11.5px;color:var(--faint);background:rgba(23,32,58,.05);padding:3px 10px;border-radius:99px}
+.t-go{color:var(--accent2);font-weight:700;font-size:13.5px;margin-top:auto;padding-top:8px}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:8px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.step .s-n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(106,90,224,.12);border:1px solid rgba(106,90,224,.35);color:var(--accent-ink);font-weight:800;font-size:13px;margin-bottom:10px}
+.step b{display:block;font-size:14.5px;margin-bottom:6px}
+.step p{font-size:13px;color:var(--muted);line-height:1.55}
+
+.pop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:8px}
+.pop{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;
+  transition:transform .18s,border-color .18s,box-shadow .18s;box-shadow:var(--shadow)
+}
+.pop:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow-lift)}
+.pop .p-cat{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.pop h3{font-size:15.5px;font-weight:700}
+.pop p{font-size:12.8px;color:var(--muted);line-height:1.5}
+.pop .p-go{color:var(--accent2);font-size:12.5px;font-weight:700;margin-top:4px}
+
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.faq summary{cursor:pointer;font-weight:700;font-size:14.8px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--accent);font-size:21px;line-height:1;font-weight:400}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin-top:10px;font-size:13.8px;color:var(--muted);line-height:1.6}
+
+/* ===== FOOTER ===== */
+footer{border-top:1px solid var(--border);padding:30px 0 40px;color:var(--dim);font-size:13px;line-height:1.7;text-align:center;margin-top:20px}
+footer b{color:var(--muted)}
+.sections-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 22px}
+.sections-nav a{
+  font-size:13px;color:var(--muted);text-decoration:none;
+  border:1px solid #dbe1ec;padding:7px 14px;border-radius:99px;
+  background:rgba(255,255,255,.7);transition:all .2s
+}
+.sections-nav a:hover{color:var(--text);border-color:var(--accent)}
+.sections-nav a[aria-current="page"]{color:var(--accent-ink);border-color:rgba(106,90,224,.5);background:rgba(106,90,224,.08)}
+
+/* источники — под спойлером (details/summary) */
+.sources{
+  text-align:left;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);margin-bottom:26px;box-shadow:var(--shadow);overflow:hidden
+}
+.sources summary{
+  cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:18px 26px;user-select:none;transition:background .15s
+}
+.sources summary::-webkit-details-marker{display:none}
+.sources summary:hover{background:rgba(106,90,224,.04)}
+.sources summary h2{font-size:16.5px;font-weight:800;color:var(--text)}
+.sources summary::after{
+  content:"+";font-size:24px;line-height:1;color:var(--accent);font-weight:400;flex-shrink:0
+}
+.sources[open] summary::after{content:"–"}
+.sources[open] summary{border-bottom:1px solid var(--border)}
+.sources-in{padding:18px 26px 24px}
+.sources .src-hint{font-size:12.5px;color:var(--dim);font-weight:500;margin-left:10px}
+.sources .note{font-size:12.8px;color:var(--dim);line-height:1.6;margin-bottom:16px}
+.sources-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.sources h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:10px;font-weight:700}
+.sources h3.txt-head{color:#be185d}
+.sources h3.qw-head{color:#5b4bd6}
+.sources h3.ph-head{color:#b45309}
+.sources h3.life-head{color:#0e7490}
+.sources ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.sources li{font-size:13px;line-height:1.5}
+.sources a{color:#44506a;text-decoration:none;border-bottom:1px dotted #b9c2d4;transition:color .15s}
+.sources a:hover{color:var(--accent2)}
+.sources li span.what{display:block;color:var(--dim);font-size:12px}
+footer a{color:var(--accent2);text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--dim);line-height:1.6}
+
+#toTop{
+  position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:12px;
+  background:var(--card);border:1px solid #dbe1ec;color:var(--muted);
+  font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;
+  transition:all .2s;z-index:60;box-shadow:var(--shadow)
+}
+#toTop:hover{color:var(--accent-ink);border-color:var(--accent)}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important
+  }
+}
+
+/* ===== TABLET ===== */
+@media (max-width:960px){
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr}
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:640px){
+  .grid{grid-template-columns:1fr}
+  header.hero{padding:34px 0 18px}
+  .hero p.sub{font-size:15px}
+  kbd{display:none}
+  .card-top{flex-wrap:wrap}
+  .controls{padding:10px 0 9px;margin-bottom:18px}
+  .search-row{margin-bottom:9px}
+  #search{font-size:16px;padding:10px 14px 10px 40px} /* 16px — iOS не зумит поле */
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:8px;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;padding:8px 14px;font-size:13px}
+  .chips{display:none}
+  .chips.open{
+    display:flex;flex-wrap:wrap;overflow-y:auto;overflow-x:hidden;
+    mask-image:none;-webkit-mask-image:none;
+    position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:70;
+    background:#fff;border:1px solid var(--border);border-radius:12px;
+    padding:12px;box-shadow:0 16px 40px rgba(23,32,58,.18);max-height:52vh;
+  }
+  .chips.open .chip{white-space:normal}
+  .chips-toggle{display:inline-flex}
+  pre.prompt{max-height:none} /* никакого «скролла в скролле» на телефоне */
+  .results-line{margin-top:8px}
+  .sources summary{padding:15px 18px}
+  .sources-in{padding:14px 18px 20px}
+  .bento{grid-template-columns:1fr}
+  .tile-big{grid-row:auto}
+  .plb-go{margin-left:0}
+  .page-link-banner{flex-wrap:wrap}
+}
+
+</style>
+</head>
+<body>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=114035585', 'ym');
+
+    ym(114035585, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/114035585" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NXPYMMXH35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NXPYMMXH35');
+</script>
+<!-- /Google tag -->
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+<header class="hero">
+  <div class="wrap">
+    <a class="back-link" href="index.html">← Все разделы</a>
+    <h1>🤖 Промпты для Qwen</h1>
+    <p class="sub">Всё про промпты для Qwen: официальный шестиблочный фреймворк Alibaba, режимы Qwen Chat, генерация изображений с точными надписями, редактирование фото и Qwen-Coder для разработчиков.</p>
+    <div class="stats"><div class="stat">Qwen Chat: <b>7</b></div><div class="stat">Qwen-Image: <b>5</b></div><div class="stat">Image-Edit: <b>4</b></div><div class="stat">Qwen-Coder: <b>7</b></div><div class="stat">Всего: <b>23</b></div></div>
+  </div>
+</header>
+<div class="controls">
+  <div class="wrap">
+    <div class="search-row">
+      <div class="search-box">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search" type="search" aria-label="Поиск по промптам раздела" placeholder="Поиск: формула, thinking, JSON, код, изображение…" autocomplete="off">
+        <kbd aria-hidden="true">/</kbd>
+      </div>
+    </div>
+    <div class="tabs" id="tabs" hidden></div>
+    <div class="chips-row" id="chipsRow">
+      <button type="button" class="chips-toggle" id="chipsToggle" aria-expanded="false" aria-controls="chips">Подразделы ▾</button>
+      <div class="chips" id="chips"><button type="button" class="chip active" aria-pressed="true">Все подразделы</button><button type="button" class="chip" aria-pressed="false">Qwen Chat: формулы и режимы</button><button type="button" class="chip" aria-pressed="false">Qwen-Image: генерация</button><button type="button" class="chip" aria-pressed="false">Qwen-Image-Edit: редактирование</button><button type="button" class="chip" aria-pressed="false">Qwen-Coder: код</button></div>
+    </div>
+    <div class="results-line">
+      <span id="results">Показаны все 23 промпта</span>
+      <span class="mini-btns">
+        <button class="mini-btn" id="expandAll" type="button">⊞ Развернуть все</button>
+        <button class="mini-btn" id="collapseAll" type="button">⊟ Свернуть все</button>
+      </span>
+    </div>
+  </div>
+</div>
+<main class="wrap" id="main" tabindex="-1">
+  <div class="strips"><div class="info-strip qwen-strip"><span class="ic" aria-hidden="true">🤖</span><span><b>О разделе:</b> шаблоны собраны по официальным гайдам Alibaba: шестиблочный фреймворк <code>#Context# → #Response#</code>, режимы мышления <code>/think</code> и <code>/no_think</code>, контекст до 1M токенов, JSON-режимы для API. Промпты работают в Qwen Chat (chat.qwen.ai), Qwen-Image, Qwen-Image-Edit и Qwen-Coder.</span></div></div>
+  <a class="page-link-banner" href="photo.html"><span class="plb-ic" aria-hidden="true">📸</span><span><b>Переделка фото нейросетью</b> — 54 промпта для Qwen-Image-Edit и других редакторов: стили, виртуальные фотосессии, реставрация снимков.</span><span class="plb-go">Открыть →</span></a>
+  <div class="grid" id="grid" data-prerendered="1">
+<div class='section-head'><h2>🤖 Qwen Chat: формулы и режимы</h2><div class='line' aria-hidden='true'></div></div>
+<article class='card' id='p97' data-id='p97'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p97'><div class='head-main'><div class='card-top'><h3>Официальная формула Qwen (6 блоков)</h3><div class='badges'><span class='badge qwen'>Qwen Chat / API</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Документированный Alibaba фреймворк: шесть именованных блоков с #-разделителями. Работает и в chat.qwen.ai, и через API.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p97'><div class='prompt-wrap'><pre class='prompt'>#Context#
+<span class="ph">[ситуация и данные, которые модель не может угадать: предыстория, ограничения]</span>
+
+#Objective#
+<span class="ph">[одна задача в повелительной форме: что именно сделать]</span>
+
+#Style#
+<span class="ph">[стиль изложения: деловая статья / разговорный пост / научный обзор]</span>
+
+#Tone#
+<span class="ph">[тональность: формальная / дружелюбная / уверенная / поддерживающая]</span>
+
+#Audience#
+<span class="ph">[кто читает результат: что уже знает, чего ожидает]</span>
+
+#Response#
+<span class="ph">[точный формат ответа: структура, объём, таблица/список/текст]</span></pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Alibaba оговаривает: не каждой задаче нужны все шесть блоков — адаптируйте под задачу. Блоки данных внутри промпта отделяйте редкими разделителями: <b>###, === или >>></b>. Это прямой аналог фреймворка CO-STAR.</div><div class='tags'><span class='tag'>#qwen</span><span class='tag'>#формула</span><span class='tag'>#co-star</span><span class='tag'>#официальный гайд</span></div></div></article>
+<article class='card' id='p98' data-id='p98'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p98'><div class='head-main'><div class='card-top'><h3>Режимы мышления: /think и /no_think</h3><div class='badges'><span class='badge qwen'>Qwen Chat / API</span><span class='dspill note' title='Ключи /think и /no_think специфичны для Qwen. Аналог в DeepSeek: переключатель DeepThink (R1) в чате или выбор модели в API — deepseek-reasoner / deepseek-chat'>DeepSeek: аналог</span></div></div><p class='desc'>Гибридные модели Qwen умеют «думать» перед ответом. Включайте режим для сложных задач и выключайте для быстрых.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p98'><div class='prompt-wrap'><pre class='prompt'>Для сложных задач (анализ, расчёты, архитектура, планирование):
+/think
+<span class="ph">[задача]</span>
+
+Для простых задач (перевод, переформулировка, короткий ответ):
+/no_think
+<span class="ph">[задача]</span></pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Через API переключатель — параметр <b>enable_thinking: true/false</b> (в OpenAI-совместимых SDK передаётся внутри extra_body), а рассуждения модели возвращаются в отдельном поле <b>reasoning_content</b>. В Qwen Chat выбор режима (auto / thinking / fast) есть прямо в интерфейсе.</div><div class='tags'><span class='tag'>#qwen</span><span class='tag'>#thinking</span><span class='tag'>#режимы</span><span class='tag'>#api</span></div></div></article>
+<article class='card' id='p99' data-id='p99'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p99'><div class='head-main'><div class='card-top'><h3>Анализ огромного документа (1M контекст)</h3><div class='badges'><span class='badge qwen'>Qwen Chat / API</span><span class='dspill note' title='Контекст DeepSeek — до 128K токенов, а не 1M: очень длинные документы разбивайте на части и подавайте последовательно с промежуточными выжимками'>DeepSeek: 128K</span></div></div><p class='desc'>Хостовые модели Qwen принимают до ~1 млн токенов — целые книги, отчёты и кодовые базы за один запрос.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p99'><div class='prompt-wrap'><pre class='prompt'>Я передаю тебе документ:
+===<span class="ph">[вставить текст или прикрепить файл]</span>===
+
+Выполни по порядку:
+1. Резюме сути в 5 предложениях;
+2. Таблица ключевых фактов, цифр и выводов;
+3. Найди противоречия, слабые аргументы и пробелы в материале;
+4. Ответь на мои вопросы по тексту: <span class="ph">[вопросы]</span>;
+5. Что стоит изучить дополнительно по этой теме.
+
+Правило: ничего не додумывай — если ответа нет в документе, прямо скажи об этом.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Для сверхдлинных документов просите отвечать по разделам с цитатами-привязками — так проще проверять, что ИИ не «поплыл».</div><div class='tags'><span class='tag'>#qwen</span><span class='tag'>#контекст</span><span class='tag'>#документы</span><span class='tag'>#анализ</span></div></div></article>
+<article class='card' id='p100' data-id='p100'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p100'><div class='head-main'><div class='card-top'><h3>Контроль языка ответа</h3><div class='badges'><span class='badge qwen'>Qwen Chat / API</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Qwen полиязычен и иногда «соскальзывает» на английский или китайский. Официальная рекомендация — вынести язык в отдельный именованный блок.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p100'><div class='prompt-wrap'><pre class='prompt'>#Language#
+Всегда отвечай на русском языке. Технические термины можно оставлять в оригинале, но при первом упоминании давай перевод в скобках.
+
+#Objective#
+<span class="ph">[ваша задача]</span>
+
+#Response#
+<span class="ph">[формат ответа]</span></pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen</span><span class='tag'>#язык</span><span class='tag'>#русский</span><span class='tag'>#локализация</span></div></div></article>
+<article class='card' id='p101' data-id='p101'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p101'><div class='head-main'><div class='card-top'><h3>Строгий JSON для интеграций</h3><div class='badges'><span class='badge qwen'>Qwen API</span><span class='dspill note' title='Надёжный JSON даёт DeepSeek-V3 (deepseek-chat) с response_format: json_object; слово «JSON» в промпте уже есть — это обязательное условие JSON-режима DeepSeek. В R1 рассуждения могут примешиваться к ответу'>DeepSeek: V3</span></div></div><p class='desc'>Структурированный вывод для скриптов, ботов и автоматизации — без лишнего текста вокруг.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p101'><div class='prompt-wrap'><pre class='prompt'>Отвечай ТОЛЬКО валидным JSON, без комментариев и markdown-обёрток.
+
+Схема: объект "result" содержит массив "items"; каждый элемент: "title" (строка), "summary" (строка до 200 знаков), "tags" (массив строк), "score" (число от 1 до 10).
+
+Задача: <span class="ph">[что проанализировать и разложить на элементы]</span>.
+Данные: ===<span class="ph">[данные]</span>===
+
+Важно: ответ должен быть JSON от первого до последнего символа.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Через API включите <b>response_format: json_object</b> (слово JSON обязательно должно встречаться и в самом промпте) или <b>json_schema</b> с strict: true — тогда схема гарантируется на уровне движка.</div><div class='tags'><span class='tag'>#qwen</span><span class='tag'>#json</span><span class='tag'>#api</span><span class='tag'>#автоматизация</span><span class='tag'>#код</span></div></div></article>
+<article class='card' id='p102' data-id='p102'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p102'><div class='head-main'><div class='card-top'><h3>Исследование темы (Deep Research)</h3><div class='badges'><span class='badge qwen'>Qwen Chat</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Глубокий разбор темы с оценкой достоверности. В Qwen Chat для этого есть режим Deep Research — промпт даёт тот же результат в обычном чате.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p102'><div class='prompt-wrap'><pre class='prompt'>Проведи исследование темы «<span class="ph">[тема]</span>».
+
+1. Разбей тему на 4–6 подвопросов и перечисли их;
+2. Ответь на каждый: данные, примеры, альтернативные точки зрения;
+3. Пометь каждый вывод уровнем достоверности: факт / вероятное суждение / гипотеза;
+4. Отдельно — что осталось спорным или непроверенным;
+5. Финал: 5 главных выводов и рекомендации, что изучить дальше.
+
+Формат: структурированный отчёт с заголовками, без воды.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen</span><span class='tag'>#research</span><span class='tag'>#исследование</span><span class='tag'>#анализ</span><span class='tag'>#достоверность</span></div></div></article>
+<article class='card' id='p103' data-id='p103'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p103'><div class='head-main'><div class='card-top'><h3>Веб-приложение одним файлом (Artifacts)</h3><div class='badges'><span class='badge qwen'>Qwen Chat</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Qwen Chat умеет сразу собирать работающие приложения (режимы Artifacts / Web Dev). Промпт для качественного результата с первого раза.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p103'><div class='prompt-wrap'><pre class='prompt'>Создай веб-приложение в одном файле: <span class="ph">[что за приложение, например «трекер привычек»]</span>.
+
+Требования:
+- HTML + CSS + JavaScript в одном файле, без внешних библиотек и CDN;
+- Функциональность: <span class="ph">[список функций по пунктам]</span>;
+- Данные сохраняются в localStorage браузера;
+- Современный минималистичный дизайн, тёмная и светлая темы, адаптив под смартфон;
+- Интерфейс полностью на русском языке;
+- Обработай пустые состояния и ошибки ввода.
+
+После кода — короткая инструкция, какие константы в начале скрипта можно настроить под себя.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen</span><span class='tag'>#artifacts</span><span class='tag'>#код</span><span class='tag'>#веб</span><span class='tag'>#приложение</span></div></div></article>
+<div class='section-head'><h2>🤖 Qwen-Image: генерация</h2><div class='line' aria-hidden='true'></div></div>
+<article class='card' id='p104' data-id='p104'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p104'><div class='head-main'><div class='card-top'><h3>Формула Qwen-Image: субъект в начале</h3><div class='badges'><span class='badge qwen'>Qwen-Image</span></div></div><p class='desc'>Архитектура MMDiT придаёт больше веса словам в начале промпта. Проверенный порядок: Субъект → Стиль → Детали → Композиция → Свет.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p104'><div class='prompt-wrap'><pre class='prompt'><span class="ph">[субъект: максимально конкретно, кто/что]</span>, <span class="ph">[стиль: editorial photography / 3D render / watercolor / flat vector]</span>, <span class="ph">[детали: текстуры, одежда, материалы]</span>, <span class="ph">[композиция: close-up / wide shot / centered / rule of thirds]</span>, <span class="ph">[освещение: golden hour / soft studio light / dramatic rim light]</span></pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Готовый пример: <b>Young woman with auburn hair in casual denim jacket, editorial photography style, natural makeup, soft focus background, golden hour lighting, high detail</b>. Параметры API: guidance_scale 5–7 для большинства задач, negative_prompt — отдельным полем («blurry, distorted, watermark»).</div><div class='tags'><span class='tag'>#qwen-image</span><span class='tag'>#формула</span><span class='tag'>#генерация</span><span class='tag'>#структура</span></div></div></article>
+<article class='card' id='p105' data-id='p105'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p105'><div class='head-main'><div class='card-top'><h3>Постер с читаемым текстом</h3><div class='badges'><span class='badge qwen'>Qwen-Image</span></div></div><p class='desc'>Киллер-фича Qwen-Image — точный рендер надписей на картинке (то, с чем остальные модели справляются хуже всего).</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p105'><div class='prompt-wrap'><pre class='prompt'>Event poster for «<span class="ph">[название события/бренда]</span>», bold headline text saying "<span class="ph">[точный текст надписи]</span>" across the top third, <span class="ph">[жанр/эстетика: art deco / modern minimal / retro 90s]</span>, <span class="ph">[цветовая палитра]</span>, textured background, sharp clean readable letterforms, professional graphic design, portrait orientation</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Точную надпись берите в кавычки и добавляйте <b>sharp text edges, legible</b>. Через API для текста поднимите guidance_scale до 6–8 и num_inference_steps до 35–45.</div><div class='tags'><span class='tag'>#qwen-image</span><span class='tag'>#текст на изображении</span><span class='tag'>#постер</span><span class='tag'>#типографика</span></div></div></article>
+<article class='card' id='p106' data-id='p106'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p106'><div class='head-main'><div class='card-top'><h3>Фотореалистичное лицо без «пластика»</h3><div class='badges'><span class='badge qwen'>Qwen-Image</span></div></div><p class='desc'>Свежие версии Qwen-Image специально улучшали естественность кожи и возрастные черты — используйте это.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p106'><div class='prompt-wrap'><pre class='prompt'>Professional headshot of <span class="ph">[возраст]</span> <span class="ph">[who: мужчина-врач / женщина-предприниматель / пожилой рыбак]</span>, <span class="ph">[одежда]</span>, natural skin texture with visible pores, realistic age-appropriate features, no airbrushed look, <span class="ph">[фон: neutral gray / офисное боке / улица]</span>, soft studio lighting, 85mm lens, shallow depth of field, candid natural expression</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Против «нейросетевого лоска» работают: <b>no airbrushed look, visible pores, candid, imperfect skin, documentary style</b>.</div><div class='tags'><span class='tag'>#qwen-image</span><span class='tag'>#портрет</span><span class='tag'>#фотореализм</span><span class='tag'>#лицо</span></div></div></article>
+<article class='card' id='p107' data-id='p107'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p107'><div class='head-main'><div class='card-top'><h3>Надписи на любом языке (RU / ZH / EN)</h3><div class='badges'><span class='badge qwen'>Qwen-Image</span></div></div><p class='desc'>Qwen-Image лучше большинства моделей рендерит нелатинские шрифты — кириллицу и особенно сложные китайские иероглифы.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p107'><div class='prompt-wrap'><pre class='prompt'><span class="ph">[носитель дизайна: вывеска кофейни / обложка книги / меню на меловой доске / упаковка чая]</span> with text "<span class="ph">[точный текст на русском / китайском / английском]</span>", correct legible letterforms, <span class="ph">[стиль надписи: modern sans-serif / hand-lettered / elegant calligraphy]</span>, <span class="ph">[окружение и свет]</span>, sharp text edges, professional design</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Для иероглифов добавляйте <b>Chinese calligraphy, accurate strokes</b>. Чем короче надпись — тем точнее рендер; длинные абзацы лучше добавлять в графическом редакторе.</div><div class='tags'><span class='tag'>#qwen-image</span><span class='tag'>#кириллица</span><span class='tag'>#китайский</span><span class='tag'>#текст</span><span class='tag'>#мультиязычность</span></div></div></article>
+<article class='card' id='p108' data-id='p108'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p108'><div class='head-main'><div class='card-top'><h3>Единый стиль серии изображений</h3><div class='badges'><span class='badge qwen'>Qwen-Image</span></div></div><p class='desc'>Один визуальный язык для всех картинок блога, презентации или витрины магазина.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p108'><div class='prompt-wrap'><pre class='prompt'>Стилевой шаблон (неизменный для всех кадров): <span class="ph">[editorial photography, natural lighting, muted warm palette, film grain, 35mm]</span>.
+
+Кадр 1: <span class="ph">[субъект и сцена]</span>.
+Кадр 2: <span class="ph">[субъект и сцена]</span>.
+Кадр 3: <span class="ph">[субъект и сцена]</span>.
+
+Генерируй каждый кадр строго в стилевом шаблоне.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Через API: зафиксируйте один <b>seed</b> и приписывайте стилевой шаблон к каждому промпту — seed + шаблон дают согласованные свет и цвет во всей серии.</div><div class='tags'><span class='tag'>#qwen-image</span><span class='tag'>#серия</span><span class='tag'>#стиль</span><span class='tag'>#seed</span><span class='tag'>#консистентность</span></div></div></article>
+<div class='section-head'><h2>🤖 Qwen-Image-Edit: редактирование</h2><div class='line' aria-hidden='true'></div></div>
+<article class='card' id='p109' data-id='p109'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p109'><div class='head-main'><div class='card-top'><h3>Точечное изменение объекта на фото</h3><div class='badges'><span class='badge qwen'>Qwen-Image-Edit</span></div></div><p class='desc'>Изменить деталь, не перерисовывая весь кадр: цвет, предметы, лишние объекты.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p109'><div class='prompt-wrap'><pre class='prompt'>Измени на этой фотографии <span class="ph">[что именно: цвет рубашки на бордовый / убери прохожих на заднем плане / добавь чашку кофе на стол]</span>. Всё остальное сохрани без изменений: композицию, освещение, лицо, фон. Фотореалистичный результат, без видимых следов редактирования.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Формулировка «всё остальное сохрани без изменений» критична — без неё модель любит перерисовать весь кадр. Для API: передавайте исходное изображение + текстовую инструкцию.</div><div class='tags'><span class='tag'>#qwen-image-edit</span><span class='tag'>#ретушь</span><span class='tag'>#правка</span><span class='tag'>#фото</span></div></div></article>
+<article class='card' id='p110' data-id='p110'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p110'><div class='head-main'><div class='card-top'><h3>Перенос стиля (style transfer)</h3><div class='badges'><span class='badge qwen'>Qwen-Image-Edit</span></div></div><p class='desc'>Превратить фото в акварель, аниме или киберпанк, сохранив композицию и узнаваемость.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p110'><div class='prompt-wrap'><pre class='prompt'>Перерисуй это изображение в стиле <span class="ph">[акварель / аниме Studio Ghibli / киберпанк-иллюстрация / масляная живопись / пиксель-арт]</span>, сохранив <span class="ph">[что важно: позу и черты лица / композицию и расположение объектов / узнаваемость бренда]</span>. Уровень детализации — <span class="ph">[высокий / плакатно-упрощённый]</span>.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen-image-edit</span><span class='tag'>#стиль</span><span class='tag'>#арт</span><span class='tag'>#трансформация</span></div></div></article>
+<article class='card' id='p111' data-id='p111'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p111'><div class='head-main'><div class='card-top'><h3>Замена текста на изображении</h3><div class='badges'><span class='badge qwen'>Qwen-Image-Edit</span></div></div><p class='desc'>Поменять надпись на вывеске, этикетке или баннере — с сохранением шрифта и освещения.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p111'><div class='prompt-wrap'><pre class='prompt'>Замени текст "<span class="ph">[старая надпись]</span>" на "<span class="ph">[новая надпись]</span>" на этом изображении. Сохрани тот же шрифт, кегль, цвет, наклон и положение букв, а также тени и освещение вокруг надписи. Больше ничего не меняй.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen-image-edit</span><span class='tag'>#текст</span><span class='tag'>#вывеска</span><span class='tag'>#замена</span></div></div></article>
+<article class='card' id='p112' data-id='p112'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p112'><div class='head-main'><div class='card-top'><h3>Персонаж в новых сценах</h3><div class='badges'><span class='badge qwen'>Qwen-Image-Edit</span></div></div><p class='desc'>Тот же герой в других обстоятельствах — для комиксов, сторис и брендовых маскотов.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p112'><div class='prompt-wrap'><pre class='prompt'>Используя персонажа с этого изображения, создай новую сцену: <span class="ph">[персонаж]</span> <span class="ph">[действие]</span> в <span class="ph">[локация]</span>, <span class="ph">[время суток и освещение]</span>. Строго сохрани лицо, причёску, пропорции тела и стиль одежды. Фотореалистично / в той же технике, что и оригинал.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Для серии сцен держите одно опорное изображение персонажа и меняйте только блок «сцена» — согласованность будет выше.</div><div class='tags'><span class='tag'>#qwen-image-edit</span><span class='tag'>#персонаж</span><span class='tag'>#серия</span><span class='tag'>#консистентность</span></div></div></article>
+<div class='section-head'><h2>🤖 Qwen-Coder: код</h2><div class='line' aria-hidden='true'></div></div>
+<article class='card' id='p113' data-id='p113'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p113'><div class='head-main'><div class='card-top'><h3>Фича: код + тесты + обоснование</h3><div class='badges'><span class='badge qwen'>Qwen-Coder / любая LLM</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Разработка по-взрослому: код по конвенциям проекта, unit-тесты с краевыми случаями и объяснение решений.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p113'><div class='prompt-wrap'><pre class='prompt'>Действуй как senior <span class="ph">[язык/стек]</span>-разработчик.
+
+Задача: реализовать <span class="ph">[функция/фича]</span> в <span class="ph">[проект/файл]</span>.
+Контекст: <span class="ph">[стек, соглашения проекта, ограничения, как устроен соседний код]</span>.
+
+Выдай по порядку:
+1. Код по конвенциям проекта (<span class="ph">[именование, стиль, структура]</span>);
+2. Unit-тесты: основные случаи + минимум 3 краевых;
+3. Обоснование архитектурных решений: почему так и какие были альтернативы;
+4. Чек-лист: что обновить в зависимых файлах и что проверить вручную.
+
+Не переписывай код, не относящийся к задаче. Если ТЗ допускает двоякое толкование — сначала задай уточняющие вопросы.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Qwen3-Coder создан для агентной работы с целым репозиторием (контекст 256K токенов, расширяется до 1M через YaRN): в Qwen Code CLI дайте ему доступ к проекту и описывайте задачу на уровне цели — он сам найдёт нужные файлы.</div><div class='tags'><span class='tag'>#qwen-coder</span><span class='tag'>#код</span><span class='tag'>#тесты</span><span class='tag'>#разработка</span></div></div></article>
+<article class='card' id='p114' data-id='p114'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p114'><div class='head-main'><div class='card-top'><h3>Поиск корневой причины бага</h3><div class='badges'><span class='badge qwen'>Qwen-Coder / любая LLM</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Диагностика от симптома к первопричине: минимальный фикс + регрессионный тест.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p114'><div class='prompt-wrap'><pre class='prompt'>Найди причину бага и исправь её.
+
+Симптом: <span class="ph">[что происходит: ошибка, стектрейс, неожиданное поведение]</span>.
+Ожидаемое поведение: <span class="ph">[как должно быть]</span>.
+Когда появилось: <span class="ph">[после какого изменения, если известно]</span>.
+Код: ===<span class="ph">[вставить код / фрагменты файлов]</span>===
+
+Порядок работы:
+1. Проследи путь данных от входа до места падения;
+2. Назови КОРНЕВУЮ причину, а не симптом;
+3. Минимальный фикс — ничего постороннего не рефакторь;
+4. Регрессионный тест: падает на старом коде, проходит на новом;
+5. Где ещё в кодовой базе может быть такая же проблема.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen-coder</span><span class='tag'>#баг</span><span class='tag'>#отладка</span><span class='tag'>#тесты</span></div></div></article>
+<article class='card' id='p115' data-id='p115'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p115'><div class='head-main'><div class='card-top'><h3>Код-ревью с приоритетами</h3><div class='badges'><span class='badge qwen'>Qwen-Coder / любая LLM</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Структурированный отчёт по серьёзности: баги, безопасность, производительность, читаемость.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p115'><div class='prompt-wrap'><pre class='prompt'>Проведи код-ревью:
+===<span class="ph">[код]</span>===
+
+Контекст: <span class="ph">[что это за код, где запускается, требования к надёжности]</span>.
+
+Формат отчёта — замечания по категориям, каждое с важностью (критично / важно / мелочь):
+1. Баги и необработанные краевые случаи;
+2. Безопасность: инъекции, утечки данных, небезопасные зависимости;
+3. Производительность: сложность алгоритмов, память, лишние запросы;
+4. Читаемость и сопровождаемость.
+
+Для каждого замечания: место (функция/строка), в чём проблема, как исправить — с примером кода.
+В конце: общая оценка и топ-3 приоритетных правок. Стиль, который проверяет линтер, не комментируй.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen-coder</span><span class='tag'>#ревью</span><span class='tag'>#безопасность</span><span class='tag'>#качество</span></div></div></article>
+<article class='card' id='p116' data-id='p116'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p116'><div class='head-main'><div class='card-top'><h3>Безопасный рефакторинг</h3><div class='badges'><span class='badge qwen'>Qwen-Coder / любая LLM</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Поведение не меняется: сначала характеристические тесты, потом маленькие шаги с подтверждениями.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p116'><div class='prompt-wrap'><pre class='prompt'>Отрефактори код:
+===<span class="ph">[код]</span>===
+
+Цель: <span class="ph">[улучшить читаемость / убрать дублирование / разбить класс-монолит / подготовить к расширению]</span>.
+Ограничение: внешнее API и наблюдаемое поведение не меняются.
+
+Порядок:
+1. Характеристические тесты, фиксирующие ТЕКУЩЕЕ поведение (включая его странности);
+2. План рефакторинга: маленькие шаги, после каждого все тесты проходят;
+3. Выполняй по одному шагу за раз, показывая код после каждого;
+4. Финал: итоговая версия и что улучшилось (дублирование, связность, размер функций).
+
+Шаг 1 и план выдай сразу, дальнейшие шаги — по одному, дожидаясь моего подтверждения.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen-coder</span><span class='tag'>#рефакторинг</span><span class='tag'>#тесты</span><span class='tag'>#пошагово</span></div></div></article>
+<article class='card' id='p117' data-id='p117'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p117'><div class='head-main'><div class='card-top'><h3>Объяснение кода для новичка</h3><div class='badges'><span class='badge qwen'>Qwen-Coder / любая LLM</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Разбор чужого кода по полочкам: от назначения до вопросов для самопроверки.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p117'><div class='prompt-wrap'><pre class='prompt'>Объясни этот код junior-разработчику, который видит его впервые:
+===<span class="ph">[код]</span>===
+
+1. Какую задачу решает — 2 предложения без жаргона;
+2. Архитектура: основные части и как они взаимодействуют (текстовая схема со стрелками);
+3. Пошаговый разбор: что происходит при типичном вызове;
+4. Неочевидные места: почему написано именно так, какие грабли заложены;
+5. 3 вопроса для самопроверки понимания (ответы — в конце).
+
+Сложные концепции объясняй через аналогии из жизни.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen-coder</span><span class='tag'>#обучение</span><span class='tag'>#объяснение</span><span class='tag'>#junior</span></div></div></article>
+<article class='card' id='p118' data-id='p118'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p118'><div class='head-main'><div class='card-top'><h3>Миграция кода и апгрейд стека</h3><div class='badges'><span class='badge qwen'>Qwen-Coder / любая LLM</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Переезд на новую версию языка или фреймворка — поэтапно, от низкого риска к высокому.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p118'><div class='prompt-wrap'><pre class='prompt'>Спланируй и начни миграцию: <span class="ph">[откуда → куда: Python 2→3 / JS→TypeScript / Vue 2→3 / старый фреймворк → новый]</span>.
+
+Код: ===<span class="ph">[код или структура файлов]</span>===
+Зависимости: <span class="ph">[список с версиями]</span>.
+
+1. Список breaking changes, которые задевают именно наш код;
+2. План миграции по шагам — от наименее рискованных к наиболее;
+3. Для каждого шага: изменённый код + чем проверить;
+4. Таблица зависимостей: что обновляется, что заменяется аналогами, что блокирует миграцию.
+
+Выполни только шаг 1 и остановись — жди подтверждения перед следующим.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen-coder</span><span class='tag'>#миграция</span><span class='tag'>#typescript</span><span class='tag'>#апгрейд</span></div></div></article>
+<article class='card' id='p119' data-id='p119'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p119'><div class='head-main'><div class='card-top'><h3>SQL-запрос из обычного языка</h3><div class='badges'><span class='badge qwen'>Qwen-Coder / любая LLM</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Запрос к базе по описанию задачи: с пояснениями, индексами и примером результата.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p119'><div class='prompt-wrap'><pre class='prompt'>Напиши SQL-запрос (<span class="ph">[СУБД: PostgreSQL / MySQL / ClickHouse]</span>) для задачи: <span class="ph">[что нужно получить — простыми словами]</span>.
+
+Схема таблиц:
+===<span class="ph">[таблицы, колонки, типы, связи]</span>===
+Объём данных: <span class="ph">[примерные размеры таблиц — влияет на оптимизацию]</span>.
+
+Выдай:
+1. Запрос с комментариями к каждой логической части;
+2. Какие индексы нужны для быстрого выполнения на больших данных;
+3. Пример результата таблицей на 2–3 строках;
+4. Краевые случаи: NULL, дубликаты, пустые периоды — как обработаны.
+
+Если задача допускает разные трактовки — перечисли допущения, которые ты сделал.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#qwen-coder</span><span class='tag'>#sql</span><span class='tag'>#база данных</span><span class='tag'>#запросы</span></div></div></article>
+  </div>
+  <div class="empty" id="empty">
+    <div class="big" aria-hidden="true">🔍</div>
+    <p>Ничего не найдено. Попробуйте другой запрос.</p>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="qwen.html" aria-current="page">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
+    <details class="sources"><summary><h2>📖 Источники</h2><span class="src-hint">показать список</span></summary><div class="sources-in"><p class="note">Шаблоны основаны на официальных гайдах Alibaba и документированных практиках. Проверено поиском: ноябрь 2026.</p><ul>
+            <li><a href="https://www.alibabacloud.com/help/en/model-studio/prompt-engineering-guide" target="_blank" rel="noopener">Alibaba Cloud Model Studio — Text-to-text prompt guide</a><span class="what">официальный гайд: шестиблочный фреймворк #Context#…#Response#, разделители, примеры вывода</span></li>
+            <li><a href="https://docs.qwencloud.com/developer-guides/accuracy-tuning/text-generation.md" target="_blank" rel="noopener">QwenCloud Docs — Text-to-text (Accuracy tuning)</a><span class="what">тот же фреймворк + управление языком ответа, prompt chaining vs CoT</span></li>
+            <li><a href="https://prompt-architects.com/blog/315-how-to-prompt-qwen-models" target="_blank" rel="noopener">Prompt Architects — How to Prompt Qwen Models</a><span class="what">переключатели thinking-режима (/think, /no_think, enable_thinking), sampling-настройки, JSON-режимы</span></li>
+            <li><a href="https://qwen.ai/blog?id=qwen3.5" target="_blank" rel="noopener">Qwen Blog — Qwen3.5: Towards Native Multimodal Agents</a><span class="what">режимы auto / thinking / fast, мультимодальные возможности</span></li>
+            <li><a href="https://fal.ai/learn/devs/qwen-image-2512-text-to-image-prompt-guide" target="_blank" rel="noopener">fal.ai — Qwen Image 2512 Prompt Guide</a><span class="what">порядок «субъект → стиль → детали → композиция → свет», guidance_scale, шаги инференса, рендер текста</span></li>
+            <li><a href="https://www.reddit.com/r/StableDiffusion/comments/1n1n81o/qwenimageedit_prompt_guide_the_complete_playbook/" target="_blank" rel="noopener">r/StableDiffusion — Qwen-Image-Edit Prompt Guide: The Complete Playbook</a><span class="what">замена текста, правка объектов, перенос стиля, контроль персонажа</span></li>
+            <li><a href="https://www.weshop.ai/solutions/models/qwen-image-2-1-ai-image-generation-and-editing-guide" target="_blank" rel="noopener">WeShop — Qwen-Image 2.1 Generation & Editing Guide</a><span class="what">структурированный промпт: Subject / Action / Environment</span></li>
+            <li><a href="https://qwen.ai/blog?id=qwen3-coder" target="_blank" rel="noopener">Qwen Blog — Qwen3-Coder: Agentic Coding</a><span class="what">агентное программирование, контекст 256K с расширением до 1M (YaRN), работа с целыми репозиториями</span></li>
+            <li><a href="https://github.com/QwenLM/Qwen3-Coder" target="_blank" rel="noopener">GitHub — QwenLM/Qwen3-Coder</a><span class="what">официальный репозиторий: возможности модели, tool calling, Qwen Code CLI</span></li>
+          </ul></div></details>
+    <b>🤖 Промпты для Qwen</b> — раздел <a href="index.html">базы промптов для ИИ</a>.<br>Модели быстро обновляются — сверяйтесь с официальной документацией Alibaba Cloud.
+  </div>
+</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<button id="toTop" title="Наверх" aria-label="Наверх">↑</button>
+<noscript><style>
+.controls{display:none!important}
+.card-body{display:flex!important}
+.chev,.copy-btn,#toTop{display:none!important}
+pre.prompt{max-height:none!important;padding-top:14px!important}
+.card-head{cursor:default}
+</style></noscript>
+<script>
+const PAGE = {"section": "qwen", "tabs": false, "cats": {"all": {"label": "Все промпты", "icon": "📚"}, "qwen": {"label": "Qwen", "icon": "🤖"}}, "catOrder": ["all", "qwen"]};
+const PROMPTS = [{"id": "p97", "section": "qwen", "cat": "qwen", "sub": "Qwen Chat: формулы и режимы", "title": "Официальная формула Qwen (6 блоков)", "model": "qwen", "modelLabel": "Qwen Chat / API", "desc": "Документированный Alibaba фреймворк: шесть именованных блоков с #-разделителями. Работает и в chat.qwen.ai, и через API.", "prompt": "#Context#\n[ситуация и данные, которые модель не может угадать: предыстория, ограничения]\n\n#Objective#\n[одна задача в повелительной форме: что именно сделать]\n\n#Style#\n[стиль изложения: деловая статья / разговорный пост / научный обзор]\n\n#Tone#\n[тональность: формальная / дружелюбная / уверенная / поддерживающая]\n\n#Audience#\n[кто читает результат: что уже знает, чего ожидает]\n\n#Response#\n[точный формат ответа: структура, объём, таблица/список/текст]", "tip": "Alibaba оговаривает: не каждой задаче нужны все шесть блоков — адаптируйте под задачу. Блоки данных внутри промпта отделяйте редкими разделителями: <b>###, === или >>><\/b>. Это прямой аналог фреймворка CO-STAR.", "tags": ["qwen", "формула", "co-star", "официальный гайд"], "qw": null, "ds": "ok"}, {"id": "p98", "section": "qwen", "cat": "qwen", "sub": "Qwen Chat: формулы и режимы", "title": "Режимы мышления: /think и /no_think", "model": "qwen", "modelLabel": "Qwen Chat / API", "desc": "Гибридные модели Qwen умеют «думать» перед ответом. Включайте режим для сложных задач и выключайте для быстрых.", "prompt": "Для сложных задач (анализ, расчёты, архитектура, планирование):\n/think\n[задача]\n\nДля простых задач (перевод, переформулировка, короткий ответ):\n/no_think\n[задача]", "tip": "Через API переключатель — параметр <b>enable_thinking: true/false<\/b> (в OpenAI-совместимых SDK передаётся внутри extra_body), а рассуждения модели возвращаются в отдельном поле <b>reasoning_content<\/b>. В Qwen Chat выбор режима (auto / thinking / fast) есть прямо в интерфейсе.", "tags": ["qwen", "thinking", "режимы", "api"], "qw": null, "ds": "think"}, {"id": "p99", "section": "qwen", "cat": "qwen", "sub": "Qwen Chat: формулы и режимы", "title": "Анализ огромного документа (1M контекст)", "model": "qwen", "modelLabel": "Qwen Chat / API", "desc": "Хостовые модели Qwen принимают до ~1 млн токенов — целые книги, отчёты и кодовые базы за один запрос.", "prompt": "Я передаю тебе документ:\n===[вставить текст или прикрепить файл]===\n\nВыполни по порядку:\n1. Резюме сути в 5 предложениях;\n2. Таблица ключевых фактов, цифр и выводов;\n3. Найди противоречия, слабые аргументы и пробелы в материале;\n4. Ответь на мои вопросы по тексту: [вопросы];\n5. Что стоит изучить дополнительно по этой теме.\n\nПравило: ничего не додумывай — если ответа нет в документе, прямо скажи об этом.", "tip": "Для сверхдлинных документов просите отвечать по разделам с цитатами-привязками — так проще проверять, что ИИ не «поплыл».", "tags": ["qwen", "контекст", "документы", "анализ"], "qw": null, "ds": "ctx"}, {"id": "p100", "section": "qwen", "cat": "qwen", "sub": "Qwen Chat: формулы и режимы", "title": "Контроль языка ответа", "model": "qwen", "modelLabel": "Qwen Chat / API", "desc": "Qwen полиязычен и иногда «соскальзывает» на английский или китайский. Официальная рекомендация — вынести язык в отдельный именованный блок.", "prompt": "#Language#\nВсегда отвечай на русском языке. Технические термины можно оставлять в оригинале, но при первом упоминании давай перевод в скобках.\n\n#Objective#\n[ваша задача]\n\n#Response#\n[формат ответа]", "tip": null, "tags": ["qwen", "язык", "русский", "локализация"], "qw": null, "ds": "ok"}, {"id": "p101", "section": "qwen", "cat": "qwen", "sub": "Qwen Chat: формулы и режимы", "title": "Строгий JSON для интеграций", "model": "qwen", "modelLabel": "Qwen API", "desc": "Структурированный вывод для скриптов, ботов и автоматизации — без лишнего текста вокруг.", "prompt": "Отвечай ТОЛЬКО валидным JSON, без комментариев и markdown-обёрток.\n\nСхема: объект \"result\" содержит массив \"items\"; каждый элемент: \"title\" (строка), \"summary\" (строка до 200 знаков), \"tags\" (массив строк), \"score\" (число от 1 до 10).\n\nЗадача: [что проанализировать и разложить на элементы].\nДанные: ===[данные]===\n\nВажно: ответ должен быть JSON от первого до последнего символа.", "tip": "Через API включите <b>response_format: json_object<\/b> (слово JSON обязательно должно встречаться и в самом промпте) или <b>json_schema<\/b> с strict: true — тогда схема гарантируется на уровне движка.", "tags": ["qwen", "json", "api", "автоматизация", "код"], "qw": null, "ds": "json"}, {"id": "p102", "section": "qwen", "cat": "qwen", "sub": "Qwen Chat: формулы и режимы", "title": "Исследование темы (Deep Research)", "model": "qwen", "modelLabel": "Qwen Chat", "desc": "Глубокий разбор темы с оценкой достоверности. В Qwen Chat для этого есть режим Deep Research — промпт даёт тот же результат в обычном чате.", "prompt": "Проведи исследование темы «[тема]».\n\n1. Разбей тему на 4–6 подвопросов и перечисли их;\n2. Ответь на каждый: данные, примеры, альтернативные точки зрения;\n3. Пометь каждый вывод уровнем достоверности: факт / вероятное суждение / гипотеза;\n4. Отдельно — что осталось спорным или непроверенным;\n5. Финал: 5 главных выводов и рекомендации, что изучить дальше.\n\nФормат: структурированный отчёт с заголовками, без воды.", "tip": null, "tags": ["qwen", "research", "исследование", "анализ", "достоверность"], "qw": null, "ds": "ok"}, {"id": "p103", "section": "qwen", "cat": "qwen", "sub": "Qwen Chat: формулы и режимы", "title": "Веб-приложение одним файлом (Artifacts)", "model": "qwen", "modelLabel": "Qwen Chat", "desc": "Qwen Chat умеет сразу собирать работающие приложения (режимы Artifacts / Web Dev). Промпт для качественного результата с первого раза.", "prompt": "Создай веб-приложение в одном файле: [что за приложение, например «трекер привычек»].\n\nТребования:\n- HTML + CSS + JavaScript в одном файле, без внешних библиотек и CDN;\n- Функциональность: [список функций по пунктам];\n- Данные сохраняются в localStorage браузера;\n- Современный минималистичный дизайн, тёмная и светлая темы, адаптив под смартфон;\n- Интерфейс полностью на русском языке;\n- Обработай пустые состояния и ошибки ввода.\n\nПосле кода — короткая инструкция, какие константы в начале скрипта можно настроить под себя.", "tip": null, "tags": ["qwen", "artifacts", "код", "веб", "приложение"], "qw": null, "ds": "ok"}, {"id": "p104", "section": "qwen", "cat": "qwen", "sub": "Qwen-Image: генерация", "title": "Формула Qwen-Image: субъект в начале", "model": "qwen", "modelLabel": "Qwen-Image", "desc": "Архитектура MMDiT придаёт больше веса словам в начале промпта. Проверенный порядок: Субъект → Стиль → Детали → Композиция → Свет.", "prompt": "[субъект: максимально конкретно, кто/что], [стиль: editorial photography / 3D render / watercolor / flat vector], [детали: текстуры, одежда, материалы], [композиция: close-up / wide shot / centered / rule of thirds], [освещение: golden hour / soft studio light / dramatic rim light]", "tip": "Готовый пример: <b>Young woman with auburn hair in casual denim jacket, editorial photography style, natural makeup, soft focus background, golden hour lighting, high detail<\/b>. Параметры API: guidance_scale 5–7 для большинства задач, negative_prompt — отдельным полем («blurry, distorted, watermark»).", "tags": ["qwen-image", "формула", "генерация", "структура"], "qw": null, "ds": null}, {"id": "p105", "section": "qwen", "cat": "qwen", "sub": "Qwen-Image: генерация", "title": "Постер с читаемым текстом", "model": "qwen", "modelLabel": "Qwen-Image", "desc": "Киллер-фича Qwen-Image — точный рендер надписей на картинке (то, с чем остальные модели справляются хуже всего).", "prompt": "Event poster for «[название события/бренда]», bold headline text saying \"[точный текст надписи]\" across the top third, [жанр/эстетика: art deco / modern minimal / retro 90s], [цветовая палитра], textured background, sharp clean readable letterforms, professional graphic design, portrait orientation", "tip": "Точную надпись берите в кавычки и добавляйте <b>sharp text edges, legible<\/b>. Через API для текста поднимите guidance_scale до 6–8 и num_inference_steps до 35–45.", "tags": ["qwen-image", "текст на изображении", "постер", "типографика"], "qw": null, "ds": null}, {"id": "p106", "section": "qwen", "cat": "qwen", "sub": "Qwen-Image: генерация", "title": "Фотореалистичное лицо без «пластика»", "model": "qwen", "modelLabel": "Qwen-Image", "desc": "Свежие версии Qwen-Image специально улучшали естественность кожи и возрастные черты — используйте это.", "prompt": "Professional headshot of [возраст] [who: мужчина-врач / женщина-предприниматель / пожилой рыбак], [одежда], natural skin texture with visible pores, realistic age-appropriate features, no airbrushed look, [фон: neutral gray / офисное боке / улица], soft studio lighting, 85mm lens, shallow depth of field, candid natural expression", "tip": "Против «нейросетевого лоска» работают: <b>no airbrushed look, visible pores, candid, imperfect skin, documentary style<\/b>.", "tags": ["qwen-image", "портрет", "фотореализм", "лицо"], "qw": null, "ds": null}, {"id": "p107", "section": "qwen", "cat": "qwen", "sub": "Qwen-Image: генерация", "title": "Надписи на любом языке (RU / ZH / EN)", "model": "qwen", "modelLabel": "Qwen-Image", "desc": "Qwen-Image лучше большинства моделей рендерит нелатинские шрифты — кириллицу и особенно сложные китайские иероглифы.", "prompt": "[носитель дизайна: вывеска кофейни / обложка книги / меню на меловой доске / упаковка чая] with text \"[точный текст на русском / китайском / английском]\", correct legible letterforms, [стиль надписи: modern sans-serif / hand-lettered / elegant calligraphy], [окружение и свет], sharp text edges, professional design", "tip": "Для иероглифов добавляйте <b>Chinese calligraphy, accurate strokes<\/b>. Чем короче надпись — тем точнее рендер; длинные абзацы лучше добавлять в графическом редакторе.", "tags": ["qwen-image", "кириллица", "китайский", "текст", "мультиязычность"], "qw": null, "ds": null}, {"id": "p108", "section": "qwen", "cat": "qwen", "sub": "Qwen-Image: генерация", "title": "Единый стиль серии изображений", "model": "qwen", "modelLabel": "Qwen-Image", "desc": "Один визуальный язык для всех картинок блога, презентации или витрины магазина.", "prompt": "Стилевой шаблон (неизменный для всех кадров): [editorial photography, natural lighting, muted warm palette, film grain, 35mm].\n\nКадр 1: [субъект и сцена].\nКадр 2: [субъект и сцена].\nКадр 3: [субъект и сцена].\n\nГенерируй каждый кадр строго в стилевом шаблоне.", "tip": "Через API: зафиксируйте один <b>seed<\/b> и приписывайте стилевой шаблон к каждому промпту — seed + шаблон дают согласованные свет и цвет во всей серии.", "tags": ["qwen-image", "серия", "стиль", "seed", "консистентность"], "qw": null, "ds": null}, {"id": "p109", "section": "qwen", "cat": "qwen", "sub": "Qwen-Image-Edit: редактирование", "title": "Точечное изменение объекта на фото", "model": "qwen", "modelLabel": "Qwen-Image-Edit", "desc": "Изменить деталь, не перерисовывая весь кадр: цвет, предметы, лишние объекты.", "prompt": "Измени на этой фотографии [что именно: цвет рубашки на бордовый / убери прохожих на заднем плане / добавь чашку кофе на стол]. Всё остальное сохрани без изменений: композицию, освещение, лицо, фон. Фотореалистичный результат, без видимых следов редактирования.", "tip": "Формулировка «всё остальное сохрани без изменений» критична — без неё модель любит перерисовать весь кадр. Для API: передавайте исходное изображение + текстовую инструкцию.", "tags": ["qwen-image-edit", "ретушь", "правка", "фото"], "qw": null, "ds": null}, {"id": "p110", "section": "qwen", "cat": "qwen", "sub": "Qwen-Image-Edit: редактирование", "title": "Перенос стиля (style transfer)", "model": "qwen", "modelLabel": "Qwen-Image-Edit", "desc": "Превратить фото в акварель, аниме или киберпанк, сохранив композицию и узнаваемость.", "prompt": "Перерисуй это изображение в стиле [акварель / аниме Studio Ghibli / киберпанк-иллюстрация / масляная живопись / пиксель-арт], сохранив [что важно: позу и черты лица / композицию и расположение объектов / узнаваемость бренда]. Уровень детализации — [высокий / плакатно-упрощённый].", "tip": null, "tags": ["qwen-image-edit", "стиль", "арт", "трансформация"], "qw": null, "ds": null}, {"id": "p111", "section": "qwen", "cat": "qwen", "sub": "Qwen-Image-Edit: редактирование", "title": "Замена текста на изображении", "model": "qwen", "modelLabel": "Qwen-Image-Edit", "desc": "Поменять надпись на вывеске, этикетке или баннере — с сохранением шрифта и освещения.", "prompt": "Замени текст \"[старая надпись]\" на \"[новая надпись]\" на этом изображении. Сохрани тот же шрифт, кегль, цвет, наклон и положение букв, а также тени и освещение вокруг надписи. Больше ничего не меняй.", "tip": null, "tags": ["qwen-image-edit", "текст", "вывеска", "замена"], "qw": null, "ds": null}, {"id": "p112", "section": "qwen", "cat": "qwen", "sub": "Qwen-Image-Edit: редактирование", "title": "Персонаж в новых сценах", "model": "qwen", "modelLabel": "Qwen-Image-Edit", "desc": "Тот же герой в других обстоятельствах — для комиксов, сторис и брендовых маскотов.", "prompt": "Используя персонажа с этого изображения, создай новую сцену: [персонаж] [действие] в [локация], [время суток и освещение]. Строго сохрани лицо, причёску, пропорции тела и стиль одежды. Фотореалистично / в той же технике, что и оригинал.", "tip": "Для серии сцен держите одно опорное изображение персонажа и меняйте только блок «сцена» — согласованность будет выше.", "tags": ["qwen-image-edit", "персонаж", "серия", "консистентность"], "qw": null, "ds": null}, {"id": "p113", "section": "qwen", "cat": "qwen", "sub": "Qwen-Coder: код", "title": "Фича: код + тесты + обоснование", "model": "qwen", "modelLabel": "Qwen-Coder / любая LLM", "desc": "Разработка по-взрослому: код по конвенциям проекта, unit-тесты с краевыми случаями и объяснение решений.", "prompt": "Действуй как senior [язык/стек]-разработчик.\n\nЗадача: реализовать [функция/фича] в [проект/файл].\nКонтекст: [стек, соглашения проекта, ограничения, как устроен соседний код].\n\nВыдай по порядку:\n1. Код по конвенциям проекта ([именование, стиль, структура]);\n2. Unit-тесты: основные случаи + минимум 3 краевых;\n3. Обоснование архитектурных решений: почему так и какие были альтернативы;\n4. Чек-лист: что обновить в зависимых файлах и что проверить вручную.\n\nНе переписывай код, не относящийся к задаче. Если ТЗ допускает двоякое толкование — сначала задай уточняющие вопросы.", "tip": "Qwen3-Coder создан для агентной работы с целым репозиторием (контекст 256K токенов, расширяется до 1M через YaRN): в Qwen Code CLI дайте ему доступ к проекту и описывайте задачу на уровне цели — он сам найдёт нужные файлы.", "tags": ["qwen-coder", "код", "тесты", "разработка"], "qw": null, "ds": "ok"}, {"id": "p114", "section": "qwen", "cat": "qwen", "sub": "Qwen-Coder: код", "title": "Поиск корневой причины бага", "model": "qwen", "modelLabel": "Qwen-Coder / любая LLM", "desc": "Диагностика от симптома к первопричине: минимальный фикс + регрессионный тест.", "prompt": "Найди причину бага и исправь её.\n\nСимптом: [что происходит: ошибка, стектрейс, неожиданное поведение].\nОжидаемое поведение: [как должно быть].\nКогда появилось: [после какого изменения, если известно].\nКод: ===[вставить код / фрагменты файлов]===\n\nПорядок работы:\n1. Проследи путь данных от входа до места падения;\n2. Назови КОРНЕВУЮ причину, а не симптом;\n3. Минимальный фикс — ничего постороннего не рефакторь;\n4. Регрессионный тест: падает на старом коде, проходит на новом;\n5. Где ещё в кодовой базе может быть такая же проблема.", "tip": null, "tags": ["qwen-coder", "баг", "отладка", "тесты"], "qw": null, "ds": "ok"}, {"id": "p115", "section": "qwen", "cat": "qwen", "sub": "Qwen-Coder: код", "title": "Код-ревью с приоритетами", "model": "qwen", "modelLabel": "Qwen-Coder / любая LLM", "desc": "Структурированный отчёт по серьёзности: баги, безопасность, производительность, читаемость.", "prompt": "Проведи код-ревью:\n===[код]===\n\nКонтекст: [что это за код, где запускается, требования к надёжности].\n\nФормат отчёта — замечания по категориям, каждое с важностью (критично / важно / мелочь):\n1. Баги и необработанные краевые случаи;\n2. Безопасность: инъекции, утечки данных, небезопасные зависимости;\n3. Производительность: сложность алгоритмов, память, лишние запросы;\n4. Читаемость и сопровождаемость.\n\nДля каждого замечания: место (функция/строка), в чём проблема, как исправить — с примером кода.\nВ конце: общая оценка и топ-3 приоритетных правок. Стиль, который проверяет линтер, не комментируй.", "tip": null, "tags": ["qwen-coder", "ревью", "безопасность", "качество"], "qw": null, "ds": "ok"}, {"id": "p116", "section": "qwen", "cat": "qwen", "sub": "Qwen-Coder: код", "title": "Безопасный рефакторинг", "model": "qwen", "modelLabel": "Qwen-Coder / любая LLM", "desc": "Поведение не меняется: сначала характеристические тесты, потом маленькие шаги с подтверждениями.", "prompt": "Отрефактори код:\n===[код]===\n\nЦель: [улучшить читаемость / убрать дублирование / разбить класс-монолит / подготовить к расширению].\nОграничение: внешнее API и наблюдаемое поведение не меняются.\n\nПорядок:\n1. Характеристические тесты, фиксирующие ТЕКУЩЕЕ поведение (включая его странности);\n2. План рефакторинга: маленькие шаги, после каждого все тесты проходят;\n3. Выполняй по одному шагу за раз, показывая код после каждого;\n4. Финал: итоговая версия и что улучшилось (дублирование, связность, размер функций).\n\nШаг 1 и план выдай сразу, дальнейшие шаги — по одному, дожидаясь моего подтверждения.", "tip": null, "tags": ["qwen-coder", "рефакторинг", "тесты", "пошагово"], "qw": null, "ds": "ok"}, {"id": "p117", "section": "qwen", "cat": "qwen", "sub": "Qwen-Coder: код", "title": "Объяснение кода для новичка", "model": "qwen", "modelLabel": "Qwen-Coder / любая LLM", "desc": "Разбор чужого кода по полочкам: от назначения до вопросов для самопроверки.", "prompt": "Объясни этот код junior-разработчику, который видит его впервые:\n===[код]===\n\n1. Какую задачу решает — 2 предложения без жаргона;\n2. Архитектура: основные части и как они взаимодействуют (текстовая схема со стрелками);\n3. Пошаговый разбор: что происходит при типичном вызове;\n4. Неочевидные места: почему написано именно так, какие грабли заложены;\n5. 3 вопроса для самопроверки понимания (ответы — в конце).\n\nСложные концепции объясняй через аналогии из жизни.", "tip": null, "tags": ["qwen-coder", "обучение", "объяснение", "junior"], "qw": null, "ds": "ok"}, {"id": "p118", "section": "qwen", "cat": "qwen", "sub": "Qwen-Coder: код", "title": "Миграция кода и апгрейд стека", "model": "qwen", "modelLabel": "Qwen-Coder / любая LLM", "desc": "Переезд на новую версию языка или фреймворка — поэтапно, от низкого риска к высокому.", "prompt": "Спланируй и начни миграцию: [откуда → куда: Python 2→3 / JS→TypeScript / Vue 2→3 / старый фреймворк → новый].\n\nКод: ===[код или структура файлов]===\nЗависимости: [список с версиями].\n\n1. Список breaking changes, которые задевают именно наш код;\n2. План миграции по шагам — от наименее рискованных к наиболее;\n3. Для каждого шага: изменённый код + чем проверить;\n4. Таблица зависимостей: что обновляется, что заменяется аналогами, что блокирует миграцию.\n\nВыполни только шаг 1 и остановись — жди подтверждения перед следующим.", "tip": null, "tags": ["qwen-coder", "миграция", "typescript", "апгрейд"], "qw": null, "ds": "ok"}, {"id": "p119", "section": "qwen", "cat": "qwen", "sub": "Qwen-Coder: код", "title": "SQL-запрос из обычного языка", "model": "qwen", "modelLabel": "Qwen-Coder / любая LLM", "desc": "Запрос к базе по описанию задачи: с пояснениями, индексами и примером результата.", "prompt": "Напиши SQL-запрос ([СУБД: PostgreSQL / MySQL / ClickHouse]) для задачи: [что нужно получить — простыми словами].\n\nСхема таблиц:\n===[таблицы, колонки, типы, связи]===\nОбъём данных: [примерные размеры таблиц — влияет на оптимизацию].\n\nВыдай:\n1. Запрос с комментариями к каждой логической части;\n2. Какие индексы нужны для быстрого выполнения на больших данных;\n3. Пример результата таблицей на 2–3 строках;\n4. Краевые случаи: NULL, дубликаты, пустые периоды — как обработаны.\n\nЕсли задача допускает разные трактовки — перечисли допущения, которые ты сделал.", "tip": null, "tags": ["qwen-coder", "sql", "база данных", "запросы"], "qw": null, "ds": "ok"}];
+</script>
+<script>
+/* =====================================================================
+   «База промптов для ИИ» — общая логика разделов.
+   Ожидает глобальные переменные (встраиваются генератором до этого кода):
+     PAGE    = {section, tabs, cats:{key:{label,icon}}, catOrder:[...]}
+     PROMPTS = [ {id, cat, sub, title, model, modelLabel, desc, prompt,
+                  tip, tags, qw}, ... ]
+   Карточки уже отрендерены в HTML статически (для SEO и работы без JS) —
+   скрипт «оживляет» их (hydrate), а при фильтрации перерисовывает сетку.
+   ===================================================================== */
+(function(){
+"use strict";
+
+/* ---- Аналитика -------------------------------------------------------
+   Впишите номер счётчика Яндекс.Метрики и раскомментируйте ym() ниже.
+   События уже подключены: prompt_copy (копирование), empty_search
+   (поиск без результатов — готовый список тем для новых промптов).     */
+var YM_ID = 114035585; /* номер счётчика Яндекс.Метрики (совпадает со сниппетом в <body>) */
+function trackEvent(name, data){
+  try{
+    if(YM_ID && window.ym){ window.ym(YM_ID, "reachGoal", name, data || {}); }
+  }catch(e){}
+  try{
+    /* Google Analytics 4: работает, если в config.json задан ga_id и встроен gtag.js */
+    if(typeof window.gtag === "function"){ window.gtag("event", name, data || {}); }
+  }catch(e){}
+}
+
+var byId = {};
+PROMPTS.forEach(function(p){ byId[p.id] = p; });
+
+var CATS = PAGE.cats;
+var state = {cat:"all", sub:"all", q:""};
+var autoOpen = true; /* при поиске карточки раскрываются автоматически */
+
+var grid        = document.getElementById("grid");
+var chipsEl     = document.getElementById("chips");
+var chipsRow    = document.getElementById("chipsRow");
+var chipsToggle = document.getElementById("chipsToggle");
+var tabsEl      = document.getElementById("tabs");
+var resultsEl   = document.getElementById("results");
+var emptyEl     = document.getElementById("empty");
+var searchEl    = document.getElementById("search");
+
+/* ---- экранирование и подсветка [плейсхолдеров] (как в статике) ---- */
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function highlight(s){
+  return esc(s).replace(/\[([^\]\n]{1,120})\]/g,'<span class="ph">[$1]</span>');
+}
+
+function matches(p,q){
+  if(!q) return true;
+  q = q.toLowerCase();
+  return (p.title+" "+p.desc+" "+p.prompt+" "+p.sub+" "+p.tags.join(" ")+" "+(p.tip||"")+" "+p.modelLabel).toLowerCase().includes(q);
+}
+function getFiltered(){
+  var q = state.q.trim();
+  return PROMPTS.filter(function(p){
+    return (state.cat==="all"||p.cat===state.cat) &&
+           (state.sub==="all"||p.sub===state.sub) &&
+           matches(p,q);
+  });
+}
+
+/* ---- табы (кнопки с aria-pressed) ---- */
+function renderTabs(){
+  if(!tabsEl) return;
+  if(!PAGE.tabs){ tabsEl.hidden = true; return; }
+  tabsEl.innerHTML = "";
+  PAGE.catOrder.forEach(function(key){
+    var c = PROMPTS.filter(function(p){return key==="all"||p.cat===key;}).length;
+    var el = document.createElement("button");
+    el.type = "button";
+    el.className = "tab" + (state.cat===key ? " active" : "");
+    el.setAttribute("aria-pressed", String(state.cat===key));
+    el.innerHTML = CATS[key].icon+" "+CATS[key].label+'<span class="cnt">'+c+'</span>';
+    el.onclick = function(){ state.cat=key; state.sub="all"; renderTabs(); renderChips(); renderGrid(); };
+    tabsEl.appendChild(el);
+  });
+}
+
+/* ---- чипсы подразделов ---- */
+function renderChips(){
+  if(!chipsEl || !chipsRow) return;
+  chipsEl.innerHTML = "";
+  var subs = [];
+  PROMPTS.forEach(function(p){
+    if((state.cat==="all"||p.cat===state.cat) && subs.indexOf(p.sub)<0) subs.push(p.sub);
+  });
+  if(subs.length < 2){ chipsRow.classList.add("no-sub"); return; }
+  chipsRow.classList.remove("no-sub");
+  function mk(label,val){
+    var el = document.createElement("button");
+    el.type = "button";
+    el.className = "chip" + (state.sub===val ? " active" : "");
+    el.setAttribute("aria-pressed", String(state.sub===val));
+    el.textContent = label;
+    el.onclick = function(){ state.sub=val; renderChips(); renderGrid(); closeChipsMobile(); };
+    chipsEl.appendChild(el);
+  }
+  mk("Все подразделы","all");
+  subs.forEach(function(s){ mk(s,s); });
+}
+/* на телефоне выпадающий список подразделов закрывается после выбора */
+function closeChipsMobile(){
+  if(chipsEl && window.matchMedia("(max-width: 640px)").matches){
+    chipsEl.classList.remove("open");
+    if(chipsToggle) chipsToggle.setAttribute("aria-expanded","false");
+  }
+}
+
+/* ---- иконки и пилюли совместимости (идентичны статической сборке) ---- */
+var CHEV = "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg>";
+var COPY_IC = "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>";
+var DONE_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>';
+function qpillHtml(p){
+  var out = "";
+  if(p.qw==="chat") out += "<span class='qpill full' title='Работает в Qwen Chat без изменений'>Qwen ✓</span>";
+  if(p.qw==="img")  out += "<span class='qpill full' title='Работает в Qwen-Image без изменений'>Qwen-Image ✓</span>";
+  if(p.qw==="core") out += "<span class='qpill core' title='Описательная часть промпта работает в Qwen-Image; параметры --ar / --niji / --style raw специфичны для Midjourney — размер и стиль в Qwen задаются в интерфейсе или API'>→ Qwen-Image</span>";
+  if(p.ds==="ok")   out += "<span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span>";
+  if(p.ds==="think")out += "<span class='dspill note' title='Ключи /think и /no_think специфичны для Qwen. Аналог в DeepSeek: переключатель DeepThink (R1) в чате или выбор модели в API — deepseek-reasoner / deepseek-chat'>DeepSeek: аналог</span>";
+  if(p.ds==="ctx")  out += "<span class='dspill note' title='Контекст DeepSeek — до 128K токенов, а не 1M: очень длинные документы разбивайте на части и подавайте последовательно с промежуточными выжимками'>DeepSeek: 128K</span>";
+  if(p.ds==="json") out += "<span class='dspill note' title='Надёжный JSON даёт DeepSeek-V3 (deepseek-chat) с response_format: json_object; слово «JSON» в промпте уже есть — это обязательное условие JSON-режима DeepSeek. В R1 рассуждения могут примешиваться к ответу'>DeepSeek: V3</span>";
+  return out;
+}
+
+/* ---- поведение карточки (общее для статики и перерисовки) ---- */
+function attachCard(card, p){
+  var head = card.querySelector(".card-head");
+  var toggle = function(){
+    card.classList.toggle("open");
+    p._open = card.classList.contains("open");
+    head.setAttribute("aria-expanded", String(p._open));
+  };
+  head.addEventListener("click", toggle);
+  head.addEventListener("keydown", function(e){
+    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); }
+  });
+  var btn = card.querySelector(".copy-btn");
+  if(btn) btn.addEventListener("click", function(){ copyPrompt(p, btn); });
+}
+
+/* ---- «оживление» статически отрендеренных карточек ---- */
+function hydrate(){
+  grid.querySelectorAll(".card[data-id]").forEach(function(card){
+    var p = byId[card.getAttribute("data-id")];
+    if(!p) return;
+    p._open = card.classList.contains("open");
+    attachCard(card, p);
+  });
+}
+
+/* ---- перерисовка сетки (при фильтрации/поиске) ---- */
+function renderGrid(){
+  var q = state.q.trim();
+  var list = getFiltered();
+  grid.innerHTML = "";
+  grid.removeAttribute("data-prerendered");
+  emptyEl.style.display = list.length ? "none" : "block";
+  resultsEl.textContent = (list.length===PROMPTS.length && !q)
+    ? "Показаны все "+list.length+" промпта"
+    : "Найдено: "+list.length;
+  if(!list.length && q) trackEvent("empty_search", {q:q, section:PAGE.section});
+
+  var lastSub = null;
+  list.forEach(function(p){
+    if(state.sub==="all" && p.sub!==lastSub){
+      lastSub = p.sub;
+      var h = document.createElement("div");
+      h.className = "section-head";
+      h.innerHTML = "<h2>"+CATS[p.cat].icon+" "+p.sub+"</h2><div class='line' aria-hidden='true'></div>";
+      grid.appendChild(h);
+    }
+    var isOpen = !!p._open || (!!q && autoOpen);
+    var bodyId = "body-"+p.id;
+    var card = document.createElement("article");
+    card.className = "card"+(isOpen?" open":"");
+    card.id = p.id;
+    card.setAttribute("data-id", p.id);
+    card.innerHTML =
+      "<div class='card-head' role='button' tabindex='0' aria-expanded='"+isOpen+"' aria-controls='"+bodyId+"'>"+
+        "<div class='head-main'>"+
+          (state.sub!=="all" ? "<div class='sub-name'>"+esc(p.sub)+"</div>" : "")+
+          "<div class='card-top'><h3>"+esc(p.title)+"</h3><div class='badges'><span class='badge "+p.model+"'>"+esc(p.modelLabel)+"</span>"+qpillHtml(p)+"</div></div>"+
+          "<p class='desc'>"+esc(p.desc)+"</p>"+
+        "</div>"+
+        "<span class='chev'>"+CHEV+"</span>"+
+      "</div>"+
+      "<div class='card-body' id='"+bodyId+"'>"+
+        "<div class='prompt-wrap'><pre class='prompt'>"+highlight(p.prompt)+"</pre>"+
+          "<button class='copy-btn' type='button'>"+COPY_IC+"Копировать</button>"+
+        "</div>"+
+        (p.tip ? "<div class='tip'>💡 "+p.tip+"</div>" : "")+
+        "<div class='tags'>"+p.tags.map(function(t){return "<span class='tag'>#"+t+"</span>";}).join("")+"</div>"+
+      "</div>";
+    attachCard(card, p);
+    grid.appendChild(card);
+  });
+}
+
+/* ---- развернуть / свернуть все ---- */
+document.getElementById("expandAll").addEventListener("click", function(){
+  getFiltered().forEach(function(p){ p._open = true; });
+  renderGrid();
+});
+document.getElementById("collapseAll").addEventListener("click", function(){
+  /* P0-фикс: сворачивание больше НЕ очищает строку поиска */
+  PROMPTS.forEach(function(p){ p._open = false; });
+  autoOpen = false;
+  renderGrid();
+});
+
+/* ---- копирование с fallback для старых браузеров ---- */
+function copyPrompt(p, btn){
+  var text = p.prompt;
+  var restore = function(){
+    btn.classList.remove("done");
+    btn.innerHTML = COPY_IC+"Копировать";
+  };
+  var done = function(ok){
+    if(ok){
+      btn.classList.add("done");
+      btn.innerHTML = DONE_IC+"Скопировано";
+      toast("Промпт скопирован в буфер обмена ✓");
+      trackEvent("prompt_copy", {id:p.id, title:p.title, section:PAGE.section});
+      setTimeout(restore, 2000);
+    }else{
+      legacyCopy(text, btn);
+    }
+  };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(function(){done(true);}).catch(function(){done(false);});
+  }else{
+    done(false);
+  }
+}
+function legacyCopy(text, btn){
+  try{
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    var ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    if(ok){ toast("Промпт скопирован ✓"); }
+    else{ selectPrompt(btn); }
+  }catch(e){ selectPrompt(btn); }
+}
+function selectPrompt(btn){
+  var pre = btn.parentElement.querySelector("pre");
+  var r = document.createRange(); r.selectNodeContents(pre);
+  var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  toast("Выделите текст и нажмите Ctrl+C");
+}
+
+/* ---- тост (aria-live объявляет его скринридерам) ---- */
+var toastT;
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ t.classList.remove("show"); }, 2200);
+}
+
+/* ---- поиск: debounce 150 мс, хоткей «/», Escape — сброс ---- */
+var searchT;
+searchEl.addEventListener("input", function(e){
+  autoOpen = true;
+  clearTimeout(searchT);
+  searchT = setTimeout(function(){ state.q = e.target.value; renderGrid(); }, 150);
+});
+document.addEventListener("keydown", function(e){
+  if(e.key==="/" && document.activeElement!==searchEl){ e.preventDefault(); searchEl.focus(); }
+  if(e.key==="Escape" && document.activeElement===searchEl){ searchEl.value=""; state.q=""; autoOpen=true; renderGrid(); searchEl.blur(); }
+});
+
+/* ---- подразделы на мобильных: кнопка-тумблер ---- */
+if(chipsToggle){
+  chipsToggle.addEventListener("click", function(){
+    var open = chipsEl.classList.toggle("open");
+    chipsToggle.setAttribute("aria-expanded", String(open));
+  });
+}
+
+/* ---- кнопка «наверх» ---- */
+var toTop = document.getElementById("toTop");
+window.addEventListener("scroll", function(){
+  toTop.style.display = window.scrollY>600 ? "flex" : "none";
+}, {passive:true});
+toTop.onclick = function(){ window.scrollTo({top:0, behavior:"smooth"}); };
+
+/* ---- инициализация ----
+   Поддержка deep-link вида photo.html?q=реставрация —
+   используется главной страницей и внешними ссылками. */
+var urlQ = new URLSearchParams(location.search).get("q");
+renderTabs();
+renderChips();
+if(urlQ){
+  searchEl.value = urlQ;
+  state.q = urlQ;
+  renderGrid();
+}else if(grid.getAttribute("data-prerendered")==="1"){
+  hydrate();          /* статические карточки: только навешиваем обработчики */
+}else{
+  renderGrid();
+}
+
+})();
+
+</script>
+</body>
+</html>

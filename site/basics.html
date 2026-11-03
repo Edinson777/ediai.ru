@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Основы промптинга — 6 универсальных формул для любой нейросети</title>
+<meta name="description" content="Универсальные формулы промптов для любой LLM: «Роль → Контекст → Задача → Формат», мета-промпт-улучшатель, режим интервью, цикл «критик → улучшение», пошаговое рассуждение.">
+<link rel="canonical" href="https://ediai.ru/basics.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="База промптов для ИИ">
+<meta property="og:title" content="Основы промптинга — 6 универсальных формул для любой нейросети">
+<meta property="og:description" content="Универсальные формулы промптов для любой LLM: «Роль → Контекст → Задача → Формат», мета-промпт-улучшатель, режим интервью, цикл «критик → улучшение», пошаговое рассуждение.">
+<meta property="og:url" content="https://ediai.ru/basics.html">
+<meta property="og:image" content="https://ediai.ru/og/og-basics.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Основы промптинга — 6 универсальных формул для любой нейросети">
+<meta name="twitter:description" content="Универсальные формулы промптов для любой LLM: «Роль → Контекст → Задача → Формат», мета-промпт-улучшатель, режим интервью, цикл «критик → улучшение», пошаговое рассуждение.">
+<meta name="twitter:image" content="https://ediai.ru/og/og-basics.png">
+<meta name="theme-color" content="#f5f6fa">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://ediai.ru/#website", "name": "База промптов для ИИ", "url": "https://ediai.ru/", "description": "Бесплатная коллекция из 181 проверенного промпта для нейросетей: переделка фото, генерация изображений, тексты, ИИ в личной жизни, Qwen и основы промптинга.", "inLanguage": "ru"}, {"@type": "CollectionPage", "@id": "https://ediai.ru/basics.html", "url": "https://ediai.ru/basics.html", "name": "Основы промптинга — 6 универсальных формул", "description": "Универсальные формулы промптов для любой LLM: «Роль → Контекст → Задача → Формат», мета-промпт-улучшатель, режим интервью, цикл «критик → улучшение», пошаговое рассуждение.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "isPartOf": {"@id": "https://ediai.ru/#website"}}, {"@type": "ItemList", "name": "Основы промптинга — 6 универсальных формул", "numberOfItems": 6, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Формула Роль → Контекст → Задача → Формат", "url": "https://ediai.ru/basics.html#p120"}, {"@type": "ListItem", "position": 2, "name": "Улучшатель промптов (мета-промпт)", "url": "https://ediai.ru/basics.html#p121"}, {"@type": "ListItem", "position": 3, "name": "Режим интервью", "url": "https://ediai.ru/basics.html#p122"}, {"@type": "ListItem", "position": 4, "name": "Цикл «критик → улучшение»", "url": "https://ediai.ru/basics.html#p123"}, {"@type": "ListItem", "position": 5, "name": "Пошаговое рассуждение", "url": "https://ediai.ru/basics.html#p124"}, {"@type": "ListItem", "position": 6, "name": "Несколько подходов сразу", "url": "https://ediai.ru/basics.html#p125"}]}, {"@type": "Article", "@id": "https://ediai.ru/basics.html#p120", "headline": "Формула Роль → Контекст → Задача → Формат", "articleBody": "Действуй как [роль: маркетолог с 10-летним опытом / юрист / преподаватель физики].\n\nКонтекст: [ситуация, аудитория, ограничения, что уже известно].\n\nЗадача: [что конкретно сделать — один глагол, один результат].\n\nФормат ответа: [объём, структура, таблица/список/текст, тон, примеры оформления].\n\nЕсли данных не хватает для качественного результата — задай мне до 5 уточняющих вопросов, прежде чем отвечать.", "description": "Каркас, который превращает любой расплывчатый запрос в точный. Подходит для 90% текстовых задач.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "формула, роль, контекст, база", "isPartOf": {"@id": "https://ediai.ru/basics.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/basics.html"}}, {"@type": "Article", "@id": "https://ediai.ru/basics.html#p121", "headline": "Улучшатель промптов (мета-промпт)", "articleBody": "Ты — эксперт по промпт-инжинирингу. Вот мой промпт: «[вставить ваш промпт]».\n\n1. Оцени его: что понятно, что расплывчато, каких деталей не хватает;\n2. Перепиши его: добавь роль, контекст, конкретику задачи, формат результата, ограничения и, если уместно, пример ожидаемого ответа;\n3. Объясни, что именно ты улучшил и почему;\n4. Затем выполни улучшенный промпт.", "description": "Пусть ИИ сам доработает ваш слабый промпт до сильного.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "мета-промпт, улучшение, промпт-инжиниринг", "isPartOf": {"@id": "https://ediai.ru/basics.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/basics.html"}}, {"@type": "Article", "@id": "https://ediai.ru/basics.html#p122", "headline": "Режим интервью", "articleBody": "Я хочу получить от тебя [результат: текст / план / код / дизайн-концепцию] на тему [тема].\n\nНо прежде чем делать — проведи мне интервью: задавай по одному уточняющему вопросу за раз (цель, аудитория, ограничения, тон, примеры, что точно не нужно). Задай столько вопросов, сколько нужно для идеального результата, но не больше 10.\n\nКогда соберёшь достаточно информации — кратко перескажи моё ТЗ и только затем выполни задачу.", "description": "ИИ сам вытаскивает из вас вводные — идеально, когда вы не знаете, как сформулировать задачу.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "интервью, уточнение, бриф, диалог", "isPartOf": {"@id": "https://ediai.ru/basics.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/basics.html"}}, {"@type": "Article", "@id": "https://ediai.ru/basics.html#p123", "headline": "Цикл «критик → улучшение»", "articleBody": "Выполни задачу: [задача].\n\nЗатем смени роль на строгого критика:\n1. Найди слабые места своего ответа (логика, полнота, убедительность, факты);\n2. Поставь оценку от 1 до 10;\n3. Перепиши ответ, устранив найденные недостатки.\n\nПовторяй цикл «критика → улучшение», пока оценка не достигнет 9+. Покажи финальную версию и кратко — что менялось на каждой итерации.", "description": "ИИ сам критикует свой ответ и доводит его до высокого уровня — вместо среднего первого черновика.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "итерации, критика, качество, самопроверка", "isPartOf": {"@id": "https://ediai.ru/basics.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/basics.html"}}, {"@type": "Article", "@id": "https://ediai.ru/basics.html#p124", "headline": "Пошаговое рассуждение", "articleBody": "Реши задачу пошагово: [задача].\n\n1. Сначала составь план рассуждений (какие шаги нужны);\n2. Выполняй каждый шаг отдельно, проверяя промежуточные результаты;\n3. Если шаг вызывает сомнение — рассмотри альтернативный вариант;\n4. В конце дай краткий ответ и перепроверь его обратным ходом.\n\nНе перескакивай через шаги и показывай ход мыслей.", "description": "Chain-of-thought: для задач с логикой, расчётами и сложными решениями снижает ошибки в разы.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "логика, пошагово, chain of thought, задачи", "isPartOf": {"@id": "https://ediai.ru/basics.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/basics.html"}}, {"@type": "Article", "@id": "https://ediai.ru/basics.html#p125", "headline": "Несколько подходов сразу", "articleBody": "Дай [3–5] принципиально разных подхода к задаче: [задача].\n\nДля каждого подхода:\n- идея в 1–2 предложениях;\n- плюсы;\n- минусы и риски;\n- в каком случае он подходит лучше всего.\n\nЗатем порекомендуй лучший для моей ситуации: [описать ситуацию и ограничения] — и объясни выбор.", "description": "Вместо одного «среднего» решения — веер вариантов с честными плюсами и минусами.", "inLanguage": "ru", "datePublished": "2026-11-02", "dateModified": "2026-11-02", "keywords": "варианты, сравнение, выбор, стратегия", "isPartOf": {"@id": "https://ediai.ru/basics.html"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ediai.ru/basics.html"}}]}</script>
+<style>
+/* =====================================================================
+   «База промптов для ИИ» — общий стиль всех страниц. СВЕТЛАЯ ТЕМА.
+   Контрасты мелкого текста подобраны под WCAG AA на светлом фоне.
+   Мобильная панель: табы в один скроллящийся ряд, подразделы под кнопку,
+   input 16px (iOS не зумит); prefers-reduced-motion, :focus-visible,
+   skip-link; кнопка «Копировать» не перекрывает текст промпта.
+   ===================================================================== */
+:root{
+  --bg:#f5f6fa;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card-hover:#fcfcff;
+  --border:#e4e8f1;
+  --border-strong:#c9d2e3;
+  --text:#182135;
+  --muted:#57627a;      /* 6.1:1 на белом */
+  --accent:#6a5ae0;
+  --accent-ink:#4b3ecf; /* акцент для текста/ссылок на светлом */
+  --accent2:#0e7490;    /* cyan-700 — читаемые ссылки */
+  --accent2-bright:#22b8cf;
+  --prompt-bg:#f6f7fb;
+  --ph:#9a5b00;         /* плейсхолдеры [в скобках] */
+  --ok:#15803d;
+  --faint:#667085;      /* 4.9:1 на белом */
+  --dim:#667085;
+  --shadow:0 1px 2px rgba(23,32,58,.05);
+  --shadow-lift:0 10px 28px rgba(23,32,58,.10);
+  --radius:14px;
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% -5%, rgba(106,90,224,.09), transparent),
+    radial-gradient(ellipse 50% 35% at 85% 0%, rgba(34,184,207,.08), transparent);
+}
+::selection{background:rgba(106,90,224,.22)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* ===== a11y: skip-link и фокус ===== */
+.skip-link{
+  position:absolute;left:-9999px;top:8px;z-index:200;
+  background:var(--accent);color:#fff;font-weight:700;font-size:14px;
+  padding:10px 18px;border-radius:10px;text-decoration:none
+}
+.skip-link:focus{left:12px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ===== HERO ===== */
+header.hero{padding:48px 0 26px;text-align:center}
+.hero .logo{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--border);
+  padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.7);
+  margin-bottom:22px;text-decoration:none
+}
+.hero a.logo:hover{color:var(--text);border-color:var(--accent)}
+.back-link{
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+  font-size:13px;color:var(--muted);border:1px solid var(--border);
+  padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.7);
+  margin-bottom:20px;transition:all .2s
+}
+.back-link:hover{color:var(--text);border-color:var(--accent)}
+.hero h1{
+  font-size:clamp(28px,4.8vw,48px);font-weight:800;line-height:1.13;letter-spacing:-.02em;
+  background:linear-gradient(100deg,#111c33 18%,var(--accent) 58%,var(--accent2) 92%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  margin-bottom:14px;
+}
+.hero h1.gold{background:linear-gradient(100deg,#17203a 15%,#b45309 50%,var(--accent) 85%);-webkit-background-clip:text;background-clip:text}
+.hero p.sub{color:var(--muted);font-size:16.5px;max-width:660px;margin:0 auto 22px;line-height:1.55}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.stat{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:8px 16px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow)
+}
+.stat b{color:var(--text);font-weight:700}
+
+/* ===== STICKY CONTROLS ===== */
+.controls{
+  position:sticky;top:0;z-index:50;
+  background:rgba(245,246,250,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:14px 0 12px;margin-bottom:26px;
+}
+.search-row{display:flex;gap:10px;margin-bottom:12px}
+.search-box{position:relative;flex:1}
+.search-box svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--muted)}
+#search{
+  width:100%;padding:12px 16px 12px 42px;font-size:15px;font-family:inherit;
+  background:var(--bg2);border:1px solid #dbe1ec;border-radius:11px;
+  color:var(--text);outline:none;transition:border .2s, box-shadow .2s;
+}
+#search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(106,90,224,.15)}
+#search::placeholder{color:#8a94a6}
+#search::-webkit-search-cancel-button{cursor:pointer}
+kbd{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  font-size:11px;color:var(--muted);border:1px solid #dbe1ec;
+  border-radius:5px;padding:2px 7px;background:var(--bg);font-family:inherit
+}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tab{
+  padding:9px 18px;border-radius:99px;font-size:14px;font-weight:600;cursor:pointer;
+  background:#eef1f7;border:1px solid #e0e5ef;color:var(--muted);
+  transition:all .18s;user-select:none;white-space:nowrap;
+  font-family:inherit;line-height:1.25;appearance:none
+}
+.tab:hover{color:var(--text);border-color:var(--border-strong)}
+.tab.active{
+  background:linear-gradient(100deg,rgba(106,90,224,.14),rgba(34,184,207,.12));
+  border-color:var(--accent);color:var(--accent-ink)
+}
+.tab .cnt{opacity:.7;font-weight:500;font-size:12.5px;margin-left:4px}
+.chips-row{display:flex;align-items:flex-start;gap:8px;position:relative}
+.chips-row.no-sub{display:none}
+.chips-toggle{
+  display:none;align-items:center;gap:6px;flex-shrink:0;
+  font-size:12.8px;font-weight:600;padding:6px 13px;border-radius:99px;
+  background:var(--bg2);border:1px solid #dbe1ec;color:var(--muted);
+  cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s
+}
+.chips-toggle:hover{color:var(--text);border-color:var(--border-strong)}
+.chips{
+  display:flex;gap:7px;flex:1;flex-wrap:nowrap;overflow-x:auto;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px;
+  mask-image:linear-gradient(90deg,#000 92%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);
+}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  padding:6px 13px;border-radius:99px;font-size:12.8px;cursor:pointer;
+  background:transparent;border:1px solid #dbe1ec;color:var(--muted);
+  transition:all .15s;user-select:none;font-family:inherit;line-height:1.35;appearance:none;
+  flex:0 0 auto;white-space:nowrap
+}
+.chip:hover{color:var(--text);border-color:var(--border-strong)}
+.chip.active{background:rgba(106,90,224,.10);border-color:rgba(106,90,224,.5);color:var(--accent-ink)}
+.results-line{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.8px;color:var(--dim);margin-top:10px}
+.mini-btns{display:flex;gap:6px}
+.mini-btn{
+  font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;cursor:pointer;
+  background:var(--bg2);border:1px solid #dbe1ec;color:var(--muted);
+  transition:all .15s;font-family:inherit
+}
+.mini-btn:hover{color:var(--accent-ink);border-color:var(--accent);background:rgba(106,90,224,.07)}
+
+/* ===== INFO STRIPS ===== */
+.strips{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.info-strip{
+  display:flex;gap:12px;align-items:flex-start;
+  background:#fff8ec;border:1px solid #f0dcae;
+  border-radius:var(--radius);padding:14px 18px;
+  font-size:13.8px;color:#7c5a12;line-height:1.55;box-shadow:var(--shadow)
+}
+.info-strip b{color:#5f4708}
+.info-strip a{color:var(--accent-ink)}
+.info-strip .ic{font-size:17px;line-height:1.4}
+.qwen-strip{background:#f3f1ff;border-color:#d6cdff;color:#4b3fb0}
+.qwen-strip b{color:#3c31a0}
+.warn-strip{background:#fff0f3;border-color:#f3c4cf;color:#8f2440}
+.warn-strip b{color:#6f1630}
+.fact-strip{background:#edfaf4;border-color:#bfe8d6;color:#0f5c46}
+.fact-strip b{color:#0a4535}
+.qwen-strip b{color:#372a9c}
+.qwen-strip code,.info-strip code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:rgba(23,32,58,.06);padding:1px 6px;border-radius:4px;color:#44506a}
+.page-link-banner{
+  display:flex;gap:12px;align-items:center;text-decoration:none;
+  background:linear-gradient(100deg,rgba(106,90,224,.08),rgba(34,184,207,.06));
+  border:1px solid rgba(106,90,224,.35);border-radius:var(--radius);
+  padding:14px 18px;margin-bottom:26px;color:#4b3fb0;font-size:13.8px;line-height:1.5;
+  transition:border-color .2s, transform .2s, box-shadow .2s;box-shadow:var(--shadow)
+}
+.page-link-banner:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.page-link-banner b{color:var(--text)}
+.plb-ic{font-size:20px}
+.plb-go{color:var(--accent2);font-weight:700;white-space:nowrap;margin-left:auto}
+
+/* ===== GRID & CARDS ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;padding-bottom:40px}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);
+  transition:transform .18s, border-color .18s, box-shadow .18s;
+  scroll-margin-top:150px;
+}
+.card:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow-lift)}
+.card-head{display:flex;gap:10px;align-items:flex-start;cursor:pointer;user-select:none}
+.card-head:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.head-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:9px}
+.card:not(.open) .head-main .desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chev{flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#98a2b3;transition:transform .2s,color .2s;margin-top:2px}
+.chev svg{width:16px;height:16px}
+.card.open .chev{transform:rotate(180deg);color:var(--accent)}
+.card-body{display:none;flex-direction:column;gap:12px}
+.card.open .card-body{display:flex}
+.card-head:hover h3{color:var(--accent-ink)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card h3{font-size:16.5px;font-weight:700;line-height:1.3}
+.card .sub-name{font-size:11.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;font-weight:600}
+.badge{
+  flex-shrink:0;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;
+  letter-spacing:.02em;white-space:nowrap;border:1px solid
+}
+.badge.mj{color:#7c3aed;border-color:#e2d4ff;background:#f5eeff}
+.badge.dalle{color:#047857;border-color:#bfe8d6;background:#ecfdf5}
+.badge.sd{color:#c2570b;border-color:#fbd9b8;background:#fff4e8}
+.badge.any{color:#1d6fb8;border-color:#c9e2f8;background:#eef7ff}
+.badge.text{color:#be185d;border-color:#f8c9dd;background:#fdf0f6}
+.badge.qwen{color:#5b4bd6;border-color:#d4ccff;background:#f3f1ff}
+.badges{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.qpill{font-size:10.3px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;cursor:help;letter-spacing:.01em}
+.qpill.full{color:var(--accent-ink);background:rgba(106,90,224,.12);border:1px solid rgba(106,90,224,.45)}
+.qpill.core{color:var(--faint);background:transparent;border:1px dashed #b9c2d4}
+.dspill{font-size:10.3px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;cursor:help;letter-spacing:.01em}
+.dspill.full{color:#3552e0;background:rgba(77,107,254,.10);border:1px solid rgba(77,107,254,.45)}
+.dspill.note{color:var(--faint);background:transparent;border:1px dashed #b9c2d4}
+.card .desc{font-size:13.8px;color:var(--muted);line-height:1.55}
+.prompt-wrap{position:relative}
+pre.prompt{
+  background:var(--prompt-bg);border:1px solid var(--border);border-radius:10px;
+  padding:42px 14px 14px; /* верхний отступ — кнопка «Копировать» не перекрывает текст */
+  font-size:12.9px;line-height:1.6;color:#33415c;
+  white-space:pre-wrap;word-break:break-word;
+  font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  max-height:320px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#cdd5e4 transparent
+}
+pre.prompt::-webkit-scrollbar{width:6px}
+pre.prompt::-webkit-scrollbar-thumb{background:#cdd5e4;border-radius:3px}
+.ph{color:var(--ph);background:rgba(180,83,9,.10);border-radius:4px;padding:0 3px;font-weight:600}
+.copy-btn{
+  position:absolute;top:8px;right:8px;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;padding:6px 12px;border-radius:8px;cursor:pointer;
+  background:rgba(255,255,255,.94);border:1px solid #dbe1ec;color:var(--muted);
+  transition:all .15s;font-family:inherit;box-shadow:var(--shadow)
+}
+.copy-btn:hover{color:var(--accent-ink);border-color:var(--accent);background:rgba(106,90,224,.08)}
+.copy-btn.done{color:var(--ok);border-color:rgba(21,128,61,.4);background:rgba(21,128,61,.08)}
+.copy-btn svg{width:13px;height:13px}
+.tip{
+  font-size:12.8px;color:#44606e;line-height:1.5;
+  background:#edf8fb;border-left:3px solid var(--accent2-bright);
+  padding:9px 12px;border-radius:0 8px 8px 0
+}
+.tip b{color:var(--accent2)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.tag{font-size:11.3px;color:var(--faint);background:rgba(23,32,58,.05);padding:3px 9px;border-radius:99px}
+
+.section-head{grid-column:1/-1;display:flex;align-items:center;gap:14px;margin:14px 0 -4px}
+.section-head h2{font-size:19px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.section-head .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border-strong),transparent)}
+
+.empty{display:none;text-align:center;padding:70px 20px;color:var(--muted)}
+.empty .big{font-size:44px;margin-bottom:14px}
+.empty p{font-size:15px}
+
+#toast{
+  position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:#1d2536;border:1px solid #33405c;color:#f2f5fa;
+  padding:11px 22px;border-radius:11px;font-size:14px;font-weight:600;
+  opacity:0;transition:all .3s;z-index:99;pointer-events:none;
+  box-shadow:0 10px 30px rgba(23,32,58,.35);max-width:90vw
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ===== HUB: BENTO ===== */
+.hub-h{font-size:21px;font-weight:800;letter-spacing:-.01em;margin:36px 0 14px}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px}
+.tile{
+  grid-column:span 2;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;gap:9px;text-decoration:none;color:var(--text);
+  transition:transform .18s,border-color .18s,box-shadow .18s;text-align:left;box-shadow:var(--shadow)
+}
+.tile:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow-lift)}
+.tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tile-big{
+  grid-row:span 2;border-color:rgba(106,90,224,.35);
+  background:linear-gradient(160deg,rgba(106,90,224,.08),rgba(180,83,9,.05) 55%,#fff 100%)
+}
+.tile-big:hover{border-color:var(--accent)}
+.tile-life{
+  border-color:rgba(14,116,144,.35);
+  background:linear-gradient(160deg,rgba(14,116,144,.08),rgba(62,207,142,.07) 55%,#fff 100%)
+}
+.tile-life:hover{border-color:#0e7490}
+.t-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.t-ic{font-size:30px;line-height:1}
+.tile-big .t-ic{font-size:40px}
+.t-count{font-size:11.5px;font-weight:700;color:var(--accent-ink);background:rgba(106,90,224,.10);border:1px solid rgba(106,90,224,.35);padding:4px 11px;border-radius:99px;white-space:nowrap}
+.tile h2{font-size:18px;font-weight:800;letter-spacing:-.01em}
+.tile-big h2{font-size:25px;margin-top:6px}
+.tile p{color:var(--muted);font-size:13.6px;line-height:1.55}
+.t-subs{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0}
+.t-subs li{font-size:11.5px;color:var(--faint);background:rgba(23,32,58,.05);padding:3px 10px;border-radius:99px}
+.t-go{color:var(--accent2);font-weight:700;font-size:13.5px;margin-top:auto;padding-top:8px}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:8px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.step .s-n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(106,90,224,.12);border:1px solid rgba(106,90,224,.35);color:var(--accent-ink);font-weight:800;font-size:13px;margin-bottom:10px}
+.step b{display:block;font-size:14.5px;margin-bottom:6px}
+.step p{font-size:13px;color:var(--muted);line-height:1.55}
+
+.pop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:8px}
+.pop{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;
+  transition:transform .18s,border-color .18s,box-shadow .18s;box-shadow:var(--shadow)
+}
+.pop:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow-lift)}
+.pop .p-cat{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.pop h3{font-size:15.5px;font-weight:700}
+.pop p{font-size:12.8px;color:var(--muted);line-height:1.5}
+.pop .p-go{color:var(--accent2);font-size:12.5px;font-weight:700;margin-top:4px}
+
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.faq summary{cursor:pointer;font-weight:700;font-size:14.8px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--accent);font-size:21px;line-height:1;font-weight:400}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin-top:10px;font-size:13.8px;color:var(--muted);line-height:1.6}
+
+/* ===== FOOTER ===== */
+footer{border-top:1px solid var(--border);padding:30px 0 40px;color:var(--dim);font-size:13px;line-height:1.7;text-align:center;margin-top:20px}
+footer b{color:var(--muted)}
+.sections-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 22px}
+.sections-nav a{
+  font-size:13px;color:var(--muted);text-decoration:none;
+  border:1px solid #dbe1ec;padding:7px 14px;border-radius:99px;
+  background:rgba(255,255,255,.7);transition:all .2s
+}
+.sections-nav a:hover{color:var(--text);border-color:var(--accent)}
+.sections-nav a[aria-current="page"]{color:var(--accent-ink);border-color:rgba(106,90,224,.5);background:rgba(106,90,224,.08)}
+
+/* источники — под спойлером (details/summary) */
+.sources{
+  text-align:left;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);margin-bottom:26px;box-shadow:var(--shadow);overflow:hidden
+}
+.sources summary{
+  cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:18px 26px;user-select:none;transition:background .15s
+}
+.sources summary::-webkit-details-marker{display:none}
+.sources summary:hover{background:rgba(106,90,224,.04)}
+.sources summary h2{font-size:16.5px;font-weight:800;color:var(--text)}
+.sources summary::after{
+  content:"+";font-size:24px;line-height:1;color:var(--accent);font-weight:400;flex-shrink:0
+}
+.sources[open] summary::after{content:"–"}
+.sources[open] summary{border-bottom:1px solid var(--border)}
+.sources-in{padding:18px 26px 24px}
+.sources .src-hint{font-size:12.5px;color:var(--dim);font-weight:500;margin-left:10px}
+.sources .note{font-size:12.8px;color:var(--dim);line-height:1.6;margin-bottom:16px}
+.sources-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.sources h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:10px;font-weight:700}
+.sources h3.txt-head{color:#be185d}
+.sources h3.qw-head{color:#5b4bd6}
+.sources h3.ph-head{color:#b45309}
+.sources h3.life-head{color:#0e7490}
+.sources ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.sources li{font-size:13px;line-height:1.5}
+.sources a{color:#44506a;text-decoration:none;border-bottom:1px dotted #b9c2d4;transition:color .15s}
+.sources a:hover{color:var(--accent2)}
+.sources li span.what{display:block;color:var(--dim);font-size:12px}
+footer a{color:var(--accent2);text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--dim);line-height:1.6}
+
+#toTop{
+  position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:12px;
+  background:var(--card);border:1px solid #dbe1ec;color:var(--muted);
+  font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;
+  transition:all .2s;z-index:60;box-shadow:var(--shadow)
+}
+#toTop:hover{color:var(--accent-ink);border-color:var(--accent)}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important
+  }
+}
+
+/* ===== TABLET ===== */
+@media (max-width:960px){
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr}
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:640px){
+  .grid{grid-template-columns:1fr}
+  header.hero{padding:34px 0 18px}
+  .hero p.sub{font-size:15px}
+  kbd{display:none}
+  .card-top{flex-wrap:wrap}
+  .controls{padding:10px 0 9px;margin-bottom:18px}
+  .search-row{margin-bottom:9px}
+  #search{font-size:16px;padding:10px 14px 10px 40px} /* 16px — iOS не зумит поле */
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:8px;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;padding:8px 14px;font-size:13px}
+  .chips{display:none}
+  .chips.open{
+    display:flex;flex-wrap:wrap;overflow-y:auto;overflow-x:hidden;
+    mask-image:none;-webkit-mask-image:none;
+    position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:70;
+    background:#fff;border:1px solid var(--border);border-radius:12px;
+    padding:12px;box-shadow:0 16px 40px rgba(23,32,58,.18);max-height:52vh;
+  }
+  .chips.open .chip{white-space:normal}
+  .chips-toggle{display:inline-flex}
+  pre.prompt{max-height:none} /* никакого «скролла в скролле» на телефоне */
+  .results-line{margin-top:8px}
+  .sources summary{padding:15px 18px}
+  .sources-in{padding:14px 18px 20px}
+  .bento{grid-template-columns:1fr}
+  .tile-big{grid-row:auto}
+  .plb-go{margin-left:0}
+  .page-link-banner{flex-wrap:wrap}
+}
+
+</style>
+</head>
+<body>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=114035585', 'ym');
+
+    ym(114035585, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/114035585" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NXPYMMXH35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NXPYMMXH35');
+</script>
+<!-- /Google tag -->
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+<header class="hero">
+  <div class="wrap">
+    <a class="back-link" href="index.html">← Все разделы</a>
+    <h1>🧠 Основы промптинга</h1>
+    <p class="sub">Шесть универсальных приёмов, которые улучшают ответ любой нейросети — ChatGPT, Claude, Gemini, Qwen, GigaChat, YandexGPT. Начните с формулы «Роль → Контекст → Задача → Формат».</p>
+    <div class="stats"><div class="stat">Формулы: <b>3</b></div><div class="stat">Качество ответа: <b>3</b></div><div class="stat">Всего: <b>6</b></div></div>
+  </div>
+</header>
+<div class="controls">
+  <div class="wrap">
+    <div class="search-row">
+      <div class="search-box">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search" type="search" aria-label="Поиск по промптам раздела" placeholder="Поиск: роль, критик, интервью, пошагово…" autocomplete="off">
+        <kbd aria-hidden="true">/</kbd>
+      </div>
+    </div>
+    <div class="tabs" id="tabs" hidden></div>
+    <div class="chips-row" id="chipsRow">
+      <button type="button" class="chips-toggle" id="chipsToggle" aria-expanded="false" aria-controls="chips">Подразделы ▾</button>
+      <div class="chips" id="chips"><button type="button" class="chip active" aria-pressed="true">Все подразделы</button><button type="button" class="chip" aria-pressed="false">Универсальные формулы</button><button type="button" class="chip" aria-pressed="false">Качество ответа</button></div>
+    </div>
+    <div class="results-line">
+      <span id="results">Показаны все 6 промпта</span>
+      <span class="mini-btns">
+        <button class="mini-btn" id="expandAll" type="button">⊞ Развернуть все</button>
+        <button class="mini-btn" id="collapseAll" type="button">⊟ Свернуть все</button>
+      </span>
+    </div>
+  </div>
+</div>
+<main class="wrap" id="main" tabindex="-1">
+  <div class="strips"><div class="info-strip"><span class="ic" aria-hidden="true">💡</span><span><b>Как пользоваться:</b> эти формулы работают в любой LLM — ChatGPT, Claude, Gemini, Qwen, GigaChat, YandexGPT, DeepSeek. Начните с «Роль → Контекст → Задача → Формат»: она закрывает 90% текстовых задач. Значок <b>Qwen&nbsp;✓</b> — проверено в Qwen Chat, <b>DeepSeek&nbsp;✓</b> — в DeepSeek.</span></div></div>
+  <a class="page-link-banner" href="texts.html"><span class="plb-ic" aria-hidden="true">✍️</span><span><b>Промпты для текстов</b> — 21 шаблон: продающие тексты, статьи, посты для соцсетей, редактура и деловые документы.</span><span class="plb-go">Открыть →</span></a>
+  <div class="grid" id="grid" data-prerendered="1">
+<div class='section-head'><h2>🧠 Универсальные формулы</h2><div class='line' aria-hidden='true'></div></div>
+<article class='card' id='p120' data-id='p120'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p120'><div class='head-main'><div class='card-top'><h3>Формула Роль → Контекст → Задача → Формат</h3><div class='badges'><span class='badge any'>любая LLM</span><span class='qpill full' title='Работает в Qwen Chat без изменений'>Qwen ✓</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Каркас, который превращает любой расплывчатый запрос в точный. Подходит для 90% текстовых задач.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p120'><div class='prompt-wrap'><pre class='prompt'>Действуй как <span class="ph">[роль: маркетолог с 10-летним опытом / юрист / преподаватель физики]</span>.
+
+Контекст: <span class="ph">[ситуация, аудитория, ограничения, что уже известно]</span>.
+
+Задача: <span class="ph">[что конкретно сделать — один глагол, один результат]</span>.
+
+Формат ответа: <span class="ph">[объём, структура, таблица/список/текст, тон, примеры оформления]</span>.
+
+Если данных не хватает для качественного результата — задай мне до 5 уточняющих вопросов, прежде чем отвечать.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tip'>💡 Последняя строка — ключевая: она включает режим диалога и резко повышает точность ответа.</div><div class='tags'><span class='tag'>#формула</span><span class='tag'>#роль</span><span class='tag'>#контекст</span><span class='tag'>#база</span></div></div></article>
+<article class='card' id='p121' data-id='p121'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p121'><div class='head-main'><div class='card-top'><h3>Улучшатель промптов (мета-промпт)</h3><div class='badges'><span class='badge any'>любая LLM</span><span class='qpill full' title='Работает в Qwen Chat без изменений'>Qwen ✓</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Пусть ИИ сам доработает ваш слабый промпт до сильного.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p121'><div class='prompt-wrap'><pre class='prompt'>Ты — эксперт по промпт-инжинирингу. Вот мой промпт: «<span class="ph">[вставить ваш промпт]</span>».
+
+1. Оцени его: что понятно, что расплывчато, каких деталей не хватает;
+2. Перепиши его: добавь роль, контекст, конкретику задачи, формат результата, ограничения и, если уместно, пример ожидаемого ответа;
+3. Объясни, что именно ты улучшил и почему;
+4. Затем выполни улучшенный промпт.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#мета-промпт</span><span class='tag'>#улучшение</span><span class='tag'>#промпт-инжиниринг</span></div></div></article>
+<article class='card' id='p122' data-id='p122'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p122'><div class='head-main'><div class='card-top'><h3>Режим интервью</h3><div class='badges'><span class='badge any'>любая LLM</span><span class='qpill full' title='Работает в Qwen Chat без изменений'>Qwen ✓</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>ИИ сам вытаскивает из вас вводные — идеально, когда вы не знаете, как сформулировать задачу.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p122'><div class='prompt-wrap'><pre class='prompt'>Я хочу получить от тебя <span class="ph">[результат: текст / план / код / дизайн-концепцию]</span> на тему <span class="ph">[тема]</span>.
+
+Но прежде чем делать — проведи мне интервью: задавай по одному уточняющему вопросу за раз (цель, аудитория, ограничения, тон, примеры, что точно не нужно). Задай столько вопросов, сколько нужно для идеального результата, но не больше 10.
+
+Когда соберёшь достаточно информации — кратко перескажи моё ТЗ и только затем выполни задачу.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#интервью</span><span class='tag'>#уточнение</span><span class='tag'>#бриф</span><span class='tag'>#диалог</span></div></div></article>
+<div class='section-head'><h2>🧠 Качество ответа</h2><div class='line' aria-hidden='true'></div></div>
+<article class='card' id='p123' data-id='p123'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p123'><div class='head-main'><div class='card-top'><h3>Цикл «критик → улучшение»</h3><div class='badges'><span class='badge any'>любая LLM</span><span class='qpill full' title='Работает в Qwen Chat без изменений'>Qwen ✓</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>ИИ сам критикует свой ответ и доводит его до высокого уровня — вместо среднего первого черновика.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p123'><div class='prompt-wrap'><pre class='prompt'>Выполни задачу: <span class="ph">[задача]</span>.
+
+Затем смени роль на строгого критика:
+1. Найди слабые места своего ответа (логика, полнота, убедительность, факты);
+2. Поставь оценку от 1 до 10;
+3. Перепиши ответ, устранив найденные недостатки.
+
+Повторяй цикл «критика → улучшение», пока оценка не достигнет 9+. Покажи финальную версию и кратко — что менялось на каждой итерации.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#итерации</span><span class='tag'>#критика</span><span class='tag'>#качество</span><span class='tag'>#самопроверка</span></div></div></article>
+<article class='card' id='p124' data-id='p124'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p124'><div class='head-main'><div class='card-top'><h3>Пошаговое рассуждение</h3><div class='badges'><span class='badge any'>любая LLM</span><span class='qpill full' title='Работает в Qwen Chat без изменений'>Qwen ✓</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Chain-of-thought: для задач с логикой, расчётами и сложными решениями снижает ошибки в разы.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p124'><div class='prompt-wrap'><pre class='prompt'>Реши задачу пошагово: <span class="ph">[задача]</span>.
+
+1. Сначала составь план рассуждений (какие шаги нужны);
+2. Выполняй каждый шаг отдельно, проверяя промежуточные результаты;
+3. Если шаг вызывает сомнение — рассмотри альтернативный вариант;
+4. В конце дай краткий ответ и перепроверь его обратным ходом.
+
+Не перескакивай через шаги и показывай ход мыслей.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#логика</span><span class='tag'>#пошагово</span><span class='tag'>#chain of thought</span><span class='tag'>#задачи</span></div></div></article>
+<article class='card' id='p125' data-id='p125'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p125'><div class='head-main'><div class='card-top'><h3>Несколько подходов сразу</h3><div class='badges'><span class='badge any'>любая LLM</span><span class='qpill full' title='Работает в Qwen Chat без изменений'>Qwen ✓</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Вместо одного «среднего» решения — веер вариантов с честными плюсами и минусами.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p125'><div class='prompt-wrap'><pre class='prompt'>Дай <span class="ph">[3–5]</span> принципиально разных подхода к задаче: <span class="ph">[задача]</span>.
+
+Для каждого подхода:
+- идея в 1–2 предложениях;
+- плюсы;
+- минусы и риски;
+- в каком случае он подходит лучше всего.
+
+Затем порекомендуй лучший для моей ситуации: <span class="ph">[описать ситуацию и ограничения]</span> — и объясни выбор.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#варианты</span><span class='tag'>#сравнение</span><span class='tag'>#выбор</span><span class='tag'>#стратегия</span></div></div></article>
+  </div>
+  <div class="empty" id="empty">
+    <div class="big" aria-hidden="true">🔍</div>
+    <p>Ничего не найдено. Попробуйте другой запрос.</p>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html" aria-current="page">🧠 Основы</a></nav>
+    <details class="sources"><summary><h2>📖 Об основах</h2><span class="src-hint">показать список</span></summary><div class="sources-in"><p class="note">Формулы основаны на общепризнанных практиках промпт-инжиниринга: role prompting, chain-of-thought, CO-STAR и официальный шестиблочный фреймворк Alibaba (<code>#Context# → #Response#</code>). Полный список источников — на <a href="index.html">главной странице</a>.</p></div></details>
+    <b>🧠 Основы промптинга</b> — раздел <a href="index.html">базы промптов для ИИ</a>.<br>Главный принцип: конкретная роль + контекст + формат ответа дают нейросети больше, чем вежливые общие слова.
+  </div>
+</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<button id="toTop" title="Наверх" aria-label="Наверх">↑</button>
+<noscript><style>
+.controls{display:none!important}
+.card-body{display:flex!important}
+.chev,.copy-btn,#toTop{display:none!important}
+pre.prompt{max-height:none!important;padding-top:14px!important}
+.card-head{cursor:default}
+</style></noscript>
+<script>
+const PAGE = {"section": "basics", "tabs": false, "cats": {"all": {"label": "Все промпты", "icon": "📚"}, "base": {"label": "Основы промптинга", "icon": "🧠"}}, "catOrder": ["all", "base"]};
+const PROMPTS = [{"id": "p120", "section": "basics", "cat": "base", "sub": "Универсальные формулы", "title": "Формула Роль → Контекст → Задача → Формат", "model": "any", "modelLabel": "любая LLM", "desc": "Каркас, который превращает любой расплывчатый запрос в точный. Подходит для 90% текстовых задач.", "prompt": "Действуй как [роль: маркетолог с 10-летним опытом / юрист / преподаватель физики].\n\nКонтекст: [ситуация, аудитория, ограничения, что уже известно].\n\nЗадача: [что конкретно сделать — один глагол, один результат].\n\nФормат ответа: [объём, структура, таблица/список/текст, тон, примеры оформления].\n\nЕсли данных не хватает для качественного результата — задай мне до 5 уточняющих вопросов, прежде чем отвечать.", "tip": "Последняя строка — ключевая: она включает режим диалога и резко повышает точность ответа.", "tags": ["формула", "роль", "контекст", "база"], "qw": "chat", "ds": "ok"}, {"id": "p121", "section": "basics", "cat": "base", "sub": "Универсальные формулы", "title": "Улучшатель промптов (мета-промпт)", "model": "any", "modelLabel": "любая LLM", "desc": "Пусть ИИ сам доработает ваш слабый промпт до сильного.", "prompt": "Ты — эксперт по промпт-инжинирингу. Вот мой промпт: «[вставить ваш промпт]».\n\n1. Оцени его: что понятно, что расплывчато, каких деталей не хватает;\n2. Перепиши его: добавь роль, контекст, конкретику задачи, формат результата, ограничения и, если уместно, пример ожидаемого ответа;\n3. Объясни, что именно ты улучшил и почему;\n4. Затем выполни улучшенный промпт.", "tip": null, "tags": ["мета-промпт", "улучшение", "промпт-инжиниринг"], "qw": "chat", "ds": "ok"}, {"id": "p122", "section": "basics", "cat": "base", "sub": "Универсальные формулы", "title": "Режим интервью", "model": "any", "modelLabel": "любая LLM", "desc": "ИИ сам вытаскивает из вас вводные — идеально, когда вы не знаете, как сформулировать задачу.", "prompt": "Я хочу получить от тебя [результат: текст / план / код / дизайн-концепцию] на тему [тема].\n\nНо прежде чем делать — проведи мне интервью: задавай по одному уточняющему вопросу за раз (цель, аудитория, ограничения, тон, примеры, что точно не нужно). Задай столько вопросов, сколько нужно для идеального результата, но не больше 10.\n\nКогда соберёшь достаточно информации — кратко перескажи моё ТЗ и только затем выполни задачу.", "tip": null, "tags": ["интервью", "уточнение", "бриф", "диалог"], "qw": "chat", "ds": "ok"}, {"id": "p123", "section": "basics", "cat": "base", "sub": "Качество ответа", "title": "Цикл «критик → улучшение»", "model": "any", "modelLabel": "любая LLM", "desc": "ИИ сам критикует свой ответ и доводит его до высокого уровня — вместо среднего первого черновика.", "prompt": "Выполни задачу: [задача].\n\nЗатем смени роль на строгого критика:\n1. Найди слабые места своего ответа (логика, полнота, убедительность, факты);\n2. Поставь оценку от 1 до 10;\n3. Перепиши ответ, устранив найденные недостатки.\n\nПовторяй цикл «критика → улучшение», пока оценка не достигнет 9+. Покажи финальную версию и кратко — что менялось на каждой итерации.", "tip": null, "tags": ["итерации", "критика", "качество", "самопроверка"], "qw": "chat", "ds": "ok"}, {"id": "p124", "section": "basics", "cat": "base", "sub": "Качество ответа", "title": "Пошаговое рассуждение", "model": "any", "modelLabel": "любая LLM", "desc": "Chain-of-thought: для задач с логикой, расчётами и сложными решениями снижает ошибки в разы.", "prompt": "Реши задачу пошагово: [задача].\n\n1. Сначала составь план рассуждений (какие шаги нужны);\n2. Выполняй каждый шаг отдельно, проверяя промежуточные результаты;\n3. Если шаг вызывает сомнение — рассмотри альтернативный вариант;\n4. В конце дай краткий ответ и перепроверь его обратным ходом.\n\nНе перескакивай через шаги и показывай ход мыслей.", "tip": null, "tags": ["логика", "пошагово", "chain of thought", "задачи"], "qw": "chat", "ds": "ok"}, {"id": "p125", "section": "basics", "cat": "base", "sub": "Качество ответа", "title": "Несколько подходов сразу", "model": "any", "modelLabel": "любая LLM", "desc": "Вместо одного «среднего» решения — веер вариантов с честными плюсами и минусами.", "prompt": "Дай [3–5] принципиально разных подхода к задаче: [задача].\n\nДля каждого подхода:\n- идея в 1–2 предложениях;\n- плюсы;\n- минусы и риски;\n- в каком случае он подходит лучше всего.\n\nЗатем порекомендуй лучший для моей ситуации: [описать ситуацию и ограничения] — и объясни выбор.", "tip": null, "tags": ["варианты", "сравнение", "выбор", "стратегия"], "qw": "chat", "ds": "ok"}];
+</script>
+<script>
+/* =====================================================================
+   «База промптов для ИИ» — общая логика разделов.
+   Ожидает глобальные переменные (встраиваются генератором до этого кода):
+     PAGE    = {section, tabs, cats:{key:{label,icon}}, catOrder:[...]}
+     PROMPTS = [ {id, cat, sub, title, model, modelLabel, desc, prompt,
+                  tip, tags, qw}, ... ]
+   Карточки уже отрендерены в HTML статически (для SEO и работы без JS) —
+   скрипт «оживляет» их (hydrate), а при фильтрации перерисовывает сетку.
+   ===================================================================== */
+(function(){
+"use strict";
+
+/* ---- Аналитика -------------------------------------------------------
+   Впишите номер счётчика Яндекс.Метрики и раскомментируйте ym() ниже.
+   События уже подключены: prompt_copy (копирование), empty_search
+   (поиск без результатов — готовый список тем для новых промптов).     */
+var YM_ID = 114035585; /* номер счётчика Яндекс.Метрики (совпадает со сниппетом в <body>) */
+function trackEvent(name, data){
+  try{
+    if(YM_ID && window.ym){ window.ym(YM_ID, "reachGoal", name, data || {}); }
+  }catch(e){}
+  try{
+    /* Google Analytics 4: работает, если в config.json задан ga_id и встроен gtag.js */
+    if(typeof window.gtag === "function"){ window.gtag("event", name, data || {}); }
+  }catch(e){}
+}
+
+var byId = {};
+PROMPTS.forEach(function(p){ byId[p.id] = p; });
+
+var CATS = PAGE.cats;
+var state = {cat:"all", sub:"all", q:""};
+var autoOpen = true; /* при поиске карточки раскрываются автоматически */
+
+var grid        = document.getElementById("grid");
+var chipsEl     = document.getElementById("chips");
+var chipsRow    = document.getElementById("chipsRow");
+var chipsToggle = document.getElementById("chipsToggle");
+var tabsEl      = document.getElementById("tabs");
+var resultsEl   = document.getElementById("results");
+var emptyEl     = document.getElementById("empty");
+var searchEl    = document.getElementById("search");
+
+/* ---- экранирование и подсветка [плейсхолдеров] (как в статике) ---- */
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function highlight(s){
+  return esc(s).replace(/\[([^\]\n]{1,120})\]/g,'<span class="ph">[$1]</span>');
+}
+
+function matches(p,q){
+  if(!q) return true;
+  q = q.toLowerCase();
+  return (p.title+" "+p.desc+" "+p.prompt+" "+p.sub+" "+p.tags.join(" ")+" "+(p.tip||"")+" "+p.modelLabel).toLowerCase().includes(q);
+}
+function getFiltered(){
+  var q = state.q.trim();
+  return PROMPTS.filter(function(p){
+    return (state.cat==="all"||p.cat===state.cat) &&
+           (state.sub==="all"||p.sub===state.sub) &&
+           matches(p,q);
+  });
+}
+
+/* ---- табы (кнопки с aria-pressed) ---- */
+function renderTabs(){
+  if(!tabsEl) return;
+  if(!PAGE.tabs){ tabsEl.hidden = true; return; }
+  tabsEl.innerHTML = "";
+  PAGE.catOrder.forEach(function(key){
+    var c = PROMPTS.filter(function(p){return key==="all"||p.cat===key;}).length;
+    var el = document.createElement("button");
+    el.type = "button";
+    el.className = "tab" + (state.cat===key ? " active" : "");
+    el.setAttribute("aria-pressed", String(state.cat===key));
+    el.innerHTML = CATS[key].icon+" "+CATS[key].label+'<span class="cnt">'+c+'</span>';
+    el.onclick = function(){ state.cat=key; state.sub="all"; renderTabs(); renderChips(); renderGrid(); };
+    tabsEl.appendChild(el);
+  });
+}
+
+/* ---- чипсы подразделов ---- */
+function renderChips(){
+  if(!chipsEl || !chipsRow) return;
+  chipsEl.innerHTML = "";
+  var subs = [];
+  PROMPTS.forEach(function(p){
+    if((state.cat==="all"||p.cat===state.cat) && subs.indexOf(p.sub)<0) subs.push(p.sub);
+  });
+  if(subs.length < 2){ chipsRow.classList.add("no-sub"); return; }
+  chipsRow.classList.remove("no-sub");
+  function mk(label,val){
+    var el = document.createElement("button");
+    el.type = "button";
+    el.className = "chip" + (state.sub===val ? " active" : "");
+    el.setAttribute("aria-pressed", String(state.sub===val));
+    el.textContent = label;
+    el.onclick = function(){ state.sub=val; renderChips(); renderGrid(); closeChipsMobile(); };
+    chipsEl.appendChild(el);
+  }
+  mk("Все подразделы","all");
+  subs.forEach(function(s){ mk(s,s); });
+}
+/* на телефоне выпадающий список подразделов закрывается после выбора */
+function closeChipsMobile(){
+  if(chipsEl && window.matchMedia("(max-width: 640px)").matches){
+    chipsEl.classList.remove("open");
+    if(chipsToggle) chipsToggle.setAttribute("aria-expanded","false");
+  }
+}
+
+/* ---- иконки и пилюли совместимости (идентичны статической сборке) ---- */
+var CHEV = "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg>";
+var COPY_IC = "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>";
+var DONE_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>';
+function qpillHtml(p){
+  var out = "";
+  if(p.qw==="chat") out += "<span class='qpill full' title='Работает в Qwen Chat без изменений'>Qwen ✓</span>";
+  if(p.qw==="img")  out += "<span class='qpill full' title='Работает в Qwen-Image без изменений'>Qwen-Image ✓</span>";
+  if(p.qw==="core") out += "<span class='qpill core' title='Описательная часть промпта работает в Qwen-Image; параметры --ar / --niji / --style raw специфичны для Midjourney — размер и стиль в Qwen задаются в интерфейсе или API'>→ Qwen-Image</span>";
+  if(p.ds==="ok")   out += "<span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span>";
+  if(p.ds==="think")out += "<span class='dspill note' title='Ключи /think и /no_think специфичны для Qwen. Аналог в DeepSeek: переключатель DeepThink (R1) в чате или выбор модели в API — deepseek-reasoner / deepseek-chat'>DeepSeek: аналог</span>";
+  if(p.ds==="ctx")  out += "<span class='dspill note' title='Контекст DeepSeek — до 128K токенов, а не 1M: очень длинные документы разбивайте на части и подавайте последовательно с промежуточными выжимками'>DeepSeek: 128K</span>";
+  if(p.ds==="json") out += "<span class='dspill note' title='Надёжный JSON даёт DeepSeek-V3 (deepseek-chat) с response_format: json_object; слово «JSON» в промпте уже есть — это обязательное условие JSON-режима DeepSeek. В R1 рассуждения могут примешиваться к ответу'>DeepSeek: V3</span>";
+  return out;
+}
+
+/* ---- поведение карточки (общее для статики и перерисовки) ---- */
+function attachCard(card, p){
+  var head = card.querySelector(".card-head");
+  var toggle = function(){
+    card.classList.toggle("open");
+    p._open = card.classList.contains("open");
+    head.setAttribute("aria-expanded", String(p._open));
+  };
+  head.addEventListener("click", toggle);
+  head.addEventListener("keydown", function(e){
+    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); }
+  });
+  var btn = card.querySelector(".copy-btn");
+  if(btn) btn.addEventListener("click", function(){ copyPrompt(p, btn); });
+}
+
+/* ---- «оживление» статически отрендеренных карточек ---- */
+function hydrate(){
+  grid.querySelectorAll(".card[data-id]").forEach(function(card){
+    var p = byId[card.getAttribute("data-id")];
+    if(!p) return;
+    p._open = card.classList.contains("open");
+    attachCard(card, p);
+  });
+}
+
+/* ---- перерисовка сетки (при фильтрации/поиске) ---- */
+function renderGrid(){
+  var q = state.q.trim();
+  var list = getFiltered();
+  grid.innerHTML = "";
+  grid.removeAttribute("data-prerendered");
+  emptyEl.style.display = list.length ? "none" : "block";
+  resultsEl.textContent = (list.length===PROMPTS.length && !q)
+    ? "Показаны все "+list.length+" промпта"
+    : "Найдено: "+list.length;
+  if(!list.length && q) trackEvent("empty_search", {q:q, section:PAGE.section});
+
+  var lastSub = null;
+  list.forEach(function(p){
+    if(state.sub==="all" && p.sub!==lastSub){
+      lastSub = p.sub;
+      var h = document.createElement("div");
+      h.className = "section-head";
+      h.innerHTML = "<h2>"+CATS[p.cat].icon+" "+p.sub+"</h2><div class='line' aria-hidden='true'></div>";
+      grid.appendChild(h);
+    }
+    var isOpen = !!p._open || (!!q && autoOpen);
+    var bodyId = "body-"+p.id;
+    var card = document.createElement("article");
+    card.className = "card"+(isOpen?" open":"");
+    card.id = p.id;
+    card.setAttribute("data-id", p.id);
+    card.innerHTML =
+      "<div class='card-head' role='button' tabindex='0' aria-expanded='"+isOpen+"' aria-controls='"+bodyId+"'>"+
+        "<div class='head-main'>"+
+          (state.sub!=="all" ? "<div class='sub-name'>"+esc(p.sub)+"</div>" : "")+
+          "<div class='card-top'><h3>"+esc(p.title)+"</h3><div class='badges'><span class='badge "+p.model+"'>"+esc(p.modelLabel)+"</span>"+qpillHtml(p)+"</div></div>"+
+          "<p class='desc'>"+esc(p.desc)+"</p>"+
+        "</div>"+
+        "<span class='chev'>"+CHEV+"</span>"+
+      "</div>"+
+      "<div class='card-body' id='"+bodyId+"'>"+
+        "<div class='prompt-wrap'><pre class='prompt'>"+highlight(p.prompt)+"</pre>"+
+          "<button class='copy-btn' type='button'>"+COPY_IC+"Копировать</button>"+
+        "</div>"+
+        (p.tip ? "<div class='tip'>💡 "+p.tip+"</div>" : "")+
+        "<div class='tags'>"+p.tags.map(function(t){return "<span class='tag'>#"+t+"</span>";}).join("")+"</div>"+
+      "</div>";
+    attachCard(card, p);
+    grid.appendChild(card);
+  });
+}
+
+/* ---- развернуть / свернуть все ---- */
+document.getElementById("expandAll").addEventListener("click", function(){
+  getFiltered().forEach(function(p){ p._open = true; });
+  renderGrid();
+});
+document.getElementById("collapseAll").addEventListener("click", function(){
+  /* P0-фикс: сворачивание больше НЕ очищает строку поиска */
+  PROMPTS.forEach(function(p){ p._open = false; });
+  autoOpen = false;
+  renderGrid();
+});
+
+/* ---- копирование с fallback для старых браузеров ---- */
+function copyPrompt(p, btn){
+  var text = p.prompt;
+  var restore = function(){
+    btn.classList.remove("done");
+    btn.innerHTML = COPY_IC+"Копировать";
+  };
+  var done = function(ok){
+    if(ok){
+      btn.classList.add("done");
+      btn.innerHTML = DONE_IC+"Скопировано";
+      toast("Промпт скопирован в буфер обмена ✓");
+      trackEvent("prompt_copy", {id:p.id, title:p.title, section:PAGE.section});
+      setTimeout(restore, 2000);
+    }else{
+      legacyCopy(text, btn);
+    }
+  };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(function(){done(true);}).catch(function(){done(false);});
+  }else{
+    done(false);
+  }
+}
+function legacyCopy(text, btn){
+  try{
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    var ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    if(ok){ toast("Промпт скопирован ✓"); }
+    else{ selectPrompt(btn); }
+  }catch(e){ selectPrompt(btn); }
+}
+function selectPrompt(btn){
+  var pre = btn.parentElement.querySelector("pre");
+  var r = document.createRange(); r.selectNodeContents(pre);
+  var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  toast("Выделите текст и нажмите Ctrl+C");
+}
+
+/* ---- тост (aria-live объявляет его скринридерам) ---- */
+var toastT;
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ t.classList.remove("show"); }, 2200);
+}
+
+/* ---- поиск: debounce 150 мс, хоткей «/», Escape — сброс ---- */
+var searchT;
+searchEl.addEventListener("input", function(e){
+  autoOpen = true;
+  clearTimeout(searchT);
+  searchT = setTimeout(function(){ state.q = e.target.value; renderGrid(); }, 150);
+});
+document.addEventListener("keydown", function(e){
+  if(e.key==="/" && document.activeElement!==searchEl){ e.preventDefault(); searchEl.focus(); }
+  if(e.key==="Escape" && document.activeElement===searchEl){ searchEl.value=""; state.q=""; autoOpen=true; renderGrid(); searchEl.blur(); }
+});
+
+/* ---- подразделы на мобильных: кнопка-тумблер ---- */
+if(chipsToggle){
+  chipsToggle.addEventListener("click", function(){
+    var open = chipsEl.classList.toggle("open");
+    chipsToggle.setAttribute("aria-expanded", String(open));
+  });
+}
+
+/* ---- кнопка «наверх» ---- */
+var toTop = document.getElementById("toTop");
+window.addEventListener("scroll", function(){
+  toTop.style.display = window.scrollY>600 ? "flex" : "none";
+}, {passive:true});
+toTop.onclick = function(){ window.scrollTo({top:0, behavior:"smooth"}); };
+
+/* ---- инициализация ----
+   Поддержка deep-link вида photo.html?q=реставрация —
+   используется главной страницей и внешними ссылками. */
+var urlQ = new URLSearchParams(location.search).get("q");
+renderTabs();
+renderChips();
+if(urlQ){
+  searchEl.value = urlQ;
+  state.q = urlQ;
+  renderGrid();
+}else if(grid.getAttribute("data-prerendered")==="1"){
+  hydrate();          /* статические карточки: только навешиваем обработчики */
+}else{
+  renderGrid();
+}
+
+})();
+
+</script>
+</body>
+</html>

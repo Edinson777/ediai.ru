@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Clean-param: q
+
+Sitemap: https://ediai.ru/sitemap.xml

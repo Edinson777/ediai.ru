@@ -1,0 +1,423 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИИ в личной жизни — база из 56 идей</title>
+<style>
+  :root{
+    --bg:#0b0e14; --bg2:#11151f; --card:#161b28; --card2:#1b2133;
+    --line:#252d42; --txt:#e8ecf5; --mut:#93a0b8; --acc:#6c8cff;
+    --acc2:#8b6cff; --ok:#3ecf8e; --warn:#ffb454; --danger:#ff6b81; --star:#ffc94d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.55}
+  a{color:var(--acc);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* HERO */
+  header{position:relative;overflow:hidden;padding:64px 0 44px;background:
+    radial-gradient(900px 420px at 15% -10%, rgba(108,140,255,.22), transparent 60%),
+    radial-gradient(800px 400px at 90% 0%, rgba(139,108,255,.18), transparent 55%),
+    linear-gradient(180deg,var(--bg2),var(--bg))}
+  .kicker{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);
+    border:1px solid rgba(108,140,255,.35);background:rgba(108,140,255,.08);padding:5px 12px;border-radius:99px;margin-bottom:18px}
+  h1{font-size:clamp(28px,4.4vw,46px);line-height:1.15;font-weight:800;letter-spacing:-.02em}
+  h1 span{background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:14px;color:var(--mut);font-size:17px;max-width:760px}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:34px}
+  .stat{background:rgba(22,27,40,.7);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .stat b{display:block;font-size:26px;font-weight:800;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat span{font-size:13px;color:var(--mut)}
+  .stat i{display:block;font-size:11px;color:#5d6a85;margin-top:6px;font-style:normal}
+
+  /* TOOLBAR */
+  .toolbar{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 0}
+  .toolbar .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .search{flex:1;min-width:220px;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 14px}
+  .search input{flex:1;background:none;border:none;outline:none;color:var(--txt);font-size:14px}
+  .search svg{flex:none;opacity:.55}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--mut);font-size:13px;padding:7px 14px;border-radius:99px;transition:.15s;user-select:none}
+  .chip:hover{border-color:var(--acc);color:var(--txt)}
+  .chip.active{background:linear-gradient(90deg,var(--acc),var(--acc2));border-color:transparent;color:#fff;font-weight:600}
+  .chip.fav.active{background:linear-gradient(90deg,#e0a62f,var(--star));color:#241a00}
+  .count{font-size:13px;color:var(--mut);margin-left:auto;white-space:nowrap}
+  .tbtns{display:flex;gap:6px}
+  .tbtn{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--mut);font-size:12.5px;padding:7px 12px;border-radius:9px;transition:.15s;user-select:none;white-space:nowrap}
+  .tbtn:hover{border-color:var(--acc);color:var(--txt)}
+
+  /* SECTION */
+  section.cat{padding:44px 0 8px}
+  .cat-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+  .cat-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:23px;flex:none;
+    background:linear-gradient(135deg,rgba(108,140,255,.18),rgba(139,108,255,.14));border:1px solid var(--line)}
+  .cat-head h2{font-size:24px;font-weight:800;letter-spacing:-.01em}
+  .cat-head p{color:var(--mut);font-size:14px;margin-top:2px}
+
+  /* CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;margin-top:18px;align-items:start}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;transition:border-color .18s, background .18s}
+  .card:hover{border-color:rgba(108,140,255,.5);background:var(--card2)}
+  .card.is-fav{border-color:rgba(255,201,77,.55)}
+  .card.open{background:var(--card2)}
+  .card-head{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;user-select:none}
+  .card-head h3{font-size:15px;font-weight:700;flex:1;line-height:1.35}
+  .num{font-size:11px;color:var(--acc);border:1px solid rgba(108,140,255,.4);border-radius:6px;padding:1px 6px;flex:none;font-weight:700}
+  .fav-btn{flex:none;width:30px;height:30px;border-radius:8px;border:1px solid transparent;background:none;cursor:pointer;font-size:17px;line-height:1;
+    color:#4a5672;transition:.15s;display:flex;align-items:center;justify-content:center}
+  .fav-btn:hover{background:rgba(255,201,77,.12);color:var(--star)}
+  .card.is-fav .fav-btn{color:var(--star)}
+  .chev{flex:none;width:22px;height:22px;display:flex;align-items:center;justify-content:center;color:var(--mut);transition:transform .22s;font-size:12px}
+  .card.open .chev{transform:rotate(180deg)}
+  .card-body{display:none;padding:2px 16px 16px;flex-direction:column;gap:10px}
+  .card.open .card-body{display:flex}
+  .card-body p{font-size:13.5px;color:var(--mut)}
+  .prompt{background:#0d1119;border:1px dashed #2c3852;border-radius:10px;padding:10px 12px;font-size:12.5px;color:#b8c4dc;font-style:italic}
+  .prompt b{color:var(--acc);font-style:normal;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .tag{font-size:11px;padding:3px 9px;border-radius:99px;background:rgba(108,140,255,.1);border:1px solid rgba(108,140,255,.25);color:#a9bcff}
+  .tag.easy{background:rgba(62,207,142,.08);border-color:rgba(62,207,142,.3);color:#7ce0b4}
+  .tag.mid{background:rgba(255,180,84,.08);border-color:rgba(255,180,84,.3);color:#ffcf8a}
+  .tag.hard{background:rgba(255,107,129,.08);border-color:rgba(255,107,129,.3);color:#ff9dab}
+
+  .hidden{display:none !important}
+  .empty{padding:60px 20px;text-align:center;color:var(--mut);font-size:15px}
+
+  /* CALLOUTS */
+  .callout{border-radius:14px;padding:16px 18px;font-size:14px;margin:18px 0;border:1px solid}
+  .callout.warn{background:rgba(255,180,84,.07);border-color:rgba(255,180,84,.35);color:#ffd9a0}
+  .callout.danger{background:rgba(255,107,129,.07);border-color:rgba(255,107,129,.35);color:#ffc2ca}
+  .callout b{color:#fff}
+
+  /* TIPS */
+  .tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:20px}
+  .tip{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .tip b{display:block;font-size:14.5px;margin-bottom:6px;color:var(--txt)}
+  .tip span{font-size:13px;color:var(--mut)}
+  .tip .n{font-size:22px;font-weight:800;color:var(--acc);margin-right:6px}
+
+  /* SOURCES */
+  .sources{background:var(--bg2);border-top:1px solid var(--line);padding:44px 0;margin-top:56px}
+  .sources h2{font-size:20px;margin-bottom:6px}
+  .sources .sr-note{font-size:13px;color:var(--mut);margin-bottom:16px}
+  .src-group{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin:20px 0 8px;font-weight:700}
+  .sources ul{list-style:none;display:grid;gap:8px}
+  .sources li{font-size:13.5px;color:var(--mut);padding-left:18px;position:relative}
+  .sources li::before{content:"→";position:absolute;left:0;color:var(--acc)}
+  footer{padding:26px 0 40px;text-align:center;color:#5d6a85;font-size:12.5px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="kicker">Исследование · Октябрь 2026</span>
+    <h1>ИИ в личной жизни:<br><span>база из 56 практических идей</span></h1>
+    <p class="sub">Как обычные люди уже сегодня используют нейросети вне работы — для быта, здоровья, финансов, учёбы, творчества и семьи. По данным исследования OpenAI и NBER (2025), <b>около 70% всех запросов к ChatGPT — нерабочие</b>: учёба, советы по жизни, творчество и общение. Нажимайте на карточку, чтобы раскрыть описание и пример запроса; отмечайте звёздочкой то, что хотите попробовать — избранное сохраняется в браузере.</p>
+
+    <div class="stats">
+      <div class="stat"><b>~70%</b><span>запросов к ChatGPT не связаны с работой (личные темы, учёба, творчество)</span><i>OpenAI + NBER, «How People Use ChatGPT», 2025</i></div>
+      <div class="stat"><b>~1,5 млрд</b><span>человек ежемесячно пользуются ИИ-сервисами в мире</span><i>DataReportal, 2026</i></div>
+      <div class="stat"><b>49%</b><span>взрослых в США используют ИИ-чат-боты (33% в 2024)</span><i>Pew Research Center, июнь 2026</i></div>
+      <div class="stat"><b>4 из 5</b><span>студентов используют генеративный ИИ в учёбе</span><i>Stanford HAI, AI Index 2026</i></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="text" placeholder="Поиск по идеям: «бюджет», «язык», «фото»…">
+    </label>
+    <div class="tbtns">
+      <span class="tbtn" id="expandAll">▤ Развернуть все</span>
+      <span class="tbtn" id="collapseAll">▥ Свернуть все</span>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="count" id="count"></div>
+  </div>
+</div>
+
+<main class="wrap" id="main"></main>
+
+<div class="wrap">
+  <div class="empty hidden" id="empty">😕 Ничего не найдено. Попробуйте другой запрос или сбросьте фильтр.</div>
+</div>
+
+<section class="wrap" style="padding:56px 20px 0">
+  <div class="cat-head" style="margin-bottom:4px">
+    <div class="cat-icon">⚖️</div>
+    <div><h2>Ограничения и безопасность</h2><p>Что важно помнить, доверяя ИИ личные задачи</p></div>
+  </div>
+  <div class="callout danger"><b>Здоровье.</b> ИИ-симптом-чекеры (Ada Health и др.) помогают решить, нужен ли врач, но <b>не заменяют диагностику</b>. При серьёзных симптомах — всегда к специалисту.</div>
+  <div class="callout warn"><b>Психика.</b> ИИ-компаньоны и чат-боты поддержки (Wysa, Youper) помогают при стрессе, но исследование MIT/OpenAI показало: у тяжёлых пользователей чувство одиночества может <b>усиливаться</b>. Используйте как дополнение, а не замену живому общению и терапии.</div>
+  <div class="callout warn"><b>Приватность.</b> Не загружайте в публичные чат-боты паспортные данные, номера карт, медицинские карты и чужие персональные данные. Для документов используйте локальные модели или сервисы с политикой необучения на ваших данных.</div>
+  <div class="callout warn"><b>Факты и деньги.</b> ИИ галлюцинирует: проверяйте юридические формулировки, суммы, даты и рекомендации. Финансовые решения принимайте сами — ИИ лишь структурирует информацию.</div>
+</section>
+
+<section class="wrap" style="padding:44px 20px 0">
+  <div class="cat-head" style="margin-bottom:4px">
+    <div class="cat-icon">💡</div>
+    <div><h2>Как выжать из ИИ максимум</h2><p>6 правил, которые превращают «игрушку» в личного помощника</p></div>
+  </div>
+  <div class="tips">
+    <div class="tip"><b><span class="n">1</span>Давайте контекст</b><span>«Мне 34, двое детей, бюджет 15 000 ₽/нед на еду» работает в 10 раз лучше, чем «составь меню».</span></div>
+    <div class="tip"><b><span class="n">2</span>Просите роль</b><span>«Ты — опытный диетолог / юрист по договорам аренды / тренер по бегу» задаёт уровень и формат ответа.</span></div>
+    <div class="tip"><b><span class="n">3</span>Итерации вместо одного запроса</b><span>Первый ответ — черновик. Уточняйте: «короче», «добавь вариант для вегетарианца», «пересчитай на 4 порции».</span></div>
+    <div class="tip"><b><span class="n">4</span>Загружайте свои данные</b><span>Фото холодильника, выписка расходов, скан договора, планировка квартиры — мультимодальные модели это умеют.</span></div>
+    <div class="tip"><b><span class="n">5</span>Проверяйте важное</b><span>Юридические условия, медицинские дозировки, цены и расписания — всегда перепроверяйте по первоисточнику.</span></div>
+    <div class="tip"><b><span class="n">6</span>Стройте привычки</b><span>Самый большой эффект — от регулярности: утренний брифинг, дневник вечером, планирование недели в воскресенье.</span></div>
+  </div>
+</section>
+
+<div class="sources">
+  <div class="wrap">
+    <h2>📚 Источники</h2>
+    <p class="sr-note">Исследования, опросы и практические обзоры, использованные при составлении базы (проверено 29.10.2026).</p>
+
+    <div class="src-group">Исследования и статистика</div>
+    <ul>
+      <li><a href="https://www.nber.org/system/files/working_papers/w34255/w34255.pdf">Chatterji A. et al. (OpenAI + NBER) — How People Use ChatGPT, Working Paper №34255 (сент. 2025)</a> — анализ ~1,5 млн диалогов: ~70% использования ChatGPT не связано с работой; личные темы, учёба, письмо и советы — крупнейшие категории.</li>
+      <li><a href="https://www.pewresearch.org/internet/2026-06-17/americans-and-ai-2026-chatbots-smart-devices-and-views-on-impact/">Pew Research Center — Americans and AI 2026: Chatbots, Smart Devices and Views on Impact (июнь 2026)</a> — 49% взрослых США используют ИИ-чат-боты (рост с 33% в 2024); 13% получают через них новости.</li>
+      <li><a href="https://qz.com/young-americans-ai-excitement-faded-pew-survey-2026">Quartz — Young Americans and AI: 10 findings from Pew's 2026 survey</a> — большинство американцев до 30 лет пользуются чат-ботами, но энтузиазм снижается.</li>
+      <li><a href="https://www.digitalapplied.com/blog/pew-americans-and-ai-2026-data-marketing-implications">Digital Applied — Pew: Half of Americans Now Use AI Chatbots in 2026 (июнь 2026)</a> — разбор данных Pew: 60% читают ИИ-саммари в поиске.</li>
+      <li><a href="https://hai.stanford.edu/ai-index/2026-ai-index-report">Stanford HAI — AI Index Report 2026</a> — 4 из 5 студентов используют генеративный ИИ; оценка ценности ИИ-инструментов для потребителей.</li>
+      <li><a href="https://www.sostav.ru/blogs/280930/98524">Sostav / DataReportal (июль 2026)</a> — ~1,5 млрд человек ежемесячно обращаются к ИИ-сервисам; самые активные группы пользователей.</li>
+    </ul>
+
+    <div class="src-group">Ментальное здоровье и психология (научные работы)</div>
+    <ul>
+      <li><a href="https://formative.jmir.org/2026/1/e86904">Callahan C. et al., JMIR Formative Research (2026) — Real-World Use of a Mental Health AI Companion</a> — дневниковое исследование: когда и зачем люди обращаются к ИИ-компаньонам (стресс, утро, дорога).</li>
+      <li><a href="https://www.mentalhealthjournal.org/articles/minds-in-crisis-how-the-ai-revolution-is-impacting-mental-health.html">Head K.R., Mental Health Journal (2025) — Minds in Crisis: How the AI Revolution is Impacting Mental Health</a> — 12% уязвимых пользователей приходят в ИИ-компаньоны именно ради поддержки; риски при интенсивном использовании (включая данные MIT/OpenAI об одиночестве).</li>
+      <li><a href="https://scholarspace.manoa.hawaii.edu/server/api/core/bitstreams/e0b4f8c1-3d54-4821-a9fa-72275f32e991/content">Jia S. et al. (HICSS, Univ. of Hawaii) — AI-Driven Grief Chatbots: Transforming Grief Management</a> — кейсы применения чат-ботов в проживании горя.</li>
+      <li><a href="https://dl.designresearchsociety.org/cgi/viewcontent.cgi?article=1546&context=iasdr">IAsDR / Design Research Society (2025) — AI as a Healing Companion: Exploring Chatbot Design for Adolescents</a> — как дизайн чат-бота влияет на терапевтический эффект у подростков.</li>
+      <li><a href="https://medium.com/@briansolis/from-productivity-to-purpose-ais-surprising-new-use-cases-in-our-personal-and-professional-lives-e5d62c4311e4">Brian Solis — From Productivity to Purpose: AI's Surprising New Use Cases (Medium)</a> — тренд на использование ИИ для самопознания, рефлексии и осмысления опыта.</li>
+    </ul>
+
+    <div class="src-group">Практика: быт, здоровье, финансы, учёба</div>
+    <ul>
+      <li><a href="https://www.dume.ai/blog/how-to-use-ai-in-daily-life-25-examples-2025">Dume.ai — 25 Real Examples of AI in Daily Life (обновлено для 2026)</a> — 25 бытовых кейсов с инструментами; статистика экономии времени (~1 час/день).</li>
+      <li><a href="https://career.hh.ru/article/kak-ispolzovat-nejroset-v-povsednevnoj-zhizni">hh.ru Журнал — Как использовать нейросеть в повседневной жизни (2026)</a> — быт, планирование, путешествия, языки, творчество: обзор для новичков.</li>
+      <li><a href="https://immune.institute/en/blog/7-ejemplos-de-uso-de-inteligencia-artificial-en-nuestro-dia-a-dia/">Immune Institute — 7 examples of AI in everyday life</a> — ИИ-ассистенты и «ИИ в кармане»: смартфон как личный помощник.</li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10436119/">Amiri M. et al. (2023) — Personalized Flexible Meal Planning for Individuals with Diet-Related Health Conditions</a> — научная работа об ИИ-планировщике питания (71 цитирование).</li>
+      <li><a href="https://www.foodunfolded.com/article/my-week-of-ai-meal-prep-can-chatgpt-be-a-personal-chef-and-nutritionist">Food Unfolded — My Week of AI Meal Prep: Can ChatGPT Be a Personal Chef and Nutritionist? (2025)</a> — недельный эксперимент журналиста с ИИ-меню.</li>
+      <li><a href="https://www.anfponline.org/news-resources/top-10-resource-lists/top-10-ways-to-utilize-artificial-intelligence-(ai)-for-recipes-and-meal-planning">ANFP — Top 10 Ways to Utilize AI for Recipes and Meal Planning</a> — ИИ в планировании питания: анализ нутриентов, персонализация.</li>
+      <li><a href="https://www.wealthenhancement.com/blog/best-ai-assistants-for-personal-finance">Wealth Enhancement — Best AI Tools for Personal Finance (дек. 2025)</a> — ИИ для организации финансовых документов, подготовки к встрече с советником, постановки целей.</li>
+      <li><a href="https://sbersova.ru/sections/lifestyle/neyroset-dlya-zhizni-uchitsya-risovat-govorit">СберСова — Как использовать нейросеть с пользой: ИИ для учёбы и жизни</a> — русскоязычный обзор бытовых и учебных сценариев.</li>
+      <li><a href="https://eandsdjournal.kpfu.ru/en/wp-content/uploads/sites/2/2025/07/%D0%9E%D0%B8%D0%A1_20_2-2025_97-109.pdf">Андреева Ю.В. (КФУ, 2025) — Влияние бытового искусственного интеллекта на развитие ребёнка</a> — российское исследование о «бытовом ИИ» и детях.</li>
+      <li><a href="https://makingfamilyhistory.com/responsible-ai-photo-restoration/">Making Family History — Responsible AI Photo Restoration (2025)</a> — реставрация семейных архивов: возможности и этические риски (изменение исторических деталей).</li>
+      <li><a href="https://www.reddit.com/r/automation/comments/1s160fh/what_ai_stuff_are_you_guys_actually_using_for/">Reddit r/automation — «What AI stuff are you guys actually using for personal life»</a> — живые пользовательские кейсы: утренние брифинги, бюджет, автоматизации дома.</li>
+      <li><a href="https://cloud.google.com/transform/101-real-world-generative-ai-use-cases-from-industry-leaders">Google Cloud — 101 Real-World Generative AI Use Cases (2026)</a> — для контекста: как те же технологии применяются компаниями (Uber, Workspace+Gemini).</li>
+    </ul>
+  </div>
+</div>
+
+<footer>База идей «ИИ в личной жизни» · составлена 29.10.2026 · данные из открытых источников, проверены на дату составления</footer>
+
+<script>
+const CATS = [
+ {id:"home", icon:"🏠", title:"Дом и быт", desc:"Еда, ремонт, покупки, организация пространства"},
+ {id:"finance", icon:"💰", title:"Финансы", desc:"Бюджет, накопления, налоги, крупные покупки"},
+ {id:"health", icon:"🏃", title:"Здоровье и спорт", desc:"Тренировки, питание, сон, профилактика"},
+ {id:"mind", icon:"🧘", title:"Психология и саморефлексия", desc:"Дневник, стресс, привычки, осознанность"},
+ {id:"learn", icon:"📚", title:"Учёба и саморазвитие", desc:"Языки, курсы, книги, новые навыки"},
+ {id:"travel", icon:"✈️", title:"Путешествия", desc:"Маршруты, документы, язык, локальные лайфхаки"},
+ {id:"creative", icon:"🎨", title:"Творчество и хобби", desc:"Тексты, фото, музыка, дизайн, семейный архив"},
+ {id:"family", icon:"👨‍👩‍👧", title:"Семья и дети", desc:"Учёба детей, игры, праздники, семейные дела"},
+ {id:"docs", icon:"📄", title:"Документы и бюрократия", desc:"Договоры, заявления, письма, резюме"},
+ {id:"time", icon:"⏰", title:"Время и продуктивность", desc:"Планирование, почта, рутина, решения"},
+];
+
+const IDEAS = [
+ // ─── ДОМ И БЫТ ───
+ {c:"home",t:"Меню из того, что есть в холодильнике",d:"Сфотографируйте полки холодильника или перечислите продукты — ИИ соберёт ужин на вечер и план на неделю, чтобы ничего не пропало. В научной работе Amiri et al. (2023) такой подход доказанно улучшает качество питания.",p:"«Вот фото моего холодильника. Составь 3 ужина на сегодня из этих продуктов, на 2 порции, до 40 минут каждый. Добавь список того, что нужно докупить».",tags:["мультимодально","экономия"],lv:"easy"},
+ {c:"home",t:"Личный нутрициолог: план питания под цель",d:"ИИ составляет сбалансированный план под ваши ограничения (аллергии, вегетарианство, диабет), бюджет и вкусы, с расчётом КБЖУ и списком покупок. Журналист Food Unfolded неделю жила по плану ChatGPT и подтвердила работоспособность подхода.",p:"«Составь меню на неделю: 2200 ккал, без лактозы, бюджет 8000 ₽, готовить не больше 1 часа в день. Таблица: приём пищи / блюда / граммовка / КБЖУ».",tags:["питание","планы"],lv:"easy"},
+ {c:"home",t:"План ремонта или переезда",d:"Нейросеть разложит большой проект на этапы со сроками, сметой и списком подрядчиков — кейс, который hh.ru называет одним из самых популярных бытовых применений ИИ.",p:"«Двушка 54 м², косметический ремонт, бюджет 400 тыс ₽, живём в квартире во время ремонта. Сделай поэтапный план с порядком работ, примерной сметой и что можно сделать самому».",tags:["планы","смета"],lv:"mid"},
+ {c:"home",t:"Визуализация интерьера",d:"Загрузите фото комнаты — ИИ покажет, как она будет выглядеть в разных стилях, подберёт цветовую схему и конкретную мебель под ваш бюджет.",p:"«Вот фото моей гостиной. Покажи 3 варианта в скандинавском стиле с бюджетом до 100 тыс ₽ на мебель. Опиши, где что купить».",tags:["мультимодально","дизайн"],lv:"easy"},
+ {c:"home",t:"Переводчик инструкций и «что значит эта ошибка»",d:"Сфотографируйте панель стиральной машины с кодом ошибки или страницу инструкции на китайском — ИИ объяснит, что делать, и найдёт вероятную причину.",p:"«Вот фото: посудомойка Bosch показывает E15. Что это значит, опасно ли, и что я могу сделать сам до вызова мастера?»",tags:["мультимодально","лайфхаки"],lv:"easy"},
+ {c:"home",t:"Разбор шкафа и капсульный гардероб",d:"Фото вещей → ИИ составит комплекты на неделю, определит недостающие базовые вещи и подскажет, что пора отдать.",p:"«Вот 15 фото моих вещей. Собери капсульный гардероб на осень: 10 образов, список 3–4 вещей, которых не хватает».",tags:["мультимодально","стиль"],lv:"easy"},
+ {c:"home",t:"Умный дом и экономия энергии",d:"Умные термостаты (Nest, Ecobee) учатся вашему расписанию и, по данным Dume.ai, экономят до 66 минут управления в день и заметно снижают счета. ИИ-ассистент поможет настроить сценарии и разобраться в тарифах.",p:"«У меня электрокотёл и двухтарифный счётчик. Вот мой график жизни на неделе. Предложи сценарии нагрева, чтобы платить меньше».",tags:["умный дом","экономия"],lv:"mid"},
+ {c:"home",t:"Уборка и организация пространства",d:"ИИ построит реалистичный график уборки под вашу занятость и площадь дома, а также поможет расхламиться по методам вроде «5 коробок».",p:"«Трёхкомнатная квартира, двое детей, я работаю полностью удалённо. Составь систему уборки: 15 минут в день + час в субботу. Кто за что отвечает».",tags:["планы","привычки"],lv:"easy"},
+
+ // ─── ФИНАНСЫ ───
+ {c:"finance",t:"Анализ выписки по карте",d:"Загрузите CSV-выписку (обезличенную!) — ИИ разложит траты по категориям, найдёт «дыры» и подписки, о которых вы забыли. Wealth Enhancement (2025) называет это базовым кейсом ИИ в личных финансах.",p:"«Вот выписка за 3 месяца. Категоризируй траты, посчитай среднее по категориям, найди повторяющиеся списания и дай 5 конкретных идей, где сэкономить».",tags:["анализ","экономия"],lv:"mid"},
+ {c:"finance",t:"Финансовый план под цель",d:"Квартира, подушка безопасности, пенсия — ИИ посчитает, сколько откладывать ежемесячно с учётом инфляции и доходности, и построит несколько сценариев.",p:"«Мне 30, доход 180 тыс ₽, хочу первоначальный взнос 2 млн через 4 года. Посчитай 3 сценария накоплений: консервативный, умеренный, агрессивный».",tags:["планы","инвестиции"],lv:"mid"},
+ {c:"finance",t:"Сравнение крупных покупок",d:"Вместо часов чтения отзывов: ИИ сравнит 3–5 моделей техники или автомобилей по вашим критериям и укажет, за что не стоит переплачивать.",p:"«Сравни эти 3 робот-пылесоса для квартиры 70 м² с коврами и собакой. Таблица: цена / мощность / мытьё полов / стоимость расходников / вердикт».",tags:["покупки","анализ"],lv:"easy"},
+ {c:"finance",t:"Подготовка к разговору с финансовым советником",d:"Кейс Wealth Enhancement: ИИ структурирует ваши цели и готовит список умных вопросов, чтобы встреча с профессионалом прошла максимально полезно.",p:"«У меня встреча с финансовым советником. Вот моя ситуация… Составь список из 10 вопросов, которые стоит задать, и чего избегать в его ответах».",tags:["подготовка"],lv:"easy"},
+ {c:"finance",t:"Налоги и декларации",d:"ИИ объяснит, какие вычеты вам положены (ИИС, лечение, обучение, спорт), поможет собрать документы и заполнить декларацию. По данным Dume.ai, ИИ-подготовка повышает точность возвратов на ~30%.",p:"«Я работаю по ТК, платил за лечение зубов 120 тыс и курсы 80 тыс в этом году. На какие вычеты я имею право и как их оформить пошагово?»",tags:["налоги","инструкции"],lv:"mid"},
+ {c:"finance",t:"Антифрод-грамотность",d:"Пришлите ИИ подозрительное SMS/письмо/«выгодное предложение» — он разберёт признаки мошенничества. Банковские ИИ-системы уже мониторят транзакции в реальном времени (кейс №14 Dume.ai), но личная бдительность важнее.",p:"«Вот текст письма от „банка“. Это фишинг? Объясни по пунктам, что подозрительно, и что мне делать».",tags:["безопасность"],lv:"easy"},
+
+ // ─── ЗДОРОВЬЕ И СПОРТ ───
+ {c:"health",t:"Персональный план тренировок",d:"ИИ-приложения вроде JuggernautAI адаптируют программу под ваш прогресс, инвентарь и травмы. Можно собрать план и в чат-боте: под цель, уровень и расписание.",p:"«Цель — подтягивания (сейчас 3), 3 тренировки в неделю, дома: турник, гантели 16 кг. Составь 8-недельную программу с прогрессией».",tags:["спорт","планы"],lv:"easy"},
+ {c:"health",t:"Техника упражнений по видео",d:"Снимите себя на видео — мультимодальные модели укажут на ошибки техники (присед, становая, бег). Это одна из самых быстрорастущих фитнес-функций ИИ по обзорам 2025–2026 гг.",p:"«Вот видео моего приседа со штангой. Проанализируй технику: глубина, колени, спина. Что исправить и какие подводящие упражнения делать?»",tags:["мультимодально","спорт"],lv:"mid"},
+ {c:"health",t:"Симптом-чекер перед визитом к врачу",d:"Ada Health и аналоги помогают понять срочность проблемы и подготовиться к приёму. Важно: это НЕ диагноз — при красных флагах сразу к врачу.",p:"«Три дня держится температура 37,5 и болит поясница справа. Насколько это срочно? Какие вопросы задать терапевту и какие анализы попросить?»",tags:["здоровье","осторожно"],lv:"easy"},
+ {c:"health",t:"Оптимизация сна",d:"Умные трекеры анализируют фазы сна, температуру, свет и активность — ИИ выдаёт персональные рекомендации по времени отбоя и ритуалам (кейс №18 Dume.ai).",p:"«Вот данные моего трекера за месяц: ложусь в 00:30, глубокого сна 40 мин. Проанализируй и составь план улучшения сна на 2 недели».",tags:["сон","данные"],lv:"mid"},
+ {c:"health",t:"Расшифровка анализов «человеческим языком»",d:"Загрузите результат анализов — ИИ объяснит, что значит каждый показатель в норме/вне её, и какие вопросы задать врачу. Диагноз — только у врача.",p:"«Вот мой общий анализ крови и биохимия. Объясни простым языком отклонения, с чем они могут быть связаны и к какому специалисту идти».",tags:["здоровье","мультимодально","осторожно"],lv:"mid"},
+ {c:"health",t:"Трекер привычек и ЗОЖ-челленджи",d:"ИИ спроектирует челлендж под ваш характер занятости: микро-шаги, система наград, правила срывов — и будет вести еженедельный обзор прогресса.",p:"«Хочу привычку: 10 000 шагов и 2 л воды в день. Я часто в командировках. Сделай 30-дневный челлендж с запасными вариантами на сложные дни».",tags:["привычки","планы"],lv:"easy"},
+
+ // ─── ПСИХОЛОГИЯ ───
+ {c:"mind",t:"ИИ-дневник и рефлексия",d:"Брайан Солис (Medium) описывает новый тренд: люди используют ИИ для самопознания, обработки эмоций и осмысления опыта — как «зеркало» для мыслей.",p:"«Вот моя запись за неделю. Задай мне 5 вопросов, которые помогут понять, что вызывало тревогу, и что я могу изменить на следующей неделе».",tags:["рефлексия","дневник"],lv:"easy"},
+ {c:"mind",t:"Боты эмоциональной поддержки (CBT)",d:"Wysa, Youper и аналоги дают техники когнитивно-поведенческой терапии 24/7: дыхательные практики, работа с катастрофизацией, отслеживание настроения. Исследование JMIR (2026) показало, что люди используют их в моменты стресса, утром и в дороге.",p:"«Я накручиваю себя перед разговором с начальником. Проведи меня через технику когнитивной переоценки: помоги разобрать мысль на факты и интерпретации».",tags:["стресс","осторожно"],lv:"easy"},
+ {c:"mind",t:"Репетиция сложных разговоров",d:"ИИ сыграет роль собеседника: увольнение, просьба о повышении, конфликт с родственником, расставание. Можно прогнать сценарий 5 раз и отработать реакции.",p:"«Сыграй моего партнёра, который не хочет обсуждать распределение бюджета. Я начну разговор. После 10 реплик дай обратную связь: что было убедительно, а что — агрессивно».",tags:["коммуникация","ролевая игра"],lv:"easy"},
+ {c:"mind",t:"Медитации и работа со стрессом",d:"ИИ генерирует персональные медитации под ваш запрос (текстом или голосом через TTS), а стресс-трекеры по биометрии и голосу подбирают практики (кейс №17 Dume.ai).",p:"«Напиши 10-минутную медитацию для вечера после тяжёлого дня: тема — отпускание контроля. Формат: текст с паузами, простой язык».",tags:["медитация","аудио"],lv:"easy"},
+ {c:"mind",t:"Поддержка в горе — с большой осторожностью",d:"Существуют «grief-боты» и практики написания писем ушедшим. Исследования (Hawaii, Design Research Society) показывают терапевтический потенциал, но MIT/OpenAI предупреждают: уязвимым людям и тяжёлым пользователям ИИ может усилить изоляцию. Только как дополнение к психологу.",p:"«Я хочу написать письмо человеку, которого больше нет, чтобы выразить то, что не успел. Помоги мне структурировать мысли, но не „говори“ за меня и не имитируй его ответы».",tags:["осторожно","глубокое"],lv:"hard"},
+
+ // ─── УЧЁБА ───
+ {c:"learn",t:"ИИ-собеседник для практики языка",d:"hh.ru и Dume.ai выделяют это как топ-кейс: голосовой режим ChatGPT/Gemini — бесплатный разговорный клуб. ELSA дополнительно ставит произношение через распознавание речи.",p:"«Давай поговорим на испанском уровня A2. Ты — официант в Мадриде, я делаю заказ. Исправляй мои ошибки после каждой реплики, но не прерывай диалог».",tags:["языки","голос"],lv:"easy"},
+ {c:"learn",t:"Персональная учебная программа",d:"Хотите освоить Python, гитару или историю искусств? ИИ построит план на месяцы с ресурсами, практикой и контрольными точками — кейс, который hh.ru рекомендует начинающим.",p:"«Составь план изучения data science с нуля до junior за 9 месяцев: 8 часов в неделю. По месяцам: темы, бесплатные курсы, проекты, чек-поинты».",tags:["планы","навыки"],lv:"mid"},
+ {c:"learn",t:"Конспекты из книг, видео и статей",d:"NotebookLM (Google) превращает загруженные материалы в конспекты, флэш-карты и даже аудио-обсуждение двух «ведущих». Идеально для нон-фикшн и курсов (кейс №25 Dume.ai).",p:"«Вот 3 статьи по теме X. Сделай единый конспект: ключевые тезисы, противоречия между авторами, 10 вопросов для самопроверки».",tags:["конспекты","инструменты"],lv:"easy"},
+ {c:"learn",t:"Объяснитель «сложного простыми словами»",d:"Метод Фейнмана на максималках: просите объяснить на уровне 5-классника, аналогиями, с примерами из вашей сферы — и попросите ИИ проверить ваше понимание вопросами.",p:"«Объясни, как работают опционы, на примере доставки пиццы. Потом задай мне 3 вопроса, чтобы проверить, понял ли я».",tags:["объяснения"],lv:"easy"},
+ {c:"learn",t:"Подготовка к экзаменам и тестам",d:"ИИ сгенерирует тесты по вашим материалам, найдёт слабые темы по статистике ошибок и составит план повторения с интервальным запоминанием.",p:"«Вот мой конспект по биологии. Сделай тест из 30 вопросов разной сложности, после моих ответов укажи пробелы и план повторения на неделю».",tags:["экзамены","генерация"],lv:"easy"},
+ {c:"learn",t:"Чтение на 30 книг в год",d:"Схема: ИИ-саммари для отбора → чтение важного → обсуждение с ИИ после каждой главы → собственные выводы. Помогает не бросать книги и выжимать суть.",p:"«Я прочитал главу „Думай медленно, решай быстро“. Вот мои заметки. Задай мне 5 вопросов, свяжи идеи с моей работой в маркетинге и предложи эксперимент на неделю».",tags:["книги","привычки"],lv:"easy"},
+
+ // ─── ПУТЕШЕСТВИЯ ───
+ {c:"travel",t:"Полный маршрут путешествия",d:"Tripplanner.ai, Layla.ai или обычный ChatGPT соберут план «7 дней в Риме под бюджет и интересы»: достопримечательности, рестораны, логистика, тайминги (кейс №10 Dume.ai).",p:"«5 дней в Стамбуле, ноябрь, пара 30+, любим еду и историю, бюджет средний, отель в Кадыкёе. Маршрут по дням с логистикой и 3 небанальных места».",tags:["маршруты","планы"],lv:"easy"},
+ {c:"travel",t:"Живой переводчик в поездке",d:"Голосовой режим на телефоне = универсальный переводчик для такси, рынков и аптек; фото-перевод меню и указателей. Кейс из «ИИ в кармане» (immune.institute).",p:"«Буду переводчиком с турецкого: я говорю фразу по-русски — дай перевод и транскрипцию латиницей, чтобы я мог прочитать вслух».",tags:["языки","голос"],lv:"easy"},
+ {c:"travel",t:"Списки, визовые требования, страховки",d:"ИИ соберёт чек-лист вещей под климат и формат поездки, объяснит визовые правила и сравнит страховки. Финальные требования — перепроверять на официальных сайтах!",p:"«10 дней треккинг в Непале в марте. Чек-лист снаряжения, требования к визе и страховке, прививки, что нельзя ввозить».",tags:["чек-листы","осторожно"],lv:"easy"},
+ {c:"travel",t:"«Локальный друг» в новом городе",d:"Переехали или приехали на месяц? ИИ поможет с бытом: как оплатить связь, где рынки, как записаться к врачу, культурные особенности и чего избегать.",p:"«Я переехал в Тбилиси на 3 месяца, работаю удалённо. Гид по первым 2 неделям: SIM, банковская карта, районы для жизни, коворкинги, грузинский этикет».",tags:["релокация","гайды"],lv:"easy"},
+
+ // ─── ТВОРЧЕСТВО ───
+ {c:"creative",t:"Восстановление и оживление семейных фотоархивов",d:"MyHeritage Deep Nostalgia, Remini и аналоги реставрируют выцветшие снимки, раскрашивают ч/б и «оживляют» лица предков. Making Family History (2025) предупреждает: ИИ может менять исторические детали — сверяйте с оригиналами.",p:"«Вот скан фото 1960-х с трещинами. Отреставрируй, не изменяя черты лиц, и раскрась реалистично. Покажи до/после».",tags:["мультимодально","семья"],lv:"mid"},
+ {c:"creative",t:"Генеалогическое древо и семейные истории",d:"ИИ структурирует рассказы бабушек в биографии, оформляет семейное древо, предлагает вопросы для интервью со старшими родственниками и «оживляет» архив.",p:"«Вот расшифровка 2-часового рассказа моей бабушки. Преврати в главу мемуаров от первого лица, сохранив её обороты. Составь список 20 вопросов для следующей беседы».",tags:["семья","архив"],lv:"mid"},
+ {c:"creative",t:"Поздравления, тосты, личные письма",d:"Не шаблонные, а под конкретного человека: с общими воспоминаниями, шутками, правильным тоном. hh.ru называет это одним из самых частых бытовых запросов.",p:"«Тост на 60 лет отцу: он рыбак, любит советское кино, ворчит на молодёжь, но добрый. 1 минута, с юмором и теплотой, без клише про „здоровье-счастье“».",tags:["тексты","семья"],lv:"easy"},
+ {c:"creative",t:"Свои песни и музыка",d:"Suno/Udio сгенерируют трек на ваши стихи в любом жанре — подарок на свадьбу, гимн семьи, колыбельная для ребёнка с его именем в тексте.",p:"«Напиши текст колыбельной для 3-летней Алисы: про её кота Барсика, луну и моря. Стиль — мягкий инди-фолк, 2 куплета».",tags:["музыка","генерация"],lv:"easy"},
+ {c:"creative",t:"Личный блог, книга или сценарий",d:"От идеи до черновика: ИИ как соавтор помогает со структурой, диалогами и «писательским блоком» (кейс №21, 24 Dume.ai). Финальный текст — ваш.",p:"«Хочу написать книгу о своём опыте смены профессии в 38 лет. Помоги со структурой: жанр — нон-фикшн с личными историями. Предложи оглавление из 12 глав и hook для первой».",tags:["тексты","творчество"],lv:"mid"},
+ {c:"creative",t:"Монтаж домашних видео и подкастов",d:"ИИ-редакторы (CapCut, Descript) вырезают паузы и «эканья», делают субтитры, нарезают хайлайты для соцсетей — кейс №23 Dume.ai. Семейный архив → красивый фильм за вечер.",p:"«Вот 40 минут видео из отпуска. Нарежь динамичный клип на 3 минуты: лучшие моменты, субтитры, музыка без авторских прав».",tags:["видео","инструменты"],lv:"mid"},
+ {c:"creative",t:"Хобби-наставник: от рисования до шахмат",d:"ИИ разберёт ваш рисунок/партию/поделку и даст персональную программу роста. Фото работ → конкретные советы, а не общие слова.",p:"«Вот 3 моих скетча тушью. Оцени уровень честно, найди 2 главные ошибки и дай упражнения на месяц по 20 минут в день».",tags:["мультимодально","навыки"],lv:"easy"},
+
+ // ─── СЕМЬЯ И ДЕТИ ───
+ {c:"family",t:"Сказки на ночь с ребёнком в главной роли",d:"Персонализированные истории: ребёнок — герой, в сюжете — его игрушки и сегодняшний день. Можно оформить как иллюстрированную книжку (текст + картинки).",p:"«Сказка на 5 минут для 6-летнего Миши: он и его пёс Чарли летят на луну из его комнаты. Мораль — про то, что убирать игрушки полезно. Простой язык».",tags:["дети","творчество"],lv:"easy"},
+ {c:"family",t:"Репетитор и помощь с домашкой",d:"Не «сделай за меня», а метод Сократа: ИИ задаёт наводящие вопросы, объясняет тему на примерах из интересов ребёнка. hh.ru рекомендует это родителям как способ учиться вместе.",p:"«Объясни моей 12-летней дочери дроби на примере пиццы и игры Minecraft. Потом дай 5 задач с подсказками, но не с готовыми ответами».",tags:["дети","учёба"],lv:"easy"},
+ {c:"family",t:"Идеи для досуга без экранов",d:"Уставший родитель в 18:00: «чем занять двоих детей 4 и 7 лет на 2 часа из того, что есть дома?» — ИИ выдаст 10 игр из подручных материалов под возраст.",p:"«Дождливый выходной, дети 4 и 7 лет, дома: бумага, конструктор, кастрюли. 8 активностей, которые я могу организовать за 5 минут каждая».",tags:["дети","лайфхаки"],lv:"easy"},
+ {c:"family",t:"Семейные праздники и подарки",d:"ИИ спланирует день рождения под бюджет и пространство: сценарий, конкурсы по возрасту, меню, список покупок, а также подберёт подарки по интересам каждого члена семьи.",p:"«ДР сына 8 лет, 10 гостей, квартира, бюджет 15 тыс. Программа на 3 часа: конкурсы, меню, что купить за неделю до, тайминг».",tags:["дети","планы"],lv:"easy"},
+ {c:"family",t:"Безопасный ИИ для детей и цифровая грамотность",d:"Исследования КФУ (2025) о «бытовом ИИ» и психологов: важно обсуждать с детьми, что ИИ может ошибаться и выдумывать. Используйте ИИ вместе, превращая это в уроки критического мышления.",p:"«Объясни 9-летнему ребёнку, как работает ChatGPT и почему он иногда врёт. Формат — разговор с 3 экспериментами, которые мы проведём вместе».",tags:["дети","безопасность"],lv:"easy"},
+
+ // ─── ДОКУМЕНТЫ ───
+ {c:"docs",t:"Разбор договоров «человеческим языком»",d:"Загрузите договор аренды, кредита или подряда — ИИ подсветит рискованные пункты, скрытые комиссии и то, о чём стоит поторговаться. Перед подписанием сложного — сверьтесь с юристом.",p:"«Вот договор аренды квартиры. Найди пункты, которые ущемляют меня как арендатора, объясни риски и предложи формулировки для торга».",tags:["юристы","осторожно"],lv:"mid"},
+ {c:"docs",t:"Официальные письма и заявления",d:"Претензия магазину, заявление в УК, жалоба, объяснительная — ИИ напишет в правильном официально-деловом стиле со ссылками на нормы (которые стоит проверить).",p:"«Управляющая компания 3 месяца не чинит лифт. Напиши претензию в УК и жалобу в жилинспекцию: официально, с требованиями и сроками ответа».",tags:["письма","шаблоны"],lv:"easy"},
+ {c:"docs",t:"Резюме и сопроводительные под каждую вакансию",d:"Классика: ИИ адаптирует резюме под конкретную вакансию, находит совпадения с требованиями и готовит к собеседованию с вопросами от «рекрутёра».",p:"«Вот моё резюме и вот вакансия. Перепиши резюме под неё, сохранив правду. Потом проведи mock-интервью: 10 вероятных вопросов и разбор моих ответов».",tags:["карьера","подготовка"],lv:"easy"},
+ {c:"docs",t:"Инструкции от государства и бюрократия",d:"«Как получить пособие / оформить наследство / зарегистрировать ИП» — ИИ построит пошаговый маршрут по инстанциям с документами и сроками. Финально сверяйте с Госуслугами и официальными сайтами.",p:"«Умер родственник, я наследник. Пошагово: что делать в первые 2 недели, какие документы, сроки, к кому идти. Мой город — Казань».",tags:["бюрократия","осторожно"],lv:"mid"},
+
+ // ─── ВРЕМЯ ───
+ {c:"time",t:"Планировщик дня и недели",d:"ИИ соберёт реалистичный план из вашего списка задач с учётом энергии в течение дня, встреч и «буферов». По данным Dume.ai, умные календари (Motion, Reclaim) экономят до 10 часов в неделю.",p:"«Вот мои 14 задач на неделю и жёсткие встречи. Расставь по дням с учётом: глубокую работу — утром, рутину — после обеда. Оставь 20% буфера».",tags:["планы","продуктивность"],lv:"easy"},
+ {c:"time",t:"Разбор входящих: почта и мессенджеры",d:"ИИ-ассистенты сканируют почту, выделяют письма, требующие действий, и предлагают черновики ответов (кейс №2 Dume.ai). Личный вариант: переслать 20 писем → получить приоритеты и ответы.",p:"«Вот скриншоты/тексты 12 писем. Классифицируй: срочно ответить / можно позже / спам. Для трёх срочных — черновики ответов в моём тоне (вежливый, короткий)».",tags:["почта","автоматизация"],lv:"easy"},
+ {c:"time",t:"Утренний личный брифинг",d:"Привычка из Reddit-тредов: одно сообщение ИИ каждое утро — погода, календарь, 3 главные задачи дня, напоминания (ДР мамы через 5 дней!). Настраивается через агентов и автоматизации.",p:"«Каждое утро в 7:30 присылай брифинг: мой календарь, погода, топ-3 задачи из списка, напоминания о днях рождения в ближайшие 7 дней. Коротко, одним экраном».",tags:["привычки","автоматизация"],lv:"mid"},
+ {c:"time",t:"Помощник решений для крупных выборов",d:"Переезд, смена работы, покупка — ИИ проведёт структурированный анализ: критерии, веса, сценарии, «премортем» (что пойдёт не так). Решение остаётся за вами.",p:"«Я выбираю между двумя офферами: вот условия. Помоги взвесить по 8 критериям с коэффициентами важности для меня, сделай премортем обоих вариантов».",tags:["решения","анализ"],lv:"mid"},
+ {c:"time",t:"Автоматизация личной рутины",d:"Шаблоны запросов и сценарии (IFTTT/n8n/голосовые агенты): «каждую пятницу — список покупок из моего меню», «при скрине чека — заносить в таблицу бюджета». Тренд 2026 — агенты, действующие по вашим правилам.",p:"«Придумай 10 микроавтоматизаций для моей жизни на основе: я фрилансер, веду бюджет в таблице, планирую еду на неделю, бегаю по утрам».",tags:["автоматизация","агенты"],lv:"hard"},
+];
+
+// присваиваем стабильные id
+IDEAS.forEach((x,ix)=>x.id=ix);
+
+// ── СОСТОЯНИЕ ──
+const LS_KEY='aiIdeasFavs_v1';
+let favs=new Set();
+let storageOK=true;
+try{ const s=localStorage.getItem(LS_KEY); if(s) favs=new Set(JSON.parse(s)); }catch(e){ storageOK=false; }
+function saveFavs(){ try{ localStorage.setItem(LS_KEY, JSON.stringify([...favs])); }catch(e){ storageOK=false; } }
+
+const expanded=new Set();          // раскрытые карточки (по id)
+let activeCat="all", favOnly=false, query="";
+
+const main=document.getElementById('main'), chipsEl=document.getElementById('chips'), countEl=document.getElementById('count');
+const LV={easy:["легко","easy"],mid:["средне","mid"],hard:["сложно","hard"]};
+
+// ── ЧИПЫ ──
+function buildChips(){
+  const favCount=favs.size;
+  let ch=`<span class="chip ${activeCat==='all'&&!favOnly?'active':''}" data-cat="all">Все · ${IDEAS.length}</span>`;
+  ch+=`<span class="chip fav ${favOnly?'active':''}" id="favChip">★ Избранное · ${favCount}</span>`;
+  CATS.forEach(c=>{
+    const n=IDEAS.filter(i=>i.c===c.id).length;
+    ch+=`<span class="chip ${activeCat===c.id&&!favOnly?'active':''}" data-cat="${c.id}">${c.icon} ${c.title} · ${n}</span>`;
+  });
+  chipsEl.innerHTML=ch;
+  chipsEl.querySelectorAll('.chip').forEach(el=>el.addEventListener('click',()=>{
+    if(el.id==='favChip'){ favOnly=!favOnly; if(favOnly) activeCat='all'; }
+    else{ favOnly=false; activeCat=el.dataset.cat; }
+    buildChips(); render();
+  }));
+}
+
+// ── РЕНДЕР ──
+function render(){
+  let html="", shown=0;
+  const searching=query.length>0;
+  CATS.forEach(cat=>{
+    if(!favOnly && activeCat!=="all" && activeCat!==cat.id) return;
+    let cards="";
+    IDEAS.forEach(i=>{
+      if(i.c!==cat.id) return;
+      if(favOnly && !favs.has(i.id)) return;
+      const hay=(i.t+" "+i.d+" "+i.p+" "+i.tags.join(" ")).toLowerCase();
+      if(searching && !hay.includes(query)) return;
+      shown++;
+      const [lvTxt,lvCls]=LV[i.lv];
+      const isOpen=searching || expanded.has(i.id);   // при поиске раскрываем всё найденное
+      const isFav=favs.has(i.id);
+      cards+=`<article class="card ${isOpen?'open':''} ${isFav?'is-fav':''}" data-id="${i.id}">
+        <div class="card-head" role="button" tabindex="0" aria-expanded="${isOpen}">
+          <span class="num">${String(i.id+1).padStart(2,'0')}</span>
+          <h3>${i.t}</h3>
+          <button class="fav-btn" title="${isFav?'Убрать из избранного':'В избранное'}" aria-label="избранное">${isFav?'★':'☆'}</button>
+          <span class="chev">▼</span>
+        </div>
+        <div class="card-body">
+          <p>${i.d}</p>
+          <div class="prompt"><b>пример запроса</b>${i.p}</div>
+          <div class="meta"><span class="tag ${lvCls}">${lvTxt}</span>${i.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+          ${!storageOK?'<div class="meta"><span class="tag hard">избранное не сохранится (браузер блокирует хранилище)</span></div>':''}
+        </div>
+      </article>`;
+    });
+    if(cards) html+=`<section class="cat">
+      <div class="cat-head"><div class="cat-icon">${cat.icon}</div>
+      <div><h2>${cat.title}</h2><p>${cat.desc}</p></div></div>
+      <div class="grid">${cards}</div></section>`;
+  });
+  main.innerHTML=html;
+  document.getElementById('empty').classList.toggle('hidden',shown>0);
+  const favNote=favOnly?` · в избранном: ${favs.size}`:'';
+  countEl.textContent=`Показано идей: ${shown}${favNote}`;
+}
+
+// ── КЛИКИ: раскрытие и избранное (делегирование) ──
+main.addEventListener('click',e=>{
+  const card=e.target.closest('.card'); if(!card) return;
+  const id=+card.dataset.id;
+  const favBtn=e.target.closest('.fav-btn');
+  if(favBtn){
+    e.stopPropagation();
+    if(favs.has(id)) favs.delete(id); else favs.add(id);
+    saveFavs(); buildChips(); render();
+    return;
+  }
+  const head=e.target.closest('.card-head');
+  if(head){
+    if(expanded.has(id)) expanded.delete(id); else expanded.add(id);
+    card.classList.toggle('open');
+    head.setAttribute('aria-expanded',card.classList.contains('open'));
+  }
+});
+main.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('card-head')){
+    e.preventDefault(); e.target.click();
+  }
+});
+
+// ── ТУЛБАР ──
+document.getElementById('q').addEventListener('input',e=>{query=e.target.value.toLowerCase().trim();render();});
+document.getElementById('expandAll').addEventListener('click',()=>{IDEAS.forEach(i=>expanded.add(i.id));render();});
+document.getElementById('collapseAll').addEventListener('click',()=>{expanded.clear();render();});
+
+buildChips();
+render();
+</script>
+</body>
+</html>

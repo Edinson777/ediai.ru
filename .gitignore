@@ -1,0 +1,8 @@
+site-src/tmp/node_modules/
+site-src/tmp/shots/
+site-src/tmp/life.json
+__pycache__/
+*.pyc
+.DS_Store
+.arena/
+site-ediai-ru-upload.zip
