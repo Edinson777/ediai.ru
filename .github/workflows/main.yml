@@ -1,9 +1,9 @@
-name: 🚀 Deploy website on push
+name: 🚀 Deploy website to FTP (ручной запуск)
 
 on:
-  push:
-    branches:
-      - main # или master, в зависимости от вашей ветки
+  # Деплой ТОЛЬКО по нажатию кнопки: вкладка Actions → этот workflow → «Run workflow».
+  # Автозапуск по push отключён намеренно.
+  workflow_dispatch:
 
 jobs:
   web-deploy:
