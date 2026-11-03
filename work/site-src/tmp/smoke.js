@@ -35,14 +35,14 @@ console.log('index.html');
   const dom = load('index.html');
   const d = dom.window.document;
   ok(d.querySelectorAll('h1').length === 1, 'ровно один <h1>');
-  ok(d.querySelectorAll('.tile').length === 6, 'bento: 6 плиток разделов');
+  ok(d.querySelectorAll('.tile').length === 7, 'bento: 7 плиток разделов');
   ok(d.querySelector('.tile-big') !== null, 'крупная плитка «Переделка фото»');
   ok(d.querySelector('.tile-life') !== null, 'крупная плитка «ИИ в личной жизни» (tile-life)');
-  ok(d.querySelectorAll('.pop:not(.sc)').length === 8, '8 популярных промптов');
+  ok(d.querySelectorAll('.pop:not(.sc)').length === 9, '9 популярных промптов');
   ok(d.querySelectorAll('.pop.sc').length === 8, 'блок «С чего начать»: 7 шагов + путеводитель');
   ok(d.querySelectorAll('.cmp tr').length === 8, 'блок «Какая нейросеть для чего»: таблица 7 задач');
   ok(d.querySelector('.know-nav') !== null, 'know-nav в футере главной');
-  ok(d.querySelectorAll('.faq details').length === 5, 'FAQ: 5 вопросов');
+  ok(d.querySelectorAll('.faq details').length === 6, 'FAQ: 6 вопросов');
   ok([...d.querySelectorAll('script')].filter(x=>!x.type && !x.src && !x.textContent.includes('metrika') && !x.textContent.includes('gtag')).length === 0, 'главная: код только Метрика/GA4 + ld+json');
   ok(d.documentElement.innerHTML.includes('googletagmanager.com/gtag/js?id=G-NXPYMMXH35') && d.documentElement.innerHTML.includes("gtag('config', 'G-NXPYMMXH35')"), 'GA4 G-NXPYMMXH35 на главной');
   ok(d.body.textContent.includes('Yandex.Metrika counter') || d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js'), 'счётчик Метрики на главной');
@@ -52,7 +52,7 @@ console.log('index.html');
   ok(!!src && !src.open, 'источники на главной: спойлер, свёрнут по умолчанию');
   ok(src.querySelectorAll('.sources-grid > div').length === 5, 'в спойлере 5 колонок источников');
   const nav = d.querySelector('.sections-nav');
-  ok(nav && nav.querySelectorAll('a').length === 7, 'навигация по 7 адресам');
+  ok(nav && nav.querySelectorAll('a').length === 8, 'навигация по 8 адресам');
 }
 
 /* ---------- 2. Раздел photo: статика + интерактив ---------- */
@@ -181,6 +181,26 @@ console.log('life.html');
   const allChip = [...d.querySelectorAll('#chips .chip')].find(t => t.textContent === 'Все подразделы');
   allChip.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
   ok(d.querySelectorAll('#grid .card').length === 56, 'возврат в «Все подразделы»: снова 56');
+}
+
+
+/* ---------- 4d. work.html — раздел «ИИ на работе» ---------- */
+console.log('work.html');
+{
+  const dom = load('work.html');
+  const w = dom.window, d = w.document;
+  await tick(80);
+  ok(d.querySelectorAll('h1').length === 1, 'ровно один <h1>');
+  ok(d.querySelectorAll('#grid .card').length === 30, '30 карточек');
+  ok(d.querySelectorAll('#tabs .tab').length === 7, '7 табов (all + 6 категорий)');
+  ok(d.querySelectorAll('.qpill').length === 30 && d.querySelectorAll('.dspill').length === 30, 'пилюли Qwen/DeepSeek: 30/30');
+  const ldW = JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent);
+  const artsW = ldW['@graph'].filter(n => n['@type'] === 'Article');
+  ok(artsW.length === 30, 'контентная аналитика: 30 материалов Article');
+  const carTab = [...d.querySelectorAll('#tabs .tab')].find(t => t.textContent.includes('Резюме'));
+  carTab.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
+  ok(d.querySelectorAll('#grid .card').length === 5, 'таб «Резюме и карьера»: 5 карточек');
+  ok(d.documentElement.innerHTML.includes('Конфиденциальность'), 'полоса о конфиденциальности на месте');
 }
 
 /* ---------- 4c. База знаний: start / models / glossary ---------- */

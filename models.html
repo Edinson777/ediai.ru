@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="https://ediai.ru/og/og-models.png">
 <meta name="theme-color" content="#f5f6fa">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://ediai.ru/#website", "name": "Ediai", "url": "https://ediai.ru/", "description": "ИИ в личной жизни и работе: 181 готовый промпт, путеводитель для новичков, сравнения нейросетей и статьи-кейсы с цифрами. Бесплатно, без регистрации.", "inLanguage": "ru"}, {"@type": "WebPage", "@id": "https://ediai.ru/models.html", "url": "https://ediai.ru/models.html", "name": "Какая нейросеть для чего: сравнение задач и моделей", "description": "Тексты, фото, изображения с нуля, код, анализ и строгий JSON: какими моделями решать и где бесплатные тарифы. Замены Midjourney и качество русского языка.", "inLanguage": "ru", "isPartOf": {"@id": "https://ediai.ru/#website"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Какая нейросеть лучше пишет по-русски?", "acceptedAnswer": {"@type": "Answer", "text": "Qwen Chat, GigaChat и YandexGPT сильны в русском; DeepSeek-V3 и ChatGPT не отстают. Для официальных писем давайте примеры тона прямо в промпте (приём few-shot)."}}, {"@type": "Question", "name": "Где бесплатно редактировать фотографии?", "acceptedAnswer": {"@type": "Answer", "text": "Qwen-Image-Edit в Qwen Chat — бесплатно и понимает русский. Альтернативы с бесплатными лимитами: Gemini (Nano Banana) и FLUX.1 Kontext."}}, {"@type": "Question", "name": "Чем заменить платный Midjourney?", "acceptedAnswer": {"@type": "Answer", "text": "Qwen-Image (бесплатно, точные надписи на картинках) и Stable Diffusion локально. Описательную часть Midjourney-промптов можно переносить в Qwen-Image без параметров --ar и --niji."}}, {"@type": "Question", "name": "Что выбрать для анализа большого документа?", "acceptedAnswer": {"@type": "Answer", "text": "Qwen с контекстом до 1M токенов примет документ целиком; DeepSeek (до 128K) — частями с промежуточными выжимками. Включайте режим рассуждений: /think или DeepThink."}}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://ediai.ru/#website", "name": "Ediai", "url": "https://ediai.ru/", "description": "ИИ в личной жизни и работе: 211 готовых промптов, путеводитель для новичков, сравнения нейросетей и статьи-кейсы с цифрами. Бесплатно, без регистрации.", "inLanguage": "ru"}, {"@type": "WebPage", "@id": "https://ediai.ru/models.html", "url": "https://ediai.ru/models.html", "name": "Какая нейросеть для чего: сравнение задач и моделей", "description": "Тексты, фото, изображения с нуля, код, анализ и строгий JSON: какими моделями решать и где бесплатные тарифы. Замены Midjourney и качество русского языка.", "inLanguage": "ru", "isPartOf": {"@id": "https://ediai.ru/#website"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Какая нейросеть лучше пишет по-русски?", "acceptedAnswer": {"@type": "Answer", "text": "Qwen Chat, GigaChat и YandexGPT сильны в русском; DeepSeek-V3 и ChatGPT не отстают. Для официальных писем давайте примеры тона прямо в промпте (приём few-shot)."}}, {"@type": "Question", "name": "Где бесплатно редактировать фотографии?", "acceptedAnswer": {"@type": "Answer", "text": "Qwen-Image-Edit в Qwen Chat — бесплатно и понимает русский. Альтернативы с бесплатными лимитами: Gemini (Nano Banana) и FLUX.1 Kontext."}}, {"@type": "Question", "name": "Чем заменить платный Midjourney?", "acceptedAnswer": {"@type": "Answer", "text": "Qwen-Image (бесплатно, точные надписи на картинках) и Stable Diffusion локально. Описательную часть Midjourney-промптов можно переносить в Qwen-Image без параметров --ar и --niji."}}, {"@type": "Question", "name": "Что выбрать для анализа большого документа?", "acceptedAnswer": {"@type": "Answer", "text": "Qwen с контекстом до 1M токенов примет документ целиком; DeepSeek (до 128K) — частями с промежуточными выжимками. Включайте режим рассуждений: /think или DeepThink."}}]}]}</script>
 <style>
 /* =====================================================================
    «База промптов для ИИ» — общий стиль всех страниц. СВЕТЛАЯ ТЕМА.
@@ -495,6 +495,9 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
   .gstep{padding:14px 15px}
 }
 
+/* нечётное число плиток: последняя занимает всю строку bento */
+.bento>.tile:last-child{grid-column:1/-1}
+
 </style>
 </head>
 <body>
@@ -523,7 +526,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 <!-- /Google tag -->
 <a class="skip-link" href="#main">Перейти к содержимому</a>
 <main class="wrap" id="main" tabindex="-1">
-  <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
+  <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="work.html">💼 Работа</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
   <div class="know-nav"><div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a></div></div>
 <section class="hero">
   <h1>Какая нейросеть для чего: сравнение задач и моделей</h1>
@@ -557,7 +560,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 </main>
 <footer>
   <div class="wrap">
-    <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
+    <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="work.html">💼 Работа</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
     <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей и глоссарий.<br>
     Тарифы и возможности нейросетей меняются — сверяйте дату обновления; важные решения проверяйте по первоисточникам.
   </div>

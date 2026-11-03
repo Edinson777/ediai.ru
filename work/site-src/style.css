@@ -469,3 +469,6 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
   .cmp th,.cmp td{padding:9px 11px}
   .gstep{padding:14px 15px}
 }
+
+/* нечётное число плиток: последняя занимает всю строку bento */
+.bento>.tile:last-child{grid-column:1/-1}
