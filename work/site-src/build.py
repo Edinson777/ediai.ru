@@ -3,16 +3,24 @@
 """
 Генератор многостраничного сайта «Ediai — ИИ в личной жизни и работе».
 
-Единый источник данных: data.json (181 промпт, извлечён из исходных страниц).
-Генерирует в ../site/:
-  index.html          — главная-хаб (bento-плитки, шаги, популярное, FAQ) — полностью статическая
+Единый источник данных: data.json (211 промптов, извлечён из исходных страниц).
+Генерирует в корень репозитория (OUT):
+  index.html          — главная-хаб (bento-плитки, глобальный поиск, шаги, статьи, популярное, FAQ)
   photo.html          — Переделка фото (54)
   generate.html       — Создание изображений (21)
   texts.html          — Тексты (21)
   life.html           — ИИ в личной жизни (56)
+  work.html           — ИИ на работе (30)
   qwen.html           — Qwen (23)
   basics.html         — Основы промптинга (6)
+  start.html, models.html, glossary.html — база знаний
+  keis-ii-pochta.html — статья-кейс «Сколько часов экономит ИИ на письмах и документах»
   robots.txt, sitemap.xml, og/*.png
+
+Фильтры-ограничения на разделах («бесплатно / нужно фото-файл / 5 минут»)
+выводятся функцией ftags() из данных карточки; чип показывается, только если
+он отсекает часть раздела (0 < n < всего). Глобальный поиск на главной —
+индекс SIDX (id/заголовок/раздел/подраздел/описание/теги) + hub.js.
 
 Все страницы самодостаточны (CSS/JS инлайнятся) и содержат статически
 отрендеренные карточки: контент виден поисковикам и работает без JS.
@@ -31,6 +39,7 @@ data    = json.load(open(os.path.join(HERE, 'data.json'),    encoding='utf-8'))
 SRC     = json.load(open(os.path.join(HERE, 'sources.json'), encoding='utf-8'))
 CSS     = open(os.path.join(HERE, 'style.css'), encoding='utf-8').read()
 APPJS   = open(os.path.join(HERE, 'app.js'),    encoding='utf-8').read()
+HUBJS   = open(os.path.join(HERE, 'hub.js'),    encoding='utf-8').read()
 
 SITE_URL  = cfg['site_url'].rstrip('/')
 SITE_NAME = cfg['site_name']
@@ -153,6 +162,42 @@ def dspill_html(ds):
 def pills_html(p):
     return qpill_html(p.get('qw')) + dspill_html(p.get('ds'))
 
+# ---------------------------------------------------------------- фильтры-ограничения
+# Три «быстрых» тега (стратегия, этап 3): подбор сценария под ограничение пользователя.
+# Значения выводятся из данных карточки, чтобы не дублировать ручную разметку:
+#   free  — сценарий решается полностью бесплатной нейросетью (всё, кроме платного Midjourney);
+#   photo — к запросу нужно прикрепить фото или файл (переделка фото, мультимодальные задачи);
+#   quick — быстрый сценарий «один запрос → результат за ~5 минут» (без длинных планов,
+#           серий, курсов и многошаговых задач).
+# Чип показывается в разделе, только если он отсекает часть карточек (0 < n < всего).
+FTAG_META = [
+    ('free',  '🆓 Бесплатно',       'Решается бесплатной нейросетью: Qwen Chat, DeepSeek, GigaChat, YandexGPT, Gemini и др.'),
+    ('photo', '📷 Нужно фото/файл', 'К запросу нужно прикрепить фотографию, видео или документ'),
+    ('quick', '⚡ 5 минут',         'Быстрый сценарий: один запрос — готовый результат за ~5 минут'),
+]
+
+def ftags(p):
+    """Список фильтров-ограничений промпта: ['free','photo','quick'] (подмножество)."""
+    t = []
+    sec, cat, sub = p['section'], p['cat'], p['sub']
+    # бесплатно: всё, кроме платного Midjourney (DALL·E и SD доступны бесплатно)
+    if p['model'] != 'mj':
+        t.append('free')
+    # нужно фото/файл: переделка фото, Qwen-Image-Edit, мультимодальные задачи «личной жизни»
+    if sec == 'photo' or (sec == 'qwen' and sub.startswith('Qwen-Image-Edit')) \
+       or (sec == 'life' and p.get('ds') is None):
+        t.append('photo')
+    # 5 минут: кроме заведомо длинных сценариев (серии и съёмки, лонгриды, планы, курсы, код)
+    quick = True
+    if sec == 'photo' and cat in ('shoot', 'creative'):       quick = False  # фотосессии и серии — итерации
+    if sec == 'texts' and sub == 'Статьи и блоги':            quick = False  # лонгрид с фактурой
+    if sec == 'life'  and cat in ('learn', 'travel', 'time'): quick = False  # курсы, маршруты, планы недели
+    if sec == 'work'  and cat in ('career', 'plan'):          quick = False  # резюме, планы квартала
+    if sec == 'qwen'  and sub.startswith('Qwen-Coder'):       quick = False  # код и отладка
+    if quick:
+        t.append('quick')
+    return t
+
 def card_html(p):
     """Карточка — байт-в-байт как рендерит app.js (свёрнутое состояние)."""
     body_id = 'body-' + p['id']
@@ -208,9 +253,10 @@ def nav_html(current):
         links.append('<a href="' + f + '"' + cur + '>' + label + '</a>')
     return '<nav class="sections-nav" aria-label="Разделы сайта">' + ''.join(links) + '</nav>'
 
-# База знаний: сквозная перелинковка во всех футерах
+# База знаний: сквозная перелинковка во всех футерах (и вверху страниц базы знаний)
 KNOW_NAV = ('<div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · '
-            '<a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a></div>')
+            '<a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a> · '
+            '<a href="keis-ii-pochta.html">Статьи и кейсы</a></div>')
 
 # ---------------------------------------------------------------- конфиг разделов
 PHOTO_STRIPS = (
@@ -492,6 +538,18 @@ def chips_html(prompts, sec):
         out.append('<button type="button" class="chip" aria-pressed="false">' + esc(s) + '</button>')
     return ''.join(out)
 
+def fchips_html(prompts):
+    """Чипы-ограничения («бесплатно / нужно фото-файл / 5 минут»).
+    Показываем только те, что отсекают часть раздела: 0 < n < len(prompts)."""
+    out = []
+    for key, label, title in FTAG_META:
+        n = sum(1 for p in prompts if key in ftags(p))
+        if 0 < n < len(prompts):
+            out.append('<button type="button" class="fchip" data-ftag="' + key +
+                       '" aria-pressed="false" title="' + attr(title) + '">' + label +
+                       '<span class="fc-cnt">' + str(n) + '</span></button>')
+    return ''.join(out)
+
 NOSCRIPT_CSS = """
 .controls{display:none!important}
 .card-body{display:flex!important}
@@ -572,6 +630,10 @@ def build_section(key):
                (sec['sources_body'] or '') + '</div></details>')
 
     page_obj = {"section":key, "tabs":sec['tabs'], "cats":sec['cats'], "catOrder":sec['cat_order']}
+    fch = fchips_html(prompts)
+    fchips_row = ('    <div class="fchips" id="fchips" role="group" aria-label="Быстрые фильтры: бесплатно, нужно фото, 5 минут">' +
+                  fch + '</div>\n') if fch else ''
+    prompts_js = [dict(p, f=ftags(p)) for p in prompts]  # 'f' — фильтры-ограничения для app.js
 
     return ('<!DOCTYPE html>\n<html lang="ru">\n<head>\n' +
       head_html(sec['title'], sec['desc'], sec['file'], 'og/og-' + key + '.png', ld(ldgraph)) +
@@ -594,6 +656,7 @@ def build_section(key):
       '      <button type="button" class="chips-toggle" id="chipsToggle" aria-expanded="false" aria-controls="chips">Подразделы ▾</button>\n'
       '      <div class="chips" id="chips">' + chips_html(prompts, sec) + '</div>\n'
       '    </div>\n'
+      + fchips_row +
       '    <div class="results-line">\n'
       '      <span id="results">Показаны все ' + str(len(prompts)) + ' промпта</span>\n'
       '      <span class="mini-btns">\n'
@@ -617,7 +680,7 @@ def build_section(key):
       '<div id="toast" role="status" aria-live="polite"></div>\n'
       '<button id="toTop" title="Наверх" aria-label="Наверх">↑</button>\n'
       '<noscript><style>' + NOSCRIPT_CSS + '</style></noscript>\n'
-      '<script>\nconst PAGE = ' + js_json(page_obj) + ';\nconst PROMPTS = ' + js_json(prompts) + ';\n</script>\n'
+      '<script>\nconst PAGE = ' + js_json(page_obj) + ';\nconst PROMPTS = ' + js_json(prompts_js) + ';\n</script>\n'
       '<script>\n' + APPJS + '\n</script>\n'
       '</body>\n</html>\n')
 
@@ -805,9 +868,10 @@ def know_page(path, title, desc, ogimg, ldgraph, content, navcur):
       '<a class="skip-link" href="#main">Перейти к содержимому</a>\n'
       '<main class="wrap" id="main" tabindex="-1">\n'
       '  ' + nav_html(navcur) + '\n'
-      '  <div class="know-nav">' + KNOW_NAV + '</div>\n' + content + '\n</main>\n'
+      '  ' + KNOW_NAV + '\n' + content + '\n</main>\n'
       '<footer>\n  <div class="wrap">\n    ' + nav_html(navcur) + '\n'
-      '    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей и глоссарий.<br>\n'
+      '    ' + KNOW_NAV + '\n'
+      '    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей, глоссарий и статьи-кейсы с цифрами.<br>\n'
       '    Тарифы и возможности нейросетей меняются — сверяйте дату обновления; важные решения проверяйте по первоисточникам.\n'
       '  </div>\n</footer>\n'
       '<div id="toast" role="status" aria-live="polite"></div>\n'
@@ -850,6 +914,165 @@ def know_glossary():
     return know_page('glossary.html', GLOSS_TITLE, GLOSS_DESC, 'og/og-glossary.png', ld,
                      build_glossary() + _gloss_body() + _gloss_tail(), 'glossary.html')
 
+# ---------------------------------------------------------------- статьи-кейсы
+# ШАБЛОН СЕРИИ «Статьи и кейсы» (стратегия, этап 3: 1–2 статьи в месяц).
+# Структура каждой статьи (копируйте для следующих):
+#   1. hero: H1 с цифрой/выгодой + лид (hub-sub) + мета (hub-meta: обновление, время чтения);
+#   2. «Коротко» — 3–5 тезисов (ul в .strip);
+#   3. «Что говорят исследования» — таблица .cmp: цифра | что означает | источник (ссылка);
+#   4. «Пример расчёта» — таблица .cmp + пометка, что расчёт иллюстративный;
+#   5. Сценарий с промптами — карточки .gstep со ссылками на карточки разделов (file.html#pN);
+#   6. warn-strip с ограничениями (конфиденциальность, галлюцинации);
+#   7. «Как повторить» — чек-лист (ul) → дублируется HowTo в JSON-LD;
+#   8. баннер на раздел-донор промптов + анонс следующей статьи;
+#   9. <details class="sources"> — источники цифр.
+# Разметка: Article (headline/articleBody — для контентной аналитики Метрики) + HowTo + WebPage.
+# Правила: цифры — только из опубликованных исследований (со ссылкой) или явно
+# помеченные как иллюстративный расчёт; никаких выдуманных «отзывов пользователей».
+
+KEIS_FILE  = 'keis-ii-pochta.html'
+KEIS_TITLE = 'Сколько часов экономит ИИ на письмах и документах — цифры и 7 промптов | Ediai'
+KEIS_DESC  = ('Кейс с цифрами: сколько времени съедают письма и документы, что показывают исследования '
+              'OpenAI, NBER, Microsoft и hh.ru, иллюстративный расчёт экономии и 7 готовых промптов '
+              'на рабочую неделю.')
+KEIS_H1    = 'Сколько часов экономит ИИ на письмах и документах'
+
+# (цифра, что означает, источник — HTML со ссылкой)
+KEIS_RESEARCH = [
+ ('~30%', 'доля рабочих задач среди всех сообщений ChatGPT — работа давно не «меньшинство», а огромный пласт применения ИИ',
+  '<a href="https://www.nber.org/system/files/working_papers/w34255/w34255.pdf" target="_blank" rel="noopener">OpenAI + NBER, WP №34255 (2025)</a>'),
+ ('40–42%', 'рабочих запросов к ChatGPT — написание и редактирование текстов: письма и документы дают нейросетям чаще всего',
+  '<a href="https://www.nber.org/system/files/working_papers/w34255/w34255.pdf" target="_blank" rel="noopener">OpenAI + NBER, WP №34255 (2025)</a>'),
+ ('57%', 'российских компаний уже внедрили ИИ (январь 2026); 37% называют это главным успехом года — навык становится нормой',
+  '<a href="https://www.cnews.ru/news/line/2026-01-23_57_kompanij_uzhe_vnedrili" target="_blank" rel="noopener">CNews (2026)</a>'),
+ ('+34%', 'медианная зарплата специалистов с навыком работы с ИИ выше (II кв. 2025) — экономия времени конвертируется в деньги',
+  '<a href="https://hh.ru/article/kak-ii-menyaet-professii-i-komu-nuzhno-uchitsya-s-nim-rabotat" target="_blank" rel="noopener">hh.ru (2026)</a>'),
+ ('1,3 млн', 'AI-вакансий — рынок труда явно сигнализирует: «уметь работать с ИИ» из плюса превращается в базовое требование',
+  '<a href="https://news.microsoft.com/annual-work-trend-index-2026/" target="_blank" rel="noopener">Microsoft Work Trend Index (2026)</a>'),
+]
+
+# (задача, без ИИ, с ИИ, пояснение) — иллюстративный расчёт рабочей недели
+KEIS_CALC = [
+ ('Черновик делового письма', '10–15 мин', '3–5 мин', 'ИИ даёт структуру и тон, факты и финальная редактура — ваши'),
+ ('Exec-summary документа на 20 страниц', '40–60 мин', '10–15 мин', 'выжимка за один запрос; ключевые выводы перечитайте сами'),
+ ('Протокол встречи', '20–30 мин', '5–10 мин', 'из ваших тезисов — документ с договорённостями и ответственными'),
+ ('Отчёт недели из фактов', '45–60 мин', '10–15 мин', 'цифры ваши, сборка и формулировки — нейросети'),
+ ('Пункт договора «человеческим языком»', '15–30 мин', '3–5 мин', 'риски и вопросы второй стороне; важное проверяет юрист'),
+]
+
+# (id промпта, день/ситуация, заголовок, короткое описание) — 7 промптов недели
+KEIS_STEPS = [
+ ('p184', 'Понедельник', 'Follow-up после встречи', 'Встреча закончилась — через 5 минут у участников резюме, договорённости и сроки.'),
+ ('p182', 'Вторник', 'Отказать, не сжигая мосты', 'Вежливый, но твёрдый отказ клиенту или коллеге: тон сохраняет отношения.'),
+ ('p187', 'Среда', 'Exec-summary длинного документа', 'Отчёт на 20 страниц помещается в один экран: выводы, риски, решения.'),
+ ('p194', 'Четверг', 'Протокол встречи из черновика', 'Ваши тезисы превращаются в протокол с ответственными и дедлайнами.'),
+ ('p190', 'Пятница', 'Отчёт недели из фактов', 'Список сделанного — в структурированный отчёт для руководителя.'),
+ ('p203', 'В течение недели', 'Пункт договора человеческим языком', 'Что на самом деле подписываете: риски и вопросы второй стороне.'),
+ ('p202', 'В течение недели', 'Таблица из неструктурированного текста', 'Каша из чата или файла — в аккуратную таблицу для отчёта.'),
+]
+
+KEIS_HOWTO = [
+ 'Выберите 2–3 задачи из таблицы расчёта, которые съедают больше всего времени именно у вас.',
+ 'Откройте промпт в разделе «ИИ на работе», скопируйте и замените данные в [скобках] на свои факты.',
+ 'Получите черновик и доуточните тон одной-двумя репликами: «короче», «формальнее», «добавь цифры».',
+ 'Потратьте 3–5 минут на проверку фактов, цифр и формулировок — ответственность всегда на человеке.',
+ 'Через две недели посчитайте фактическое время и сравните с расчётом — скорректируйте свой сценарий.',
+]
+
+def keis_content():
+    s = ('<section class="hero">\n'
+         '  <h1>' + KEIS_H1 + '</h1>\n'
+         '  <p class="hub-sub">Кейс с цифрами: письма, отчёты и протоколы — самые частые рабочие задачи для нейросетей. '
+         'Что показывают исследования 2025–2026 годов, как посчитать свою экономию и какие 7 промптов закрывают '
+         'типовую рабочую неделю.</p>\n'
+         '  <p class="hub-meta">Обновлено ' + MONTH_YEAR + ' · ~6 минут чтения · Кейс редакции Ediai</p>\n'
+         '</section>\n'
+         '<div class="strip">\n'
+         '  <h2>Коротко</h2>\n'
+         '  <ul>\n'
+         '    <li>Письма и документы — задача №1 для ИИ на работе: <b>40–42% рабочих запросов</b> к ChatGPT — это тексты (OpenAI + NBER, 2025).</li>\n'
+         '    <li>Схема экономии простая: нейросеть собирает черновик за 1–2 минуты, вы тратите 3–5 минут на факты и тон — вместо 15–60 минут на документ с нуля.</li>\n'
+         '    <li>Ниже — иллюстративный расчёт рабочей недели и 7 готовых промптов из раздела <a href="work.html">«ИИ на работе»</a>.</li>\n'
+         '    <li>Навык окупается буквально: медианная зарплата специалистов с умением работать с ИИ — <b>+34%</b> (hh.ru).</li>\n'
+         '  </ul>\n'
+         '  <h2>Что говорят исследования</h2>\n'
+         '  <div class="table-wrap">\n    <table class="cmp">\n'
+         '      <tr><th>Цифра</th><th>Что означает</th><th>Источник</th></tr>\n')
+    for num, mean, src in KEIS_RESEARCH:
+        s += '      <tr><td>' + num + '</td><td>' + mean + '</td><td>' + src + '</td></tr>\n'
+    s += ('    </table>\n  </div>\n'
+          '  <h2>Пример расчёта: рабочая неделя писем и документов</h2>\n'
+          '  <div class="table-wrap">\n    <table class="cmp">\n'
+          '      <tr><th>Задача</th><th>Без ИИ</th><th>С ИИ</th><th>Пояснение</th></tr>\n')
+    for task, wo, w_, note in KEIS_CALC:
+        s += '      <tr><td>' + task + '</td><td>' + wo + '</td><td>' + w_ + '</td><td>' + note + '</td></tr>\n'
+    s += ('    </table>\n  </div>\n'
+          '  <p class="art-note">Расчёт иллюстративный, а не обещание: подставьте свои цифры. Принцип один — '
+          'нейросеть забирает 70–80% механической сборки черновика, человек оставляет себе факты, суждения '
+          'и ответственность. Если таких задач в неделе пять-семь, высвобождается от 3–4 часов — почти '
+          'половина рабочего дня.</p>\n'
+          '  <h2>7 промптов на рабочую неделю</h2>\n'
+          '  <div class="guide">\n')
+    for i, (pid, day, t, txt) in enumerate(KEIS_STEPS):
+        s += ('    <div class="gstep" id="keis-' + pid + '"><span class="s-n">' + str(i + 1) + '</span><div>'
+              '<h3>' + day + ' · ' + t + '</h3><p>' + txt + '</p>'
+              '<p class="p-go"><a href="work.html#' + pid + '">Открыть промпт в разделе →</a></p></div></div>\n')
+    s += ('  </div>\n'
+          '  <div class="info-strip warn-strip"><span class="ic" aria-hidden="true">🔒</span>'
+          '<span><b>Прежде чем копировать:</b> не отправляйте в публичные чат-боты коммерческую тайну, '
+          'персональные данные и финотчётность — обезличивайте: имена и компании → <code>[компания]</code>, '
+          'суммы → диапазоны. ИИ галлюцинирует: цифры, даты, цитаты и юридические формулировки проверяйте '
+          'по первоисточнику.</span></div>\n'
+          '  <h2>Как повторить этот кейс</h2>\n'
+          '  <ul>\n')
+    for i, st in enumerate(KEIS_HOWTO):
+        s += '    <li><b>' + str(i + 1) + '.</b> ' + st + '</li>\n'
+    s += ('  </ul>\n'
+          '  ' + banner('work.html', '💼', '<b>«ИИ на работе»</b> — все 30 промптов раздела: письма и деликатные '
+                       'отказы, отчёты и exec-summary, встречи и переговоры, резюме, документы и планы.') + '\n'
+          '  <p class="art-next">Следующий кейс серии: <b>«Неделя ИИ-меню: что вышло»</b> — эксперимент с меню '
+          'из того, что есть в холодильнике: цифры, выводы и промпты из раздела '
+          '<a href="life.html">«ИИ в личной жизни»</a>.</p>\n'
+          '  <details class="sources"><summary><h2>📖 Источники кейса</h2>'
+          '<span class="src-hint">показать список</span></summary>'
+          '<div class="sources-in"><p class="note">Цифры — из опубликованных исследований по ссылкам ниже; '
+          'таблица расчёта — иллюстративная модель редакции Ediai. Промпты — из раздела «ИИ на работе», '
+          'составлены редакцией. Проверено: ' + UPDATED + '.</p>' + SRC['work_ul'] + '</div></details>\n'
+          '</div>\n')
+    return s
+
+def know_case():
+    url = SITE_URL + '/' + KEIS_FILE
+    body_text = ('Письма и документы — самые частые рабочие задачи для нейросетей: 40–42% рабочих запросов '
+                 'к ChatGPT — написание и редактирование текстов (OpenAI + NBER, 2025). Нейросеть собирает '
+                 'черновик за 1–2 минуты, человек тратит 3–5 минут на факты и тон вместо 15–60 минут на '
+                 'документ с нуля. В кейсе: цифры исследований (доля рабочих задач ~30%, 57% российских '
+                 'компаний внедрили ИИ, медианная зарплата с навыком ИИ +34%, 1,3 млн AI-вакансий), '
+                 'иллюстративный расчёт рабочей недели и 7 готовых промптов: follow-up после встречи, '
+                 'деликатный отказ, exec-summary, протокол, отчёт недели, разбор пункта договора, таблица '
+                 'из неструктурированного текста.')
+    ld = {"@context":"https://schema.org","@graph":[
+      WEBSITE_LD,
+      {"@type":"WebPage","@id":url,"url":url,
+       "name":KEIS_H1,"description":KEIS_DESC,
+       "inLanguage":"ru","isPartOf":{"@id":SITE_URL+"/#website"}},
+      {"@type":"Article","@id":url,"url":url,
+       "headline":KEIS_H1 + ": цифры и 7 промптов",
+       "description":KEIS_DESC,"inLanguage":"ru",
+       "image":[SITE_URL+"/og/og-keis-pochta.png"],
+       "author":{"@type":"Organization","name":"Ediai","url":SITE_URL+"/"},
+       "publisher":{"@type":"Organization","name":"Ediai","url":SITE_URL+"/"},
+       "datePublished":LASTMOD,"dateModified":LASTMOD,
+       "articleBody":body_text,
+       "keywords":"ИИ на работе, письма, документы, экономия времени, промпты, кейс, exec-summary, протокол встречи",
+       "isPartOf":{"@id":SITE_URL+"/#website"},
+       "mainEntityOfPage":{"@type":"WebPage","@id":url}},
+      {"@type":"HowTo","name":"Как повторить кейс «ИИ на письмах и документах»",
+       "step":[{"@type":"HowToStep","position":i+1,"name":st} for i,st in enumerate(KEIS_HOWTO)]},
+    ]}
+    return know_page(KEIS_FILE, KEIS_TITLE, KEIS_DESC, 'og/og-keis-pochta.png', ld,
+                     keis_content(), KEIS_FILE)
+
 def build_index():
     tiles = []
     for t in TILES:
@@ -874,6 +1097,44 @@ def build_index():
                     '<p>' + desc + '</p><span class="p-go">Открыть промпт →</span></a>')
 
     faq = ''.join('<details><summary>' + esc(q) + '</summary><p>' + esc(a) + '</p></details>' for q, a in FAQ)
+
+    # глобальный поиск: компактный индекс всех промптов (без текстов — страницу не раздуваем)
+    nav_by_file = {f: label for f, label in NAV}
+    sidx = [{'i': p['id'], 't': p['title'], 's': p['section'], 'c': p['sub'],
+             'd': p['desc'], 'g': ' '.join(p['tags'])} for p in PROMPTS]
+    sectmeta = {k: {'f': SECTIONS[k]['file'], 'n': nav_by_file[SECTIONS[k]['file']]}
+                for k in SECTION_ORDER}
+
+    hub_search = (
+      '  <h2 class="hub-h">🔎 Найти сценарий</h2>\n'
+      '  <div class="hub-search" id="hubSearch">\n'
+      '    <div class="search-box">\n'
+      '      <svg fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>\n'
+      '      <input id="hubQ" type="search" aria-label="Поиск по всем ' + str(TOTAL) + ' промптам базы" '
+      'placeholder="Поиск по всем ' + str(TOTAL) + ' промптам: резюме, хедшот, холодильник, отчёт…" autocomplete="off">\n'
+      '      <kbd aria-hidden="true">/</kbd>\n'
+      '    </div>\n'
+      '    <p class="hub-search-hint" id="hubHint">Начните вводить задачу — подходящие сценарии появятся здесь '
+      'и откроются карточкой в нужном разделе. Хоткей «/», Esc — сброс.</p>\n'
+      '    <div class="hub-res" id="hubRes" aria-live="polite" hidden></div>\n'
+      '    <noscript><style>.hub-search .search-box,#hubHint{display:none!important}</style>'
+      '<p class="hub-search-hint">Поиск работает с включённым JavaScript. Все ' + str(TOTAL) + ' ' +
+      plural(TOTAL, 'промпт', 'промпта', 'промптов') + ' доступны и без него — выберите раздел ниже: '
+      'карточки и тексты промптов отрендерены статически.</p></noscript>\n'
+      '  </div>\n')
+
+    cases_block = (
+      '  <h2 class="hub-h">📈 Статьи и кейсы</h2>\n'
+      '  <div class="pop-grid">\n'
+      '    <a class="pop case" href="' + KEIS_FILE + '"><span class="p-cat">Кейс · ИИ на работе</span>'
+      '<h3>Сколько часов экономит ИИ на письмах и документах</h3>'
+      '<p>Цифры исследований OpenAI, NBER, Microsoft и hh.ru, пример расчёта рабочей недели '
+      'и 7 готовых промптов: от follow-up до exec-summary и протокола встречи.</p>'
+      '<span class="p-go">Читать кейс →</span></a>\n'
+      '    <div class="pop soon"><span class="p-cat">Готовится</span><h3>«Неделя ИИ-меню: что вышло»</h3>'
+      '<p>Следующий кейс — про быт: меню из того, что есть в холодильнике, список покупок и экономия '
+      'в цифрах. Промпты — в разделе «ИИ в личной жизни».</p><span class="p-go">Скоро</span></div>\n'
+      '  </div>\n')
 
     ldgraph = {"@context":"https://schema.org","@graph":[
         WEBSITE_LD,
@@ -910,7 +1171,7 @@ def build_index():
       '<header class="hero">\n  <div class="wrap">\n'
       '    <span class="logo">⚡ EDIAI.RU · практический ИИ</span>\n'
       '    <h1>ИИ в личной жизни и работе: ' + str(TOTAL) + ' ' + plural(TOTAL, 'готовый промпт', 'готовых промпта', 'готовых промптов') + ', гиды и сравнения</h1>\n'
-      '    <p class="sub">Готовые промпты, путеводитель для новичков и честные сравнения нейросетей: переделка фото, генерация изображений, тексты, ИИ в личной жизни и на работе, Qwen и основы промптинга. Скопируйте сценарий, подставьте свои данные вместо <span style="color:var(--ph);font-weight:600">[скобок]</span> — и получите результат за минуты.</p>\n'
+      '    <p class="sub">Готовые промпты, путеводитель для новичков, честные сравнения нейросетей и статьи-кейсы с цифрами: переделка фото, генерация изображений, тексты, ИИ в личной жизни и на работе, Qwen и основы промптинга. Скопируйте сценарий, подставьте свои данные вместо <span style="color:var(--ph);font-weight:600">[скобок]</span> — и получите результат за минуты.</p>\n'
       '    <div class="stats">'
       '<div class="stat">📚 Всего промптов: <b>' + str(TOTAL) + '</b></div>'
       '<div class="stat">🗂 Разделов: <b>' + str(len(SECTION_ORDER)) + '</b></div>'
@@ -918,6 +1179,7 @@ def build_index():
       '</div>\n'
       '  </div>\n</header>\n'
       '<main class="wrap" id="main" tabindex="-1">\n'
+      + hub_search +
       '  <h2 class="hub-h">🗂 Разделы</h2>\n'
       '  <div class="bento">' + ''.join(tiles) + '</div>\n'
       '  <h2 class="hub-h">⚡ Как пользоваться</h2>\n'
@@ -944,6 +1206,7 @@ def build_index():
       '    </table>\n  </div>\n'
       '  <p class="mini-more"><a href="models.html">Полное сравнение: бесплатные тарифы, русский язык, замены →</a> · '
       '<a href="glossary.html">Глоссарий терминов →</a></p>\n'
+      + cases_block +
       '  <h2 class="hub-h">🔥 Популярные промпты</h2>\n'
       '  <div class="pop-grid">' + ''.join(pops) + '</div>\n'
       '  <h2 class="hub-h">❓ Частые вопросы</h2>\n'
@@ -956,6 +1219,8 @@ def build_index():
       '    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · ' + str(TOTAL) + ' проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.<br>\n'
       '    Шаблоны основаны на общепризнанных практиках промпт-инжиниринга и официальных гайдах; лучшие результаты даёт итерация: сгенерировали → уточнили → повторили.\n'
       '  </div>\n</footer>\n'
+      '<script>\nconst SIDX = ' + js_json(sidx) + ';\nconst SECTMETA = ' + js_json(sectmeta) + ';\n</script>\n'
+      '<script>\n' + HUBJS + '\n</script>\n'
       '</body>\n</html>\n')
 
 # ---------------------------------------------------------------- служебные файлы
@@ -964,7 +1229,7 @@ def robots_txt():
 
 def sitemap_xml():
     pages = [('index.html','1.0')] + [(SECTIONS[k]['file'],'0.8') for k in SECTION_ORDER] + \
-            [('start.html','0.7'),('models.html','0.7'),('glossary.html','0.6')]
+            [('start.html','0.7'),('models.html','0.7'),('glossary.html','0.6'),(KEIS_FILE,'0.7')]
     urls = ''.join(
       '  <url><loc>' + SITE_URL + '/' + f + '</loc><lastmod>' + LASTMOD + '</lastmod>'
       '<changefreq>weekly</changefreq><priority>' + pr + '</priority></url>\n'
@@ -1011,6 +1276,9 @@ def og_images():
       ('og-glossary.png', 'EDIAI.RU · БАЗА ЗНАНИЙ', 'Глоссарий терминов ИИ',
        '16 понятий простыми словами: промпт, токен, галлюцинация, агент, RAG',
        'словарь · с примерами', (76,201,240), (139,124,248)),
+      ('og-keis-pochta.png', 'EDIAI.RU · СТАТЬИ И КЕЙСЫ', 'Сколько часов экономит ИИ',
+       'Письма и документы: цифры исследований, расчёт недели, 7 промптов',
+       'кейс · цифры · 7 промптов', (235,150,60), (139,124,248)),
       ('og-index.png', 'EDIAI.RU · ПРАКТИЧЕСКИЙ ИИ', 'ИИ в личной жизни и работе',
               str(TOTAL) + ' готовых промптов, гиды и сравнения нейросетей',
               str(TOTAL) + ' промптов · ' + str(len(SECTION_ORDER)) + ' разделов', (139,124,248), (76,201,240))]
@@ -1062,6 +1330,7 @@ def main():
     w('start.html', know_start())
     w('models.html', know_models())
     w('glossary.html', know_glossary())
+    w(KEIS_FILE, know_case())
     w('robots.txt', robots_txt())
     w('sitemap.xml', sitemap_xml())
     og_images()

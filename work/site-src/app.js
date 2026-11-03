@@ -29,7 +29,7 @@ var byId = {};
 PROMPTS.forEach(function(p){ byId[p.id] = p; });
 
 var CATS = PAGE.cats;
-var state = {cat:"all", sub:"all", q:""};
+var state = {cat:"all", sub:"all", q:"", ft:[]};  /* ft — активные фильтры-ограничения (free/photo/quick) */
 var autoOpen = true; /* при поиске карточки раскрываются автоматически */
 
 var grid        = document.getElementById("grid");
@@ -52,11 +52,17 @@ function matches(p,q){
   q = q.toLowerCase();
   return (p.title+" "+p.desc+" "+p.prompt+" "+p.sub+" "+p.tags.join(" ")+" "+(p.tip||"")+" "+p.modelLabel).toLowerCase().includes(q);
 }
+function ftMatch(p){
+  if(!state.ft.length) return true;
+  var f = p.f || [];
+  return state.ft.every(function(t){ return f.indexOf(t) >= 0; });
+}
 function getFiltered(){
   var q = state.q.trim();
   return PROMPTS.filter(function(p){
     return (state.cat==="all"||p.cat===state.cat) &&
            (state.sub==="all"||p.sub===state.sub) &&
+           ftMatch(p) &&
            matches(p,q);
   });
 }
@@ -157,7 +163,7 @@ function renderGrid(){
   grid.innerHTML = "";
   grid.removeAttribute("data-prerendered");
   emptyEl.style.display = list.length ? "none" : "block";
-  resultsEl.textContent = (list.length===PROMPTS.length && !q)
+  resultsEl.textContent = (list.length===PROMPTS.length && !q && !state.ft.length)
     ? "Показаны все "+list.length+" промпта"
     : "Найдено: "+list.length;
   if(!list.length && q) trackEvent("empty_search", {q:q, section:PAGE.section});
@@ -281,6 +287,23 @@ if(chipsToggle){
   });
 }
 
+/* ---- фильтры-ограничения: «бесплатно / нужно фото-файл / 5 минут» ----
+   Несколько чипов работают как «И»: бесплатно + 5 минут = быстрые бесплатные сценарии. */
+var fchipsEl = document.getElementById("fchips");
+if(fchipsEl){
+  fchipsEl.querySelectorAll(".fchip").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var tag = btn.getAttribute("data-ftag");
+      var i = state.ft.indexOf(tag);
+      var on = i < 0;
+      if(on){ state.ft.push(tag); } else { state.ft.splice(i, 1); }
+      btn.classList.toggle("active", on);
+      btn.setAttribute("aria-pressed", String(on));
+      renderGrid();
+    });
+  });
+}
+
 /* ---- кнопка «наверх» ---- */
 var toTop = document.getElementById("toTop");
 window.addEventListener("scroll", function(){
@@ -302,6 +325,19 @@ if(urlQ){
   hydrate();          /* статические карточки: только навешиваем обработчики */
 }else{
   renderGrid();
+}
+
+/* ---- deep-link по якорю: photo.html#p12 — раскрыть карточку ----
+   Используется глобальным поиском главной и ссылками из статей-кейсов. */
+if(/^#p\d+$/.test(location.hash)){
+  var hid = location.hash.slice(1);
+  var hashCard = document.getElementById(hid);
+  if(hashCard && hashCard.classList.contains("card")){
+    hashCard.classList.add("open");
+    var hashHead = hashCard.querySelector(".card-head");
+    if(hashHead) hashHead.setAttribute("aria-expanded", "true");
+    if(byId[hid]) byId[hid]._open = true;
+  }
 }
 
 })();

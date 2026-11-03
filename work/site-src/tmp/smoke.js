@@ -38,12 +38,21 @@ console.log('index.html');
   ok(d.querySelectorAll('.tile').length === 7, 'bento: 7 плиток разделов');
   ok(d.querySelector('.tile-big') !== null, 'крупная плитка «Переделка фото»');
   ok(d.querySelector('.tile-life') !== null, 'крупная плитка «ИИ в личной жизни» (tile-life)');
-  ok(d.querySelectorAll('.pop:not(.sc)').length === 9, '9 популярных промптов');
+  ok(d.querySelectorAll('.pop:not(.sc):not(.case):not(.soon)').length === 9, '9 популярных промптов');
   ok(d.querySelectorAll('.pop.sc').length === 8, 'блок «С чего начать»: 7 шагов + путеводитель');
+  const caseCard = d.querySelector('.pop.case');
+  ok(!!caseCard && caseCard.getAttribute('href') === 'keis-ii-pochta.html', 'блок «Статьи и кейсы»: карточка кейса');
+  ok(d.querySelector('.pop.soon') !== null, 'блок «Статьи и кейсы»: анонс следующей статьи');
+  ok([...d.querySelectorAll('.know-nav a')].some(a => a.getAttribute('href') === 'keis-ii-pochta.html'), 'know-nav главной: ссылка «Статьи и кейсы»');
   ok(d.querySelectorAll('.cmp tr').length === 8, 'блок «Какая нейросеть для чего»: таблица 7 задач');
   ok(d.querySelector('.know-nav') !== null, 'know-nav в футере главной');
   ok(d.querySelectorAll('.faq details').length === 6, 'FAQ: 6 вопросов');
-  ok([...d.querySelectorAll('script')].filter(x=>!x.type && !x.src && !x.textContent.includes('metrika') && !x.textContent.includes('gtag')).length === 0, 'главная: код только Метрика/GA4 + ld+json');
+  ok(!!d.getElementById('hubQ') && !!d.getElementById('hubRes'), 'глобальный поиск: поле и блок результатов');
+  ok(d.getElementById('hubRes').hidden === true, 'глобальный поиск: результаты скрыты на старте');
+  ok(d.documentElement.innerHTML.includes('Поиск работает с включённым JavaScript'), 'noscript-заглушка поиска');
+  const idxScripts = [...d.querySelectorAll('script')].filter(x=>!x.type && !x.src && !x.textContent.includes('metrika') && !x.textContent.includes('gtag'));
+  ok(idxScripts.length === 1 && idxScripts[0].textContent.includes('const SIDX ='), 'главная: единственный доп. скрипт — индекс поиска SIDX (hub.js содержит gtag-обвязку)');
+  ok([...d.querySelectorAll('script')].some(x=>!x.src && x.textContent.includes('hubQ')), 'код глобального поиска встроен в главную');
   ok(d.documentElement.innerHTML.includes('googletagmanager.com/gtag/js?id=G-NXPYMMXH35') && d.documentElement.innerHTML.includes("gtag('config', 'G-NXPYMMXH35')"), 'GA4 G-NXPYMMXH35 на главной');
   ok(d.body.textContent.includes('Yandex.Metrika counter') || d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js'), 'счётчик Метрики на главной');
   const ld = d.querySelector('script[type="application/ld+json"]');
@@ -53,6 +62,36 @@ console.log('index.html');
   ok(src.querySelectorAll('.sources-grid > div').length === 6, 'в спойлере 6 колонок источников');
   const nav = d.querySelector('.sections-nav');
   ok(nav && nav.querySelectorAll('a').length === 8, 'навигация по 8 адресам');
+}
+
+/* ---------- 1b. Глобальный поиск главной: функционально ---------- */
+console.log('index.html: глобальный поиск');
+{
+  const dom = load('index.html');
+  const w = dom.window, d = w.document;
+  await tick(50);
+  const q = d.getElementById('hubQ');
+  const res = d.getElementById('hubRes');
+  q.value = 'резюме';
+  q.dispatchEvent(new w.Event('input', {bubbles:true}));
+  await tick(250);
+  ok(res.hidden === false, 'результаты показаны после ввода');
+  const hrefs = [...res.querySelectorAll('a')].map(a => a.getAttribute('href'));
+  ok(hrefs.includes('work.html#p197'), '«резюме» → карточка work.html#p197');
+  ok(res.textContent.includes('Найдено'), 'счётчик найденного');
+  ok(hrefs.length <= 12, 'не больше 12 результатов');
+  /* пустая выдача → empty_search в оба счётчика */
+  const dlBefore = w.dataLayer.length, ymBefore = w.ym.a.length;
+  q.value = 'квиртинаблг';
+  q.dispatchEvent(new w.Event('input', {bubbles:true}));
+  await tick(250);
+  ok(!!res.querySelector('.hub-empty'), 'бессмысленный запрос → подсказка «ничего не найдено»');
+  ok([...w.dataLayer.slice(dlBefore)].some(a => a[0]==='event' && a[1]==='empty_search'), 'GA4: empty_search с хаба');
+  ok([...w.ym.a.slice(ymBefore)].some(a => a[1]==='reachGoal' && a[2]==='empty_search'), 'Метрика: empty_search с хаба');
+  /* Escape — сброс */
+  q.focus();
+  d.dispatchEvent(new w.KeyboardEvent('keydown', {key:'Escape', bubbles:true}));
+  ok(q.value === '' && res.hidden === true, 'Escape очищает запрос и скрывает результаты');
 }
 
 /* ---------- 2. Раздел photo: статика + интерактив ---------- */
@@ -106,6 +145,16 @@ console.log('photo.html');
   chip.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
   ok(d.querySelectorAll('#grid .card').length === 54, 'возврат в «Все промпты»: снова 54');
 
+  /* фильтры-ограничения («бесплатно / нужно фото / 5 минут») */
+  ok(d.querySelectorAll('#fchips .fchip').length === 1, 'photo: один чип-фильтр (бесплатно и «нужно фото» = 100% раздела — скрыты)');
+  const fchipQ = d.querySelector('#fchips .fchip[data-ftag="quick"]');
+  ok(!!fchipQ && fchipQ.textContent.includes('24'), 'photo: чип «⚡ 5 минут» со счётчиком 24');
+  fchipQ.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
+  ok(d.querySelectorAll('#grid .card').length === 24, 'фильтр «5 минут»: 24 карточки (без фотосессий и серий)');
+  ok(fchipQ.getAttribute('aria-pressed') === 'true', 'активный чип-фильтр: aria-pressed=true');
+  fchipQ.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
+  ok(d.querySelectorAll('#grid .card').length === 54, 'повторный клик снял фильтр: снова 54');
+
   /* a11y-атрибуты */
   ok(d.getElementById('search').getAttribute('aria-label') !== null, 'search: aria-label');
   ok(d.getElementById('toast').getAttribute('aria-live') === 'polite', 'toast: aria-live=polite');
@@ -139,14 +188,26 @@ console.log('photo.html?q=реставрация');
   ok(n >= 2 && n < 54, 'выдача по ?q= отфильтрована (' + n + ')');
 }
 
+/* ---------- 3b. deep-link по якорю: карточка раскрывается ---------- */
+console.log('photo.html#p12');
+{
+  const dom = load('photo.html', '#p12');
+  const w = dom.window, d = w.document;
+  await tick(80);
+  const c = d.getElementById('p12');
+  ok(c.classList.contains('open'), 'якорь #p12: карточка раскрыта (глобальный поиск и статьи ведут на якоря)');
+  ok(c.querySelector('.card-head').getAttribute('aria-expanded') === 'true', 'якорь: aria-expanded=true');
+}
+
 /* ---------- 4. Разделы без табов ---------- */
-for(const [file, expect, pillMin] of [['generate.html',21,1], ['texts.html',21,1], ['qwen.html',23,0], ['basics.html',6,1]]){
+for(const [file, expect, pillMin, fchips] of [['generate.html',21,1,1], ['texts.html',21,1,1], ['qwen.html',23,0,2], ['basics.html',6,1,0]]){
   console.log(file);
   const dom = load(file);
   const w = dom.window, d = w.document;
   await tick(50);
   ok(d.querySelectorAll('#grid .card').length === expect, expect + ' карточек');
   ok(d.getElementById('tabs').hidden === true, 'строка табов скрыта (одна категория)');
+  ok(d.querySelectorAll('#fchips .fchip').length === fchips, 'чипов-фильтров: ' + fchips);
   const head = d.querySelector('#grid .card-head');
   head.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
   ok(d.querySelector('#grid .card').classList.contains('open'), 'гидратация работает');
@@ -181,6 +242,18 @@ console.log('life.html');
   const allChip = [...d.querySelectorAll('#chips .chip')].find(t => t.textContent === 'Все подразделы');
   allChip.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
   ok(d.querySelectorAll('#grid .card').length === 56, 'возврат в «Все подразделы»: снова 56');
+  /* фильтры-ограничения life: «нужно фото/файл» 13, «5 минут» 41, комбинация = И (11) */
+  const fcP = d.querySelector('#fchips .fchip[data-ftag="photo"]');
+  const fcQ = d.querySelector('#fchips .fchip[data-ftag="quick"]');
+  ok(!!fcP && fcP.textContent.includes('13'), 'life: чип «📷 Нужно фото/файл» со счётчиком 13');
+  ok(!!fcQ && fcQ.textContent.includes('41'), 'life: чип «⚡ 5 минут» со счётчиком 41');
+  fcP.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
+  ok(d.querySelectorAll('#grid .card').length === 13, 'фильтр «нужно фото/файл»: 13 карточек');
+  fcQ.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
+  ok(d.querySelectorAll('#grid .card').length === 11, 'комбинация двух фильтров (И): 11 карточек');
+  fcP.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
+  fcQ.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
+  ok(d.querySelectorAll('#grid .card').length === 56, 'фильтры сняты: снова 56');
 }
 
 
@@ -201,6 +274,13 @@ console.log('work.html');
   carTab.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
   ok(d.querySelectorAll('#grid .card').length === 5, 'таб «Резюме и карьера»: 5 карточек');
   ok(d.documentElement.innerHTML.includes('Конфиденциальность'), 'полоса о конфиденциальности на месте');
+  /* фильтр «5 минут» в работе: без резюме/карьеры и планов */
+  const allTabW = [...d.querySelectorAll('#tabs .tab')].find(t => t.textContent.includes('Все'));
+  allTabW.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
+  const fcW = d.querySelector('#fchips .fchip[data-ftag="quick"]');
+  ok(!!fcW && fcW.textContent.includes('20'), 'work: чип «⚡ 5 минут» со счётчиком 20');
+  fcW.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
+  ok(d.querySelectorAll('#grid .card').length === 20, 'фильтр «5 минут» в работе: 20 карточек');
 }
 
 /* ---------- 4c. База знаний: start / models / glossary ---------- */
@@ -231,6 +311,42 @@ for (const [file, h1part, checks] of [
   ok(d.querySelector('.know-nav') !== null && d.querySelector('footer nav') !== null, file + ': know-nav и навигация разделов');
   ok(d.querySelector('main nav') !== null && [...d.querySelectorAll('main nav a')].some(a => a.getAttribute('href') === 'index.html'), file + ': навигация с «Главная» вверху страницы');
   for (const [msg, cond] of Object.entries(checks(d))) ok(cond, file + ': ' + msg);
+}
+
+/* ---------- 5b. Статья-кейс keis-ii-pochta.html ---------- */
+console.log('keis-ii-pochta.html');
+{
+  const dom = load('keis-ii-pochta.html');
+  const w = dom.window, d = w.document;
+  await tick(50);
+  ok(d.querySelectorAll('h1').length === 1 && d.querySelector('h1').textContent.includes('Сколько часов экономит ИИ'), 'кейс: один h1 «Сколько часов экономит ИИ…»');
+  const ldK = JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent);
+  const art = ldK['@graph'].find(n => n['@type'] === 'Article');
+  ok(!!art && art.headline && art.articleBody, 'кейс: Article с headline и articleBody (контентная аналитика Метрики)');
+  ok(!!art && art.author && art.author.name === 'Ediai', 'кейс: автор Organization Ediai');
+  ok(ldK['@graph'].some(n => n['@type'] === 'HowTo'), 'кейс: HowTo «Как повторить»');
+  ok(d.querySelectorAll('.cmp').length === 2, 'кейс: 2 таблицы (исследования + расчёт)');
+  const gsLinks = [...d.querySelectorAll('.gstep a')];
+  ok(d.querySelectorAll('.gstep').length === 7, 'кейс: 7 промптов недели');
+  ok(gsLinks.every(a => /^work\.html#p\d+$/.test(a.getAttribute('href'))), 'кейс: все ссылки — на карточки work.html#pN');
+  const domW = load('work.html');
+  const dW = domW.window.document;
+  ok(gsLinks.every(a => dW.getElementById(a.getAttribute('href').split('#')[1])), 'кейс: все 7 якорей — реальные карточки раздела «Работа»');
+  const srcK = d.querySelector('details.sources');
+  ok(!!srcK && !srcK.open, 'кейс: источники — свёрнутый спойлер');
+  ok(srcK.querySelectorAll('li').length >= 5, 'кейс: в источниках ≥5 ссылок');
+  ok(d.documentElement.innerHTML.includes('G-NXPYMMXH35') && d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), 'кейс: GA4 + Метрика');
+  ok(d.querySelector('link[rel="canonical"]').href.includes('keis-ii-pochta.html'), 'кейс: canonical');
+  ok(d.querySelector('.know-nav a[href="keis-ii-pochta.html"]') !== null, 'кейс: know-nav со «Статьи и кейсы»');
+  ok(d.querySelector('.art-note') !== null && d.body.textContent.includes('иллюстративный'), 'кейс: расчёт помечен как иллюстративный');
+}
+
+/* ---------- 5c. sitemap ---------- */
+console.log('sitemap.xml');
+{
+  const sm = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
+  ok((sm.match(/<loc>/g) || []).length === 12, 'sitemap: 12 страниц');
+  ok(sm.includes('keis-ii-pochta.html'), 'sitemap: статья-кейс добавлена');
 }
 
 /* ---------- 6. События в счётчики (Метрика + GA4) ---------- */

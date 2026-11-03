@@ -118,14 +118,14 @@ header.hero{padding:48px 0 26px;text-align:center}
 .search-row{display:flex;gap:10px;margin-bottom:12px}
 .search-box{position:relative;flex:1}
 .search-box svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--muted)}
-#search{
+#search,#hubQ{
   width:100%;padding:12px 16px 12px 42px;font-size:15px;font-family:inherit;
   background:var(--bg2);border:1px solid #dbe1ec;border-radius:11px;
   color:var(--text);outline:none;transition:border .2s, box-shadow .2s;
 }
-#search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(106,90,224,.15)}
-#search::placeholder{color:#8a94a6}
-#search::-webkit-search-cancel-button{cursor:pointer}
+#search:focus,#hubQ:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(106,90,224,.15)}
+#search::placeholder,#hubQ::placeholder{color:#8a94a6}
+#search::-webkit-search-cancel-button,#hubQ::-webkit-search-cancel-button{cursor:pointer}
 kbd{
   position:absolute;right:12px;top:50%;transform:translateY(-50%);
   font-size:11px;color:var(--muted);border:1px solid #dbe1ec;
@@ -168,6 +168,17 @@ kbd{
 }
 .chip:hover{color:var(--text);border-color:var(--border-strong)}
 .chip.active{background:rgba(106,90,224,.10);border-color:rgba(106,90,224,.5);color:var(--accent-ink)}
+/* фильтры-ограничения: «бесплатно / нужно фото-файл / 5 минут» */
+.fchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.fchip{
+  padding:6px 13px;border-radius:99px;font-size:12.8px;cursor:pointer;
+  background:#eef1f7;border:1px solid #e0e5ef;color:var(--muted);
+  transition:all .15s;user-select:none;font-family:inherit;line-height:1.35;appearance:none;
+  white-space:nowrap
+}
+.fchip:hover{color:var(--text);border-color:var(--border-strong)}
+.fchip.active{background:linear-gradient(100deg,rgba(106,90,224,.14),rgba(34,184,207,.12));border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.fchip .fc-cnt{opacity:.7;font-weight:600;font-size:11.5px;margin-left:4px}
 .results-line{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.8px;color:var(--dim);margin-top:10px}
 .mini-btns{display:flex;gap:6px}
 .mini-btn{
@@ -352,6 +363,25 @@ pre.prompt::-webkit-scrollbar-thumb{background:#cdd5e4;border-radius:3px}
 .pop h3{font-size:15.5px;font-weight:700}
 .pop p{font-size:12.8px;color:var(--muted);line-height:1.5}
 .pop .p-go{color:var(--accent2);font-size:12.5px;font-weight:700;margin-top:4px}
+.pop.case{border-color:rgba(235,150,60,.45);background:linear-gradient(160deg,rgba(235,150,60,.07),#fff 65%)}
+.pop.case:hover{border-color:#eb963c}
+.pop.soon{border-style:dashed;background:transparent;box-shadow:none;cursor:default;opacity:.85}
+.pop.soon:hover{transform:none;border-color:var(--border-strong);box-shadow:none}
+.pop.soon .p-go{color:var(--faint)}
+
+/* ===== ХАБ: ГЛОБАЛЬНЫЙ ПОИСК ПО ВСЕЙ БАЗЕ ===== */
+.hub-search{margin:0 0 10px}
+.hub-search .search-box{max-width:760px}
+.hub-search-hint{font-size:12.8px;color:var(--dim);margin-top:9px;max-width:760px;line-height:1.5}
+.hub-res{margin-top:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);max-width:760px}
+.hub-res-n{font-size:12.8px;color:var(--muted);margin-bottom:10px}
+.hub-res-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.hub-res-list a{display:flex;flex-direction:column;gap:3px;text-decoration:none;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--bg);transition:border-color .15s,transform .15s,box-shadow .15s}
+.hub-res-list a:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow)}
+.hr-sec{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:700}
+.hr-t{font-size:14.6px;font-weight:700;color:var(--text)}
+.hr-d{font-size:12.6px;color:var(--muted);line-height:1.45}
+.hub-empty{font-size:13.8px;color:var(--muted);line-height:1.55}
 
 .faq details{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
 .faq summary{cursor:pointer;font-weight:700;font-size:14.8px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
@@ -440,7 +470,9 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
 
   .controls{padding:10px 0 9px;margin-bottom:18px}
   .search-row{margin-bottom:9px}
-  #search{font-size:16px;padding:10px 14px 10px 40px} /* 16px — iOS не зумит поле */
+  #search,#hubQ{font-size:16px;padding:10px 14px 10px 40px} /* 16px — iOS не зумит поле */
+  .fchips{margin-top:7px}
+  .fchip{padding:6px 11px;font-size:12.3px}
   .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:8px;padding-bottom:2px;-webkit-overflow-scrolling:touch}
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:0 0 auto;padding:8px 14px;font-size:13px}
@@ -467,6 +499,7 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
 /* ===== БАЗА ЗНАНИЙ: know-nav, таблицы, путеводитель, глоссарий ===== */
 .know-nav{font-size:13px;color:var(--muted);margin:0 0 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;text-align:center}
 .know-nav a{color:var(--accent-ink);font-weight:600}
+section.hero{text-align:center;padding:6px 0 2px}
 .hero .hub-sub{color:var(--muted);font-size:16px;max-width:760px;margin:12px auto 0;line-height:1.55}
 .hero .hub-meta{color:var(--faint);font-size:12.5px;margin-top:12px;letter-spacing:.02em}
 .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);margin:0 0 12px;-webkit-overflow-scrolling:touch}
@@ -494,7 +527,25 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 @media (max-width:640px){
   .cmp th,.cmp td{padding:9px 11px}
   .gstep{padding:14px 15px}
+  .strip h2{font-size:18px;margin:22px 0 10px}
+  .hub-search-hint,.hub-res{font-size:12.5px}
 }
+
+/* ===== СТАТЬИ И ТИПОГРАФИКА БАЗЫ ЗНАНИЙ (.strip) ===== */
+.strip h2{font-size:20px;font-weight:800;letter-spacing:-.01em;margin:28px 0 12px}
+.strip h2:first-child{margin-top:6px}
+.strip p{font-size:14.6px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.strip p a{color:var(--accent-ink);font-weight:600}
+.strip ul{list-style:none;margin:0 0 14px}
+.strip li{position:relative;padding-left:26px;font-size:14.6px;color:var(--muted);line-height:1.6;margin-bottom:9px}
+.strip li::before{content:"→";position:absolute;left:4px;top:0;color:var(--accent);font-weight:700}
+.strip li b,.strip p b{color:var(--text)}
+.strip .p-go{margin:4px 0 16px}
+.strip .p-go a{color:var(--accent2);font-weight:700;font-size:13.8px}
+.strip code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;background:rgba(23,32,58,.06);padding:1px 6px;border-radius:4px;color:#44506a}
+.art-note{font-size:13px;color:var(--faint);line-height:1.6;background:rgba(23,32,58,.04);border-left:3px solid var(--border-strong);padding:10px 14px;border-radius:0 8px 8px 0;margin:0 0 16px}
+.art-next{font-size:13.8px;color:#4b3fb0;line-height:1.55;background:#f3f1ff;border:1px solid #d6cdff;border-radius:10px;padding:12px 16px;margin:16px 0}
+.art-next a{color:var(--accent-ink);font-weight:600}
 
 /* нечётное число плиток: последняя занимает всю строку bento */
 .bento>.tile:last-child{grid-column:1/-1}
@@ -617,7 +668,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 <footer>
   <div class="wrap">
     <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="work.html">💼 Работа</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html" aria-current="page">🧠 Основы</a></nav>
-    <div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a></div>
+    <div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a> · <a href="keis-ii-pochta.html">Статьи и кейсы</a></div>
     <details class="sources"><summary><h2>📖 Об основах</h2><span class="src-hint">показать список</span></summary><div class="sources-in"><p class="note">Формулы основаны на общепризнанных практиках промпт-инжиниринга: role prompting, chain-of-thought, CO-STAR и официальный шестиблочный фреймворк Alibaba (<code>#Context# → #Response#</code>). Полный список источников — на <a href="index.html">главной странице</a>.</p></div></details>
     <b>🧠 Основы промптинга</b> — раздел <a href="index.html">базы промптов для ИИ</a>.<br>Главный принцип: конкретная роль + контекст + формат ответа дают нейросети больше, чем вежливые общие слова.
   </div>
@@ -633,7 +684,7 @@ pre.prompt{max-height:none!important;padding-top:14px!important}
 </style></noscript>
 <script>
 const PAGE = {"section": "basics", "tabs": false, "cats": {"all": {"label": "Все промпты", "icon": "📚"}, "base": {"label": "Основы промптинга", "icon": "🧠"}}, "catOrder": ["all", "base"]};
-const PROMPTS = [{"id": "p120", "section": "basics", "cat": "base", "sub": "Универсальные формулы", "title": "Формула Роль → Контекст → Задача → Формат", "model": "any", "modelLabel": "любая LLM", "desc": "Каркас, который превращает любой расплывчатый запрос в точный. Подходит для 90% текстовых задач.", "prompt": "Действуй как [роль: маркетолог с 10-летним опытом / юрист / преподаватель физики].\n\nКонтекст: [ситуация, аудитория, ограничения, что уже известно].\n\nЗадача: [что конкретно сделать — один глагол, один результат].\n\nФормат ответа: [объём, структура, таблица/список/текст, тон, примеры оформления].\n\nЕсли данных не хватает для качественного результата — задай мне до 5 уточняющих вопросов, прежде чем отвечать.", "tip": "Последняя строка — ключевая: она включает режим диалога и резко повышает точность ответа.", "tags": ["формула", "роль", "контекст", "база"], "qw": "chat", "ds": "ok"}, {"id": "p121", "section": "basics", "cat": "base", "sub": "Универсальные формулы", "title": "Улучшатель промптов (мета-промпт)", "model": "any", "modelLabel": "любая LLM", "desc": "Пусть ИИ сам доработает ваш слабый промпт до сильного.", "prompt": "Ты — эксперт по промпт-инжинирингу. Вот мой промпт: «[вставить ваш промпт]».\n\n1. Оцени его: что понятно, что расплывчато, каких деталей не хватает;\n2. Перепиши его: добавь роль, контекст, конкретику задачи, формат результата, ограничения и, если уместно, пример ожидаемого ответа;\n3. Объясни, что именно ты улучшил и почему;\n4. Затем выполни улучшенный промпт.", "tip": null, "tags": ["мета-промпт", "улучшение", "промпт-инжиниринг"], "qw": "chat", "ds": "ok"}, {"id": "p122", "section": "basics", "cat": "base", "sub": "Универсальные формулы", "title": "Режим интервью", "model": "any", "modelLabel": "любая LLM", "desc": "ИИ сам вытаскивает из вас вводные — идеально, когда вы не знаете, как сформулировать задачу.", "prompt": "Я хочу получить от тебя [результат: текст / план / код / дизайн-концепцию] на тему [тема].\n\nНо прежде чем делать — проведи мне интервью: задавай по одному уточняющему вопросу за раз (цель, аудитория, ограничения, тон, примеры, что точно не нужно). Задай столько вопросов, сколько нужно для идеального результата, но не больше 10.\n\nКогда соберёшь достаточно информации — кратко перескажи моё ТЗ и только затем выполни задачу.", "tip": null, "tags": ["интервью", "уточнение", "бриф", "диалог"], "qw": "chat", "ds": "ok"}, {"id": "p123", "section": "basics", "cat": "base", "sub": "Качество ответа", "title": "Цикл «критик → улучшение»", "model": "any", "modelLabel": "любая LLM", "desc": "ИИ сам критикует свой ответ и доводит его до высокого уровня — вместо среднего первого черновика.", "prompt": "Выполни задачу: [задача].\n\nЗатем смени роль на строгого критика:\n1. Найди слабые места своего ответа (логика, полнота, убедительность, факты);\n2. Поставь оценку от 1 до 10;\n3. Перепиши ответ, устранив найденные недостатки.\n\nПовторяй цикл «критика → улучшение», пока оценка не достигнет 9+. Покажи финальную версию и кратко — что менялось на каждой итерации.", "tip": null, "tags": ["итерации", "критика", "качество", "самопроверка"], "qw": "chat", "ds": "ok"}, {"id": "p124", "section": "basics", "cat": "base", "sub": "Качество ответа", "title": "Пошаговое рассуждение", "model": "any", "modelLabel": "любая LLM", "desc": "Chain-of-thought: для задач с логикой, расчётами и сложными решениями снижает ошибки в разы.", "prompt": "Реши задачу пошагово: [задача].\n\n1. Сначала составь план рассуждений (какие шаги нужны);\n2. Выполняй каждый шаг отдельно, проверяя промежуточные результаты;\n3. Если шаг вызывает сомнение — рассмотри альтернативный вариант;\n4. В конце дай краткий ответ и перепроверь его обратным ходом.\n\nНе перескакивай через шаги и показывай ход мыслей.", "tip": null, "tags": ["логика", "пошагово", "chain of thought", "задачи"], "qw": "chat", "ds": "ok"}, {"id": "p125", "section": "basics", "cat": "base", "sub": "Качество ответа", "title": "Несколько подходов сразу", "model": "any", "modelLabel": "любая LLM", "desc": "Вместо одного «среднего» решения — веер вариантов с честными плюсами и минусами.", "prompt": "Дай [3–5] принципиально разных подхода к задаче: [задача].\n\nДля каждого подхода:\n- идея в 1–2 предложениях;\n- плюсы;\n- минусы и риски;\n- в каком случае он подходит лучше всего.\n\nЗатем порекомендуй лучший для моей ситуации: [описать ситуацию и ограничения] — и объясни выбор.", "tip": null, "tags": ["варианты", "сравнение", "выбор", "стратегия"], "qw": "chat", "ds": "ok"}];
+const PROMPTS = [{"id": "p120", "section": "basics", "cat": "base", "sub": "Универсальные формулы", "title": "Формула Роль → Контекст → Задача → Формат", "model": "any", "modelLabel": "любая LLM", "desc": "Каркас, который превращает любой расплывчатый запрос в точный. Подходит для 90% текстовых задач.", "prompt": "Действуй как [роль: маркетолог с 10-летним опытом / юрист / преподаватель физики].\n\nКонтекст: [ситуация, аудитория, ограничения, что уже известно].\n\nЗадача: [что конкретно сделать — один глагол, один результат].\n\nФормат ответа: [объём, структура, таблица/список/текст, тон, примеры оформления].\n\nЕсли данных не хватает для качественного результата — задай мне до 5 уточняющих вопросов, прежде чем отвечать.", "tip": "Последняя строка — ключевая: она включает режим диалога и резко повышает точность ответа.", "tags": ["формула", "роль", "контекст", "база"], "qw": "chat", "ds": "ok", "f": ["free", "quick"]}, {"id": "p121", "section": "basics", "cat": "base", "sub": "Универсальные формулы", "title": "Улучшатель промптов (мета-промпт)", "model": "any", "modelLabel": "любая LLM", "desc": "Пусть ИИ сам доработает ваш слабый промпт до сильного.", "prompt": "Ты — эксперт по промпт-инжинирингу. Вот мой промпт: «[вставить ваш промпт]».\n\n1. Оцени его: что понятно, что расплывчато, каких деталей не хватает;\n2. Перепиши его: добавь роль, контекст, конкретику задачи, формат результата, ограничения и, если уместно, пример ожидаемого ответа;\n3. Объясни, что именно ты улучшил и почему;\n4. Затем выполни улучшенный промпт.", "tip": null, "tags": ["мета-промпт", "улучшение", "промпт-инжиниринг"], "qw": "chat", "ds": "ok", "f": ["free", "quick"]}, {"id": "p122", "section": "basics", "cat": "base", "sub": "Универсальные формулы", "title": "Режим интервью", "model": "any", "modelLabel": "любая LLM", "desc": "ИИ сам вытаскивает из вас вводные — идеально, когда вы не знаете, как сформулировать задачу.", "prompt": "Я хочу получить от тебя [результат: текст / план / код / дизайн-концепцию] на тему [тема].\n\nНо прежде чем делать — проведи мне интервью: задавай по одному уточняющему вопросу за раз (цель, аудитория, ограничения, тон, примеры, что точно не нужно). Задай столько вопросов, сколько нужно для идеального результата, но не больше 10.\n\nКогда соберёшь достаточно информации — кратко перескажи моё ТЗ и только затем выполни задачу.", "tip": null, "tags": ["интервью", "уточнение", "бриф", "диалог"], "qw": "chat", "ds": "ok", "f": ["free", "quick"]}, {"id": "p123", "section": "basics", "cat": "base", "sub": "Качество ответа", "title": "Цикл «критик → улучшение»", "model": "any", "modelLabel": "любая LLM", "desc": "ИИ сам критикует свой ответ и доводит его до высокого уровня — вместо среднего первого черновика.", "prompt": "Выполни задачу: [задача].\n\nЗатем смени роль на строгого критика:\n1. Найди слабые места своего ответа (логика, полнота, убедительность, факты);\n2. Поставь оценку от 1 до 10;\n3. Перепиши ответ, устранив найденные недостатки.\n\nПовторяй цикл «критика → улучшение», пока оценка не достигнет 9+. Покажи финальную версию и кратко — что менялось на каждой итерации.", "tip": null, "tags": ["итерации", "критика", "качество", "самопроверка"], "qw": "chat", "ds": "ok", "f": ["free", "quick"]}, {"id": "p124", "section": "basics", "cat": "base", "sub": "Качество ответа", "title": "Пошаговое рассуждение", "model": "any", "modelLabel": "любая LLM", "desc": "Chain-of-thought: для задач с логикой, расчётами и сложными решениями снижает ошибки в разы.", "prompt": "Реши задачу пошагово: [задача].\n\n1. Сначала составь план рассуждений (какие шаги нужны);\n2. Выполняй каждый шаг отдельно, проверяя промежуточные результаты;\n3. Если шаг вызывает сомнение — рассмотри альтернативный вариант;\n4. В конце дай краткий ответ и перепроверь его обратным ходом.\n\nНе перескакивай через шаги и показывай ход мыслей.", "tip": null, "tags": ["логика", "пошагово", "chain of thought", "задачи"], "qw": "chat", "ds": "ok", "f": ["free", "quick"]}, {"id": "p125", "section": "basics", "cat": "base", "sub": "Качество ответа", "title": "Несколько подходов сразу", "model": "any", "modelLabel": "любая LLM", "desc": "Вместо одного «среднего» решения — веер вариантов с честными плюсами и минусами.", "prompt": "Дай [3–5] принципиально разных подхода к задаче: [задача].\n\nДля каждого подхода:\n- идея в 1–2 предложениях;\n- плюсы;\n- минусы и риски;\n- в каком случае он подходит лучше всего.\n\nЗатем порекомендуй лучший для моей ситуации: [описать ситуацию и ограничения] — и объясни выбор.", "tip": null, "tags": ["варианты", "сравнение", "выбор", "стратегия"], "qw": "chat", "ds": "ok", "f": ["free", "quick"]}];
 </script>
 <script>
 /* =====================================================================
@@ -667,7 +718,7 @@ var byId = {};
 PROMPTS.forEach(function(p){ byId[p.id] = p; });
 
 var CATS = PAGE.cats;
-var state = {cat:"all", sub:"all", q:""};
+var state = {cat:"all", sub:"all", q:"", ft:[]};  /* ft — активные фильтры-ограничения (free/photo/quick) */
 var autoOpen = true; /* при поиске карточки раскрываются автоматически */
 
 var grid        = document.getElementById("grid");
@@ -690,11 +741,17 @@ function matches(p,q){
   q = q.toLowerCase();
   return (p.title+" "+p.desc+" "+p.prompt+" "+p.sub+" "+p.tags.join(" ")+" "+(p.tip||"")+" "+p.modelLabel).toLowerCase().includes(q);
 }
+function ftMatch(p){
+  if(!state.ft.length) return true;
+  var f = p.f || [];
+  return state.ft.every(function(t){ return f.indexOf(t) >= 0; });
+}
 function getFiltered(){
   var q = state.q.trim();
   return PROMPTS.filter(function(p){
     return (state.cat==="all"||p.cat===state.cat) &&
            (state.sub==="all"||p.sub===state.sub) &&
+           ftMatch(p) &&
            matches(p,q);
   });
 }
@@ -795,7 +852,7 @@ function renderGrid(){
   grid.innerHTML = "";
   grid.removeAttribute("data-prerendered");
   emptyEl.style.display = list.length ? "none" : "block";
-  resultsEl.textContent = (list.length===PROMPTS.length && !q)
+  resultsEl.textContent = (list.length===PROMPTS.length && !q && !state.ft.length)
     ? "Показаны все "+list.length+" промпта"
     : "Найдено: "+list.length;
   if(!list.length && q) trackEvent("empty_search", {q:q, section:PAGE.section});
@@ -919,6 +976,23 @@ if(chipsToggle){
   });
 }
 
+/* ---- фильтры-ограничения: «бесплатно / нужно фото-файл / 5 минут» ----
+   Несколько чипов работают как «И»: бесплатно + 5 минут = быстрые бесплатные сценарии. */
+var fchipsEl = document.getElementById("fchips");
+if(fchipsEl){
+  fchipsEl.querySelectorAll(".fchip").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var tag = btn.getAttribute("data-ftag");
+      var i = state.ft.indexOf(tag);
+      var on = i < 0;
+      if(on){ state.ft.push(tag); } else { state.ft.splice(i, 1); }
+      btn.classList.toggle("active", on);
+      btn.setAttribute("aria-pressed", String(on));
+      renderGrid();
+    });
+  });
+}
+
 /* ---- кнопка «наверх» ---- */
 var toTop = document.getElementById("toTop");
 window.addEventListener("scroll", function(){
@@ -940,6 +1014,19 @@ if(urlQ){
   hydrate();          /* статические карточки: только навешиваем обработчики */
 }else{
   renderGrid();
+}
+
+/* ---- deep-link по якорю: photo.html#p12 — раскрыть карточку ----
+   Используется глобальным поиском главной и ссылками из статей-кейсов. */
+if(/^#p\d+$/.test(location.hash)){
+  var hid = location.hash.slice(1);
+  var hashCard = document.getElementById(hid);
+  if(hashCard && hashCard.classList.contains("card")){
+    hashCard.classList.add("open");
+    var hashHead = hashCard.querySelector(".card-head");
+    if(hashHead) hashHead.setAttribute("aria-expanded", "true");
+    if(byId[hid]) byId[hid]._open = true;
+  }
 }
 
 })();

@@ -118,14 +118,14 @@ header.hero{padding:48px 0 26px;text-align:center}
 .search-row{display:flex;gap:10px;margin-bottom:12px}
 .search-box{position:relative;flex:1}
 .search-box svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--muted)}
-#search{
+#search,#hubQ{
   width:100%;padding:12px 16px 12px 42px;font-size:15px;font-family:inherit;
   background:var(--bg2);border:1px solid #dbe1ec;border-radius:11px;
   color:var(--text);outline:none;transition:border .2s, box-shadow .2s;
 }
-#search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(106,90,224,.15)}
-#search::placeholder{color:#8a94a6}
-#search::-webkit-search-cancel-button{cursor:pointer}
+#search:focus,#hubQ:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(106,90,224,.15)}
+#search::placeholder,#hubQ::placeholder{color:#8a94a6}
+#search::-webkit-search-cancel-button,#hubQ::-webkit-search-cancel-button{cursor:pointer}
 kbd{
   position:absolute;right:12px;top:50%;transform:translateY(-50%);
   font-size:11px;color:var(--muted);border:1px solid #dbe1ec;
@@ -168,6 +168,17 @@ kbd{
 }
 .chip:hover{color:var(--text);border-color:var(--border-strong)}
 .chip.active{background:rgba(106,90,224,.10);border-color:rgba(106,90,224,.5);color:var(--accent-ink)}
+/* фильтры-ограничения: «бесплатно / нужно фото-файл / 5 минут» */
+.fchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.fchip{
+  padding:6px 13px;border-radius:99px;font-size:12.8px;cursor:pointer;
+  background:#eef1f7;border:1px solid #e0e5ef;color:var(--muted);
+  transition:all .15s;user-select:none;font-family:inherit;line-height:1.35;appearance:none;
+  white-space:nowrap
+}
+.fchip:hover{color:var(--text);border-color:var(--border-strong)}
+.fchip.active{background:linear-gradient(100deg,rgba(106,90,224,.14),rgba(34,184,207,.12));border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.fchip .fc-cnt{opacity:.7;font-weight:600;font-size:11.5px;margin-left:4px}
 .results-line{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.8px;color:var(--dim);margin-top:10px}
 .mini-btns{display:flex;gap:6px}
 .mini-btn{
@@ -352,6 +363,25 @@ pre.prompt::-webkit-scrollbar-thumb{background:#cdd5e4;border-radius:3px}
 .pop h3{font-size:15.5px;font-weight:700}
 .pop p{font-size:12.8px;color:var(--muted);line-height:1.5}
 .pop .p-go{color:var(--accent2);font-size:12.5px;font-weight:700;margin-top:4px}
+.pop.case{border-color:rgba(235,150,60,.45);background:linear-gradient(160deg,rgba(235,150,60,.07),#fff 65%)}
+.pop.case:hover{border-color:#eb963c}
+.pop.soon{border-style:dashed;background:transparent;box-shadow:none;cursor:default;opacity:.85}
+.pop.soon:hover{transform:none;border-color:var(--border-strong);box-shadow:none}
+.pop.soon .p-go{color:var(--faint)}
+
+/* ===== ХАБ: ГЛОБАЛЬНЫЙ ПОИСК ПО ВСЕЙ БАЗЕ ===== */
+.hub-search{margin:0 0 10px}
+.hub-search .search-box{max-width:760px}
+.hub-search-hint{font-size:12.8px;color:var(--dim);margin-top:9px;max-width:760px;line-height:1.5}
+.hub-res{margin-top:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);max-width:760px}
+.hub-res-n{font-size:12.8px;color:var(--muted);margin-bottom:10px}
+.hub-res-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.hub-res-list a{display:flex;flex-direction:column;gap:3px;text-decoration:none;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--bg);transition:border-color .15s,transform .15s,box-shadow .15s}
+.hub-res-list a:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow)}
+.hr-sec{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:700}
+.hr-t{font-size:14.6px;font-weight:700;color:var(--text)}
+.hr-d{font-size:12.6px;color:var(--muted);line-height:1.45}
+.hub-empty{font-size:13.8px;color:var(--muted);line-height:1.55}
 
 .faq details{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
 .faq summary{cursor:pointer;font-weight:700;font-size:14.8px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
@@ -440,7 +470,9 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
 
   .controls{padding:10px 0 9px;margin-bottom:18px}
   .search-row{margin-bottom:9px}
-  #search{font-size:16px;padding:10px 14px 10px 40px} /* 16px — iOS не зумит поле */
+  #search,#hubQ{font-size:16px;padding:10px 14px 10px 40px} /* 16px — iOS не зумит поле */
+  .fchips{margin-top:7px}
+  .fchip{padding:6px 11px;font-size:12.3px}
   .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:8px;padding-bottom:2px;-webkit-overflow-scrolling:touch}
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:0 0 auto;padding:8px 14px;font-size:13px}
@@ -467,6 +499,7 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
 /* ===== БАЗА ЗНАНИЙ: know-nav, таблицы, путеводитель, глоссарий ===== */
 .know-nav{font-size:13px;color:var(--muted);margin:0 0 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;text-align:center}
 .know-nav a{color:var(--accent-ink);font-weight:600}
+section.hero{text-align:center;padding:6px 0 2px}
 .hero .hub-sub{color:var(--muted);font-size:16px;max-width:760px;margin:12px auto 0;line-height:1.55}
 .hero .hub-meta{color:var(--faint);font-size:12.5px;margin-top:12px;letter-spacing:.02em}
 .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);margin:0 0 12px;-webkit-overflow-scrolling:touch}
@@ -494,7 +527,25 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 @media (max-width:640px){
   .cmp th,.cmp td{padding:9px 11px}
   .gstep{padding:14px 15px}
+  .strip h2{font-size:18px;margin:22px 0 10px}
+  .hub-search-hint,.hub-res{font-size:12.5px}
 }
+
+/* ===== СТАТЬИ И ТИПОГРАФИКА БАЗЫ ЗНАНИЙ (.strip) ===== */
+.strip h2{font-size:20px;font-weight:800;letter-spacing:-.01em;margin:28px 0 12px}
+.strip h2:first-child{margin-top:6px}
+.strip p{font-size:14.6px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.strip p a{color:var(--accent-ink);font-weight:600}
+.strip ul{list-style:none;margin:0 0 14px}
+.strip li{position:relative;padding-left:26px;font-size:14.6px;color:var(--muted);line-height:1.6;margin-bottom:9px}
+.strip li::before{content:"→";position:absolute;left:4px;top:0;color:var(--accent);font-weight:700}
+.strip li b,.strip p b{color:var(--text)}
+.strip .p-go{margin:4px 0 16px}
+.strip .p-go a{color:var(--accent2);font-weight:700;font-size:13.8px}
+.strip code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;background:rgba(23,32,58,.06);padding:1px 6px;border-radius:4px;color:#44506a}
+.art-note{font-size:13px;color:var(--faint);line-height:1.6;background:rgba(23,32,58,.04);border-left:3px solid var(--border-strong);padding:10px 14px;border-radius:0 8px 8px 0;margin:0 0 16px}
+.art-next{font-size:13.8px;color:#4b3fb0;line-height:1.55;background:#f3f1ff;border:1px solid #d6cdff;border-radius:10px;padding:12px 16px;margin:16px 0}
+.art-next a{color:var(--accent-ink);font-weight:600}
 
 /* нечётное число плиток: последняя занимает всю строку bento */
 .bento>.tile:last-child{grid-column:1/-1}
@@ -528,7 +579,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 <a class="skip-link" href="#main">Перейти к содержимому</a>
 <main class="wrap" id="main" tabindex="-1">
   <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="work.html">💼 Работа</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
-  <div class="know-nav"><div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a></div></div>
+  <div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a> · <a href="keis-ii-pochta.html">Статьи и кейсы</a></div>
 <section class="hero">
   <h1>Глоссарий терминов ИИ простыми словами</h1>
   <p class="hub-sub">Шестнадцать понятий, которые встречаются в статьях и подсказках чат-ботов, — с короткими примерами из практики. Без формул и маркетинга.</p>
@@ -561,7 +612,8 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 <footer>
   <div class="wrap">
     <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="work.html">💼 Работа</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
-    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей и глоссарий.<br>
+    <div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a> · <a href="keis-ii-pochta.html">Статьи и кейсы</a></div>
+    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей, глоссарий и статьи-кейсы с цифрами.<br>
     Тарифы и возможности нейросетей меняются — сверяйте дату обновления; важные решения проверяйте по первоисточникам.
   </div>
 </footer>
