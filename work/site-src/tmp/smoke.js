@@ -107,6 +107,7 @@ console.log('photo.html');
   const srcP = d.querySelector('details.sources');
   ok(!!srcP && !srcP.open, 'источники раздела: спойлер, свёрнут');
   ok(d.querySelector('meta[name="theme-color"]').content === '#f5f6fa', 'theme-color светлый');
+  ok(d.querySelector('style').textContent.includes('.card-top{display:flex;flex-direction:column'), 'карточка: заголовок 1-й строкой, значки ИИ 2-й');
   ok(d.querySelector('link[rel="canonical"]').href.includes('ediai.ru'), 'canonical = ediai.ru');
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), 'Метрика 114035585 на разделе');
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/watch/114035585'), 'noscript-маячок Метрики');
