@@ -761,6 +761,7 @@ def know_page(path, title, desc, ogimg, ldgraph, content, navcur):
       '\n</head>\n<body>\n' + METRIKA + gtag_snippet() +
       '<a class="skip-link" href="#main">Перейти к содержимому</a>\n'
       '<main class="wrap" id="main" tabindex="-1">\n'
+      '  ' + nav_html(navcur) + '\n'
       '  <div class="know-nav">' + KNOW_NAV + '</div>\n' + content + '\n</main>\n'
       '<footer>\n  <div class="wrap">\n    ' + nav_html(navcur) + '\n'
       '    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей и глоссарий.<br>\n'
