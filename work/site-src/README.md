@@ -1,6 +1,6 @@
 # «База промптов для ИИ» — многостраничник (светлая тема)
 
-Готовый к публикации сайт лежит в **`../site/`**. Исходники и генератор — здесь (`site-src/`).
+Готовый к публикации сайт лежит в **`../site/`**. Исходники и генератор — здесь (`work/site-src/`).
 Домен: **ediai.ru** (прописан в `config.json` → canonical, OG, sitemap, robots).
 
 ## Структура сайта (`site/`)
@@ -46,7 +46,7 @@
 
 1. Откройте [analytics.google.com](https://analytics.google.com) → «Администратор» → создайте аккаунт/ресурс (или используйте существующий ресурс).
 2. В ресурсе: «Администратор» → «Потоки данных» → «Веб» → укажите `https://ediai.ru` → скопируйте **Measurement ID** вида `G-XXXXXXXXXX`.
-3. Впишите его в `site-src/config.json`: `"ga_id": "G-XXXXXXXXXX"`.
+3. Впишите его в `work/site-src/config.json`: `"ga_id": "G-XXXXXXXXXX"`.
 4. Пересоберите и перезалейте: `python3 build.py` → архив `site-ediai-ru-upload.zip` → на хостинг.
 
 Что происходит после этого автоматически:
@@ -58,15 +58,15 @@
 
 ## Как править
 
-1. **Промпты:** `site-src/data.json`.
-2. **Заголовки/описания/баннеры/источники:** `site-src/build.py` (словари `SECTIONS`, `TILES/STEPS/POPULAR/FAQ`).
-3. **Дизайн:** `site-src/style.css`. **Поведение:** `site-src/app.js`.
-4. **Домен/даты/счётчики:** `site-src/config.json` (`site_url`, `updated`, `metrika_id`, `ga_id`).
+1. **Промпты:** `work/site-src/data.json`.
+2. **Заголовки/описания/баннеры/источники:** `work/site-src/build.py` (словари `SECTIONS`, `TILES/STEPS/POPULAR/FAQ`).
+3. **Дизайн:** `work/site-src/style.css`. **Поведение:** `work/site-src/app.js`.
+4. **Домен/даты/счётчики:** `work/site-src/config.json` (`site_url`, `updated`, `metrika_id`, `ga_id`).
 
 Сборка и тесты:
 
 ```bash
-cd site-src && python3 build.py            # пересборка ../site/ (+ OG-картинки, нужен Pillow)
+cd work/site-src && python3 build.py            # пересборка ../site/ (+ OG-картинки, нужен Pillow)
 cd tmp && npm install jsdom && node smoke.js          # функциональные тесты (jsdom)
 pip install playwright && playwright install chromium --only-shell \
   && playwright install-deps chromium && python3 shots.py  # скриншоты и замеры вёрстки

@@ -21,12 +21,13 @@
 
 ## Структура репозитория
 
-- корень (`index.html`, `*.html`, `og/`, `robots.txt`, `sitemap.xml`) — **готовый к выкладке сайт**;
-- `site-src/` — генератор: единый источник данных `data.json`, `build.py` (шаблоны страниц,
-  JSON-LD, OG-картинки), `style.css`, `app.js`, `config.json` (домен, счётчики), `sources.json`;
-- `site-src/tmp/smoke.js` — функциональные тесты (jsdom), `site-src/tmp/shots.py` — скриншоты и
-  замеры вёрстки (Playwright);
-- `uploads/` — исходные страницы-доноры, из которых извлечены промпты (история источников).
+- **корень** (`index.html`, `*.html`, `og/`, `robots.txt`, `sitemap.xml`) — **готовый к выкладке сайт**: ровно то, что публикуется на GitHub Pages и заливается на хостинг;
+- **`work/`** — всё рабочее, не входящее в сайт:
+  - `work/site-src/` — генератор: единый источник данных `data.json`, `build.py` (шаблоны страниц, JSON-LD, OG-картинки), `style.css`, `app.js`, `config.json` (домен, счётчики), `sources.json`;
+  - `work/site-src/tmp/smoke.js` — функциональные тесты (jsdom), `tmp/shots.py` — скриншоты и замеры вёрстки (Playwright);
+  - `work/uploads/` — исходные страницы-доноры, из которых извлечены промпты;
+  - `work/audit-i-plan-razvitiya.md`, `work/strategiya-ediai-2026.md` — аудит и маркетинговая стратегия;
+  - `work/site-ediai-ru-upload.zip` — архив сайта для хостинга ediai.ru.
 
 ## Репозиторий и GitHub Pages
 
@@ -36,13 +37,13 @@
   Основной домен — **ediai.ru**: canonical, OG и sitemap указывают на него; Pages — превью и бэкап.
 - Пуш настроен по SSH через deploy-ключ (Settings → Deploy keys, только публичная половина
   добавлена в репозиторий): `git push origin main`.
-- Архив для хостинга ediai.ru собирается из корня: все `*.html`, `robots.txt`, `sitemap.xml`, `og/`.
+- Архив для хостинга ediai.ru: `work/site-ediai-ru-upload.zip` (все `*.html`, `robots.txt`, `sitemap.xml`, `og/`).
 
 ## Сборка
 
 ```bash
-cd site-src && pip install pillow && python3 build.py     # пересобрать сайт в корень репозитория
-cd site-src/tmp && npm install jsdom && node smoke.js     # тесты
+cd work/site-src && pip install pillow && python3 build.py   # пересобрать сайт в корень репозитория
+cd work/site-src/tmp && npm install jsdom && node smoke.js  # тесты
 ```
 
-Подробности, инструкции по целям Метрики и включению GA4 — в `site-src/README.md`.
+Подробности, инструкции по целям Метрики и включению GA4 — в `work/site-src/README.md`.

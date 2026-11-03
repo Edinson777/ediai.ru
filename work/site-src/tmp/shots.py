@@ -3,7 +3,7 @@
 import os, json
 from playwright.sync_api import sync_playwright
 
-SITE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+SITE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 OUT  = os.path.join(os.path.dirname(__file__), 'shots')
 os.makedirs(OUT, exist_ok=True)
 
