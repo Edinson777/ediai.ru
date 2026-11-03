@@ -23,7 +23,18 @@
 - `site-src/` — генератор: единый источник данных `data.json`, `build.py` (шаблоны страниц,
   JSON-LD, OG-картинки), `style.css`, `app.js`, `config.json` (домен, счётчики), `sources.json`;
 - `site-src/tmp/smoke.js` — функциональные тесты (jsdom), `site-src/tmp/shots.py` — скриншоты и
-  замеры вёрстки (Playwright).
+  замеры вёрстки (Playwright);
+- `uploads/` — исходные страницы-доноры, из которых извлечены промпты (история источников).
+
+## Репозиторий и GitHub Pages
+
+- Репозиторий: <https://github.com/Edinson777/ediai.ru> — сайт лежит в корне ветки `main`.
+- Зеркало на GitHub Pages: <https://edinson777.github.io/ediai.ru/> — включается один раз:
+  Settings → Pages → Deploy from a branch → ветка `main`, папка `/(root)` → Save.
+  Основной домен — **ediai.ru**: canonical, OG и sitemap указывают на него; Pages — превью и бэкап.
+- Пуш настроен по SSH через deploy-ключ (Settings → Deploy keys, только публичная половина
+  добавлена в репозиторий): `git push origin main`.
+- Архив для хостинга ediai.ru собирается из корня: все `*.html`, `robots.txt`, `sitemap.xml`, `og/`.
 
 ## Сборка
 

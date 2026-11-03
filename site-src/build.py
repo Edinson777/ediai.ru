@@ -25,7 +25,7 @@ import json, os, re, html as H
 from urllib.parse import quote
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT  = os.path.normpath(os.path.join(HERE, '..', 'site'))
+OUT  = os.path.normpath(os.path.join(HERE, '..'))  # корень репозитория = готовый сайт (GitHub Pages)
 
 cfg     = json.load(open(os.path.join(HERE, 'config.json'),  encoding='utf-8'))
 data    = json.load(open(os.path.join(HERE, 'data.json'),    encoding='utf-8'))

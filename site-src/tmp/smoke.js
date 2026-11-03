@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 
-const SITE = path.join(__dirname, '..', '..', 'site');
+const SITE = path.join(__dirname, '..', '..');
 let fails = 0;
 function ok(cond, msg){
   if(cond){ console.log('  ✓ ' + msg); }
