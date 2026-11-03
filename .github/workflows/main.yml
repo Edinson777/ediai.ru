@@ -28,5 +28,5 @@ jobs:
           **/.git*
           **/.git*/**
           **/work/**
-          **/read*
+          **/README.md
           
