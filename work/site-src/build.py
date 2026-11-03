@@ -12,7 +12,6 @@
   life.html           — ИИ в личной жизни (56)
   qwen.html           — Qwen (23)
   basics.html         — Основы промптинга (6)
-  prompt-base.html / photo-edit-prompts.html — редиректы со старых адресов
   robots.txt, sitemap.xml, og/*.png
 
 Все страницы самодостаточны (CSS/JS инлайнятся) и содержат статически
@@ -960,19 +959,6 @@ def build_index():
       '</body>\n</html>\n')
 
 # ---------------------------------------------------------------- служебные файлы
-def redirect_page(new_file, title):
-    return ('<!DOCTYPE html>\n<html lang="ru">\n<head>\n'
-      '<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
-      '<title>' + esc(title) + ' — страница переехала</title>\n'
-      '<meta name="robots" content="noindex">\n'
-      '<link rel="canonical" href="' + SITE_URL + '/' + new_file + '">\n'
-      '<meta http-equiv="refresh" content="0; url=' + new_file + '">\n'
-      '<script>location.replace("' + new_file + '");</script>\n'
-      '</head>\n<body style="background:#f5f6fa;color:#182135;font-family:-apple-system,\'Segoe UI\',Roboto,Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0">\n'
-      '<p style="text-align:center;padding:20px;line-height:1.6">Страница переехала.<br>'
-      '<a href="' + new_file + '" style="color:#0e7490;font-weight:700">Перейти: ' + esc(title) + ' →</a></p>\n'
-      '</body>\n</html>\n')
-
 def robots_txt():
     return ('User-agent: *\nAllow: /\nClean-param: q\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n')
 
@@ -1076,8 +1062,6 @@ def main():
     w('start.html', know_start())
     w('models.html', know_models())
     w('glossary.html', know_glossary())
-    w('prompt-base.html', redirect_page('index.html', 'ИИ в личной жизни и работе'))
-    w('photo-edit-prompts.html', redirect_page('photo.html', 'Переделка фото нейросетью'))
     w('robots.txt', robots_txt())
     w('sitemap.xml', sitemap_xml())
     og_images()

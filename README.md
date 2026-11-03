@@ -29,9 +29,8 @@
 - **`work/`** — всё рабочее, не входящее в сайт:
   - `work/site-src/` — генератор: единый источник данных `data.json`, `build.py` (шаблоны страниц, JSON-LD, OG-картинки), `style.css`, `app.js`, `config.json` (домен, счётчики), `sources.json`;
   - `work/site-src/tmp/smoke.js` — функциональные тесты (jsdom), `tmp/shots.py` — скриншоты и замеры вёрстки (Playwright);
-  - `work/uploads/` — исходные страницы-доноры, из которых извлечены промпты;
-  - `work/audit-i-plan-razvitiya.md`, `work/strategiya-ediai-2026.md` — аудит и маркетинговая стратегия;
-  - `work/site-ediai-ru-upload.zip` — архив сайта для хостинга ediai.ru (собирается локально, в git не хранится).
+  - `work/uploads/` — исходные страницы-доноры, из которых извлечены промпты (хранятся только локально, в git не попадают);
+  - `work/audit-i-plan-razvitiya.md`, `work/strategiya-ediai-2026.md` — аудит и маркетинговая стратегия.
 
 ## Репозиторий и GitHub Pages
 
@@ -41,7 +40,7 @@
   Основной домен — **ediai.ru**: canonical, OG и sitemap указывают на него; Pages — превью и бэкап.
 - Пуш настроен по SSH через deploy-ключ (Settings → Deploy keys, только публичная половина
   добавлена в репозиторий): `git push origin main`.
-- Архив для хостинга ediai.ru: `work/site-ediai-ru-upload.zip` (все `*.html`, `robots.txt`, `sitemap.xml`, `og/`).
+- Хостинг ediai.ru обновляется через FTP-workflow: Actions → «🚀 Deploy website to FTP (ручной запуск)» → Run workflow (заливается корень репозитория, `work/` исключён).
 
 ## Сборка
 

@@ -18,7 +18,6 @@
 | `start.html` | База знаний: путеводитель «Первая неделя с ИИ» (7 шагов-сценариев, JSON-LD HowTo) |
 | `models.html` | База знаний: сравнение «какая нейросеть для чего» + FAQ (JSON-LD FAQPage) |
 | `glossary.html` | База знаний: глоссарий из 16 терминов с примерами (JSON-LD DefinedTermSet) |
-| `prompt-base.html`, `photo-edit-prompts.html` | Редиректы со старых адресов (meta refresh + JS + canonical) |
 | `robots.txt`, `sitemap.xml` | Для поисковиков (`Clean-param: q` — чтобы ?q= ссылки не дублировали индекс) |
 | `og/*.png` | Светлые OG-картинки 1200×630 для превью в Telegram/VK/Twitter (10 шт.) |
 
@@ -51,7 +50,7 @@
 1. Откройте [analytics.google.com](https://analytics.google.com) → «Администратор» → создайте аккаунт/ресурс (или используйте существующий ресурс).
 2. В ресурсе: «Администратор» → «Потоки данных» → «Веб» → укажите `https://ediai.ru` → скопируйте **Measurement ID** вида `G-XXXXXXXXXX`.
 3. Впишите его в `work/site-src/config.json`: `"ga_id": "G-XXXXXXXXXX"`.
-4. Пересоберите и перезалейте: `python3 build.py` → архив `site-ediai-ru-upload.zip` → на хостинг.
+4. Пересоберите и выкатите: `python3 build.py` → коммит и пуш → кнопка FTP-деплоя в Actions.
 
 Что происходит после этого автоматически:
 

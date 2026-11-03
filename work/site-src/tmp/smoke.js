@@ -233,15 +233,6 @@ for (const [file, h1part, checks] of [
   for (const [msg, cond] of Object.entries(checks(d))) ok(cond, file + ': ' + msg);
 }
 
-/* ---------- 5. Редиректы ---------- */
-console.log('redirects');
-{
-  const html = fs.readFileSync(path.join(SITE,'prompt-base.html'),'utf8');
-  ok(html.includes('location.replace("index.html")'), 'prompt-base.html → index.html');
-  const html2 = fs.readFileSync(path.join(SITE,'photo-edit-prompts.html'),'utf8');
-  ok(html2.includes('location.replace("photo.html")'), 'photo-edit-prompts.html → photo.html');
-}
-
 /* ---------- 6. События в счётчики (Метрика + GA4) ---------- */
 console.log('события prompt_copy → ym + gtag');
 {

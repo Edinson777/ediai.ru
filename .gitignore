@@ -1,7 +1,7 @@
 work/site-src/tmp/node_modules/
 work/site-src/tmp/shots/
 work/site-src/tmp/life.json
-work/site-ediai-ru-upload.zip
+work/uploads/
 __pycache__/
 *.pyc
 .DS_Store
