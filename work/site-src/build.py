@@ -57,6 +57,7 @@ GLOSS_TITLE = 'Глоссарий терминов ИИ простыми сло�
 GLOSS_DESC  = ('16 понятий нейросетей с примерами из практики: промпт, токен, контекстное окно, галлюцинация, '
                'агент, RAG, few-shot и другие — без формул и маркетинга.')
 GA_ID     = cfg.get('ga_id', '').strip()   # Google Analytics 4 Measurement ID (G-…)
+ADS_ID    = cfg.get('ads_block_id', '').strip()  # Яндекс РСЯ: блок авторекламы (пусто = реклама выключена)
 
 PROMPTS = data['prompts']
 BY_SECTION = {}
@@ -95,9 +96,22 @@ def gtag_snippet():
             '  window.dataLayer = window.dataLayer || [];\n'
             '  function gtag(){dataLayer.push(arguments);}\n'
             "  gtag('js', new Date());\n\n"
-            "  gtag('config', '" + GA_ID + "');\n"
-            '</script>\n'
-            '<!-- /Google tag -->\n')
+      "  gtag('config', '" + GA_ID + "');\n"
+      '</script>\n'
+      '<!-- /Google tag -->\n')
+
+# Яндекс РСЯ, автореклама: два async-скрипта перед </body> на всех страницах сайта.
+# Ставим в конец body, а не в head: скрипты async, но так они не конкурируют за раннюю
+# загрузку со счётчиками (Метрика/GA4) и не отодвигают первый рендер.
+# Рекламные блоки вставляются самим загрузчиком в поток контента.
+# Пустой ads_block_id в config.json = сниппет не вставляется (реклама выключена).
+def ads_snippet():
+    if not ADS_ID:
+        return ''
+    return ('<!-- Yandex Autoplacement ' + ADS_ID + ' -->\n'
+            '<script src="https://yandex.ru/ads/system/context.js" async></script>\n'
+            '<script data-page-id="' + ADS_ID + '" src="https://yandex.ru/ads/system/ap-loader.js" async></script>\n'
+            '<!-- /Yandex Autoplacement -->\n')
 
 # ---------------------------------------------------------------- helpers
 def plural(n, f1, f2, f5):
@@ -682,6 +696,7 @@ def build_section(key):
       '<noscript><style>' + NOSCRIPT_CSS + '</style></noscript>\n'
       '<script>\nconst PAGE = ' + js_json(page_obj) + ';\nconst PROMPTS = ' + js_json(prompts_js) + ';\n</script>\n'
       '<script>\n' + APPJS + '\n</script>\n'
+      + ads_snippet() +
       '</body>\n</html>\n')
 
 # ---------------------------------------------------------------- главная (хаб)
@@ -875,6 +890,7 @@ def know_page(path, title, desc, ogimg, ldgraph, content, navcur):
       '    Тарифы и возможности нейросетей меняются — сверяйте дату обновления; важные решения проверяйте по первоисточникам.\n'
       '  </div>\n</footer>\n'
       '<div id="toast" role="status" aria-live="polite"></div>\n'
+      + ads_snippet() +
       '</body>\n</html>\n')
 
 def know_start():
@@ -1221,6 +1237,7 @@ def build_index():
       '  </div>\n</footer>\n'
       '<script>\nconst SIDX = ' + js_json(sidx) + ';\nconst SECTMETA = ' + js_json(sectmeta) + ';\n</script>\n'
       '<script>\n' + HUBJS + '\n</script>\n'
+      + ads_snippet() +
       '</body>\n</html>\n')
 
 # ---------------------------------------------------------------- служебные файлы
