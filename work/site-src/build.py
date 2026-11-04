@@ -53,7 +53,7 @@ START_DESC  = ('Путеводитель для новичков: семь еж�
 MODELS_TITLE = 'Какая нейросеть для чего: сравнение задач и моделей | Ediai'
 MODELS_DESC  = ('Тексты, фото, изображения с нуля, код, анализ и строгий JSON: какими моделями решать и где '
                 'бесплатные тарифы. Замены Midjourney и качество русского языка.')
-GLOSS_TITLE = 'Глоссарий терминов ИИ простыми словами | Ediai'
+GLOSS_TITLE = 'Глоссарий терминов ИИ простыми словами: 16 понятий с примерами | Ediai'
 GLOSS_DESC  = ('16 понятий нейросетей с примерами из практики: промпт, токен, контекстное окно, галлюцинация, '
                'агент, RAG, few-shot и другие — без формул и маркетинга.')
 GA_ID     = cfg.get('ga_id', '').strip()   # Google Analytics 4 Measurement ID (G-…)
@@ -260,12 +260,15 @@ NAV = [
     ('basics.html',   '🧠 Основы'),
 ]
 
-def nav_html(current):
+def nav_html(current, footer=False):
     links = []
     for f, label in NAV:
         cur = ' aria-current="page"' if f == current else ''
         links.append('<a href="' + f + '"' + cur + '>' + label + '</a>')
-    return '<nav class="sections-nav" aria-label="Разделы сайта">' + ''.join(links) + '</nav>'
+    inner = ''.join(links)
+    if footer:  # в футере — обычный блок: второй nav дублировал landmark (axe: landmark-unique)
+        return '<div class="sections-nav">' + inner + '</div>'
+    return '<nav class="sections-nav" aria-label="Разделы сайта">' + inner + '</nav>'
 
 # База знаний: сквозная перелинковка во всех футерах (и вверху страниц базы знаний)
 KNOW_NAV = ('<div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · '
@@ -366,7 +369,7 @@ SECTIONS = {
   file='photo.html', h1='📸 Переделка фото нейросетью', h1_class=' class="gold"',
   plain='Переделка фото нейросетью — 54 промпта',
   title='Переделка фото нейросетью — 54 промпта: стили, фотосессии, реставрация',
-  desc='54 готовых промпта для переделки фото нейросетью: стили (акварель, аниме, киберпанк), виртуальные фотосессии, замена одежды и фона, реставрация и колоризация старых снимков.',
+  desc='54 промпта для переделки фото нейросетью: стили (акварель, аниме, киберпанк), фотосессии, замена одежды и фона, реставрация и колоризация старых снимков.',
   sub='54 промпта для редактирования фотографий: превращение в разные стили, виртуальные фотосессии, замена одежды и фона, реставрация старых снимков. Скопируйте промпт, подставьте свои данные вместо <span style="color:var(--ph);font-weight:600">[скобок]</span> — и отправьте в нейроредактор вместе с фото.',
   placeholder='Поиск: акварель, хедшот, Paris, татуировка, реставрация…',
   tabs=True,
@@ -387,8 +390,8 @@ SECTIONS = {
 'generate': dict(
   file='generate.html', h1='🎨 Создание изображений нейросетью', h1_class='',
   plain='Промпты для генерации изображений — 21 шаблон',
-  title='Промпты для генерации изображений — 21 шаблон: Midjourney, DALL·E, Qwen-Image',
-  desc='Готовые промпты для создания изображений нейросетями: фотореализм, иллюстрации, логотипы, постеры, персонажи. Совместимость с Midjourney, DALL·E 3, Stable Diffusion и Qwen-Image.',
+  title='Генерация изображений нейросетью — 21 промпт: от логотипа до постера',
+  desc='21 промпт генерации изображений: портреты, товары, пейзажи, иллюстрации, логотипы и постеры — с пометками совместимости с Qwen-Image и бесплатными аналогами.',
   sub='21 шаблон для создания изображений с нуля: фотореализм, иллюстрации и арт, дизайн и брендинг, персонажи. Замените данные в <span style="color:var(--ph);font-weight:600">[скобках]</span> на свои — и копируйте.',
   placeholder='Поиск: портрет, логотип, пейзаж, товар, персонаж…',
   tabs=False,
@@ -408,8 +411,8 @@ SECTIONS = {
 'texts': dict(
   file='texts.html', h1='✍️ Промпты для текстов', h1_class='',
   plain='Промпты для текстов — 21 шаблон',
-  title='Промпты для текстов — 21 шаблон: копирайтинг, статьи, соцсети, редактура',
-  desc='Готовые промпты для написания и улучшения текстов: продажи по AIDA и PAS, статьи, SEO, посты для соцсетей, редактура, деловые письма. Работают в ChatGPT, Claude, Gemini, Qwen, GigaChat.',
+  title='Тексты нейросетью — 21 промпт: копирайтинг, статьи, посты, редактура',
+  desc='21 промпт для текстов: продающие формулы, статьи, посты для соцсетей, редактура и деловые письма — для любой текстовой нейросети, на русском языке.',
   sub='21 шаблон для копирайтеров, редакторов, SMM и руководителей: копирайтинг, статьи и блоги, соцсети, редактура и проверка, деловые тексты. Работают в любой текстовой нейросети.',
   placeholder='Поиск: AIDA, заголовки, статья, Telegram, редактор…',
   tabs=False,
@@ -429,7 +432,7 @@ SECTIONS = {
   file='qwen.html', h1='🤖 Промпты для Qwen', h1_class='',
   plain='Промпты для Qwen — 23 шаблона',
   title='Промпты для Qwen — 23 шаблона: Chat, Image, Image-Edit, Coder',
-  desc='Официальная формула промптов Alibaba (6 блоков), режимы /think и /no_think, контекст 1M токенов, JSON для API, генерация и редактирование изображений, промпты для Qwen-Coder.',
+  desc='23 промпта по официальным гайдам Qwen: шестиблочный фреймворк, режимы /think и /no_think, контекст до 1M токенов, JSON в API, генерация изображений и код.',
   sub='Всё про промпты для Qwen: официальный шестиблочный фреймворк Alibaba, режимы Qwen Chat, генерация изображений с точными надписями, редактирование фото и Qwen-Coder для разработчиков.',
   placeholder='Поиск: формула, thinking, JSON, код, изображение…',
   tabs=False,
@@ -450,7 +453,7 @@ SECTIONS = {
   file='basics.html', h1='🧠 Основы промптинга', h1_class='',
   plain='Основы промптинга — 6 универсальных формул',
   title='Основы промптинга — 6 универсальных формул для любой нейросети',
-  desc='Универсальные формулы промптов для любой LLM: «Роль → Контекст → Задача → Формат», мета-промпт-улучшатель, режим интервью, цикл «критик → улучшение», пошаговое рассуждение.',
+  desc='6 формул промптинга для любой LLM: роль-контекст-задача-формат, few-shot, цепочка рассуждений, самокритика и цикл улучшения ответа — с примерами.',
   sub='Шесть универсальных приёмов, которые улучшают ответ любой нейросети — ChatGPT, Claude, Gemini, Qwen, GigaChat, YandexGPT. Начните с формулы «Роль → Контекст → Задача → Формат».',
   placeholder='Поиск: роль, критик, интервью, пошагово…',
   tabs=False,
@@ -470,7 +473,7 @@ SECTIONS = {
   file='life.html', h1='🏡 ИИ в личной жизни', h1_class='',
   plain='ИИ в личной жизни — 56 идей и промптов',
   title='ИИ в личной жизни — 56 промптов: быт, финансы, здоровье, учёба, семья',
-  desc='56 практических идей и готовых промптов для нейросетей вне работы: меню из холодильника, план тренировок, разбор выписки, налоги и вычеты, медитации, учёба детей, путешествия, договоры и продуктивность.',
+  desc='56 идей ИИ для личной жизни: меню из продуктов под рукой, план тренировок, разбор выписки, медитации, учёба детей, поездки, договоры и почта — с примерами запросов.',
   sub='Как обычные люди уже сегодня используют нейросети вне работы: 56 идей с готовыми примерами запросов — дом и быт, финансы, здоровье и спорт, психология, учёба, путешествия, творчество, семья и дети, документы, время и продуктивность. Работают в ChatGPT, Qwen Chat, DeepSeek, GigaChat и Gemini.',
   placeholder='Поиск: холодильник, тренировки, вычеты, медитация, дети, договор…',
   tabs=False,
@@ -494,8 +497,8 @@ SECTIONS = {
 'work': dict(
   file='work.html', h1='💼 ИИ на работе', h1_class='',
   plain='ИИ на работе — 30 промптов',
-  title='ИИ на работе — 30 промптов: письма, отчёты, переговоры, резюме, документы, планы',
-  desc='30 готовых промптов для рабочих задач: деликатные письма и отказы, exec-summary и отчёты, повестки и протоколы встреч, переговоры и возражения, резюме под вакансию, регламенты, чек-листы и планы квартала.',
+  title='ИИ на работе — 30 промптов: письма, отчёты, встречи, резюме, документы',
+  desc='30 промптов для работы: деликатные письма, exec-summary и отчёты, повестки и протоколы, переговоры, резюме под вакансию, регламенты и планы квартала.',
   sub='Рабочие сценарии, которые экономят часы каждую неделю: письма и коммуникации, отчёты и аналитика, встречи и переговоры, резюме и карьера, документы и таблицы, планы и проекты. Подставьте свои фактуры вместо <span style="color:var(--ph);font-weight:600">[скобок]</span> — и отправьте в любую текстовую нейросеть.',
   placeholder='Поиск: письмо, отчёт, переговоры, резюме, регламент, риски…',
   tabs=True,
@@ -572,7 +575,7 @@ pre.prompt{max-height:none!important;padding-top:14px!important}
 .card-head{cursor:default}
 """
 
-def head_html(title, desc, path, og_img, ldjson, extra=''):
+def head_html(title, desc, path, og_img, ldjson, extra='', og_type='website'):
     url = SITE_URL + '/' + path if path != 'index.html' else SITE_URL + '/'
     return (
 '<meta charset="UTF-8">\n'
@@ -580,7 +583,7 @@ def head_html(title, desc, path, og_img, ldjson, extra=''):
 '<title>' + esc(title) + '</title>\n'
 '<meta name="description" content="' + attr(desc) + '">\n'
 '<link rel="canonical" href="' + url + '">\n'
-'<meta property="og:type" content="website">\n'
+'<meta property="og:type" content="' + og_type + '">\n'
 '<meta property="og:site_name" content="' + attr(SITE_NAME) + '">\n'
 '<meta property="og:title" content="' + attr(title) + '">\n'
 '<meta property="og:description" content="' + attr(desc) + '">\n'
@@ -645,7 +648,7 @@ def build_section(key):
 
     page_obj = {"section":key, "tabs":sec['tabs'], "cats":sec['cats'], "catOrder":sec['cat_order']}
     fch = fchips_html(prompts)
-    fchips_row = ('    <div class="fchips" id="fchips" role="group" aria-label="Быстрые фильтры: бесплатно, нужно фото, 5 минут">' +
+    fchips_row = ('      <div class="fchips" id="fchips" role="group" aria-label="Быстрые фильтры: бесплатно, нужно фото, 5 минут">' +
                   fch + '</div>\n') if fch else ''
     prompts_js = [dict(p, f=ftags(p)) for p in prompts]  # 'f' — фильтры-ограничения для app.js
 
@@ -659,7 +662,7 @@ def build_section(key):
       '    <p class="sub">' + sec['sub'] + '</p>\n'
       '    ' + stats_html(prompts, sec) + '\n'
       '  </div>\n</header>\n'
-      '<div class="controls">\n  <div class="wrap">\n'
+      '<section class="controls" aria-label="Поиск и фильтры раздела">\n  <div class="wrap">\n'
       '    <div class="search-row">\n      <div class="search-box">\n'
       '        <svg fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>\n'
       '        <input id="search" type="search" aria-label="Поиск по промптам раздела" placeholder="' + attr(sec['placeholder']) + '" autocomplete="off">\n'
@@ -669,15 +672,15 @@ def build_section(key):
       '    <div class="chips-row" id="chipsRow">\n'
       '      <button type="button" class="chips-toggle" id="chipsToggle" aria-expanded="false" aria-controls="chips">Подразделы ▾</button>\n'
       '      <div class="chips" id="chips">' + chips_html(prompts, sec) + '</div>\n'
-      '    </div>\n'
       + fchips_row +
+      '    </div>\n'
       '    <div class="results-line">\n'
       '      <span id="results">Показаны все ' + str(len(prompts)) + ' промпта</span>\n'
       '      <span class="mini-btns">\n'
       '        <button class="mini-btn" id="expandAll" type="button">⊞ Развернуть все</button>\n'
       '        <button class="mini-btn" id="collapseAll" type="button">⊟ Свернуть все</button>\n'
       '      </span>\n    </div>\n'
-      '  </div>\n</div>\n'
+      '  </div>\n</section>\n'
       '<main class="wrap" id="main" tabindex="-1">\n'
       '  <div class="strips">' + sec['strips'] + '</div>\n'
       '  ' + sec['banner'] + '\n'
@@ -686,7 +689,7 @@ def build_section(key):
       '    <p>Ничего не найдено. Попробуйте другой запрос.</p>\n  </div>\n'
       '</main>\n'
       '<footer>\n  <div class="wrap">\n'
-      '    ' + nav_html(sec['file']) + '\n'
+      '    ' + nav_html(sec['file'], True) + '\n'
       '    ' + KNOW_NAV + '\n'
       '    ' + sources + '\n'
       '    ' + sec['foot'] + '\n'
@@ -841,7 +844,7 @@ def build_models():
 </section>
 <div class="strip">
   <h2>Задача → модель</h2>
-  <div class="table-wrap">
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица с горизонтальной прокруткой">
     <table class="cmp">
       <tr><th>Задача</th><th>Чем решать</th><th>Бесплатный вариант</th></tr>
 ''')
@@ -876,15 +879,15 @@ def _gloss_tail():
   <p class="p-go"><a href="models.html">Какая нейросеть для чего →</a> · <a href="start.html">С чего начать →</a></p>
 </div>
 ''')
-def know_page(path, title, desc, ogimg, ldgraph, content, navcur):
+def know_page(path, title, desc, ogimg, ldgraph, content, navcur, og_type='website'):
     return ('<!DOCTYPE html>\n<html lang="ru">\n<head>\n' +
-      head_html(title, desc, path, ogimg, ld(ldgraph)) +
+      head_html(title, desc, path, ogimg, ld(ldgraph), og_type=og_type) +
       '\n</head>\n<body>\n' + METRIKA + gtag_snippet() +
       '<a class="skip-link" href="#main">Перейти к содержимому</a>\n'
       '<main class="wrap" id="main" tabindex="-1">\n'
       '  ' + nav_html(navcur) + '\n'
       '  ' + KNOW_NAV + '\n' + content + '\n</main>\n'
-      '<footer>\n  <div class="wrap">\n    ' + nav_html(navcur) + '\n'
+      '<footer>\n  <div class="wrap">\n    ' + nav_html(navcur, True) + '\n'
       '    ' + KNOW_NAV + '\n'
       '    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей, глоссарий и статьи-кейсы с цифрами.<br>\n'
       '    Тарифы и возможности нейросетей меняются — сверяйте дату обновления; важные решения проверяйте по первоисточникам.\n'
@@ -947,10 +950,9 @@ def know_glossary():
 # помеченные как иллюстративный расчёт; никаких выдуманных «отзывов пользователей».
 
 KEIS_FILE  = 'keis-ii-pochta.html'
-KEIS_TITLE = 'Сколько часов экономит ИИ на письмах и документах — цифры и 7 промптов | Ediai'
+KEIS_TITLE = 'Сколько часов экономит ИИ на письмах и документах — цифры и промпты | Ediai'
 KEIS_DESC  = ('Кейс с цифрами: сколько времени съедают письма и документы, что показывают исследования '
-              'OpenAI, NBER, Microsoft и hh.ru, иллюстративный расчёт экономии и 7 готовых промптов '
-              'на рабочую неделю.')
+              'OpenAI, NBER, Microsoft и hh.ru, расчёт экономии и 7 промптов недели.')
 KEIS_H1    = 'Сколько часов экономит ИИ на письмах и документах'
 
 # (цифра, что означает, источник — HTML со ссылкой)
@@ -1012,13 +1014,13 @@ def keis_content():
          '    <li>Навык окупается буквально: медианная зарплата специалистов с умением работать с ИИ — <b>+34%</b> (hh.ru).</li>\n'
          '  </ul>\n'
          '  <h2>Что говорят исследования</h2>\n'
-         '  <div class="table-wrap">\n    <table class="cmp">\n'
+         '  <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица с горизонтальной прокруткой">\n    <table class="cmp">\n'
          '      <tr><th>Цифра</th><th>Что означает</th><th>Источник</th></tr>\n')
     for num, mean, src in KEIS_RESEARCH:
         s += '      <tr><td>' + num + '</td><td>' + mean + '</td><td>' + src + '</td></tr>\n'
     s += ('    </table>\n  </div>\n'
           '  <h2>Пример расчёта: рабочая неделя писем и документов</h2>\n'
-          '  <div class="table-wrap">\n    <table class="cmp">\n'
+          '  <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица с горизонтальной прокруткой">\n    <table class="cmp">\n'
           '      <tr><th>Задача</th><th>Без ИИ</th><th>С ИИ</th><th>Пояснение</th></tr>\n')
     for task, wo, w_, note in KEIS_CALC:
         s += '      <tr><td>' + task + '</td><td>' + wo + '</td><td>' + w_ + '</td><td>' + note + '</td></tr>\n'
@@ -1087,7 +1089,7 @@ def know_case():
        "step":[{"@type":"HowToStep","position":i+1,"name":st} for i,st in enumerate(KEIS_HOWTO)]},
     ]}
     return know_page(KEIS_FILE, KEIS_TITLE, KEIS_DESC, 'og/og-keis-pochta.png', ld,
-                     keis_content(), KEIS_FILE)
+                     keis_content(), KEIS_FILE, og_type='article')
 
 def build_index():
     tiles = []
@@ -1196,7 +1198,7 @@ def build_index():
       '  </div>\n</header>\n'
       '<main class="wrap" id="main" tabindex="-1">\n'
       + hub_search +
-      '  <h2 class="hub-h">🗂 Разделы</h2>\n'
+      '  <h2 class="hub-h" id="razdely">🗂 Разделы</h2>\n'
       '  <div class="bento">' + ''.join(tiles) + '</div>\n'
       '  <h2 class="hub-h">⚡ Как пользоваться</h2>\n'
       '  <div class="steps">' + steps + '</div>\n'
@@ -1215,7 +1217,7 @@ def build_index():
       '<span class="p-go">Открыть путеводитель →</span></a>\n'
       '  </div>\n'
       '  <h2 class="hub-h">🎯 Какая нейросеть для чего</h2>\n'
-      '  <div class="table-wrap">\n    <table class="cmp">\n'
+      '  <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица с горизонтальной прокруткой">\n    <table class="cmp">\n'
       '      <tr><th>Задача</th><th>Чем решать</th><th>Бесплатный вариант</th></tr>\n' + ''.join(
           '      <tr><td>' + task + '</td><td>' + models + '</td><td>' + free + '</td></tr>\n'
           for task, models, free in MODELS_MINI) +
@@ -1229,7 +1231,7 @@ def build_index():
       '  <div class="faq">' + faq + '</div>\n'
       '</main>\n'
       '<footer>\n  <div class="wrap">\n'
-      '    ' + nav_html('index.html') + '\n'
+      '    ' + nav_html('index.html', True) + '\n'
       '    ' + KNOW_NAV + '\n'
       '    ' + sources_grid + '\n'
       '    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · ' + str(TOTAL) + ' проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.<br>\n'

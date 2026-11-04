@@ -143,9 +143,9 @@ kbd{
   background:linear-gradient(100deg,rgba(106,90,224,.14),rgba(34,184,207,.12));
   border-color:var(--accent);color:var(--accent-ink)
 }
-.tab .cnt{opacity:.7;font-weight:500;font-size:12.5px;margin-left:4px}
-.chips-row{display:flex;align-items:flex-start;gap:8px;position:relative}
-.chips-row.no-sub{display:none}
+.tab .cnt{color:var(--muted);font-weight:500;font-size:12.5px;margin-left:4px}
+.chips-row{display:flex;align-items:flex-start;gap:8px;position:relative;flex-wrap:wrap}
+.chips-row.no-sub .chips,.chips-row.no-sub .chips-toggle{display:none}
 .chips-toggle{
   display:none;align-items:center;gap:6px;flex-shrink:0;
   font-size:12.8px;font-weight:600;padding:6px 13px;border-radius:99px;
@@ -169,7 +169,7 @@ kbd{
 .chip:hover{color:var(--text);border-color:var(--border-strong)}
 .chip.active{background:rgba(106,90,224,.10);border-color:rgba(106,90,224,.5);color:var(--accent-ink)}
 /* фильтры-ограничения: «бесплатно / нужно фото-файл / 5 минут» */
-.fchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.fchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;flex-basis:100%}
 .fchip{
   padding:6px 13px;border-radius:99px;font-size:12.8px;cursor:pointer;
   background:#eef1f7;border:1px solid #e0e5ef;color:var(--muted);
@@ -178,7 +178,7 @@ kbd{
 }
 .fchip:hover{color:var(--text);border-color:var(--border-strong)}
 .fchip.active{background:linear-gradient(100deg,rgba(106,90,224,.14),rgba(34,184,207,.12));border-color:var(--accent);color:var(--accent-ink);font-weight:600}
-.fchip .fc-cnt{opacity:.7;font-weight:600;font-size:11.5px;margin-left:4px}
+.fchip .fc-cnt{color:var(--muted);font-weight:600;font-size:11.5px;margin-left:4px}
 .results-line{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.8px;color:var(--dim);margin-top:10px}
 .mini-btns{display:flex;gap:6px}
 .mini-btn{
@@ -471,8 +471,11 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
   .controls{padding:10px 0 9px;margin-bottom:18px}
   .search-row{margin-bottom:9px}
   #search,#hubQ{font-size:16px;padding:10px 14px 10px 40px} /* 16px — iOS не зумит поле */
-  .fchips{margin-top:7px}
-  .fchip{padding:6px 11px;font-size:12.3px}
+  .chips-row{align-items:center}
+  .fchips{margin-top:0;flex:1 1 auto;justify-content:flex-end;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(90deg,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent)}
+  .fchips::-webkit-scrollbar{display:none}
+  .fchip{padding:6px 11px;font-size:12.3px;flex:0 0 auto}
+  .section-head h2{white-space:normal;font-size:17px;line-height:1.3}
   .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:8px;padding-bottom:2px;-webkit-overflow-scrolling:touch}
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:0 0 auto;padding:8px 14px;font-size:13px}
@@ -597,7 +600,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
     <div class="hub-res" id="hubRes" aria-live="polite" hidden></div>
     <noscript><style>.hub-search .search-box,#hubHint{display:none!important}</style><p class="hub-search-hint">Поиск работает с включённым JavaScript. Все 211 промптов доступны и без него — выберите раздел ниже: карточки и тексты промптов отрендерены статически.</p></noscript>
   </div>
-  <h2 class="hub-h">🗂 Разделы</h2>
+  <h2 class="hub-h" id="razdely">🗂 Разделы</h2>
   <div class="bento"><a class="tile tile-big" href="photo.html"><span class="t-top"><span class="t-ic" aria-hidden="true">📸</span><span class="t-count">54 промпта</span></span><h2>Переделка фото нейросетью</h2><p>Превращение снимков в разные стили, виртуальные фотосессии, замена одежды и фона, реставрация и колоризация старых фотографий.</p><ul class="t-subs"><li>Стили</li><li>Фотосессии</li><li>Креатив</li><li>Реставрация</li><li>Техники</li></ul><span class="t-go">Открыть раздел →</span></a><a class="tile" href="generate.html"><span class="t-top"><span class="t-ic" aria-hidden="true">🎨</span><span class="t-count">21 промпта</span></span><h2>Создание изображений</h2><p>Портреты и товары, пейзажи, иллюстрации, логотипы, постеры и персонажи — с пометками совместимости с Qwen-Image.</p><ul class="t-subs"><li>Фотореализм</li><li>Иллюстрации</li><li>Дизайн</li><li>Персонажи</li></ul><span class="t-go">Открыть раздел →</span></a><a class="tile" href="texts.html"><span class="t-top"><span class="t-ic" aria-hidden="true">✍️</span><span class="t-count">21 промпта</span></span><h2>Тексты</h2><p>Продающие тексты, статьи, посты для соцсетей, редактура и деловые документы — для любой текстовой нейросети.</p><ul class="t-subs"><li>Копирайтинг</li><li>Статьи</li><li>Соцсети</li><li>Редактура</li></ul><span class="t-go">Открыть раздел →</span></a><a class="tile tile-big tile-life" href="life.html"><span class="t-top"><span class="t-ic" aria-hidden="true">🏡</span><span class="t-count">56 промпта</span></span><h2>ИИ в личной жизни</h2><p>56 идей для жизни вне работы: меню из того, что есть в холодильнике, план тренировок, разбор выписки и налоговые вычеты, медитации, учёба детей, поездки, договоры и почта.</p><ul class="t-subs"><li>Дом и быт</li><li>Финансы</li><li>Здоровье</li><li>Учёба</li><li>Семья</li><li>Документы</li></ul><span class="t-go">Открыть раздел →</span></a><a class="tile" href="qwen.html"><span class="t-top"><span class="t-ic" aria-hidden="true">🤖</span><span class="t-count">23 промпта</span></span><h2>Qwen</h2><p>Официальный фреймворк Alibaba, режимы мышления, генерация изображений с точными надписями, редактирование фото и код.</p><ul class="t-subs"><li>Chat</li><li>Image</li><li>Image-Edit</li><li>Coder</li></ul><span class="t-go">Открыть раздел →</span></a><a class="tile" href="basics.html"><span class="t-top"><span class="t-ic" aria-hidden="true">🧠</span><span class="t-count">6 промпта</span></span><h2>Основы промптинга</h2><p>Шесть приёмов, которые улучшают ответ любой LLM: от формулы «роль-контекст-задача» до цикла «критик → улучшение».</p><ul class="t-subs"><li>Формулы</li><li>Качество ответа</li></ul><span class="t-go">Открыть раздел →</span></a><a class="tile" href="work.html"><span class="t-top"><span class="t-ic" aria-hidden="true">💼</span><span class="t-count">30 промпта</span></span><h2>ИИ на работе</h2><p>Письма и деликатные отказы, exec-summary и отчёты, повестки и протоколы, переговоры, резюме под вакансию, регламенты и планы квартала.</p><ul class="t-subs"><li>Письма</li><li>Отчёты</li><li>Переговоры</li><li>Резюме</li><li>Документы</li><li>Планы</li></ul><span class="t-go">Открыть раздел →</span></a></div>
   <h2 class="hub-h">⚡ Как пользоваться</h2>
   <div class="steps"><div class="step"><span class="s-n" aria-hidden="true">1</span><b>Выберите раздел</b><p>Семь разделов: переделка фото, генерация изображений, тексты, ИИ в личной жизни, ИИ на работе, Qwen и основы промптинга — всего 211 шаблонов.</p></div><div class="step"><span class="s-n" aria-hidden="true">2</span><b>Найдите промпт</b><p>Поиском (клавиша «/»), категорией или подразделом. Нажмите на карточку, чтобы раскрыть текст промпта и совет.</p></div><div class="step"><span class="s-n" aria-hidden="true">3</span><b>Скопируйте и примените</b><p>Кнопка «Копировать», замените <span style="color:var(--ph)">[данные в скобках]</span> на свои. Для переделки фото прикрепите снимок к запросу в нейроредактор.</p></div></div>
@@ -614,7 +617,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
     <a class="pop sc sc-all" href="start.html"><span class="p-cat">Путеводитель</span><h3>Первая неделя с ИИ</h3><p>Семь шагов-сценариев: от формулы промпта до привычки спрашивать. Проверки и типовые ошибки новичков.</p><span class="p-go">Открыть путеводитель →</span></a>
   </div>
   <h2 class="hub-h">🎯 Какая нейросеть для чего</h2>
-  <div class="table-wrap">
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица с горизонтальной прокруткой">
     <table class="cmp">
       <tr><th>Задача</th><th>Чем решать</th><th>Бесплатный вариант</th></tr>
       <tr><td>Тексты на русском: статьи, письма, редактура</td><td>Qwen Chat · DeepSeek-V3 · GigaChat · ChatGPT</td><td>Qwen Chat и GigaChat — бесплатно</td></tr>
@@ -639,7 +642,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 </main>
 <footer>
   <div class="wrap">
-    <nav class="sections-nav" aria-label="Разделы сайта"><a href="index.html" aria-current="page">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="work.html">💼 Работа</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></nav>
+    <div class="sections-nav"><a href="index.html" aria-current="page">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="work.html">💼 Работа</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html">🧠 Основы</a></div>
     <div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a> · <a href="keis-ii-pochta.html">Статьи и кейсы</a></div>
     <details class="sources"><summary><h2>📖 Источники</h2><span class="src-hint">показать список</span></summary><div class="sources-in"><p class="note">Шаблоны не скопированы дословно — они адаптированы и скомпилированы на основе практик из перечисленных ниже руководств, а также классических фреймворков копирайтинга (AIDA, PAS) и методов промпт-инжиниринга (role prompting, chain-of-thought). Проверено поиском: ноябрь 2026.</p><div class="sources-grid"><div><h3>🎨 Генерация изображений</h3><ul>
             <li><a href="https://medium.com/@inchristiely/midjourney-prompt-formula-the-exact-structure-behind-every-stunning-image-f2872ed3fcc0" target="_blank" rel="noopener">Midjourney Prompt Formula (Medium)</a><span class="what">формула: субъект + действие + окружение + настроение + свет + стиль + камера + параметры</span></li>
@@ -654,7 +657,6 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
             <li><a href="https://www.reddit.com/r/ChatGPTPromptGenius/comments/1irkmsz/my_favorite_copywriting_prompt_try_now/" target="_blank" rel="noopener">r/ChatGPTPromptGenius — копирайтерский промпт для заголовков</a><span class="what">приём «Act as a seasoned copywriter…» для высокоэффективных заголовков</span></li>
             <li><a href="https://medium.com/@hazelparadise/i-tested-200-chatgpt-prompts-these-were-the-only-ones-worth-saving-f0cb9ea57636" target="_blank" rel="noopener">Medium — «Я протестировала 200 промптов ChatGPT»</a><span class="what">промпт-редактор, улучшающий ясность и убирающий лишнее</span></li>
             <li><a href="https://www.reddit.com/r/ChatGPTPromptGenius/comments/1kiz7ko/i_built_a_text_refinement_prompt_that_might_even/" target="_blank" rel="noopener">r/ChatGPTPromptGenius — промпт для улучшения текста</a><span class="what">фокус на ясности, стиле, структуре и соответствии замыслу</span></li>
-            <li><a href="https://petr-panda.ru/nejroset-dlya-uluchsheniya-kachestva-teksta/" target="_blank" rel="noopener">Petr-Panda — 24 промпта для улучшения качества текста</a><span class="what">роль структурного редактора, анализ логики текста</span></li>
             <li><a href="https://www.sostav.ru/blogs/287316/108792" target="_blank" rel="noopener">Sostav — Как написать хороший запрос к ChatGPT</a><span class="what">приём «проверь текст как строгий редактор»: повторы, общие фразы</span></li>
             <li><a href="https://gptunnel.ru/ru/blog/gotovye-prompty-dlya-napisaniya-tekstov-s-pomoshchyu-chatgpt" target="_blank" rel="noopener">GPTunnel — 30+ готовых шаблонов для текстов</a><span class="what">посты для соцсетей, статьи, письма, продающие тексты</span></li>
             <li><a href="https://sdelaem.agency/blog/promty-gpt-dlya-kopirajterov-6-zaprosov-pod-raznye-zadachi/" target="_blank" rel="noopener">Sdelaem Agency — промпты GPT для копирайтеров</a><span class="what">запросы на доработку и улучшение текстов под разные задачи</span></li>

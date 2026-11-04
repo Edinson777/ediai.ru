@@ -311,7 +311,7 @@ for (const [file, h1part, checks] of [
   ok(d.documentElement.innerHTML.includes('G-P1BDWZ1D1Q'), file + ': GA4');
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), file + ': Метрика');
   ok(d.documentElement.innerHTML.includes('yandex.ru/ads/system/ap-loader.js'), file + ': автореклама РСЯ');
-  ok(d.querySelector('.know-nav') !== null && d.querySelector('footer nav') !== null, file + ': know-nav и навигация разделов');
+  ok(d.querySelector('.know-nav') !== null && d.querySelector('footer .sections-nav') !== null, file + ': know-nav и навигация разделов');
   ok(d.querySelector('main nav') !== null && [...d.querySelectorAll('main nav a')].some(a => a.getAttribute('href') === 'index.html'), file + ': навигация с «Главная» вверху страницы');
   for (const [msg, cond] of Object.entries(checks(d))) ok(cond, file + ': ' + msg);
 }

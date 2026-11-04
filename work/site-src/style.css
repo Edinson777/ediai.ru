@@ -118,9 +118,9 @@ kbd{
   background:linear-gradient(100deg,rgba(106,90,224,.14),rgba(34,184,207,.12));
   border-color:var(--accent);color:var(--accent-ink)
 }
-.tab .cnt{opacity:.7;font-weight:500;font-size:12.5px;margin-left:4px}
-.chips-row{display:flex;align-items:flex-start;gap:8px;position:relative}
-.chips-row.no-sub{display:none}
+.tab .cnt{color:var(--muted);font-weight:500;font-size:12.5px;margin-left:4px}
+.chips-row{display:flex;align-items:flex-start;gap:8px;position:relative;flex-wrap:wrap}
+.chips-row.no-sub .chips,.chips-row.no-sub .chips-toggle{display:none}
 .chips-toggle{
   display:none;align-items:center;gap:6px;flex-shrink:0;
   font-size:12.8px;font-weight:600;padding:6px 13px;border-radius:99px;
@@ -144,7 +144,7 @@ kbd{
 .chip:hover{color:var(--text);border-color:var(--border-strong)}
 .chip.active{background:rgba(106,90,224,.10);border-color:rgba(106,90,224,.5);color:var(--accent-ink)}
 /* фильтры-ограничения: «бесплатно / нужно фото-файл / 5 минут» */
-.fchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.fchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;flex-basis:100%}
 .fchip{
   padding:6px 13px;border-radius:99px;font-size:12.8px;cursor:pointer;
   background:#eef1f7;border:1px solid #e0e5ef;color:var(--muted);
@@ -153,7 +153,7 @@ kbd{
 }
 .fchip:hover{color:var(--text);border-color:var(--border-strong)}
 .fchip.active{background:linear-gradient(100deg,rgba(106,90,224,.14),rgba(34,184,207,.12));border-color:var(--accent);color:var(--accent-ink);font-weight:600}
-.fchip .fc-cnt{opacity:.7;font-weight:600;font-size:11.5px;margin-left:4px}
+.fchip .fc-cnt{color:var(--muted);font-weight:600;font-size:11.5px;margin-left:4px}
 .results-line{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.8px;color:var(--dim);margin-top:10px}
 .mini-btns{display:flex;gap:6px}
 .mini-btn{
@@ -446,8 +446,11 @@ footer .ethics{max-width:760px;margin:18px auto 0;font-size:12.5px;color:var(--d
   .controls{padding:10px 0 9px;margin-bottom:18px}
   .search-row{margin-bottom:9px}
   #search,#hubQ{font-size:16px;padding:10px 14px 10px 40px} /* 16px — iOS не зумит поле */
-  .fchips{margin-top:7px}
-  .fchip{padding:6px 11px;font-size:12.3px}
+  .chips-row{align-items:center}
+  .fchips{margin-top:0;flex:1 1 auto;justify-content:flex-end;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(90deg,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent)}
+  .fchips::-webkit-scrollbar{display:none}
+  .fchip{padding:6px 11px;font-size:12.3px;flex:0 0 auto}
+  .section-head h2{white-space:normal;font-size:17px;line-height:1.3}
   .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:8px;padding-bottom:2px;-webkit-overflow-scrolling:touch}
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:0 0 auto;padding:8px 14px;font-size:13px}
