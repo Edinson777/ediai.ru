@@ -598,6 +598,8 @@ def head_html(title, desc, path, og_img, ldjson, extra='', og_type='website'):
 '<meta name="twitter:image" content="' + SITE_URL + '/' + og_img + '">\n'
 '<meta name="theme-color" content="#f5f6fa">\n'
 '<link rel="icon" href="' + FAVICON + '">\n'
+'<link rel="icon" type="image/x-icon" href="' + SITE_URL + '/favicon.ico" sizes="16x16 32x32 48x48">\n'
+'<link rel="apple-touch-icon" href="' + SITE_URL + '/apple-touch-icon.png">\n'
 '<script type="application/ld+json">' + ldjson + '</script>\n'
 + extra +
 '<style>\n' + CSS + '\n</style>'
@@ -1244,7 +1246,7 @@ def build_index():
 
 # ---------------------------------------------------------------- служебные файлы
 def robots_txt():
-    return ('User-agent: *\nAllow: /\nClean-param: q\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n')
+    return ('User-agent: *\nAllow: /\nDisallow: /404.html\nClean-param: q\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n')
 
 def sitemap_xml():
     pages = [('index.html','1.0')] + [(SECTIONS[k]['file'],'0.8') for k in SECTION_ORDER] + \
@@ -1285,6 +1287,17 @@ def og_images():
             d.text((x, y), ch, font=font, fill=fill)
             x += d.textlength(ch, font=font) + spacing
 
+    def wrapb(text, font, maxw):
+        # сбалансированный перенос: 1 строка → самая ровная разбивка на 2 → жадный перенос
+        if font.getlength(text) <= maxw: return [text]
+        words = text.split(); best = None
+        for i in range(1, len(words)):
+            a, b = ' '.join(words[:i]), ' '.join(words[i:])
+            m = max(font.getlength(a), font.getlength(b))
+            if best is None or m < best[0]: best = (m, a, b)
+        if best and best[0] <= maxw: return [best[1], best[2]]
+        return wrap(text, font, maxw)
+
     specs = [
       ('og-start.png', 'EDIAI.RU · БАЗА ЗНАНИЙ', 'Первая неделя с ИИ',
        'Семь шагов-сценариев: от формулы промпта до привычки спрашивать',
@@ -1310,8 +1323,8 @@ def og_images():
         base = Image.new('RGBA', (W,H), (245,246,250,255))
         glow = Image.new('RGBA', (W,H), (0,0,0,0))
         gd = ImageDraw.Draw(glow)
-        gd.ellipse([W-560,-380,W+340,520], fill=ac+(64,))
-        gd.ellipse([-320,H-300,420,H+340], fill=ac2+(48,))
+        gd.ellipse([W/2-460,-420,W/2+460,330], fill=ac+(56,))
+        gd.ellipse([W/2-430,H-270,W/2+430,H+380], fill=ac2+(44,))
         glow = glow.filter(ImageFilter.GaussianBlur(130))
         img = Image.alpha_composite(base, glow)
         d = ImageDraw.Draw(img)
@@ -1319,20 +1332,93 @@ def og_images():
         for x in range(W):
             t = x / W
             d.line([(x,0),(x,5)], fill=tuple(int(ac[i]*(1-t)+ac2[i]*t) for i in range(3))+(255,))
-        spaced(d, 90, 74, kicker, fr(26), (102,112,133), 7)
-        f_t, f_s, f_p = fb(76), fr(33), fb(28)
-        y = 150
-        for line in wrap(title, f_t, 1000):
-            d.text((88, y), line, font=f_t, fill=(23,32,53)); y += 92
-        y += 16
-        for line in wrap(sub, f_s, 980):
-            d.text((90, y), line, font=f_s, fill=(87,98,122)); y += 46
+        # Центрированная crop-safe композиция: Telegram/VK вырезают превью квадратом
+        # из центра картинки, поэтому весь смысл держим в полосе x ∈ [285, 915].
+        f_k = fr(22)
+        kw = sum(d.textlength(ch, font=f_k) for ch in kicker) + 5 * (len(kicker) - 1)
+        spaced(d, (W - kw) / 2, 86, kicker, f_k, (102,112,133), 5)
+        f_t = fb(72 if len(title) <= 22 else 62)
+        tlines = wrapb(title, f_t, 600)
+        y = 190 if len(tlines) >= 2 else 232
+        for line in tlines:
+            d.text(((W - d.textlength(line, font=f_t)) / 2, y), line, font=f_t, fill=(23,32,53))
+            y += 84
+        y += 14
+        f_s = fr(26)
+        for line in wrapb(sub, f_s, 600):
+            d.text(((W - d.textlength(line, font=f_s)) / 2, y), line, font=f_s, fill=(87,98,122))
+            y += 40
+        f_p = fb(26)
         pw = d.textlength(pill, font=f_p)
-        d.rounded_rectangle([88, H-128, 88+pw+56, H-64], radius=32,
+        d.rounded_rectangle([(W-pw-56)/2, H-124, (W+pw+56)/2, H-62], radius=31,
                             fill=ac+(30,), outline=ac+(230,), width=2)
-        d.text((116, H-114), pill, font=f_p, fill=tuple(max(0,c-70) for c in ac))
+        d.text(((W-pw)/2, H-110), pill, font=f_p, fill=tuple(max(0,c-70) for c in ac))
         img.convert('RGB').save(os.path.join(OUT,'og',fname), optimize=True)
     print('  OG-картинки: ' + str(len(specs)) + ' шт.')
+
+# ---------------------------------------------------------------- иконки
+def icons():
+    """favicon.ico (16/32/48) + apple-touch-icon.png (180): молния на фирменном градиенте."""
+    try:
+        from PIL import Image, ImageDraw
+    except ImportError:
+        print('  [!] Pillow не установлен — favicon.ico/apple-touch-icon пропущены')
+        return
+    S = 256
+    POLY = [(57,8),(26,56),(45,56),(40,92),(74,42),(53,42)]  # молния в коробке 100×100
+
+    def base(rounded):
+        grad = Image.new('RGB', (S, S))
+        gd = ImageDraw.Draw(grad)
+        for y in range(S):
+            t = y / (S - 1)
+            gd.line([(0,y),(S,y)], fill=(int(124*(1-t)+84*t), int(108*(1-t)+64*t), int(242*(1-t)+216*t)))
+        mask = Image.new('L', (S, S), 0)
+        if rounded:
+            ImageDraw.Draw(mask).rounded_rectangle([0,0,S-1,S-1], radius=int(S*0.22), fill=255)
+        else:
+            mask.paste(255, (0,0,S,S))
+        img = Image.new('RGBA', (S, S), (0,0,0,0))
+        img.paste(grad, (0,0), mask)
+        d = ImageDraw.Draw(img)
+        pad = S * 0.21
+        d.polygon([(pad + x/100*(S-2*pad), pad + y/100*(S-2*pad)) for x, y in POLY],
+                  fill=(255,255,255,255))
+        return img
+
+    base(True).save(os.path.join(OUT, 'favicon.ico'), sizes=[(16,16),(32,32),(48,48)])
+    base(False).resize((180,180), Image.LANCZOS).convert('RGB').save(
+        os.path.join(OUT, 'apple-touch-icon.png'), optimize=True)
+    print('  favicon.ico + apple-touch-icon.png')
+
+# ---------------------------------------------------------------- страница 404
+def build_404():
+    tiles = [('photo.html', 'Генерация фото', 'Портреты, предметка и атмосферные сцены по описанию'),
+             ('life.html', 'ИИ в личной жизни', 'Меню, путешествия, учёба, быт и подарки'),
+             ('work.html', 'ИИ на работе', 'Письма, отчёты, встречи, карьера и планы'),
+             ('start.html', 'База знаний', 'С чего начать, какая нейросеть для чего, глоссарий')]
+    return ('<!DOCTYPE html>\n<html lang="ru">\n<head>\n'
+      '<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
+      '<title>Страница не найдена — Ediai</title>\n'
+      '<meta name="description" content="Такой страницы нет. Вернитесь на главную Ediai: '
+      + str(TOTAL) + ' готовых промптов для нейросетей и база знаний.">\n'
+      '<meta name="robots" content="noindex,follow">\n'
+      '<meta name="theme-color" content="#f5f6fa">\n'
+      '<link rel="icon" href="' + FAVICON + '">\n'
+      '<link rel="icon" type="image/x-icon" href="' + SITE_URL + '/favicon.ico" sizes="16x16 32x32 48x48">\n'
+      '<link rel="apple-touch-icon" href="' + SITE_URL + '/apple-touch-icon.png">\n'
+      '<style>\n' + CSS + '\n</style>\n</head>\n<body>\n' + METRIKA + gtag_snippet() +
+      '<main class="wrap" id="main" tabindex="-1">\n'
+      '<section class="hero">\n<h1>404 — такой страницы нет</h1>\n'
+      '<p class="hub-sub">Возможно, ссылка устарела или в адресе опечатка. На главной есть поиск по всем '
+      + str(TOTAL) + ' промптам, а ниже — основные разделы.</p>\n'
+      '<p><a href="index.html">← Вернуться на главную</a></p>\n'
+      '</section>\n' + nav_html('404.html') + '\n'
+      '<div class="pop-grid">' + ''.join(
+        '<a class="pop" href="' + f + '"><h3>' + t + '</h3><p>' + x +
+        '</p><span class="p-go">Открыть →</span></a>' for f, t, x in tiles) + '</div>\n'
+      '</main>\n<footer>\n  <div class="wrap">\n    ' + nav_html('404.html', True) + '\n    ' + KNOW_NAV +
+      '\n    <b>⚡ Ediai — ИИ в личной жизни и работе</b>\n  </div>\n</footer>\n</body>\n</html>\n')
 
 # ---------------------------------------------------------------- сборка
 def w(path, content):
@@ -1350,9 +1436,11 @@ def main():
     w('models.html', know_models())
     w('glossary.html', know_glossary())
     w(KEIS_FILE, know_case())
+    w('404.html', build_404())
     w('robots.txt', robots_txt())
     w('sitemap.xml', sitemap_xml())
     og_images()
+    icons()
     print('Готово. Всего промптов: ' + str(TOTAL))
 
 if __name__ == '__main__':

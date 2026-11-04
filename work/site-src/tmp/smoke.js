@@ -374,6 +374,27 @@ console.log('события prompt_copy → ym + gtag');
   ok(typeof w.gtag === 'function', 'window.gtag определён сниппетом');
 }
 
+console.log('404, favicon, apple-touch-icon');
+{
+  const h4 = fs.readFileSync(path.join(SITE, '404.html'), 'utf8');
+  ok(h4.includes('404 — такой страницы нет'), '404: заголовок на месте');
+  ok(/name="robots" content="noindex,follow"/.test(h4), '404: noindex,follow');
+  ok(!h4.includes('rel="canonical"'), '404: без canonical (не конкурирует с страницами)');
+  ok(h4.includes('href="index.html"') && h4.includes('photo.html'), '404: навигация домой и в разделы');
+  ok(h4.includes('metrika/tag.js?id=114035585') && h4.includes('G-P1BDWZ1D1Q'), '404: оба счётчика (видны битые ссылки)');
+  const ico = fs.readFileSync(path.join(SITE, 'favicon.ico'));
+  ok(ico[0] === 0 && ico[1] === 0 && ico[2] === 1 && ico[3] === 0 && ico.readUInt16LE(4) === 3,
+     'favicon.ico: валидный ICO с 3 размерами');
+  const ap = fs.readFileSync(path.join(SITE, 'apple-touch-icon.png'));
+  ok(ap[1] === 0x50 && ap[2] === 0x4E && ap[3] === 0x47, 'apple-touch-icon.png: валидный PNG');
+  const hi = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
+  ok(hi.includes('rel="apple-touch-icon"') && hi.includes('/favicon.ico'), 'head: ссылки на иконки на всех страницах');
+  const rb = fs.readFileSync(path.join(SITE, 'robots.txt'), 'utf8');
+  ok(rb.includes('Disallow: /404.html'), 'robots.txt: 404 закрыта от индекса');
+  const sm = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
+  ok(!sm.includes('404.html'), 'sitemap.xml: без 404');
+}
+
 console.log(fails ? ('\nПРОВАЛЕНО ПРОВЕРОК: ' + fails) : '\nВСЕ ПРОВЕРКИ ПРОЙДЕНЫ');
 process.exit(fails ? 1 : 0);
 })();
