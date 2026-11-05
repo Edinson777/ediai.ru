@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+
+<!-- ===== СЧЕТЧИКИ СТАТИСТИКИ ===== -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=114035585', 'ym');
+
+    ym(114035585, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/114035585" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P1BDWZ1D1Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-P1BDWZ1D1Q');
+</script>
+<!-- /Google tag -->
+<!-- ===== /СЧЕТЧИКИ ===== -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Первые шаги в ИИ — инструкция для новичков | Ediai</title>
+<meta name="description" content="Первые шаги в ИИ для тех, кто не хочет тратить недели на изучение: один инструмент, готовый промпт, одна задача и чек-лист первого вечера. Qwen, DeepSeek, GigaChat, Алиса — все без VPN.">
+<meta name="theme-color" content="#f5f6fa">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<style>
+/* =====================================================================
+   Стиль ediai.ru — светлая тема, градиентный акцент, карточки 14px.
+   Страница «Первые шаги в ИИ» — самостоятельный лендинг.
+   ===================================================================== */
+:root{
+  --bg:#f5f6fa;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card-hover:#fcfcff;
+  --border:#e4e8f1;
+  --border-strong:#c9d2e3;
+  --text:#182135;
+  --muted:#57627a;
+  --accent:#6a5ae0;
+  --accent-ink:#4b3ecf;
+  --accent2:#0e7490;
+  --accent2-bright:#22b8cf;
+  --prompt-bg:#f6f7fb;
+  --ph:#9a5b00;
+  --ok:#15803d;
+  --faint:#667085;
+  --dim:#7a849a;
+  --shadow:0 1px 2px rgba(23,32,58,.05);
+  --shadow-lift:0 10px 28px rgba(23,32,58,.10);
+  --radius:14px;
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% -5%, rgba(106,90,224,.09), transparent),
+    radial-gradient(ellipse 50% 35% at 85% 0%, rgba(34,184,207,.08), transparent);
+}
+::selection{background:rgba(106,90,224,.22)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* ===== a11y ===== */
+.skip-link{position:absolute;left:-9999px;top:8px;z-index:200;background:var(--accent);color:#fff;font-weight:700;font-size:14px;padding:10px 18px;border-radius:10px;text-decoration:none}
+.skip-link:focus{left:12px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ===== ВЕРХНЕЕ МЕНЮ ===== */
+.sections-nav{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  margin:22px 0 18px;
+}
+.sections-nav a{
+  font-size:13px;color:var(--muted);text-decoration:none;
+  border:1px solid #dbe1ec;padding:7px 14px;border-radius:99px;
+  background:rgba(255,255,255,.7);transition:all .2s;
+}
+.sections-nav a:hover{color:var(--text);border-color:var(--accent)}
+.sections-nav a[aria-current="page"]{
+  color:var(--accent-ink);border-color:rgba(106,90,224,.5);
+  background:rgba(106,90,224,.08);
+}
+
+/* ===== HERO ===== */
+header.hero{padding:20px 0 26px;text-align:center}
+.hero .logo{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--border);
+  padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.7);
+  margin-bottom:22px;text-decoration:none;
+}
+.hero a.logo:hover{color:var(--text);border-color:var(--accent)}
+.hero h1{
+  font-size:clamp(28px,4.8vw,48px);font-weight:800;line-height:1.13;letter-spacing:-.02em;
+  background:linear-gradient(100deg,#111c33 18%,var(--accent) 58%,var(--accent2) 92%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  margin-bottom:14px;
+}
+.hero p.sub{color:var(--muted);font-size:16.5px;max-width:660px;margin:0 auto 22px;line-height:1.55}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.stat{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:8px 16px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow)
+}
+.stat b{color:var(--text);font-weight:700}
+
+/* ===== CONTENT ===== */
+main{padding-bottom:40px}
+.section{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 26px;margin-bottom:20px;box-shadow:var(--shadow);
+}
+.section h2{
+  font-size:22px;font-weight:800;line-height:1.3;margin-bottom:16px;
+  color:var(--text);
+}
+.section h2 .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:9px;
+  background:linear-gradient(135deg,rgba(106,90,224,.14),rgba(34,184,207,.12));
+  color:var(--accent-ink);font-size:14px;font-weight:800;margin-right:10px;
+  vertical-align:middle;
+}
+.section p{font-size:15px;line-height:1.65;color:var(--muted);margin-bottom:12px}
+.section p:last-child{margin-bottom:0}
+.section strong{color:var(--text);font-weight:700}
+.section a.inline{color:var(--accent-ink);font-weight:600;text-decoration:none}
+.section a.inline:hover{text-decoration:underline}
+
+/* ===== СПИСКИ ===== */
+ul.rules{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:4px}
+ul.rules li{
+  position:relative;padding:10px 14px 10px 38px;
+  background:var(--prompt-bg);border:1px solid var(--border);border-radius:10px;
+  font-size:14px;line-height:1.55;color:var(--muted);
+}
+ul.rules li::before{
+  content:"→";position:absolute;left:14px;top:10px;
+  color:var(--accent);font-weight:800;font-size:14px;
+}
+ul.rules li b{color:var(--text)}
+ul.rules li a.inline{color:var(--accent-ink);font-weight:600;text-decoration:none}
+ul.rules li a.inline:hover{text-decoration:underline}
+
+/* ===== КАРТОЧКИ ШАГОВ ===== */
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:18px;margin-top:4px;
+}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);
+  transition:transform .18s, border-color .18s, box-shadow .18s;
+}
+.card:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow-lift)}
+.card .step-label{
+  font-size:11.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;font-weight:600;
+}
+.card h3{font-size:16.5px;font-weight:700;line-height:1.3}
+.card .desc{font-size:13.8px;color:var(--muted);line-height:1.55}
+.card .desc b{color:var(--text)}
+.card .desc a.inline{color:var(--accent-ink);font-weight:600;text-decoration:none}
+.card .desc a.inline:hover{text-decoration:underline}
+
+/* ===== TIP ===== */
+.tip{
+  font-size:12.8px;color:#44606e;line-height:1.5;
+  background:#edf8fb;border-left:3px solid var(--accent2-bright);
+  padding:9px 12px;border-radius:0 8px 8px 0;margin-top:12px;
+}
+.tip b{color:var(--accent2)}
+.tip a.inline{color:var(--accent2);font-weight:600;text-decoration:none}
+.tip a.inline:hover{text-decoration:underline}
+
+/* ===== ЧЕК-ЛИСТ ===== */
+.checklist{
+  display:flex;flex-direction:column;gap:8px;margin-top:6px;
+  list-style:none;
+}
+.checklist li{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  font-size:14px;line-height:1.5;color:var(--muted);
+}
+.checklist li .box{
+  flex-shrink:0;width:18px;height:18px;border-radius:5px;
+  border:1.5px solid #c9d2e3;background:#fff;margin-top:1px;
+}
+
+/* ===== НЕ ДЕЛАТЬ ===== */
+ul.dont{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:4px}
+ul.dont li{
+  position:relative;padding:10px 14px 10px 38px;
+  background:#fef7f7;border:1px solid #f3d9d9;border-radius:10px;
+  font-size:14px;line-height:1.55;color:#7a2e2e;
+}
+ul.dont li::before{
+  content:"✕";position:absolute;left:14px;top:10px;
+  color:#c0392b;font-weight:800;font-size:13px;
+}
+ul.dont li b{color:#5c1f1f}
+
+/* ===== FOOTER ===== */
+footer{
+  border-top:1px solid var(--border);
+  padding:30px 0 40px;
+  color:var(--dim);
+  font-size:13px;
+  line-height:1.7;
+  text-align:center;
+  margin-top:20px;
+}
+footer b{color:var(--muted)}
+footer a{color:var(--accent2);text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .ethics{
+  max-width:760px;margin:18px auto 0;
+  font-size:12.5px;color:var(--dim);line-height:1.6;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:520px){
+  .section{padding:20px 18px}
+  .grid{grid-template-columns:1fr}
+  .hero h1{font-size:26px}
+  .section h2{font-size:19px}
+  .sections-nav{gap:6px}
+  .sections-nav a{font-size:12px;padding:6px 12px}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к содержанию</a>
+
+<!-- ===== ВЕРХНЕЕ МЕНЮ ===== -->
+<nav class="sections-nav wrap" aria-label="Основная навигация">
+  <a href="https://ediai.ru/">⚡ Ediai</a>
+  <a href="https://ediai.ru/#prompts">Промпты</a>
+  <a href="https://ediai.ru/#guide">Путеводитель</a>
+  <a href="https://ediai.ru/#compare">Сравнения</a>
+  <a href="https://ediai.ru/#cases">Кейсы</a>
+  <a href="https://ediai.ru/photo.html">Переделка фото</a>
+  <a href="https://ediai.ru/#qwen">Qwen</a>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <a href="https://ediai.ru" class="logo">⚡ EDIAI.RU · практический ИИ</a>
+    <h1>Первые шаги в ИИ: инструкция для тех, кто не хочет тратить недели на «изучение»</h1>
+    <p class="sub">Большинство «гайдов для новичков» начинаются с истории нейросетей и объяснения, что такое токен. Это бесполезно. Вы не станете водить машину лучше, если выучите устройство двигателя. Вам нужно доехать.</p>
+    <div class="stats">
+      <div class="stat"><b>1</b> инструмент</div>
+      <div class="stat"><b>1</b> готовый промпт</div>
+      <div class="stat"><b>1</b> вечер</div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+
+    <!-- Шаг 1 -->
+    <div class="section">
+      <h2><span class="num">1</span> Возьмите один инструмент, который работает здесь и сейчас</h2>
+      <p>Не выбирайте «лучшую нейросеть». На старте это бессмысленное занятие: разница между топовыми моделями для новичка меньше, чем разница между тем, сделали вы запрос или не сделали.</p>
+      <p>Для первого запуска в России нужен сервис, который открывается без VPN и нормально понимает русский. Таких четыре, и у каждого есть чёткая роль.</p>
+
+      <div class="grid" style="margin-bottom:16px;">
+        <div class="card">
+          <div class="step-label">универсальный старт</div>
+          <h3>Qwen Chat</h3>
+          <div class="desc"><b>chat.qwen.ai</b> — бесплатно, без VPN, хорошо держит русский без «китайского акцента» в тексте. <a class="inline" href="https://ediai.ru/#compare">Сравнение с другими моделями →</a></div>
+        </div>
+        <div class="card">
+          <div class="step-label">универсальный старт</div>
+          <h3>DeepSeek</h3>
+          <div class="desc">Бесплатно, сильный русский, браузер и приложение. Хорош в логике и структуре длинных текстов.</div>
+        </div>
+        <div class="card">
+          <div class="step-label">русский документ</div>
+          <h3>GigaChat</h3>
+          <div class="desc">Сбер. Вход через <b>Сбер ID</b> (российский номер). Бесплатный режим с дневными лимитами. Сильнее Qwen и DeepSeek там, где нужен «нативный» русский: договоры, служебные записки, тексты под аудиторию РФ. Данные не уходят в иностранные сервисы.</div>
+        </div>
+        <div class="card">
+          <div class="step-label">быстрый вопрос</div>
+          <h3>Алиса AI</h3>
+          <div class="desc">Яндекс. Вход через <b>Яндекс ID</b>. Базовые функции бесплатны, картинку можно сгенерировать вообще без регистрации. Встроена в Яндекс Браузер. Лучший вариант, если не хотите «идти в отдельный сервис» — спросили и закрыли.</div>
+        </div>
+      </div>
+
+      <div class="tip"><b>ChatGPT на старте не берите.</b> Он может требовать VPN и платную подписку для нормального доступа. Потратить первый вечер на борьбу с регистрацией — худшее, что можно сделать.</div>
+      <div class="tip"><b>Правило одного инструмента:</b> выберите <b>один</b> из четырёх и работайте только в нём первую неделю. Если задача — русский документ, берите GigaChat. Если нужен быстрый ответ без лишних шагов — Алису. Если универсальный текстовый черновик — Qwen или DeepSeek. Не распыляйтесь. <a class="inline" href="https://ediai.ru/#qwen">Подробный разбор Qwen →</a></div>
+    </div>
+
+    <!-- Шаг 2 -->
+    <div class="section">
+      <h2><span class="num">2</span> Не пишите промпт с нуля. Возьмите готовый</h2>
+      <p>Главная ошибка новичка — пытаться сформулировать «идеальный запрос» с первого раза. Это навык, который приходит с опытом. Начинать с нуля — значит гарантированно получить посредственный результат и решить, что «ИИ не работает».</p>
+      <p>Вместо этого откройте раздел с готовыми промптами на <a class="inline" href="https://ediai.ru/#prompts">ediai.ru</a>. Там 211 шаблонов под конкретные задачи. Они не привязаны к конкретной модели: один и тот же промпт можно вставить в Qwen, DeepSeek, GigaChat или Алису. Если не знаете, с какого шаблона начать, сначала пройдите <a class="inline" href="https://ediai.ru/#guide">путеводитель</a> — он помогает выбрать задачу под ваш случай, а не листать все 211 подряд.</p>
+      <ul class="rules">
+        <li>Найдите промпт под свою реальную задачу — не «интересную», а ту, которую вам нужно сделать сегодня или завтра.</li>
+        <li>Нажмите «Копировать».</li>
+        <li>Замените данные в квадратных скобках <span class="ph">[вот такие]</span> на свои.</li>
+        <li>Отправьте в Qwen, DeepSeek, GigaChat или Алису.</li>
+      </ul>
+      <p style="margin-top:14px;">Это не «читерство». Это единственный способ увидеть, на что способен инструмент, до того как вы научитесь говорить с ним на его языке.</p>
+    </div>
+
+    <!-- Шаг 3 -->
+    <div class="section">
+      <h2><span class="num">3</span> Сделайте одну задачу. Не «попробуйте ИИ», а закройте дело</h2>
+      <p>«Поиграться с нейросетью» — не цель. Цель — получить готовый текст письма, которое вы откладывали три дня. Или привести в порядок фото для аватарки. Или разобрать договор, который непонятен.</p>
+      <p>Когда промпт сработал и вы получили черновик, сделайте вторую вещь, которую новички пропускают: <strong>скажите, что не так</strong>. Прямо в чате:</p>
+      <div class="grid">
+        <div class="card">
+          <div class="step-label">правка 1</div>
+          <div class="desc">«Слишком официально. Перепиши проще».</div>
+        </div>
+        <div class="card">
+          <div class="step-label">правка 2</div>
+          <div class="desc">«Добавь конкретики, убери воду».</div>
+        </div>
+        <div class="card">
+          <div class="step-label">правка 3</div>
+          <div class="desc">«Сделай короче в два раза».</div>
+        </div>
+      </div>
+      <p style="margin-top:14px;">ИИ не обидится. Он перепишет. Именно в этом цикле — запрос → результат → правка → результат — и происходит настоящее освоение инструмента. Не в чтении статей. <a class="inline" href="https://ediai.ru/#cases">Посмотрите кейсы →</a> — там видно, как этот цикл выглядит на реальных задачах, а не на учебных примерах.</p>
+    </div>
+
+    <!-- Шаг 4 -->
+    <div class="section">
+      <h2><span class="num">4</span> Выберите одну повторяющуюся задачу и сделайте её привычкой</h2>
+      <p>Разовая попытка не меняет ничего. Изменение происходит, когда ИИ встраивается в конкретный повторяющийся процесс.</p>
+      <p>Выберите <strong>одну</strong> вещь, которую вы делаете регулярно и которая вам надоела:</p>
+      <ul class="rules">
+        <li>письма и ответы клиентам;</li>
+        <li>переписывание текстов «своими словами»;</li>
+        <li>составление меню на неделю;</li>
+        <li>разбор ошибок в коде;</li>
+        <li>подготовка краткого содержания документов;</li>
+        <li>приведение в порядок фото для документов или аватарки — это разбирается на отдельной странице <a class="inline" href="https://ediai.ru/photo.html">«Переделка фото»</a>;</li>
+        <li>разбор русскоязычных договоров и служебных документов через GigaChat — он реже «переводит с английского» и лучше держит формулировки.</li>
+      </ul>
+      <p style="margin-top:14px;">Делайте это через ИИ <strong>каждый раз</strong> в течение недели. Не «когда захочется», а каждый раз, когда возникает задача. Через семь дней вы будете делать это автоматически, не думая «надо ли использовать нейросеть».</p>
+    </div>
+
+    <!-- Чего не делать -->
+    <div class="section">
+      <h2>Чего не делать на старте</h2>
+      <ul class="dont">
+        <li><b>Не регистрируйтесь в пяти сервисах «на всякий случай».</b> Это создаёт иллюзию движения и съедает время.</li>
+        <li><b>Не покупайте курсы по промпт-инжинирингу.</b> Базовые навыки берутся за три-четыре реальные задачи. Остальное — либо вода, либо продажа воздуха.</li>
+        <li><b>Не пытайтесь «выучить все возможности».</b> Вы не выучили все функции текстового редактора, которым пользуетесь годами. С ИИ так же.</li>
+        <li><b>Не отправляйте в публичные чат-боты паспортные данные, номера карт и коммерческую тайну.</b> Обезличивайте: <span class="ph">[компания]</span>, <span class="ph">[сумма]</span>, <span class="ph">[имя]</span>.</li>
+      </ul>
+    </div>
+
+    <!-- Чек-лист -->
+    <div class="section">
+      <h2>Чек-лист первого вечера</h2>
+      <ul class="checklist">
+        <li><span class="box"></span>Открыт один из четырёх — Qwen, DeepSeek, GigaChat или Алиса — без VPN, без оплаты.</li>
+        <li><span class="box"></span>На ediai.ru найден один готовый промпт под реальную задачу.</li>
+        <li><span class="box"></span>Промпт скопирован, скобки заменены на свои данные.</li>
+        <li><span class="box"></span>Результат получен.</li>
+        <li><span class="box"></span>Результат исправлен прямыми указаниями («короче», «проще», «убери это»).</li>
+        <li><span class="box"></span>Выбрана одна повторяющаяся задача, которую вы будете делать через ИИ следующую неделю.</li>
+      </ul>
+      <div class="tip" style="margin-top:16px;"><b>Если чек-лист закрыт</b> — вы уже пользуетесь ИИ. Не «изучаете», не «интересуетесь», не «присматриваетесь». Пользуетесь. Остальное — вопрос практики, а не знаний.</div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ===== НИЖНЕЕ МЕНЮ (FOOTER) ===== -->
+<footer>
+  <div class="wrap">
+    <div class="sections-nav" style="margin-bottom:14px;">
+      <a href="https://ediai.ru/">Главная</a>
+      <a href="https://ediai.ru/#prompts">Промпты</a>
+      <a href="https://ediai.ru/#guide">Путеводитель</a>
+      <a href="https://ediai.ru/#compare">Сравнения</a>
+      <a href="https://ediai.ru/#cases">Кейсы</a>
+      <a href="https://ediai.ru/photo.html">Переделка фото</a>
+      <a href="https://ediai.ru/#qwen">Qwen</a>
+    </div>
+    <p>⚡ <b>ediai.ru</b> · практический ИИ · 211 готовых промптов</p>
+    <p class="ethics">Этика: переделывайте свои фото или те, на которые получено явное согласие. Не создавайте дипфейки реальных людей. Маркируйте изображения, созданные или изменённые ИИ, в рекламе и СМИ.</p>
+  </div>
+</footer>
+
+</body>
+</html>
