@@ -47,7 +47,7 @@ URL_MAP = {
     'models.html':         '/guides/kakuyu-nejroset-vybrat/',
     'keis-ii-pochta.html': '/guides/ii-i-pochta/',
     'glossary.html':       '/glossary/',
-    'education/studying-AI.html': '/education/studying-AI.html',
+    'education/studying-AI.html': '/education/studying-ai/',
 }
 URL_RE = re.compile(
     r'(?<![\w-])(' + '|'.join(re.escape(k) for k in URL_MAP) + r')'
@@ -116,5 +116,5 @@ with open(os.path.join(VENDOR, 'sections.json'), 'w', encoding='utf-8') as f:
     json.dump(dump, f, ensure_ascii=False, indent=1)
 n = len(re.findall(r'[\w-]+\.html', json.dumps(dump, ensure_ascii=False)))
 print('  vendor/sections.json  (' + str(len(json.dumps(dump)) // 1024) + ' КБ)')
-print('  ссылок со старыми именами файлов осталось: ' + str(n) + ' (должно быть 0, кроме education)')
+print('  ссылок со старыми именами файлов осталось: ' + str(n) + ' (должно быть 0)')
 print('OK: вендорные файлы синхронизированы, адреса переведены на URL-конвенцию §3.3.')

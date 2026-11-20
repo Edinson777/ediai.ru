@@ -22,7 +22,7 @@
 - [Кейс: ИИ и почта](https://ediai.ru/guides/ii-i-pochta/): сколько часов экономит ИИ, с цифрами
 - [Инструменты](https://ediai.ru/instrumenty/): обзор моделей
 - [Глоссарий](https://ediai.ru/glossary/): термины ИИ простыми словами
-- [Путь в ИИ](https://ediai.ru/education/studying-AI.html): план обучения с нуля
+- [Путь в ИИ](https://ediai.ru/education/studying-ai/): план обучения с нуля
 
 ## О проекте
 

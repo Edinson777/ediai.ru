@@ -14,7 +14,7 @@
     4. карточки промптов (article.card) — те же id в том же порядке;
     5. видимый текст — совпадает;
     6. клиентские данные PAGE/PROMPTS/SIDX/SECTMETA — совпадают (после замены адресов);
-    7. в новой странице нет ссылок на старые *.html (кроме education/studying-AI.html);
+    7. в новой странице нет ссылок на старые *.html;
     8. крошки (nav.crumbs) есть на всех страницах, кроме главной и 404.
   новые страницы без старого аналога (/prompty/, /guides/, /instrumenty/, /o-proekte/,
   /politika-konfidencialnosti/): canonical, один h1, крошки, JSON-LD разбирается,
@@ -36,7 +36,7 @@ URL_MAP = {
     'generate.html': '/prompty/generaciya/', 'qwen.html': '/prompty/qwen/',
     'basics.html': '/guides/osnovy-promptinga/', 'start.html': '/guides/s-chego-nachat/',
     'models.html': '/guides/kakuyu-nejroset-vybrat/', 'keis-ii-pochta.html': '/guides/ii-i-pochta/',
-    'glossary.html': '/glossary/', 'education/studying-AI.html': '/education/studying-AI.html',
+    'glossary.html': '/glossary/', 'education/studying-AI.html': '/education/studying-ai/',
 }
 URL_RE = re.compile(r'(?<![\w-])(' + '|'.join(re.escape(k) for k in URL_MAP) + r')')
 
@@ -92,8 +92,8 @@ def norm_urls(obj):
     return obj
 
 def old_links_ok(soup):
-    """В новой странице не должно быть ссылок на старые внутренние *.html
-    (кроме education). Внешние ссылки (другие домены) не проверяются."""
+    """В новой странице не должно быть ссылок на старые внутренние *.html.
+    Внешние ссылки (другие домены) не проверяются."""
     bad = []
     for a in soup.find_all('a'):
         href = a.get('href') or ''
@@ -102,7 +102,7 @@ def old_links_ok(soup):
         if href.startswith(SITE):
             href = href[len(SITE):]
         m = re.search(r'(?<![\w/-])[\w-]+\.html', href)
-        if m and not href.startswith('/education/'):
+        if m:
             bad.append(a.get('href'))
     return bad
 
@@ -128,6 +128,7 @@ NEW_PAGES = [
     ('o-proekte/index.html', '/o-proekte/'),
     ('politika-konfidencialnosti/index.html', '/politika-konfidencialnosti/'),
     ('poisk/index.html', '/poisk/'),
+    ('education/studying-ai/index.html', '/education/studying-ai/'),
 ]
 
 def strip_chrome(soup):

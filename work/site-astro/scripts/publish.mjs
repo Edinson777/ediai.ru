@@ -12,7 +12,9 @@
  *
  * ЗАПРЕТНЫЙ СПИСОК — скрипт никогда не пишет и не удаляет в:
  *   z/, maxbot/, pwa/        — личные/служебные папки (z/ в репо, maxbot и pwa на хостинге);
- *   og/, education/, work/   — OG-картинки (генерирует build.py), учебный раздел, рабочая папка;
+ *   og/, work/               — OG-картинки (генерирует build.py), рабочая папка;
+ *     (education/ с фазы «оформить как все» собирается Astro — /education/studying-ai/,
+ *      старый /education/studying-AI.html удаляется через OLD_FILES);
  *   favicon.ico, apple-touch-icon.png, README.md, .git* — служебные файлы корня.
  *
  * Запуск:  npm run publish   (после npm run build)
@@ -25,7 +27,7 @@ const DIST = join(ASTRO, 'dist');
 const ROOT = join(ASTRO, '..', '..');                    // корень репозитория
 
 const FORBIDDEN = new Set([
-  'z', 'maxbot', 'pwa', 'og', 'education', 'work', 'node_modules', '.git',
+  'z', 'maxbot', 'pwa', 'og', 'work', 'node_modules', '.git',
 ]);
 const FORBIDDEN_FILES = new Set([
   'favicon.ico', 'apple-touch-icon.png', 'README.md',
@@ -40,6 +42,7 @@ const OLD_FILES = [
   'photo.html', 'generate.html', 'texts.html', 'life.html', 'work.html',
   'qwen.html', 'basics.html', 'start.html', 'models.html', 'glossary.html',
   'keis-ii-pochta.html',
+  'education/studying-AI.html', // порт курса в шаблон: страница теперь на /education/studying-ai/
 ];
 // index.html и 404.html управляются Astro (переписываются ниже), в список не входят.
 

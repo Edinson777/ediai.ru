@@ -1,0 +1,40 @@
+---
+/** Страница «Путь в ИИ» /education/studying-ai/ — порт интерактивного курса
+ *  education/studying-AI.html в общий шаблон (Base.astro, крошки, JSON-LD, футер).
+ *  Приложение перенесено дословно (hash-роутинг план/6 уровней, прогресс в
+ *  localStorage «ai-course-progress-v1», парные чекбоксы, сброс): тело —
+ *  src/vendor/edu-app.html (?raw), скрипт — внутри тела, стили —
+ *  src/styles/edu-app.css со скоупом .edu-app. Старый адрес
+ *  /education/studying-AI.html — 301 в .htaccess (public/). */
+import Base from '../../layouts/Base.astro';
+import { SITE_URL, WEBSITE_LD, breadcrumbLd, crumbs, TOTAL } from '../../lib/site.js';
+import { ld } from '../../lib/gen.js';
+import eduBody from '../../vendor/edu-app.html?raw';
+import eduCss from '../../styles/edu-app.css?raw';
+
+const path = '/education/studying-ai/';
+const title = 'Путь в ИИ — план обучения с нуля · ediai.ru';
+const desc = 'План обучения ИИ с нуля: уровни от «чайника» до инженера — темы, аналогии из жизни, примеры и мини-тест. Прогресс сохраняется в браузере. Бесплатно.';
+const crumb = crumbs([
+  { name: 'Главная', href: '/' },
+  { name: 'Путь в ИИ' },
+]);
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  breadcrumbLd(crumb),
+  { '@type': 'WebPage', '@id': SITE_URL + path, url: SITE_URL + path,
+    name: 'Путь в ИИ — план обучения с нуля', description: desc,
+    inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
+] };
+---
+
+<Base title={title} desc={desc} path={path} ogImg="og/og-index.png" ldGraph={ld(ldGraphObj)} crumb={crumb}>
+<style is:inline set:html={eduCss} />
+<Fragment set:html={eduBody} />
+<footer>
+  <div class="wrap">
+    <b>⚡ Ediai — ИИ в личной жизни и работе</b> · {TOTAL} проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.
+  </div>
+  <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a> · <a href="/poisk/">Поиск</a></div>
+</footer>
+</Base>

@@ -20,7 +20,7 @@ SITE = D['SITE_URL']
 
 # приоритеты страниц (как в текущем sitemap.xml) и даты обновления
 TODAY = datetime.date.today().isoformat()
-# 404.html в sitemap не попадает (noindex), education/ — добавляем отдельно.
+# 404.html в sitemap не попадает (noindex).
 SITEMAP = [
     ('/', 1.0, D['LASTMOD']),
     ('/prompty/', 0.8, D['LASTMOD']),
@@ -40,7 +40,7 @@ SITEMAP = [
     ('/o-proekte/', 0.5, TODAY),
     ('/politika-konfidencialnosti/', 0.3, TODAY),
     ('/poisk/', 0.5, TODAY),
-    ('/education/studying-AI.html', 0.7, TODAY),
+    ('/education/studying-ai/', 0.7, TODAY),
 ]
 
 def collect_dist():
@@ -58,8 +58,9 @@ def collect_dist():
 
 found = collect_dist()
 listed = set(p for p, *_ in SITEMAP)
-# страницы, существующие вне dist (не собираются Astro, но в sitemap входят)
-OUTSIDE_DIST = {'/education/studying-AI.html'}
+# страницы, существующие вне dist (не собираются Astro, но в sitemap входят):
+# с портом «Пути в ИИ» таких больше нет
+OUTSIDE_DIST = set()
 missing = sorted(found - listed - {'/404.html'})
 extra = sorted(listed - found - OUTSIDE_DIST)
 if missing:
@@ -118,7 +119,7 @@ llms = f"""# Ediai.ru
 - [Кейс: ИИ и почта]({SITE}/guides/ii-i-pochta/): сколько часов экономит ИИ, с цифрами
 - [Инструменты]({SITE}/instrumenty/): обзор моделей
 - [Глоссарий]({SITE}/glossary/): термины ИИ простыми словами
-- [Путь в ИИ]({SITE}/education/studying-AI.html): план обучения с нуля
+- [Путь в ИИ]({SITE}/education/studying-ai/): план обучения с нуля
 
 ## О проекте
 

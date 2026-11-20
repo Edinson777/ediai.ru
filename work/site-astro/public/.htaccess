@@ -20,5 +20,9 @@ Redirect 301 /keis-ii-pochta.html /guides/ii-i-pochta/
 Redirect 301 /glossary.html       /glossary/
 Redirect 301 /index.html          /
 
-# education/studying-AI.html остаётся на своём адресе — редирект не нужен.
+# учебный раздел переехал на Astro-страницу (/education/studying-ai/, фаза
+# «оформить как все страницы»); вариант со строчной .html — на случай опечаток
+Redirect 301 /education/studying-AI.html  /education/studying-ai/
+Redirect 301 /education/studying-ai.html  /education/studying-ai/
+
 # Папки z/, maxbot/, pwa/ правил не касаются и как обслуживались, так и обслуживаются.

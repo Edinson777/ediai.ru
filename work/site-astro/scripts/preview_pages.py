@@ -31,7 +31,7 @@ DIST = os.path.normpath(os.path.join(HERE, '..', 'dist'))
 OUT = os.path.normpath(os.path.join(HERE, '..', 'dist-ghp'))
 BASE = '/ediai.ru'  # под-путь project page на edinson777.github.io
 
-# старый адрес → новый (синхронно с URL_MAP в scripts/verify.py, кроме index/education)
+# старый адрес → новый (синхронно с URL_MAP в scripts/verify.py, кроме index)
 STUBS = {
     'photo.html': '/prompty/foto/',
     'life.html': '/prompty/zhizn/',
@@ -44,6 +44,7 @@ STUBS = {
     'models.html': '/guides/kakuyu-nejroset-vybrat/',
     'keis-ii-pochta.html': '/guides/ii-i-pochta/',
     'glossary.html': '/glossary/',
+    'education/studying-AI.html': '/education/studying-ai/',
 }
 
 # известные топы для JSON-строк в inline-скриптах; pagefind — динамический import()

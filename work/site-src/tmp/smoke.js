@@ -41,7 +41,7 @@ console.log('шапка и крошки (на prompty/foto)');
   ok(JSON.stringify(labels) === JSON.stringify(['Промпты','Гайды','Инструменты','Глоссарий','О проекте']),
      'шапка: пункты ' + labels.join(' / '));
   ok(d.querySelectorAll('.sh-nav .sh-item.has-drop').length === 3, 'шапка: дропдауны у 3 разделов');
-  ok([...d.querySelectorAll('.sh-nav .sh-drop a[href]')].every(a => !a.getAttribute('href').includes('.html') || a.getAttribute('href').startsWith('/education/')), 'шапка: в дропдаунах нет мёртвых ссылок на *.html');
+  ok([...d.querySelectorAll('.sh-nav .sh-drop a[href]')].every(a => !a.getAttribute('href').includes('.html')), 'шапка: в дропдаунах нет мёртвых ссылок на *.html');
   ok(d.querySelector('.sh-drop .sh-row[href="/prompty/foto/"]') !== null, 'шапка: 6 категорий промптов с адресами');
   ok(!!d.querySelector('.sh-search input[name="q"]') && d.querySelector('.sh-search').getAttribute('action') === '/poisk/', 'шапка: поиск — форма GET на /poisk/ (фаза 3)');
   ok(d.querySelector('.sh-msearch') === null || d.querySelector('.sh-msearch').getAttribute('action') === '/poisk/', 'мобильный поиск — форма GET на /poisk/');
@@ -418,16 +418,38 @@ console.log('guides/ii-i-pochta');
 console.log('sitemap.xml / llms.txt / .htaccess');
 {
   const sm = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sm.match(/<loc>/g) || []).length === 19, 'sitemap: 19 страниц (17 новых + education + /poisk/)');
+  ok((sm.match(/<loc>/g) || []).length === 19, 'sitemap: 19 страниц (17 новых + /education/studying-ai/ + /poisk/)');
   ok(sm.includes('https://ediai.ru/prompty/foto/'), 'sitemap: новый адрес фото-раздела');
-  ok(!sm.includes('.html</loc>') || sm.includes('/education/studying-AI.html'), 'sitemap: каталоги, из .html только education');
+  ok(sm.includes('https://ediai.ru/education/studying-ai/'), 'sitemap: курс на новом адресе');
+  ok(!sm.includes('.html</loc>'), 'sitemap: каталоги, .html-адресов не осталось');
   const lt = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(lt.startsWith('# Ediai.ru'), 'llms.txt: заголовок сайта');
   ok(lt.includes('/prompty/foto/') && lt.includes('/guides/') && lt.includes('/o-proekte/'), 'llms.txt: разделы, материалы, о проекте');
   ok(lt.includes('54 промпта') && lt.includes('56 промптов') && lt.includes('21 промпт'), 'llms.txt: счётчики со склонением');
   const ht = fs.readFileSync(path.join(SITE, '.htaccess'), 'utf8');
-  ok((ht.match(/^Redirect 301/gm) || []).length === 12, '.htaccess: 12 редиректов со старых адресов');
+  ok((ht.match(/^Redirect 301/gm) || []).length === 14, '.htaccess: 14 редиректов (12 старых + 2 на курс)');
   ok(/^Redirect 301 \/photo\.html +\/prompty\/foto\/$/m.test(ht), '.htaccess: photo.html → /prompty/foto/');
+  ok(/^Redirect 301 \/education\/studying-AI\.html +\/education\/studying-ai\/$/m.test(ht), '.htaccess: studying-AI.html → /education/studying-ai/');
+}
+
+/* ---------- 5b-fаза «оформить как все»: курс «Путь в ИИ» ---------- */
+console.log('education: Путь в ИИ в общем шаблоне');
+{
+  const dom = load('education/studying-ai/index.html');
+  const d = dom.window.document;
+  ok(!!d.querySelector('header.site-header') && !!d.querySelector('nav.crumbs'), 'education: шапка сайта и крошки на месте');
+  const cb = d.querySelector('link[rel="canonical"]');
+  ok(cb && cb.getAttribute('href') === 'https://ediai.ru/education/studying-ai/', 'education: canonical на новый адрес');
+  ok(d.querySelectorAll('script[type="application/ld+json"]').length >= 1, 'education: JSON-LD присутствует');
+  ok(d.querySelectorAll('.edu-app .page').length === 7, 'education: план + 6 уровней (.page)');
+  ok(d.querySelectorAll('.edu-app .topbar nav a').length === 7, 'education: топбар приложения — 7 вкладок');
+  ok(!!d.getElementById('resetBtn') && !!d.getElementById('obarFill') && !!d.getElementById('overallText'), 'education: сброс и общий прогресс на месте');
+  const appJs = d.querySelector('.edu-app script').textContent;
+  ok(appJs.includes('ai-course-progress-v1') && appJs.includes('history.replaceState') && appJs.includes('levelTopics'), 'education: скрипт курса перенесён дословно');
+  ok(d.querySelectorAll('.edu-app input[type="checkbox"][data-id]').length === 86, 'education: 43 темы × 2 кнопки «Понял»');
+  ok([...d.querySelectorAll('.edu-app a[href]')].every(a => !a.getAttribute('href').includes('.html')), 'education: внутри приложения нет *.html-ссылок');
+  ok(d.querySelector('.edu-app .more-links a[href="/guides/s-chego-nachat/"]') !== null, 'education: блок «ещё на сайте» с новыми адресами');
+  ok(d.querySelector('footer .svc-nav') !== null, 'education: общий футер сайта');
 }
 
 /* ---------- 6. События в счётчики (Метрика + GA4) ---------- */
