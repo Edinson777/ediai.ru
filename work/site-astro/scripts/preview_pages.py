@@ -6,7 +6,7 @@
 
 Что делает:
   1. копирует dist → dist-ghp;
-  2. в HTML: атрибуты href="/…" и src="/…" получают префикс /ediai.ru (под-путь Pages);
+  2. в HTML: атрибуты href="/…", src="/…" и action="/…" (формы поиска) получают префикс /ediai.ru (под-путь Pages);
   3. в inline-скриптах (PAGE/PROMPTS/SECTMETA…): JSON-строки "/prompty/" и т.п. — тот же
      префикс. Правило консервативное: только известные разделы-топы, чтобы не задеть
      артефакты регулярок вида "/g, в JS;
@@ -48,7 +48,7 @@ STUBS = {
 
 # известные топы для JSON-строк в inline-скриптах; pagefind — динамический import()
 # загрузчика поиска на /poisk/ (фаза 3); URL самих результатов правит baseUrl в pagefind
-TOPS = r'prompty|guides|glossary|instrumenty|o-proekte|politika-konfidencialnosti|education|pagefind'
+TOPS = r'prompty|guides|glossary|instrumenty|o-proekte|politika-konfidencialnosti|education|pagefind|poisk'
 
 # счётчики/реклама: блоки, целиком ограниченные HTML-комментариями (site.js: METRIKA,
 # gtagSnippet, adsSnippet). Удаляются только в превью-сборке.
@@ -80,7 +80,7 @@ def main():
         shutil.rmtree(OUT)
     shutil.copytree(DIST, OUT)
 
-    stats = {'pages': 0, 'href': 0, 'src': 0, 'js': 0, 'noindex': 0, 'counters': 0}
+    stats = {'pages': 0, 'href': 0, 'src': 0, 'js': 0, 'noindex': 0, 'counters': 0, 'forms': 0}
     problems = []
 
     for root, dirs, files in os.walk(OUT):
@@ -95,8 +95,11 @@ def main():
                 html = html.replace('href="/', 'href="%s/' % BASE)
                 m = html.count('src="/')
                 html = html.replace('src="/', 'src="%s/' % BASE)
+                f = html.count('action="/')
+                html = html.replace('action="/', 'action="%s/' % BASE)
                 stats['href'] += n
                 stats['src'] += m
+                stats['forms'] += f
 
                 # счётчики/реклама — целиком по комментариям-границам
                 k = len(COUNTER_RE.findall(html))
@@ -124,9 +127,9 @@ def main():
                         stats['noindex'] += 1
 
                 # самопроверка: не осталось ли непрефиксованных атрибутов
-                left = re.findall(r'href="/(?!ediai\.ru)[^"]*"', html)
+                left = re.findall(r'(?:href|action)="/(?!ediai\.ru)[^"]*"', html)
                 if left:
-                    problems.append('%s: остались href=%s' % (os.path.relpath(p, OUT), left[:3]))
+                    problems.append('%s: остались href/action=%s' % (os.path.relpath(p, OUT), left[:3]))
                 left_js = re.findall(r'(["\'])(/(?:%s)(?=[/?#"\']))' % TOPS, html)
                 if left_js:
                     problems.append('%s: остались пути в скриптах %s' % (os.path.relpath(p, OUT), [a[1] for a in left_js[:3]]))
@@ -165,7 +168,7 @@ def main():
     with open(os.path.join(OUT, '.nojekyll'), 'w') as f:
         f.write('')
 
-    print('страниц обработано: %(pages)d | href: %(href)d | src: %(src)d | пути в JS: %(js)d | noindex: %(noindex)d | счётчиков удалено: %(counters)d | заглушек: %(stubs)d' % stats)
+    print('страниц обработано: %(pages)d | href: %(href)d | src: %(src)d | форм: %(forms)d | пути в JS: %(js)d | noindex: %(noindex)d | счётчиков удалено: %(counters)d | заглушек: %(stubs)d' % stats)
     if problems:
         print('ПРОБЛЕМЫ:')
         for pr in problems:

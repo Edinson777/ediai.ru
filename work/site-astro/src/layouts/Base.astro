@@ -146,16 +146,16 @@ const mobileGuides = GUIDES.map(g => ({ href: g.path, label: g.label }));
         <a class="sh-link" href="/o-proekte/">О проекте</a>
       </div>
     </nav>
-    <form class="sh-search" action="/" method="get" role="search">
-      <input type="search" name="q" placeholder={'Поиск по ' + TOTAL + ' промптам…'} aria-label="Поиск по сайту" autocomplete="off">
+    <form class="sh-search" action="/poisk/" method="get" role="search">
+      <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" autocomplete="off">
     </form>
     <button type="button" class="sh-burger" aria-expanded="false" aria-controls="shMobile" aria-label="Открыть меню">
       <span></span><span></span><span></span>
     </button>
   </div>
   <div class="sh-mobile" id="shMobile" hidden>
-    <form class="sh-msearch" action="/" method="get" role="search">
-      <input type="search" name="q" placeholder={'Поиск по ' + TOTAL + ' промптам…'} aria-label="Поиск по сайту" autocomplete="off">
+    <form class="sh-msearch" action="/poisk/" method="get" role="search">
+      <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" autocomplete="off">
     </form>
     <div class="sh-macc" data-macc>
       <button type="button" class="sh-mhead" aria-expanded="false">Промпты <span class="sh-mn">{TOTAL}</span></button>
