@@ -8,3 +8,6 @@ src/vendor/
 
 # системное
 .DS_Store
+
+# превью для GitHub Pages (собирается scripts/preview_pages.py)
+dist-ghp/
