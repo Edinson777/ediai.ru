@@ -3,8 +3,10 @@ node_modules/
 dist/
 .astro/
 
-# вендорные файлы генерируются скриптом scripts/dump_data.py из work/site-src
-src/vendor/
+# вендорные файлы генерируются скриптом scripts/dump_data.py из work/site-src,
+# но edu-app.html правится руками (первичный источник курса) — не игнорируем
+src/vendor/*
+!src/vendor/edu-app.html
 
 # системное
 .DS_Store

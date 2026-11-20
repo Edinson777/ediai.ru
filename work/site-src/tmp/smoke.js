@@ -447,7 +447,7 @@ console.log('education: Путь в ИИ в общем шаблоне');
   ok(cb && cb.getAttribute('href') === 'https://ediai.ru/education/studying-ai/', 'education: canonical на новый адрес');
   ok(d.querySelectorAll('script[type="application/ld+json"]').length >= 1, 'education: JSON-LD присутствует');
   ok(d.querySelectorAll('.edu-app .page').length === 7, 'education: план + 6 уровней (.page)');
-  ok(!!d.querySelector('.edu-app .topbar .overall') && !d.querySelector('.edu-app .topbar .brand') && !d.querySelector('.edu-app .topbar nav') && !d.querySelector('.edu-app .topbar .back-home'), 'education: топбар — только полоса прогресса (без бренд-блока и вкладок)');
+  ok(!!d.querySelector('.edu-app .topbar .overall') && d.querySelectorAll('.edu-app .topbar nav a').length === 7 && !d.querySelector('.edu-app .topbar .brand') && !d.querySelector('.edu-app .topbar .back-home'), 'education: топбар — полоса прогресса + 7 вкладок уровней (без бренд-блока и «На главный сайт»)');
   ok(!d.querySelector('.edu-app .poster-fig') && !d.querySelector('.edu-app .kick'), 'education: плашка и картинка-плакат убраны');
   const guidesDrop = [...d.querySelectorAll('.sh-item.has-drop')].find(x => x.querySelector('.sh-link') && x.querySelector('.sh-link').textContent === 'Гайды');
   const firstRow = guidesDrop && guidesDrop.querySelector('.sh-drop .sh-row');
