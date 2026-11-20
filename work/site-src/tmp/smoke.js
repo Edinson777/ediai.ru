@@ -41,6 +41,11 @@ console.log('шапка и крошки (на prompty/foto)');
   ok(JSON.stringify(labels) === JSON.stringify(['Промпты','Гайды','Инструменты','Глоссарий','О проекте']),
      'шапка: пункты ' + labels.join(' / '));
   ok(d.querySelectorAll('.sh-nav .sh-item.has-drop').length === 3, 'шапка: дропдауны у 3 разделов');
+  const chromeStyle = [...d.querySelectorAll('style')].map(s => s.textContent).find(t => t.includes('--sh-ink'));
+  ok(!!chromeStyle && /:root\s*\{[^}]*--sh-ink/.test(chromeStyle) && !chromeStyle.includes('sh-*/'),
+     'шапка: CSS-переменные шапки дошли до страницы (:root не съеден комментарием)');
+  ok(!!d.querySelector('.sh-burger') && !!d.getElementById('shMobile'),
+     'шапка: бургер и мобильная панель в разметке');
   ok([...d.querySelectorAll('.sh-nav .sh-drop a[href]')].every(a => !a.getAttribute('href').includes('.html')), 'шапка: в дропдаунах нет мёртвых ссылок на *.html');
   ok(d.querySelector('.sh-drop .sh-row[href="/prompty/foto/"]') !== null, 'шапка: 6 категорий промптов с адресами');
   ok(!!d.querySelector('.sh-search input[name="q"]') && d.querySelector('.sh-search').getAttribute('action') === '/poisk/', 'шапка: поиск — форма GET на /poisk/ (фаза 3)');
