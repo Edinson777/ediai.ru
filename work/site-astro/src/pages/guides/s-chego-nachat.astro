@@ -1,23 +1,31 @@
 ---
-/** Порт know_start() + build_start() из build.py: «Первая неделя с ИИ». */
-import KnowPage from '../templates/KnowPage.astro';
-import { D, SITE_URL, WEBSITE_LD, UPDATED } from '../lib/site.js';
-import { ld } from '../lib/gen.js';
+/** Гайд «Первая неделя с ИИ» (порт know_start() + build_start() из build.py).
+ *  Фаза 2: адрес /guides/s-chego-nachat/, крошки + BreadcrumbList, абсолютные ссылки. */
+import KnowPage from '../../templates/KnowPage.astro';
+import { D, SITE_URL, WEBSITE_LD, UPDATED, breadcrumbLd, crumbs } from '../../lib/site.js';
+import { ld } from '../../lib/gen.js';
 
-const path = 'start.html';
+const path = '/guides/s-chego-nachat/';
+const crumb = crumbs([
+  { name: 'Главная', href: '/' },
+  { name: 'Гайды', href: '/guides/' },
+  { name: 'С чего начать' },
+]);
 const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
   WEBSITE_LD,
-  { '@type': 'WebPage', '@id': SITE_URL + '/' + path, url: SITE_URL + '/' + path,
+  breadcrumbLd(crumb),
+  { '@type': 'WebPage', '@id': SITE_URL + path, url: SITE_URL + path,
     name: 'Первая неделя с ИИ: путеводитель по семи шагам', description: D.START_DESC,
     inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
   { '@type': 'HowTo', name: 'Первая неделя с ИИ',
     step: D.START_STEPS.map(([day, t, txt, pg, q], i) => ({ '@type': 'HowToStep',
       position: i + 1, name: day + ' · ' + t, text: txt,
-      url: SITE_URL + '/' + pg + '?q=' + q })) },
+      // как в build.py: сырой запрос в URL (JSON-LD допускает юникод), без percent-encoding
+      url: SITE_URL + pg + '?q=' + q })) },
 ] };
 ---
 
-<KnowPage path={path} title={D.START_TITLE} desc={D.START_DESC} ogimg="og/og-start.png" ldGraph={ld(ldGraphObj)} navcur={path}>
+<KnowPage path={path} title={D.START_TITLE} desc={D.START_DESC} ogimg="og/og-start.png" ldGraph={ld(ldGraphObj)} navcur={path} crumb={crumb}>
   <section class="hero">
     <h1>Первая неделя с ИИ: путеводитель по семи шагам</h1>
     <p class="hub-sub">Каждый день — один сценарий на пять минут. Ссылки открывают готовый промпт в разделе сайта: копируйте, подставляйте свои детали, отмечайте, что сработало.</p>
@@ -32,7 +40,7 @@ const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
           <div>
             <h3>{day} · {t}</h3>
             <p set:html={txt} />
-            <p class="p-go"><a href={pg + '?q=' + q}>Открыть промпт в разделе →</a></p>
+            <p class="p-go"><a href={pg + '?q=' + encodeURIComponent(q)}>Открыть промпт в разделе →</a></p>
           </div>
         </div>
       ))}
@@ -43,6 +51,6 @@ const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
       <li>Перепроверяйте суммы, дозировки и юридические формулировки по первоисточнику.</li>
       <li>Не публикуйте переписку с личными данными.</li>
     </ul>
-    <p class="p-go"><a href="index.html#razdely">Все сценарии по разделам →</a> · <a href="models.html">Какая нейросеть для чего →</a></p>
+    <p class="p-go"><a href="/#razdely">Все сценарии по разделам →</a> · <a href="/guides/kakuyu-nejroset-vybrat/">Какая нейросеть для чего →</a></p>
   </div>
 </KnowPage>

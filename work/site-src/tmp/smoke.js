@@ -1,5 +1,6 @@
 /* Смоук-тест собранного сайта в jsdom.
-   Запуск: node smoke.js   (из site-src/tmp) */
+   Запуск: node smoke.js   (из site-src/tmp)
+   Фаза 2: адреса /prompty/{slug}/, /guides/{slug}/ и т. д. (URL-конвенция §3.3). */
 const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
@@ -29,29 +30,57 @@ const tick = ms => new Promise(r => setTimeout(r, ms));
 
 (async () => {
 
+/* ---------- 0. Шапка и хлебные крошки (фаза 2) ---------- */
+console.log('шапка и крошки (на prompty/foto)');
+{
+  const dom = load('prompty/foto/index.html');
+  const d = dom.window.document;
+  const items = [...d.querySelectorAll('.sh-nav > .sh-item')];
+  ok(items.length === 5, 'шапка: 5 пунктов меню');
+  const labels = items.map(i => i.querySelector('.sh-link').textContent.trim());
+  ok(JSON.stringify(labels) === JSON.stringify(['Промпты','Гайды','Инструменты','Глоссарий','О проекте']),
+     'шапка: пункты ' + labels.join(' / '));
+  ok(d.querySelectorAll('.sh-nav .sh-item.has-drop').length === 3, 'шапка: дропдауны у 3 разделов');
+  ok([...d.querySelectorAll('.sh-nav .sh-drop a[href]')].every(a => !a.getAttribute('href').includes('.html') || a.getAttribute('href').startsWith('/education/')), 'шапка: в дропдаунах нет мёртвых ссылок на *.html');
+  ok(d.querySelector('.sh-drop .sh-row[href="/prompty/foto/"]') !== null, 'шапка: 6 категорий промптов с адресами');
+  ok(!!d.querySelector('.sh-search input[name="q"]') && d.querySelector('.sh-search').getAttribute('action') === '/', 'шапка: поиск — форма GET на главную');
+  ok(!!d.querySelector('.sh-burger') && d.getElementById('shMobile').hidden === true, 'шапка: бургер + скрытая мобильная панель');
+  ok(d.querySelectorAll('.sh-macc').length === 3, 'мобильная панель: 3 аккордеона');
+  const crumbs = d.querySelectorAll('nav.crumbs li');
+  ok(crumbs.length === 3, 'крошки: Главная → Промпты → категория (3 элемента)');
+  ok(crumbs[0].querySelector('a').getAttribute('href') === '/', 'крошка 1 — главная');
+  const ldF = JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent);
+  ok(ldF['@graph'].some(n => n['@type'] === 'BreadcrumbList' && n.itemListElement.length === 3), 'BreadcrumbList из 3 узлов в JSON-LD');
+  ok(d.querySelector('.sh-item.active .sh-link').textContent === 'Промпты', 'активный раздел подсвечен (aria/класс active)');
+}
+
 /* ---------- 1. Главная: статична, без JS-ошибок ---------- */
 console.log('index.html');
 {
   const dom = load('index.html');
   const d = dom.window.document;
   ok(d.querySelectorAll('h1').length === 1, 'ровно один <h1>');
+  ok(d.querySelectorAll('nav.crumbs').length === 0, 'на главной нет хлебных крошек');
   ok(d.querySelectorAll('.tile').length === 7, 'bento: 7 плиток разделов');
   ok(d.querySelector('.tile-big') !== null, 'крупная плитка «Переделка фото»');
   ok(d.querySelector('.tile-life') !== null, 'крупная плитка «ИИ в личной жизни» (tile-life)');
+  ok([...d.querySelectorAll('.tile')].every(t => !t.getAttribute('href').endsWith('.html')), 'плитки ведут на каталоги без .html');
   ok(d.querySelectorAll('.pop:not(.sc):not(.case):not(.soon)').length === 9, '9 популярных промптов');
   ok(d.querySelectorAll('.pop.sc').length === 9, 'блок «С чего начать»: 7 шагов + путеводитель + план обучения');
   const caseCard = d.querySelector('.pop.case');
-  ok(!!caseCard && caseCard.getAttribute('href') === 'keis-ii-pochta.html', 'блок «Статьи и кейсы»: карточка кейса');
+  ok(!!caseCard && caseCard.getAttribute('href') === '/guides/ii-i-pochta/', 'блок «Статьи и кейсы»: карточка кейса');
   ok(d.querySelector('.pop.soon') !== null, 'блок «Статьи и кейсы»: анонс следующей статьи');
-  ok([...d.querySelectorAll('.know-nav a')].some(a => a.getAttribute('href') === 'keis-ii-pochta.html'), 'know-nav главной: ссылка «Статьи и кейсы»');
+  ok([...d.querySelectorAll('.know-nav a')].some(a => a.getAttribute('href') === '/guides/ii-i-pochta/'), 'know-nav главной: ссылка «Статьи и кейсы»');
   ok(d.querySelectorAll('.cmp tr').length === 8, 'блок «Какая нейросеть для чего»: таблица 7 задач');
   ok(d.querySelector('.know-nav') !== null, 'know-nav в футере главной');
   ok(d.querySelectorAll('.faq details').length === 6, 'FAQ: 6 вопросов');
+  ok(d.querySelector('.svc-nav a[href="/o-proekte/"]') !== null && d.querySelector('.svc-nav a[href="/politika-konfidencialnosti/"]') !== null, 'футер: служебные ссылки О проекте и Политика');
   ok(!!d.getElementById('hubQ') && !!d.getElementById('hubRes'), 'глобальный поиск: поле и блок результатов');
   ok(d.getElementById('hubRes').hidden === true, 'глобальный поиск: результаты скрыты на старте');
   ok(d.documentElement.innerHTML.includes('Поиск работает с включённым JavaScript'), 'noscript-заглушка поиска');
-  const idxScripts = [...d.querySelectorAll('script')].filter(x=>!x.type && !x.src && !x.textContent.includes('metrika') && !x.textContent.includes('gtag'));
-  ok(idxScripts.length === 1 && idxScripts[0].textContent.includes('const SIDX ='), 'главная: единственный доп. скрипт — индекс поиска SIDX (hub.js содержит gtag-обвязку)');
+  const idxScripts = [...d.querySelectorAll('script')].filter(x=>!x.type && !x.src && !x.textContent.includes('metrika') && !x.textContent.includes('gtag') && !x.textContent.includes('sh-burger'));
+  ok(idxScripts.some(x=>x.textContent.includes('const SIDX =')), 'главная: встроен индекс поиска SIDX');
+  ok(idxScripts.some(x=>x.textContent.includes('URLSearchParams')), 'главная: автоподстановка ?q= из поиска в шапке');
   ok([...d.querySelectorAll('script')].some(x=>!x.src && x.textContent.includes('hubQ')), 'код глобального поиска встроен в главную');
   ok(d.documentElement.innerHTML.includes('googletagmanager.com/gtag/js?id=G-P1BDWZ1D1Q') && d.documentElement.innerHTML.includes("gtag('config', 'G-P1BDWZ1D1Q')"), 'GA4 G-P1BDWZ1D1Q на главной');
   ok(d.body.textContent.includes('Yandex.Metrika counter') || d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js'), 'счётчик Метрики на главной');
@@ -61,8 +90,9 @@ console.log('index.html');
   const src = d.querySelector('details.sources');
   ok(!!src && !src.open, 'источники на главной: спойлер, свёрнут по умолчанию');
   ok(src.querySelectorAll('.sources-grid > div').length === 6, 'в спойлере 6 колонок источников');
-  const nav = d.querySelector('.sections-nav');
-  ok(nav && nav.querySelectorAll('a').length === 8, 'навигация по 8 адресам');
+  const nav = d.querySelector('footer .sections-nav');
+  ok(nav && nav.querySelectorAll('a').length === 8, 'навигация по 8 адресам (футер)');
+  ok(d.documentElement.innerHTML.includes('href="/prompty/"'), 'главная ссылается на карту /prompty/ (§5.4)');
 }
 
 /* ---------- 1b. Глобальный поиск главной: функционально ---------- */
@@ -78,7 +108,7 @@ console.log('index.html: глобальный поиск');
   await tick(250);
   ok(res.hidden === false, 'результаты показаны после ввода');
   const hrefs = [...res.querySelectorAll('a')].map(a => a.getAttribute('href'));
-  ok(hrefs.includes('work.html#p197'), '«резюме» → карточка work.html#p197');
+  ok(hrefs.includes('/prompty/rabota/#p197'), '«резюме» → карточка /prompty/rabota/#p197');
   ok(res.textContent.includes('Найдено'), 'счётчик найденного');
   ok(hrefs.length <= 12, 'не больше 12 результатов');
   /* пустая выдача → empty_search в оба счётчика */
@@ -93,12 +123,17 @@ console.log('index.html: глобальный поиск');
   q.focus();
   d.dispatchEvent(new w.KeyboardEvent('keydown', {key:'Escape', bubbles:true}));
   ok(q.value === '' && res.hidden === true, 'Escape очищает запрос и скрывает результаты');
+  /* поиск из шапки: ?q= подставляется в глобальный поиск */
+  const dom2 = load('index.html', '?q=' + encodeURIComponent('хедшот'));
+  await tick(150);
+  ok(dom2.window.document.getElementById('hubQ').value === 'хедшот', '?q= из шапки автоподставлен в поиск хаба');
+  ok(dom2.window.document.getElementById('hubRes').hidden === false, 'результаты поиска из шапки показаны');
 }
 
 /* ---------- 2. Раздел photo: статика + интерактив ---------- */
-console.log('photo.html');
+console.log('prompty/foto');
 {
-  const dom = load('photo.html');
+  const dom = load('prompty/foto/index.html');
   const w = dom.window, d = w.document;
   await tick(50);
   ok(d.querySelectorAll('#grid .card').length === 54, '54 карточки отрендерены статически');
@@ -108,6 +143,7 @@ console.log('photo.html');
   ok(d.getElementById('results').textContent.includes('54'), 'счётчик «Показаны все 54 промпта»');
   ok(d.querySelectorAll('[data-prerendered]').length === 1, 'grid помечен data-prerendered');
   ok(d.querySelectorAll('#grid .card-head[aria-controls]').length === 54, 'у всех 54 карточек aria-controls на тело');
+  ok(d.querySelector('link[rel="canonical"]').getAttribute('href') === 'https://ediai.ru/prompty/foto/', 'canonical = /prompty/foto/');
 
   /* гидратация: клик по статической карточке раскрывает её */
   const first = d.querySelector('#grid .card');
@@ -159,15 +195,14 @@ console.log('photo.html');
   /* a11y-атрибуты */
   ok(d.getElementById('search').getAttribute('aria-label') !== null, 'search: aria-label');
   ok(d.getElementById('toast').getAttribute('aria-live') === 'polite', 'toast: aria-live=polite');
-  ok(d.querySelector('.skip-link') !== null, 'skip-link присутствует');
+  ok(d.querySelector('.skip-link') !== null, 'skip-link присутствует (ровно один)');
+  ok(d.querySelectorAll('.skip-link').length === 1, 'skip-link не задублирован');
   ok(d.querySelector('meta[name="description"]') !== null, 'meta description');
-  ok(d.querySelector('link[rel="canonical"]') !== null, 'canonical');
   ok(d.querySelector('meta[property="og:image"]') !== null, 'og:image');
   const srcP = d.querySelector('details.sources');
   ok(!!srcP && !srcP.open, 'источники раздела: спойлер, свёрнут');
   ok(d.querySelector('meta[name="theme-color"]').content === '#f5f6fa', 'theme-color светлый');
   ok(d.querySelector('style').textContent.includes('.card-top{display:flex;flex-direction:column'), 'карточка: заголовок 1-й строкой, значки ИИ 2-й');
-  ok(d.querySelector('link[rel="canonical"]').href.includes('ediai.ru'), 'canonical = ediai.ru');
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), 'Метрика 114035585 на разделе');
   ok(d.documentElement.innerHTML.includes('yandex.ru/ads/system/ap-loader.js'), 'автореклама РСЯ на разделе');
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/watch/114035585'), 'noscript-маячок Метрики');
@@ -176,13 +211,12 @@ console.log('photo.html');
   ok(arts.length === 54, 'контентная аналитика: 54 материала Article');
   ok(arts.every(a => a['@id'] && a.headline && a.articleBody), 'у каждого Article есть @id, headline, articleBody');
   ok(arts.every(a => d.getElementById(a['@id'].split('#')[1])), 'фрагменты @id указывают на реальные карточки');
-
 }
 
 /* ---------- 3. deep-link ?q= ---------- */
-console.log('photo.html?q=реставрация');
+console.log('prompty/foto?q=реставрация');
 {
-  const dom = load('photo.html', '?q=' + encodeURIComponent('реставрация'));
+  const dom = load('prompty/foto/index.html', '?q=' + encodeURIComponent('реставрация'));
   const w = dom.window, d = w.document;
   await tick(80);
   ok(d.getElementById('search').value === 'реставрация', 'параметр ?q= подставлен в поиск');
@@ -191,9 +225,9 @@ console.log('photo.html?q=реставрация');
 }
 
 /* ---------- 3b. deep-link по якорю: карточка раскрывается ---------- */
-console.log('photo.html#p12');
+console.log('prompty/foto#p12');
 {
-  const dom = load('photo.html', '#p12');
+  const dom = load('prompty/foto/index.html', '#p12');
   const w = dom.window, d = w.document;
   await tick(80);
   const c = d.getElementById('p12');
@@ -202,7 +236,7 @@ console.log('photo.html#p12');
 }
 
 /* ---------- 4. Разделы без табов ---------- */
-for(const [file, expect, pillMin, fchips] of [['generate.html',21,1,1], ['texts.html',21,1,1], ['qwen.html',23,0,2], ['basics.html',6,1,0]]){
+for(const [file, expect, pillMin, fchips] of [['prompty/generaciya/index.html',21,1,1], ['prompty/teksty/index.html',21,1,1], ['prompty/qwen/index.html',23,0,2], ['guides/osnovy-promptinga/index.html',6,1,0]]){
   console.log(file);
   const dom = load(file);
   const w = dom.window, d = w.document;
@@ -214,15 +248,15 @@ for(const [file, expect, pillMin, fchips] of [['generate.html',21,1,1], ['texts.
   head.dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
   ok(d.querySelector('#grid .card').classList.contains('open'), 'гидратация работает');
   const ds = d.querySelectorAll('.dspill').length;
-  ok((file==='texts.html'||file==='basics.html') ? ds===expect : true, 'пилюли DeepSeek: ' + ds);
+  ok((file==='prompty/teksty/index.html'||file==='guides/osnovy-promptinga/index.html') ? ds===expect : true, 'пилюли DeepSeek: ' + ds);
   const pills = d.querySelectorAll('.qpill').length;
   ok(pillMin ? pills > 0 : pills === 0, 'пилюли совместимости: ' + pills + ' (ожидалось ' + (pillMin? '>0':'0') + ')');
 }
 
-/* ---------- 4b. life.html — новый раздел с табами ---------- */
-console.log('life.html');
+/* ---------- 4b. prompty/zhizn — раздел с табами-чипами ---------- */
+console.log('prompty/zhizn');
 {
-  const dom = load('life.html');
+  const dom = load('prompty/zhizn/index.html');
   const w = dom.window, d = w.document;
   await tick(80);
   ok(d.querySelectorAll('h1').length === 1, 'ровно один <h1>');
@@ -259,10 +293,10 @@ console.log('life.html');
 }
 
 
-/* ---------- 4d. work.html — раздел «ИИ на работе» ---------- */
-console.log('work.html');
+/* ---------- 4d. prompty/rabota — раздел «ИИ на работе» ---------- */
+console.log('prompty/rabota');
 {
-  const dom = load('work.html');
+  const dom = load('prompty/rabota/index.html');
   const w = dom.window, d = w.document;
   await tick(80);
   ok(d.querySelectorAll('h1').length === 1, 'ровно один <h1>');
@@ -285,20 +319,21 @@ console.log('work.html');
   ok(d.querySelectorAll('#grid .card').length === 20, 'фильтр «5 минут» в работе: 20 карточек');
 }
 
-/* ---------- 4c. База знаний: start / models / glossary ---------- */
-console.log('start.html / models.html / glossary.html');
+/* ---------- 4c. Гайды: s-chego-nachat / kakuyu-nejroset-vybrat / glossary ---------- */
+console.log('guides/s-chego-nachat / guides/kakuyu-nejroset-vybrat / glossary');
 for (const [file, h1part, checks] of [
-  ['start.html', 'Первая неделя с ИИ', d => ({
+  ['guides/s-chego-nachat/index.html', 'Первая неделя с ИИ', d => ({
     '7 шагов-сценариев': d.querySelectorAll('.gstep').length === 7,
     'ссылки ведут на промпты разделов': [...d.querySelectorAll('.gstep a')].every(a => /\?q=/.test(a.getAttribute('href'))),
     'HowTo в JSON-LD': JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent)['@graph'].some(n => n['@type'] === 'HowTo'),
+    'крошки: Главная → Гайды → С чего начать': [...d.querySelectorAll('nav.crumbs a')].map(a=>a.getAttribute('href')).join(' ') === '/ /guides/',
   })],
-  ['models.html', 'Какая нейросеть для чего', d => ({
+  ['guides/kakuyu-nejroset-vybrat/index.html', 'Какая нейросеть для чего', d => ({
     'таблица: 7 задач': d.querySelectorAll('.cmp tr').length === 8,
     'FAQ: 4 вопроса': d.querySelectorAll('.faq details').length === 4,
     'FAQPage в JSON-LD': JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent)['@graph'].some(n => n['@type'] === 'FAQPage'),
   })],
-  ['glossary.html', 'Глоссарий терминов ИИ', d => ({
+  ['glossary/index.html', 'Глоссарий терминов ИИ', d => ({
     '16 терминов': d.querySelectorAll('.term').length === 16,
     'у каждого термина пример': [...d.querySelectorAll('.term')].every(t => t.querySelector('.ex')),
     'DefinedTermSet в JSON-LD': JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent)['@graph'].some(n => n['@type'] === 'DefinedTermSet'),
@@ -312,14 +347,47 @@ for (const [file, h1part, checks] of [
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), file + ': Метрика');
   ok(d.documentElement.innerHTML.includes('yandex.ru/ads/system/ap-loader.js'), file + ': автореклама РСЯ');
   ok(d.querySelector('.know-nav') !== null && d.querySelector('footer .sections-nav') !== null, file + ': know-nav и навигация разделов');
-  ok(d.querySelector('main nav') !== null && [...d.querySelectorAll('main nav a')].some(a => a.getAttribute('href') === 'index.html'), file + ': навигация с «Главная» вверху страницы');
+  ok(d.querySelector('main nav') !== null && [...d.querySelectorAll('main nav a')].some(a => a.getAttribute('href') === '/'), file + ': навигация с «Главная» вверху страницы');
   for (const [msg, cond] of Object.entries(checks(d))) ok(cond, file + ': ' + msg);
 }
 
-/* ---------- 5b. Статья-кейс keis-ii-pochta.html ---------- */
-console.log('keis-ii-pochta.html');
+/* ---------- 5a. Новые хабы фазы 2 ---------- */
+console.log('новые хабы: /prompty/, /guides/, /instrumenty/, /o-proekte/, /politika-konfidencialnosti/');
+for (const [file, h1part, extra] of [
+  ['prompty/index.html', 'Карта промптов', d => ({
+    '6 категорий': d.querySelectorAll('.bento .tile').length === 6,
+    'блок материалов': d.querySelectorAll('.pop').length >= 5,
+    'FAQ: 3 вопроса': d.querySelectorAll('.faq details').length === 3,
+  })],
+  ['guides/index.html', 'Гайды по нейросетям', d => ({
+    '4 гайда + план обучения': d.querySelectorAll('.pop').length === 5,
+  })],
+  ['instrumenty/index.html', 'какая нейросеть для какой задачи', d => ({
+    '5 моделей': d.querySelectorAll('.pop').length === 5,
+    'таблица задач': d.querySelectorAll('.cmp tr').length === 8,
+  })],
+  ['o-proekte/index.html', 'О проекте', d => ({
+    'методика проверки': d.body.textContent.includes('Методика проверки'),
+  })],
+  ['politika-konfidencialnosti/index.html', 'Политика конфиденциальности', d => ({
+    'Метрика и GA4 упомянуты': d.body.textContent.includes('Яндекс.Метрика') && d.body.textContent.includes('Google Analytics 4'),
+  })],
+]) {
+  const dom = load(file);
+  const w = dom.window, d = w.document;
+  await tick(30);
+  ok(d.querySelectorAll('h1').length === 1 && d.querySelector('h1').textContent.toLowerCase().includes(h1part.toLowerCase()), file + ': один h1 «' + h1part + '»');
+  ok(d.querySelector('nav.crumbs') !== null, file + ': хлебные крошки');
+  const ldN = JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent);
+  ok(ldN['@graph'].some(n => n['@type'] === 'BreadcrumbList'), file + ': BreadcrumbList в JSON-LD');
+  ok(d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), file + ': Метрика');
+  for (const [msg, cond] of Object.entries(extra(d))) ok(cond, file + ': ' + msg);
+}
+
+/* ---------- 5b. Гайд-кейс /guides/ii-i-pochta/ ---------- */
+console.log('guides/ii-i-pochta');
 {
-  const dom = load('keis-ii-pochta.html');
+  const dom = load('guides/ii-i-pochta/index.html');
   const w = dom.window, d = w.document;
   await tick(50);
   ok(d.querySelectorAll('h1').length === 1 && d.querySelector('h1').textContent.includes('Сколько часов экономит ИИ'), 'кейс: один h1 «Сколько часов экономит ИИ…»');
@@ -331,8 +399,8 @@ console.log('keis-ii-pochta.html');
   ok(d.querySelectorAll('.cmp').length === 2, 'кейс: 2 таблицы (исследования + расчёт)');
   const gsLinks = [...d.querySelectorAll('.gstep a')];
   ok(d.querySelectorAll('.gstep').length === 7, 'кейс: 7 промптов недели');
-  ok(gsLinks.every(a => /^work\.html#p\d+$/.test(a.getAttribute('href'))), 'кейс: все ссылки — на карточки work.html#pN');
-  const domW = load('work.html');
+  ok(gsLinks.every(a => /^\/prompty\/rabota\/#p\d+$/.test(a.getAttribute('href'))), 'кейс: все ссылки — на карточки /prompty/rabota/#pN');
+  const domW = load('prompty/rabota/index.html');
   const dW = domW.window.document;
   ok(gsLinks.every(a => dW.getElementById(a.getAttribute('href').split('#')[1])), 'кейс: все 7 якорей — реальные карточки раздела «Работа»');
   const srcK = d.querySelector('details.sources');
@@ -340,23 +408,31 @@ console.log('keis-ii-pochta.html');
   ok(srcK.querySelectorAll('li').length >= 5, 'кейс: в источниках ≥5 ссылок');
   ok(d.documentElement.innerHTML.includes('G-P1BDWZ1D1Q') && d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), 'кейс: GA4 + Метрика');
   ok(d.documentElement.innerHTML.includes('yandex.ru/ads/system/ap-loader.js'), 'кейс: автореклама РСЯ');
-  ok(d.querySelector('link[rel="canonical"]').href.includes('keis-ii-pochta.html'), 'кейс: canonical');
-  ok(d.querySelector('.know-nav a[href="keis-ii-pochta.html"]') !== null, 'кейс: know-nav со «Статьи и кейсы»');
+  ok(d.querySelector('link[rel="canonical"]').href.includes('/guides/ii-i-pochta/'), 'кейс: canonical');
+  ok(d.querySelector('.know-nav a[href="/guides/ii-i-pochta/"]') !== null, 'кейс: know-nav со «Статьи и кейсы»');
   ok(d.querySelector('.art-note') !== null && d.body.textContent.includes('иллюстративный'), 'кейс: расчёт помечен как иллюстративный');
 }
 
-/* ---------- 5c. sitemap ---------- */
-console.log('sitemap.xml');
+/* ---------- 5c. sitemap, llms.txt, .htaccess ---------- */
+console.log('sitemap.xml / llms.txt / .htaccess');
 {
   const sm = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sm.match(/<loc>/g) || []).length === 13, 'sitemap: 13 страниц (12 + education/studying-AI)');
-  ok(sm.includes('keis-ii-pochta.html'), 'sitemap: статья-кейс добавлена');
+  ok((sm.match(/<loc>/g) || []).length === 18, 'sitemap: 18 страниц (12 старых → 17 новых + education)');
+  ok(sm.includes('https://ediai.ru/prompty/foto/'), 'sitemap: новый адрес фото-раздела');
+  ok(!sm.includes('.html</loc>') || sm.includes('/education/studying-AI.html'), 'sitemap: каталоги, из .html только education');
+  const lt = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
+  ok(lt.startsWith('# Ediai.ru'), 'llms.txt: заголовок сайта');
+  ok(lt.includes('/prompty/foto/') && lt.includes('/guides/') && lt.includes('/o-proekte/'), 'llms.txt: разделы, материалы, о проекте');
+  ok(lt.includes('54 промпта') && lt.includes('56 промптов') && lt.includes('21 промпт'), 'llms.txt: счётчики со склонением');
+  const ht = fs.readFileSync(path.join(SITE, '.htaccess'), 'utf8');
+  ok((ht.match(/^Redirect 301/gm) || []).length === 12, '.htaccess: 12 редиректов со старых адресов');
+  ok(/^Redirect 301 \/photo\.html +\/prompty\/foto\/$/m.test(ht), '.htaccess: photo.html → /prompty/foto/');
 }
 
 /* ---------- 6. События в счётчики (Метрика + GA4) ---------- */
 console.log('события prompt_copy → ym + gtag');
 {
-  const dom = load('photo.html');
+  const dom = load('prompty/foto/index.html');
   const w = dom.window, d = w.document;
   await tick(80);
   /* стабим Clipboard API, чтобы сработал основной путь копирования */
@@ -380,7 +456,7 @@ console.log('404, favicon, apple-touch-icon');
   ok(h4.includes('404 — такой страницы нет'), '404: заголовок на месте');
   ok(/name="robots" content="noindex,follow"/.test(h4), '404: noindex,follow');
   ok(!h4.includes('rel="canonical"'), '404: без canonical (не конкурирует с страницами)');
-  ok(h4.includes('href="index.html"') && h4.includes('photo.html'), '404: навигация домой и в разделы');
+  ok(h4.includes('href="/"') && h4.includes('/prompty/foto/'), '404: навигация домой и в разделы');
   ok(h4.includes('metrika/tag.js?id=114035585') && h4.includes('G-P1BDWZ1D1Q'), '404: оба счётчика (видны битые ссылки)');
   const ico = fs.readFileSync(path.join(SITE, 'favicon.ico'));
   ok(ico[0] === 0 && ico[1] === 0 && ico[2] === 1 && ico[3] === 0 && ico.readUInt16LE(4) === 3,
@@ -391,6 +467,8 @@ console.log('404, favicon, apple-touch-icon');
   ok(hi.includes('rel="apple-touch-icon"') && hi.includes('/favicon.ico'), 'head: ссылки на иконки на всех страницах');
   const rb = fs.readFileSync(path.join(SITE, 'robots.txt'), 'utf8');
   ok(rb.includes('Disallow: /404.html'), 'robots.txt: 404 закрыта от индекса');
+  ok(rb.includes('User-agent: GPTBot') && rb.includes('User-agent: ClaudeBot') && rb.includes('User-agent: PerplexityBot'), 'robots.txt: ИИ-краулеры открыты (GPTBot, ClaudeBot, PerplexityBot)');
+  ok(rb.includes('Disallow: /z') && rb.includes('Disallow: /maxbot') && rb.includes('Disallow: /pwa'), 'robots.txt: служебные папки закрыты');
   const sm = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
   ok(!sm.includes('404.html'), 'sitemap.xml: без 404');
 }

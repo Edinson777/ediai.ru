@@ -1,0 +1,24 @@
+# ediai.ru — редиректы фазы 2 (переезд на URL-конвенцию §3.3 стратегии)
+# Сервер: Nginx + Apache (FastCGI/PHP-FPM) — владелец подтвердил Apache в цепочке,
+# поэтому .htaccess обрабатывается. ВАЖНО: если Nginx отдаёт статику напрямую
+# и обходит Apache, эти правила не сработают — тогда список ниже переносится
+# в nginx-конфиг (return 301). Сайт на момент переезда не проиндексирован,
+# поэтому редиректы — формальность на будущее (закладки, старые ссылки).
+#
+# Правило: Redirect 301 <старый путь> <новый путь> (mod_alias, есть на всех shared-хостингах).
+
+Redirect 301 /photo.html          /prompty/foto/
+Redirect 301 /life.html           /prompty/zhizn/
+Redirect 301 /work.html           /prompty/rabota/
+Redirect 301 /texts.html          /prompty/teksty/
+Redirect 301 /generate.html       /prompty/generaciya/
+Redirect 301 /qwen.html           /prompty/qwen/
+Redirect 301 /basics.html         /guides/osnovy-promptinga/
+Redirect 301 /start.html          /guides/s-chego-nachat/
+Redirect 301 /models.html         /guides/kakuyu-nejroset-vybrat/
+Redirect 301 /keis-ii-pochta.html /guides/ii-i-pochta/
+Redirect 301 /glossary.html       /glossary/
+Redirect 301 /index.html          /
+
+# education/studying-AI.html остаётся на своём адресе — редирект не нужен.
+# Папки z/, maxbot/, pwa/ правил не касаются и как обслуживались, так и обслуживаются.

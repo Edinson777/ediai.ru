@@ -1,10 +1,12 @@
 ---
 /**
  * Страница-раздел промптов — порт build_section() из build.py.
- * Одна на 7 разделов (роут src/pages/[slug].astro, старые адреса *.html).
+ * Одна на 6 разделов (роут src/pages/prompty/[slug].astro, адрес /prompty/{slug}/).
+ * Фаза 2: хлебные крошки + BreadcrumbList, абсолютные ссылки.
  */
 import Base from '../layouts/Base.astro';
-import { D, SITE_URL, SITE_NAME, LASTMOD, BY_SECTION, WEBSITE_LD, APPJS, NOSCRIPT_CSS } from '../lib/site.js';
+import { D, SITE_URL, SITE_NAME, LASTMOD, BY_SECTION, WEBSITE_LD, APPJS, NOSCRIPT_CSS,
+         SECTION_PATHS, SECTION_LABELS, breadcrumbLd, crumbs } from '../lib/site.js';
 import {
   esc, attr, jsJson, ld, cardHtml, gridHtml, navHtml, statsHtml, tabsHtml,
   chipsHtml, fchipsHtml, ftags,
@@ -13,9 +15,19 @@ import {
 const { key } = Astro.props;
 const sec = D.SECTIONS[key];
 const prompts = BY_SECTION[key];
-const url = SITE_URL + '/' + sec.file;
+const url = SITE_URL + sec.file;           // sec.file = '/prompty/foto/' (трансформация dump_data)
+// basics — раздел-гайд: адрес /guides/osnovy-promptinga/, крошки через «Гайды» (§3.3)
+const crumb = crumbs(key === 'basics' ? [
+  { name: 'Главная', href: '/' },
+  { name: 'Гайды', href: '/guides/' },
+  { name: SECTION_LABELS[key] },
+] : [
+  { name: 'Главная', href: '/' },
+  { name: 'Промпты', href: '/prompty/' },
+  { name: SECTION_LABELS[key] },
+]);
 
-// JSON-LD: CollectionPage + ItemList + каждый промпт как Article (контентная аналитика Метрики)
+// JSON-LD: CollectionPage + BreadcrumbList + ItemList + каждый промпт как Article
 const articles = prompts.map(p => ({
   '@type': 'Article',
   '@id': url + '#' + p.id,
@@ -32,6 +44,7 @@ const articles = prompts.map(p => ({
 
 const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
   WEBSITE_LD,
+  breadcrumbLd(crumb),
   { '@type': 'CollectionPage', '@id': url, url: url, name: sec.plain,
     description: sec.desc, inLanguage: 'ru',
     datePublished: LASTMOD, dateModified: LASTMOD,
@@ -54,11 +67,10 @@ const dataJs = 'const PAGE = ' + jsJson(pageObj) + ';\nconst PROMPTS = ' + jsJso
 const gold = sec.h1_class.includes('gold');
 ---
 
-<Base title={sec.title} desc={sec.desc} path={sec.file} ogImg={'og/og-' + key + '.png'} ldGraph={ld(ldGraphObj)}>
-  <a class="skip-link" href="#main">Перейти к содержимому</a>
+<Base title={sec.title} desc={sec.desc} path={sec.file} ogImg={'og/og-' + key + '.png'} ldGraph={ld(ldGraphObj)} crumb={crumb}>
   <header class="hero">
     <div class="wrap">
-      <a class="back-link" href="index.html">← Все разделы</a>
+      <a class="back-link" href={key === 'basics' ? '/guides/' : '/prompty/'}>← {key === 'basics' ? 'Все гайды' : 'Все разделы'}</a>
       <h1 class={gold ? 'gold' : undefined}>{sec.h1}</h1>
       <p class="sub" set:html={sec.sub} />
       <Fragment set:html={statsHtml(prompts, sec)} />
@@ -105,6 +117,7 @@ const gold = sec.h1_class.includes('gold');
       <Fragment set:html={D.KNOW_NAV} />
       <Fragment set:html={sources} />
       <Fragment set:html={sec.foot} />
+      <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a></div>
     </div>
   </footer>
   <div id="toast" role="status" aria-live="polite"></div>

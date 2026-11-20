@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="ru"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Основы промптинга — 6 универсальных формул для любой нейросети</title><meta name="description" content="6 формул промптинга для любой LLM: роль-контекст-задача-формат, few-shot, цепочка рассуждений, самокритика и цикл улучшения ответа — с примерами."><link rel="canonical" href="https://ediai.ru/basics.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Ediai"><meta property="og:title" content="Основы промптинга — 6 универсальных формул для любой нейросети"><meta property="og:description" content="6 формул промптинга для любой LLM: роль-контекст-задача-формат, few-shot, цепочка рассуждений, самокритика и цикл улучшения ответа — с примерами."><meta property="og:url" content="https://ediai.ru/basics.html"><meta property="og:image" content="https://ediai.ru/og/og-basics.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="ru_RU"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Основы промптинга — 6 универсальных формул для любой нейросети"><meta name="twitter:description" content="6 формул промптинга для любой LLM: роль-контекст-задача-формат, few-shot, цепочка рассуждений, самокритика и цикл улучшения ответа — с примерами."><meta name="twitter:image" content="https://ediai.ru/og/og-basics.png"><meta name="theme-color" content="#f5f6fa"><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"><link rel="icon" type="image/x-icon" href="https://ediai.ru/favicon.ico" sizes="16x16 32x32 48x48"><link rel="apple-touch-icon" href="https://ediai.ru/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ediai.ru/#website","name":"Ediai","url":"https://ediai.ru/","description":"ИИ в личной жизни и работе: 211 готовых промптов, путеводитель для новичков, сравнения нейросетей и статьи-кейсы с цифрами. Бесплатно, без регистрации.","inLanguage":"ru"},{"@type":"CollectionPage","@id":"https://ediai.ru/basics.html","url":"https://ediai.ru/basics.html","name":"Основы промптинга — 6 универсальных формул","description":"6 формул промптинга для любой LLM: роль-контекст-задача-формат, few-shot, цепочка рассуждений, самокритика и цикл улучшения ответа — с примерами.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","isPartOf":{"@id":"https://ediai.ru/#website"}},{"@type":"ItemList","name":"Основы промптинга — 6 универсальных формул","numberOfItems":6,"itemListElement":[{"@type":"ListItem","position":1,"name":"Формула Роль → Контекст → Задача → Формат","url":"https://ediai.ru/basics.html#p120"},{"@type":"ListItem","position":2,"name":"Улучшатель промптов (мета-промпт)","url":"https://ediai.ru/basics.html#p121"},{"@type":"ListItem","position":3,"name":"Режим интервью","url":"https://ediai.ru/basics.html#p122"},{"@type":"ListItem","position":4,"name":"Цикл «критик → улучшение»","url":"https://ediai.ru/basics.html#p123"},{"@type":"ListItem","position":5,"name":"Пошаговое рассуждение","url":"https://ediai.ru/basics.html#p124"},{"@type":"ListItem","position":6,"name":"Несколько подходов сразу","url":"https://ediai.ru/basics.html#p125"}]},{"@type":"Article","@id":"https://ediai.ru/basics.html#p120","headline":"Формула Роль → Контекст → Задача → Формат","articleBody":"Действуй как [роль: маркетолог с 10-летним опытом / юрист / преподаватель физики].\n\nКонтекст: [ситуация, аудитория, ограничения, что уже известно].\n\nЗадача: [что конкретно сделать — один глагол, один результат].\n\nФормат ответа: [объём, структура, таблица/список/текст, тон, примеры оформления].\n\nЕсли данных не хватает для качественного результата — задай мне до 5 уточняющих вопросов, прежде чем отвечать.","description":"Каркас, который превращает любой расплывчатый запрос в точный. Подходит для 90% текстовых задач.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"формула, роль, контекст, база","isPartOf":{"@id":"https://ediai.ru/basics.html"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/basics.html"}},{"@type":"Article","@id":"https://ediai.ru/basics.html#p121","headline":"Улучшатель промптов (мета-промпт)","articleBody":"Ты — эксперт по промпт-инжинирингу. Вот мой промпт: «[вставить ваш промпт]».\n\n1. Оцени его: что понятно, что расплывчато, каких деталей не хватает;\n2. Перепиши его: добавь роль, контекст, конкретику задачи, формат результата, ограничения и, если уместно, пример ожидаемого ответа;\n3. Объясни, что именно ты улучшил и почему;\n4. Затем выполни улучшенный промпт.","description":"Пусть ИИ сам доработает ваш слабый промпт до сильного.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"мета-промпт, улучшение, промпт-инжиниринг","isPartOf":{"@id":"https://ediai.ru/basics.html"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/basics.html"}},{"@type":"Article","@id":"https://ediai.ru/basics.html#p122","headline":"Режим интервью","articleBody":"Я хочу получить от тебя [результат: текст / план / код / дизайн-концепцию] на тему [тема].\n\nНо прежде чем делать — проведи мне интервью: задавай по одному уточняющему вопросу за раз (цель, аудитория, ограничения, тон, примеры, что точно не нужно). Задай столько вопросов, сколько нужно для идеального результата, но не больше 10.\n\nКогда соберёшь достаточно информации — кратко перескажи моё ТЗ и только затем выполни задачу.","description":"ИИ сам вытаскивает из вас вводные — идеально, когда вы не знаете, как сформулировать задачу.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"интервью, уточнение, бриф, диалог","isPartOf":{"@id":"https://ediai.ru/basics.html"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/basics.html"}},{"@type":"Article","@id":"https://ediai.ru/basics.html#p123","headline":"Цикл «критик → улучшение»","articleBody":"Выполни задачу: [задача].\n\nЗатем смени роль на строгого критика:\n1. Найди слабые места своего ответа (логика, полнота, убедительность, факты);\n2. Поставь оценку от 1 до 10;\n3. Перепиши ответ, устранив найденные недостатки.\n\nПовторяй цикл «критика → улучшение», пока оценка не достигнет 9+. Покажи финальную версию и кратко — что менялось на каждой итерации.","description":"ИИ сам критикует свой ответ и доводит его до высокого уровня — вместо среднего первого черновика.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"итерации, критика, качество, самопроверка","isPartOf":{"@id":"https://ediai.ru/basics.html"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/basics.html"}},{"@type":"Article","@id":"https://ediai.ru/basics.html#p124","headline":"Пошаговое рассуждение","articleBody":"Реши задачу пошагово: [задача].\n\n1. Сначала составь план рассуждений (какие шаги нужны);\n2. Выполняй каждый шаг отдельно, проверяя промежуточные результаты;\n3. Если шаг вызывает сомнение — рассмотри альтернативный вариант;\n4. В конце дай краткий ответ и перепроверь его обратным ходом.\n\nНе перескакивай через шаги и показывай ход мыслей.","description":"Chain-of-thought: для задач с логикой, расчётами и сложными решениями снижает ошибки в разы.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"логика, пошагово, chain of thought, задачи","isPartOf":{"@id":"https://ediai.ru/basics.html"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/basics.html"}},{"@type":"Article","@id":"https://ediai.ru/basics.html#p125","headline":"Несколько подходов сразу","articleBody":"Дай [3–5] принципиально разных подхода к задаче: [задача].\n\nДля каждого подхода:\n- идея в 1–2 предложениях;\n- плюсы;\n- минусы и риски;\n- в каком случае он подходит лучше всего.\n\nЗатем порекомендуй лучший для моей ситуации: [описать ситуацию и ограничения] — и объясни выбор.","description":"Вместо одного «среднего» решения — веер вариантов с честными плюсами и минусами.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"варианты, сравнение, выбор, стратегия","isPartOf":{"@id":"https://ediai.ru/basics.html"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/basics.html"}}]}</script><style>/* =====================================================================
+<!DOCTYPE html><html lang="ru"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Основы промптинга — 6 универсальных формул для любой нейросети</title><meta name="description" content="6 формул промптинга для любой LLM: роль-контекст-задача-формат, few-shot, цепочка рассуждений, самокритика и цикл улучшения ответа — с примерами."><link rel="canonical" href="https://ediai.ru/guides/osnovy-promptinga/"><meta property="og:type" content="website"><meta property="og:site_name" content="Ediai"><meta property="og:title" content="Основы промптинга — 6 универсальных формул для любой нейросети"><meta property="og:description" content="6 формул промптинга для любой LLM: роль-контекст-задача-формат, few-shot, цепочка рассуждений, самокритика и цикл улучшения ответа — с примерами."><meta property="og:url" content="https://ediai.ru/guides/osnovy-promptinga/"><meta property="og:image" content="https://ediai.ru/og/og-basics.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="ru_RU"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Основы промптинга — 6 универсальных формул для любой нейросети"><meta name="twitter:description" content="6 формул промптинга для любой LLM: роль-контекст-задача-формат, few-shot, цепочка рассуждений, самокритика и цикл улучшения ответа — с примерами."><meta name="twitter:image" content="https://ediai.ru/og/og-basics.png"><meta name="theme-color" content="#f5f6fa"><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"><link rel="icon" type="image/x-icon" href="https://ediai.ru/favicon.ico" sizes="16x16 32x32 48x48"><link rel="apple-touch-icon" href="https://ediai.ru/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ediai.ru/#website","name":"Ediai","url":"https://ediai.ru/","description":"ИИ в личной жизни и работе: 211 готовых промптов, путеводитель для новичков, сравнения нейросетей и статьи-кейсы с цифрами. Бесплатно, без регистрации.","inLanguage":"ru"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://ediai.ru/"},{"@type":"ListItem","position":2,"name":"Гайды","item":"https://ediai.ru/guides/"},{"@type":"ListItem","position":3,"name":"Основы промптинга"}]},{"@type":"CollectionPage","@id":"https://ediai.ru/guides/osnovy-promptinga/","url":"https://ediai.ru/guides/osnovy-promptinga/","name":"Основы промптинга — 6 универсальных формул","description":"6 формул промптинга для любой LLM: роль-контекст-задача-формат, few-shot, цепочка рассуждений, самокритика и цикл улучшения ответа — с примерами.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","isPartOf":{"@id":"https://ediai.ru/#website"}},{"@type":"ItemList","name":"Основы промптинга — 6 универсальных формул","numberOfItems":6,"itemListElement":[{"@type":"ListItem","position":1,"name":"Формула Роль → Контекст → Задача → Формат","url":"https://ediai.ru/guides/osnovy-promptinga/#p120"},{"@type":"ListItem","position":2,"name":"Улучшатель промптов (мета-промпт)","url":"https://ediai.ru/guides/osnovy-promptinga/#p121"},{"@type":"ListItem","position":3,"name":"Режим интервью","url":"https://ediai.ru/guides/osnovy-promptinga/#p122"},{"@type":"ListItem","position":4,"name":"Цикл «критик → улучшение»","url":"https://ediai.ru/guides/osnovy-promptinga/#p123"},{"@type":"ListItem","position":5,"name":"Пошаговое рассуждение","url":"https://ediai.ru/guides/osnovy-promptinga/#p124"},{"@type":"ListItem","position":6,"name":"Несколько подходов сразу","url":"https://ediai.ru/guides/osnovy-promptinga/#p125"}]},{"@type":"Article","@id":"https://ediai.ru/guides/osnovy-promptinga/#p120","headline":"Формула Роль → Контекст → Задача → Формат","articleBody":"Действуй как [роль: маркетолог с 10-летним опытом / юрист / преподаватель физики].\n\nКонтекст: [ситуация, аудитория, ограничения, что уже известно].\n\nЗадача: [что конкретно сделать — один глагол, один результат].\n\nФормат ответа: [объём, структура, таблица/список/текст, тон, примеры оформления].\n\nЕсли данных не хватает для качественного результата — задай мне до 5 уточняющих вопросов, прежде чем отвечать.","description":"Каркас, который превращает любой расплывчатый запрос в точный. Подходит для 90% текстовых задач.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"формула, роль, контекст, база","isPartOf":{"@id":"https://ediai.ru/guides/osnovy-promptinga/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/guides/osnovy-promptinga/"}},{"@type":"Article","@id":"https://ediai.ru/guides/osnovy-promptinga/#p121","headline":"Улучшатель промптов (мета-промпт)","articleBody":"Ты — эксперт по промпт-инжинирингу. Вот мой промпт: «[вставить ваш промпт]».\n\n1. Оцени его: что понятно, что расплывчато, каких деталей не хватает;\n2. Перепиши его: добавь роль, контекст, конкретику задачи, формат результата, ограничения и, если уместно, пример ожидаемого ответа;\n3. Объясни, что именно ты улучшил и почему;\n4. Затем выполни улучшенный промпт.","description":"Пусть ИИ сам доработает ваш слабый промпт до сильного.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"мета-промпт, улучшение, промпт-инжиниринг","isPartOf":{"@id":"https://ediai.ru/guides/osnovy-promptinga/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/guides/osnovy-promptinga/"}},{"@type":"Article","@id":"https://ediai.ru/guides/osnovy-promptinga/#p122","headline":"Режим интервью","articleBody":"Я хочу получить от тебя [результат: текст / план / код / дизайн-концепцию] на тему [тема].\n\nНо прежде чем делать — проведи мне интервью: задавай по одному уточняющему вопросу за раз (цель, аудитория, ограничения, тон, примеры, что точно не нужно). Задай столько вопросов, сколько нужно для идеального результата, но не больше 10.\n\nКогда соберёшь достаточно информации — кратко перескажи моё ТЗ и только затем выполни задачу.","description":"ИИ сам вытаскивает из вас вводные — идеально, когда вы не знаете, как сформулировать задачу.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"интервью, уточнение, бриф, диалог","isPartOf":{"@id":"https://ediai.ru/guides/osnovy-promptinga/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/guides/osnovy-promptinga/"}},{"@type":"Article","@id":"https://ediai.ru/guides/osnovy-promptinga/#p123","headline":"Цикл «критик → улучшение»","articleBody":"Выполни задачу: [задача].\n\nЗатем смени роль на строгого критика:\n1. Найди слабые места своего ответа (логика, полнота, убедительность, факты);\n2. Поставь оценку от 1 до 10;\n3. Перепиши ответ, устранив найденные недостатки.\n\nПовторяй цикл «критика → улучшение», пока оценка не достигнет 9+. Покажи финальную версию и кратко — что менялось на каждой итерации.","description":"ИИ сам критикует свой ответ и доводит его до высокого уровня — вместо среднего первого черновика.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"итерации, критика, качество, самопроверка","isPartOf":{"@id":"https://ediai.ru/guides/osnovy-promptinga/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/guides/osnovy-promptinga/"}},{"@type":"Article","@id":"https://ediai.ru/guides/osnovy-promptinga/#p124","headline":"Пошаговое рассуждение","articleBody":"Реши задачу пошагово: [задача].\n\n1. Сначала составь план рассуждений (какие шаги нужны);\n2. Выполняй каждый шаг отдельно, проверяя промежуточные результаты;\n3. Если шаг вызывает сомнение — рассмотри альтернативный вариант;\n4. В конце дай краткий ответ и перепроверь его обратным ходом.\n\nНе перескакивай через шаги и показывай ход мыслей.","description":"Chain-of-thought: для задач с логикой, расчётами и сложными решениями снижает ошибки в разы.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"логика, пошагово, chain of thought, задачи","isPartOf":{"@id":"https://ediai.ru/guides/osnovy-promptinga/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/guides/osnovy-promptinga/"}},{"@type":"Article","@id":"https://ediai.ru/guides/osnovy-promptinga/#p125","headline":"Несколько подходов сразу","articleBody":"Дай [3–5] принципиально разных подхода к задаче: [задача].\n\nДля каждого подхода:\n- идея в 1–2 предложениях;\n- плюсы;\n- минусы и риски;\n- в каком случае он подходит лучше всего.\n\nЗатем порекомендуй лучший для моей ситуации: [описать ситуацию и ограничения] — и объясни выбор.","description":"Вместо одного «среднего» решения — веер вариантов с честными плюсами и минусами.","inLanguage":"ru","datePublished":"2026-11-02","dateModified":"2026-11-02","keywords":"варианты, сравнение, выбор, стратегия","isPartOf":{"@id":"https://ediai.ru/guides/osnovy-promptinga/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ediai.ru/guides/osnovy-promptinga/"}}]}</script><style>/* =====================================================================
    «База промптов для ИИ» — общий стиль всех страниц. СВЕТЛАЯ ТЕМА.
    Контрасты мелкого текста подобраны под WCAG AA на светлом фоне.
    Мобильная панель: табы в один скроллящийся ряд, подразделы под кнопку,
@@ -527,6 +527,284 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 
 /* нечётное число плиток: последняя занимает всю строку bento */
 .bento>.tile:last-child{grid-column:1/-1}
+</style><style>/* =====================================================================
+   Шапка, дропдауны, хлебные крошки (фаза 2, стратегия §4.1–4.3).
+   Подключается ПОСЛЕ основного style.css; префиксы sh-*/cr-* не конфликтуют.
+   ===================================================================== */
+
+:root{
+  --sh-ink:#23244d;
+  --sh-accent:#4b3ecf;
+  --sh-accent-soft:#efedff;
+  --sh-border:#e3e4ef;
+}
+
+.site-header{
+  background:#fff;
+  border-bottom:1px solid var(--sh-border);
+  position:relative;
+  z-index:50;
+}
+.sh-in{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  max-width:1180px;
+  margin:0 auto;
+  padding:10px 16px;
+}
+.sh-logo{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:800;
+  font-size:19px;
+  color:var(--sh-ink);
+  text-decoration:none;
+  white-space:nowrap;
+}
+.sh-logo-d{color:var(--sh-accent);font-weight:700}
+
+/* --- главное меню --- */
+.sh-nav{
+  display:flex;
+  align-items:stretch;
+  gap:4px;
+  flex:1;
+  min-width:0;
+}
+.sh-item{position:relative;display:flex;align-items:center}
+.sh-link{
+  display:flex;
+  align-items:center;
+  padding:10px 12px;
+  font-size:15px;
+  font-weight:600;
+  color:var(--sh-ink);
+  text-decoration:none;
+  border-radius:8px;
+  border-bottom:3px solid transparent;
+}
+.sh-item.active>.sh-link{color:var(--sh-accent)}
+.sh-item.active>.sh-link::after{
+  content:"";
+  position:absolute;
+  left:10px;right:10px;bottom:-11px;
+  height:3px;
+  background:var(--sh-accent);
+  border-radius:2px 2px 0 0;
+}
+.sh-link:hover{background:var(--sh-accent-soft)}
+
+/* тоггл дропдауна (клик для тача и клавиатуры) */
+.sh-toggle{
+  border:0;background:none;cursor:pointer;
+  color:#8a8ca8;font-size:11px;padding:8px 2px;
+  line-height:1;
+}
+.sh-item.drop-open .sh-toggle{transform:rotate(180deg)}
+
+/* --- дропдаун --- */
+.sh-drop{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  min-width:340px;
+  background:#fff;
+  border:1px solid var(--sh-border);
+  border-radius:12px;
+  box-shadow:0 14px 40px rgba(35,36,77,.14);
+  padding:16px;
+  gap:22px;
+}
+.sh-item.drop-open .sh-drop{display:flex}
+/* раскрытие по наведению на десктопе (устройства с ховером) */
+@media (hover:hover){
+  .sh-item.has-drop:hover>.sh-drop{display:flex}
+}
+.sh-drop{flex-wrap:wrap}
+.sh-col{flex:1;min-width:170px}
+.sh-col-t{
+  margin:0 0 6px;
+  font-size:11.5px;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#8a8ca8;
+}
+.sh-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:10px;
+  padding:6px 8px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--sh-ink);
+  text-decoration:none;
+  border-radius:8px;
+}
+.sh-row:hover{background:var(--sh-accent-soft);color:var(--sh-accent)}
+.sh-row .sh-n{
+  font-size:12.5px;
+  font-weight:700;
+  color:#fff;
+  background:var(--sh-accent);
+  border-radius:999px;
+  padding:1px 8px;
+  white-space:nowrap;
+}
+.sh-row .sh-note{font-size:11.5px;font-weight:500;color:#8a8ca8;white-space:nowrap}
+.sh-soon{font-size:12.5px;color:#8a8ca8;line-height:1.5;margin:0 0 10px}
+.sh-card{
+  flex:0 0 200px;
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  justify-content:center;
+  background:linear-gradient(135deg,#f3f1ff,#e9e4ff);
+  border:1px solid #d6cdff;
+  border-radius:12px;
+  padding:14px;
+  font-size:13.5px;
+  line-height:1.45;
+  color:var(--sh-ink);
+  text-decoration:none;
+}
+.sh-card b{font-size:15px;color:var(--sh-accent)}
+.sh-card .sh-go{font-weight:700;color:var(--sh-accent);margin-top:auto}
+
+/* --- поиск в шапке --- */
+.sh-search{flex:0 1 230px}
+.sh-search input{
+  width:100%;
+  border:1px solid var(--sh-border);
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:14px;
+  background:#f7f7fb;
+  color:var(--sh-ink);
+  outline:none;
+}
+.sh-search input:focus{border-color:var(--sh-accent);background:#fff}
+
+/* --- бургер (скрыт на десктопе) --- */
+.sh-burger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  border:1px solid var(--sh-border);
+  background:#fff;
+  border-radius:8px;
+  padding:9px 8px;
+  cursor:pointer;
+}
+.sh-burger span{width:18px;height:2px;background:var(--sh-ink);border-radius:2px;transition:.2s}
+.sh-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.sh-burger.open span:nth-child(2){opacity:0}
+.sh-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* --- мобильная панель --- */
+.sh-mobile{
+  border-top:1px solid var(--sh-border);
+  background:#fff;
+  padding:12px 16px 18px;
+}
+.sh-msearch{margin-bottom:10px}
+.sh-msearch input{
+  width:100%;
+  border:1px solid var(--sh-border);
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:15px;
+  background:#f7f7fb;
+}
+.sh-macc{border-bottom:1px solid var(--sh-border)}
+.sh-mhead{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:0;
+  background:none;
+  padding:12px 2px;
+  font-size:16px;
+  font-weight:700;
+  color:var(--sh-ink);
+  cursor:pointer;
+}
+.sh-mhead.open{color:var(--sh-accent)}
+.sh-mn{
+  font-size:12.5px;
+  font-weight:700;
+  color:#fff;
+  background:var(--sh-accent);
+  border-radius:999px;
+  padding:1px 8px;
+}
+.sh-mbody{padding:0 2px 10px;display:flex;flex-direction:column}
+.sh-mbody a{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 6px;
+  font-size:14.5px;
+  font-weight:600;
+  color:var(--sh-ink);
+  text-decoration:none;
+  border-radius:8px;
+}
+.sh-mbody a:hover{background:var(--sh-accent-soft)}
+.sh-mlink{
+  display:block;
+  padding:12px 2px;
+  font-size:16px;
+  font-weight:700;
+  color:var(--sh-ink);
+  text-decoration:none;
+  border-bottom:1px solid var(--sh-border);
+}
+.sh-mlink:last-child{border-bottom:0}
+
+/* --- хлебные крошки --- */
+.crumbs{padding-top:12px}
+.crumbs ol{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  row-gap:4px;
+  font-size:13.5px;
+}
+.crumbs li{display:flex;align-items:center}
+.cr-sep{margin:0 8px;color:#9a9cb8}
+.crumbs a{color:#61638a;text-decoration:none;font-weight:600}
+.crumbs a:hover{color:var(--sh-accent);text-decoration:underline}
+.crumbs [aria-current]{color:var(--sh-accent);font-weight:700}
+
+/* --- адаптив: до 960px шапка сжимается до логотипа, поиска-иконки и бургера --- */
+@media (max-width:960px){
+  .sh-nav{display:none}
+  .sh-search{display:none}
+  .sh-burger{display:flex}
+  .sh-in{gap:12px;justify-content:space-between}
+}
+@media (max-width:640px){
+  .sh-logo{font-size:17px}
+  .sh-logo-d{display:none}
+}
+
+/* --- служебные ссылки в футере (§4.1: непервичная навигация — в футере) --- */
+.svc-nav{
+  margin-top:14px;
+  font-size:13px;
+  color:#8a8ca8;
+}
+.svc-nav a{color:#8a8ca8;font-weight:600;text-decoration:none}
+.svc-nav a:hover{color:var(--sh-accent);text-decoration:underline}
 </style></head> <body> <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -550,7 +828,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
   gtag('config', 'G-P1BDWZ1D1Q');
 </script>
 <!-- /Google tag -->
-  <a class="skip-link" href="#main">Перейти к содержимому</a> <header class="hero"> <div class="wrap"> <a class="back-link" href="index.html">← Все разделы</a> <h1>🧠 Основы промптинга</h1> <p class="sub">Шесть универсальных приёмов, которые улучшают ответ любой нейросети — ChatGPT, Claude, Gemini, Qwen, GigaChat, YandexGPT. Начните с формулы «Роль → Контекст → Задача → Формат».</p> <div class="stats"><div class="stat">Формулы: <b>3</b></div><div class="stat">Качество ответа: <b>3</b></div><div class="stat">Всего: <b>6</b></div></div> </div> </header> <section class="controls" aria-label="Поиск и фильтры раздела"> <div class="wrap"> <div class="search-row"> <div class="search-box"> <svg fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.35-4.35"></path></svg> <input id="search" type="search" aria-label="Поиск по промптам раздела" placeholder="Поиск: роль, критик, интервью, пошагово…" autocomplete="off"> <kbd aria-hidden="true">/</kbd> </div> </div> <div class="tabs" id="tabs" hidden></div> <div class="chips-row" id="chipsRow"> <button type="button" class="chips-toggle" id="chipsToggle" aria-expanded="false" aria-controls="chips">Подразделы ▾</button> <div class="chips" id="chips"><button type="button" class="chip active" aria-pressed="true">Все подразделы</button><button type="button" class="chip" aria-pressed="false">Универсальные формулы</button><button type="button" class="chip" aria-pressed="false">Качество ответа</button></div>  </div> <div class="results-line"> <span id="results">Показаны все 6 промпта</span> <span class="mini-btns"> <button class="mini-btn" id="expandAll" type="button">⊞ Развернуть все</button> <button class="mini-btn" id="collapseAll" type="button">⊟ Свернуть все</button> </span> </div> </div> </section> <main class="wrap" id="main" tabindex="-1"> <div class="strips"><div class="info-strip"><span class="ic" aria-hidden="true">💡</span><span><b>Как пользоваться:</b> эти формулы работают в любой LLM — ChatGPT, Claude, Gemini, Qwen, GigaChat, YandexGPT, DeepSeek. Начните с «Роль → Контекст → Задача → Формат»: она закрывает 90% текстовых задач. Значок <b>Qwen&nbsp;✓</b> — проверено в Qwen Chat, <b>DeepSeek&nbsp;✓</b> — в DeepSeek.</span></div></div> <a class="page-link-banner" href="texts.html"><span class="plb-ic" aria-hidden="true">✍️</span><span><b>Промпты для текстов</b> — 21 шаблон: продающие тексты, статьи, посты для соцсетей, редактура и деловые документы.</span><span class="plb-go">Открыть →</span></a> <div class="grid" id="grid" data-prerendered="1"><div class='section-head'><h2>🧠 Универсальные формулы</h2><div class='line' aria-hidden='true'></div></div>
+ <a class="skip-link" href="#main">Перейти к содержимому</a> <header class="site-header"> <div class="wrap sh-in"> <a class="sh-logo" href="/" aria-label="Ediai — на главную">⚡ <span>Ediai<span class="sh-logo-d">.ru</span></span></a> <nav class="sh-nav" aria-label="Главное меню"> <div class="sh-item has-drop"> <a class="sh-link" href="/prompty/">Промпты</a> <button type="button" class="sh-toggle" aria-expanded="false" aria-label="Подменю «Промпты»">▾</button> <div class="sh-drop"> <div class="sh-col"> <p class="sh-col-t">Категории</p> <a class="sh-row" href="/prompty/foto/"> <span>Фото и изображения</span><span class="sh-n">54</span> </a><a class="sh-row" href="/prompty/generaciya/"> <span>Генерация картинок</span><span class="sh-n">21</span> </a><a class="sh-row" href="/prompty/teksty/"> <span>Тексты</span><span class="sh-n">21</span> </a><a class="sh-row" href="/prompty/zhizn/"> <span>Личная жизнь</span><span class="sh-n">56</span> </a><a class="sh-row" href="/prompty/rabota/"> <span>Работа</span><span class="sh-n">30</span> </a><a class="sh-row" href="/prompty/qwen/"> <span>Qwen</span><span class="sh-n">23</span> </a> </div> <div class="sh-col"> <p class="sh-col-t">Сценарии</p> <p class="sh-soon">Готовятся: «Нейрофотосессия», «Промпты по профессиям», «ИИ и почта» — сценарные подборки с примерами до/после.</p> <p class="sh-col-t">Материалы</p> <a class="sh-row" href="/guides/ii-i-pochta/"><span>Кейс: сколько часов экономит ИИ на почте</span></a> <a class="sh-row" href="/guides/s-chego-nachat/"><span>Первая неделя с ИИ</span></a> </div> <a class="sh-card" href="/prompty/"> <b>Вся база — 211 промптов</b> <span>Карта раздела: все категории, сценарии и материалы в одном месте</span> <span class="sh-go">Открыть →</span> </a> </div> </div> <div class="sh-item has-drop active"> <a class="sh-link" href="/guides/">Гайды</a> <button type="button" class="sh-toggle" aria-expanded="false" aria-label="Подменю «Гайды»">▾</button> <div class="sh-drop"> <div class="sh-col"> <a class="sh-row" href="/guides/s-chego-nachat/"><span>С чего начать</span></a><a class="sh-row" href="/guides/osnovy-promptinga/"><span>Основы промптинга</span></a><a class="sh-row" href="/guides/kakuyu-nejroset-vybrat/"><span>Какую нейросеть выбрать</span></a><a class="sh-row" href="/guides/ii-i-pochta/"><span>Кейс: ИИ и почта</span></a> </div> </div> </div> <div class="sh-item has-drop"> <a class="sh-link" href="/instrumenty/">Инструменты</a> <button type="button" class="sh-toggle" aria-expanded="false" aria-label="Подменю «Инструменты»">▾</button> <div class="sh-drop"> <div class="sh-col"> <a class="sh-row" href="/prompty/qwen/"><span>Qwen</span><span class="sh-note">промпты и подсказки совместимости</span></a><a class="sh-row" href="/guides/kakuyu-nejroset-vybrat/"><span>ChatGPT</span><span class="sh-note">страницы моделей — в разработке</span></a><a class="sh-row" href="/prompty/generaciya/"><span>Midjourney</span><span class="sh-note">промпты генерации изображений</span></a><a class="sh-row" href="/guides/kakuyu-nejroset-vybrat/"><span>GigaChat</span><span class="sh-note">сравнение моделей</span></a><a class="sh-row" href="/guides/kakuyu-nejroset-vybrat/"><span>YandexGPT</span><span class="sh-note">сравнение моделей</span></a> </div> </div> </div> <div class="sh-item"> <a class="sh-link" href="/glossary/">Глоссарий</a> </div> <div class="sh-item"> <a class="sh-link" href="/o-proekte/">О проекте</a> </div> </nav> <form class="sh-search" action="/" method="get" role="search"> <input type="search" name="q" placeholder="Поиск по 211 промптам…" aria-label="Поиск по сайту" autocomplete="off"> </form> <button type="button" class="sh-burger" aria-expanded="false" aria-controls="shMobile" aria-label="Открыть меню"> <span></span><span></span><span></span> </button> </div> <div class="sh-mobile" id="shMobile" hidden> <form class="sh-msearch" action="/" method="get" role="search"> <input type="search" name="q" placeholder="Поиск по 211 промптам…" aria-label="Поиск по сайту" autocomplete="off"> </form> <div class="sh-macc" data-macc> <button type="button" class="sh-mhead" aria-expanded="false">Промпты <span class="sh-mn">211</span></button> <div class="sh-mbody" hidden> <a href="/prompty/">Карта промптов</a> <a href="/prompty/foto/">Фото и изображения <span class="sh-mn">54</span></a><a href="/prompty/generaciya/">Генерация картинок <span class="sh-mn">21</span></a><a href="/prompty/teksty/">Тексты <span class="sh-mn">21</span></a><a href="/prompty/zhizn/">Личная жизнь <span class="sh-mn">56</span></a><a href="/prompty/rabota/">Работа <span class="sh-mn">30</span></a><a href="/prompty/qwen/">Qwen <span class="sh-mn">23</span></a> </div> </div> <div class="sh-macc" data-macc> <button type="button" class="sh-mhead" aria-expanded="false">Гайды</button> <div class="sh-mbody" hidden> <a href="/guides/">Все гайды</a> <a href="/guides/s-chego-nachat/">С чего начать</a><a href="/guides/osnovy-promptinga/">Основы промптинга</a><a href="/guides/kakuyu-nejroset-vybrat/">Какую нейросеть выбрать</a><a href="/guides/ii-i-pochta/">Кейс: ИИ и почта</a> </div> </div> <div class="sh-macc" data-macc> <button type="button" class="sh-mhead" aria-expanded="false">Инструменты</button> <div class="sh-mbody" hidden> <a href="/instrumenty/">Обзор моделей</a> <a href="/prompty/qwen/">Qwen</a> <a href="/guides/kakuyu-nejroset-vybrat/">Какую нейросеть выбрать</a> </div> </div> <a class="sh-mlink" href="/glossary/">Глоссарий</a> <a class="sh-mlink" href="/o-proekte/">О проекте</a> </div> </header> <nav class="crumbs wrap" aria-label="Хлебные крошки"> <ol> <li>  <a href="/">Главная</a> </li><li> <span class="cr-sep" aria-hidden="true">→</span> <a href="/guides/">Гайды</a> </li><li> <span class="cr-sep" aria-hidden="true">→</span> <span aria-current="page">Основы промптинга</span> </li> </ol> </nav>  <header class="hero"> <div class="wrap"> <a class="back-link" href="/guides/">← Все гайды</a> <h1>🧠 Основы промптинга</h1> <p class="sub">Шесть универсальных приёмов, которые улучшают ответ любой нейросети — ChatGPT, Claude, Gemini, Qwen, GigaChat, YandexGPT. Начните с формулы «Роль → Контекст → Задача → Формат».</p> <div class="stats"><div class="stat">Формулы: <b>3</b></div><div class="stat">Качество ответа: <b>3</b></div><div class="stat">Всего: <b>6</b></div></div> </div> </header> <section class="controls" aria-label="Поиск и фильтры раздела"> <div class="wrap"> <div class="search-row"> <div class="search-box"> <svg fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.35-4.35"></path></svg> <input id="search" type="search" aria-label="Поиск по промптам раздела" placeholder="Поиск: роль, критик, интервью, пошагово…" autocomplete="off"> <kbd aria-hidden="true">/</kbd> </div> </div> <div class="tabs" id="tabs" hidden></div> <div class="chips-row" id="chipsRow"> <button type="button" class="chips-toggle" id="chipsToggle" aria-expanded="false" aria-controls="chips">Подразделы ▾</button> <div class="chips" id="chips"><button type="button" class="chip active" aria-pressed="true">Все подразделы</button><button type="button" class="chip" aria-pressed="false">Универсальные формулы</button><button type="button" class="chip" aria-pressed="false">Качество ответа</button></div>  </div> <div class="results-line"> <span id="results">Показаны все 6 промпта</span> <span class="mini-btns"> <button class="mini-btn" id="expandAll" type="button">⊞ Развернуть все</button> <button class="mini-btn" id="collapseAll" type="button">⊟ Свернуть все</button> </span> </div> </div> </section> <main class="wrap" id="main" tabindex="-1"> <div class="strips"><div class="info-strip"><span class="ic" aria-hidden="true">💡</span><span><b>Как пользоваться:</b> эти формулы работают в любой LLM — ChatGPT, Claude, Gemini, Qwen, GigaChat, YandexGPT, DeepSeek. Начните с «Роль → Контекст → Задача → Формат»: она закрывает 90% текстовых задач. Значок <b>Qwen&nbsp;✓</b> — проверено в Qwen Chat, <b>DeepSeek&nbsp;✓</b> — в DeepSeek.</span></div></div> <a class="page-link-banner" href="/prompty/teksty/"><span class="plb-ic" aria-hidden="true">✍️</span><span><b>Промпты для текстов</b> — 21 шаблон: продающие тексты, статьи, посты для соцсетей, редактура и деловые документы.</span><span class="plb-go">Открыть →</span></a> <div class="grid" id="grid" data-prerendered="1"><div class='section-head'><h2>🧠 Универсальные формулы</h2><div class='line' aria-hidden='true'></div></div>
 <article class='card' id='p120' data-id='p120'><div class='card-head' role='button' tabindex='0' aria-expanded='false' aria-controls='body-p120'><div class='head-main'><div class='card-top'><h3>Формула Роль → Контекст → Задача → Формат</h3><div class='badges'><span class='badge any'>любая LLM</span><span class='qpill full' title='Работает в Qwen Chat без изменений'>Qwen ✓</span><span class='dspill full' title='Работает в DeepSeek: V3 (deepseek-chat) для текстов и креатива, R1 (deepseek-reasoner / DeepThink) для анализа, логики и кода'>DeepSeek ✓</span></div></div><p class='desc'>Каркас, который превращает любой расплывчатый запрос в точный. Подходит для 90% текстовых задач.</p></div><span class='chev'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg></span></div><div class='card-body' id='body-p120'><div class='prompt-wrap'><pre class='prompt'>Действуй как <span class="ph">[роль: маркетолог с 10-летним опытом / юрист / преподаватель физики]</span>.
 
 Контекст: <span class="ph">[ситуация, аудитория, ограничения, что уже известно]</span>.
@@ -596,7 +874,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 - минусы и риски;
 - в каком случае он подходит лучше всего.
 
-Затем порекомендуй лучший для моей ситуации: <span class="ph">[описать ситуацию и ограничения]</span> — и объясни выбор.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#варианты</span><span class='tag'>#сравнение</span><span class='tag'>#выбор</span><span class='tag'>#стратегия</span></div></div></article></div> <div class="empty" id="empty"> <div class="big" aria-hidden="true">🔍</div> <p>Ничего не найдено. Попробуйте другой запрос.</p> </div> </main> <footer> <div class="wrap"> <div class="sections-nav"><a href="index.html">🏠 Главная</a><a href="photo.html">📸 Переделка фото</a><a href="generate.html">🎨 Генерация изображений</a><a href="texts.html">✍️ Тексты</a><a href="life.html">🏡 Личная жизнь</a><a href="work.html">💼 Работа</a><a href="qwen.html">🤖 Qwen</a><a href="basics.html" aria-current="page">🧠 Основы</a></div> <div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · <a href="education/studying-AI.html">Путь в ИИ</a> · <a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a> · <a href="keis-ii-pochta.html">Статьи и кейсы</a></div> <details class="sources"><summary><h2>📖 Об основах</h2><span class="src-hint">показать список</span></summary><div class="sources-in"><p class="note">Формулы основаны на общепризнанных практиках промпт-инжиниринга: role prompting, chain-of-thought, CO-STAR и официальный шестиблочный фреймворк Alibaba (<code>#Context# → #Response#</code>). Полный список источников — на <a href="index.html">главной странице</a>.</p></div></details> <b>🧠 Основы промптинга</b> — раздел <a href="index.html">базы промптов для ИИ</a>.<br>Главный принцип: конкретная роль + контекст + формат ответа дают нейросети больше, чем вежливые общие слова. </div> </footer> <div id="toast" role="status" aria-live="polite"></div> <button id="toTop" title="Наверх" aria-label="Наверх">↑</button> <noscript><style>
+Затем порекомендуй лучший для моей ситуации: <span class="ph">[описать ситуацию и ограничения]</span> — и объясни выбор.</pre><button class='copy-btn' type='button'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/><path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>Копировать</button></div><div class='tags'><span class='tag'>#варианты</span><span class='tag'>#сравнение</span><span class='tag'>#выбор</span><span class='tag'>#стратегия</span></div></div></article></div> <div class="empty" id="empty"> <div class="big" aria-hidden="true">🔍</div> <p>Ничего не найдено. Попробуйте другой запрос.</p> </div> </main> <footer> <div class="wrap"> <div class="sections-nav"><a href="/">🏠 Главная</a><a href="/prompty/foto/">📸 Переделка фото</a><a href="/prompty/generaciya/">🎨 Генерация изображений</a><a href="/prompty/teksty/">✍️ Тексты</a><a href="/prompty/zhizn/">🏡 Личная жизнь</a><a href="/prompty/rabota/">💼 Работа</a><a href="/prompty/qwen/">🤖 Qwen</a><a href="/guides/osnovy-promptinga/" aria-current="page">🧠 Основы</a></div> <div class="know-nav"><b>📚 База знаний:</b> <a href="/guides/s-chego-nachat/">С чего начать</a> · <a href="/education/studying-AI.html">Путь в ИИ</a> · <a href="/guides/kakuyu-nejroset-vybrat/">Какая нейросеть для чего</a> · <a href="/glossary/">Глоссарий</a> · <a href="/guides/ii-i-pochta/">Статьи и кейсы</a></div> <details class="sources"><summary><h2>📖 Об основах</h2><span class="src-hint">показать список</span></summary><div class="sources-in"><p class="note">Формулы основаны на общепризнанных практиках промпт-инжиниринга: role prompting, chain-of-thought, CO-STAR и официальный шестиблочный фреймворк Alibaba (<code>#Context# → #Response#</code>). Полный список источников — на <a href="/">главной странице</a>.</p></div></details> <b>🧠 Основы промптинга</b> — раздел <a href="/">базы промптов для ИИ</a>.<br>Главный принцип: конкретная роль + контекст + формат ответа дают нейросети больше, чем вежливые общие слова. <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a></div> </div> </footer> <div id="toast" role="status" aria-live="polite"></div> <button id="toTop" title="Наверх" aria-label="Наверх">↑</button> <noscript><style>
 .controls{display:none!important}
 .card-body{display:flex!important}
 .chev,.copy-btn,#toTop{display:none!important}
@@ -950,4 +1228,58 @@ if(/^#p\d+$/.test(location.hash)){
 <script src="https://yandex.ru/ads/system/context.js" async></script>
 <script data-page-id="20335162" src="https://yandex.ru/ads/system/ap-loader.js" async></script>
 <!-- /Yandex Autoplacement -->
- </body></html>
+ <script>
+(function(){
+"use strict";
+/* Шапка: дропдауны по клику (тач/клавиатура), наведение — через CSS; мобильный аккордеон. */
+var burger = document.querySelector('.sh-burger');
+var panel  = document.getElementById('shMobile');
+if (burger && panel) {
+  burger.addEventListener('click', function(){
+    var open = panel.hidden;
+    panel.hidden = !open;
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.classList.toggle('open', open);
+  });
+}
+document.querySelectorAll('.sh-item.has-drop').forEach(function(item){
+  var btn = item.querySelector('.sh-toggle');
+  if (!btn) return;
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = item.classList.toggle('drop-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.querySelectorAll('.sh-item.drop-open').forEach(function(o){
+      if (o !== item) { o.classList.remove('drop-open');
+        var b = o.querySelector('.sh-toggle'); if (b) b.setAttribute('aria-expanded','false'); }
+    });
+  });
+});
+document.addEventListener('click', function(e){
+  if (!e.target.closest('.sh-item.has-drop')) {
+    document.querySelectorAll('.sh-item.drop-open').forEach(function(o){
+      o.classList.remove('drop-open');
+      var b = o.querySelector('.sh-toggle'); if (b) b.setAttribute('aria-expanded','false');
+    });
+  }
+});
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.sh-item.drop-open').forEach(function(o){
+      o.classList.remove('drop-open');
+      var b = o.querySelector('.sh-toggle'); if (b) b.setAttribute('aria-expanded','false');
+    });
+    if (burger && !panel.hidden) burger.click();
+  }
+});
+document.querySelectorAll('[data-macc] .sh-mhead').forEach(function(head){
+  head.addEventListener('click', function(){
+    var body = head.nextElementSibling;
+    var open = body.hidden;
+    body.hidden = !open;
+    head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    head.classList.toggle('open', open);
+  });
+});
+})();
+</script> </body> </html>

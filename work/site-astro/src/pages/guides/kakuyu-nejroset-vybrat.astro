@@ -1,13 +1,20 @@
 ---
-/** Порт know_models() + build_models() из build.py: «Какая нейросеть для чего». */
-import KnowPage from '../templates/KnowPage.astro';
-import { D, SITE_URL, WEBSITE_LD, UPDATED } from '../lib/site.js';
-import { ld } from '../lib/gen.js';
+/** Гайд «Какая нейросеть для чего» (порт know_models() + build_models() из build.py).
+ *  Фаза 2: адрес /guides/kakuyu-nejroset-vybrat/, крошки + BreadcrumbList, абсолютные ссылки. */
+import KnowPage from '../../templates/KnowPage.astro';
+import { D, SITE_URL, WEBSITE_LD, UPDATED, breadcrumbLd, crumbs } from '../../lib/site.js';
+import { ld } from '../../lib/gen.js';
 
-const path = 'models.html';
+const path = '/guides/kakuyu-nejroset-vybrat/';
+const crumb = crumbs([
+  { name: 'Главная', href: '/' },
+  { name: 'Гайды', href: '/guides/' },
+  { name: 'Какую нейросеть выбрать' },
+]);
 const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
   WEBSITE_LD,
-  { '@type': 'WebPage', '@id': SITE_URL + '/' + path, url: SITE_URL + '/' + path,
+  breadcrumbLd(crumb),
+  { '@type': 'WebPage', '@id': SITE_URL + path, url: SITE_URL + path,
     name: 'Какая нейросеть для чего: сравнение задач и моделей', description: D.MODELS_DESC,
     inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
   { '@type': 'FAQPage', mainEntity: D.MODELS_FAQ.map(([q, a]) => ({ '@type': 'Question',
@@ -15,7 +22,7 @@ const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
 ] };
 ---
 
-<KnowPage path={path} title={D.MODELS_TITLE} desc={D.MODELS_DESC} ogimg="og/og-models.png" ldGraph={ld(ldGraphObj)} navcur={path}>
+<KnowPage path={path} title={D.MODELS_TITLE} desc={D.MODELS_DESC} ogimg="og/og-models.png" ldGraph={ld(ldGraphObj)} navcur={path} crumb={crumb}>
   <section class="hero">
     <h1>Какая нейросеть для чего: сравнение задач и моделей</h1>
     <p class="hub-sub">Тексты, фотографии, изображения с нуля, код, анализ и строгий JSON — с бесплатными вариантами и заменами. Тарифы меняются: сверяйте даты обновлений.</p>
@@ -37,6 +44,6 @@ const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
         <details><summary>{q}</summary><p set:html={a} /></details>
       ))}
     </div>
-    <p class="p-go"><a href="glossary.html">Глоссарий терминов →</a> · <a href="start.html">С чего начать →</a></p>
+    <p class="p-go"><a href="/glossary/">Глоссарий терминов →</a> · <a href="/guides/s-chego-nachat/">С чего начать →</a> · <a href="/instrumenty/">Обзор моделей →</a></p>
   </div>
 </KnowPage>

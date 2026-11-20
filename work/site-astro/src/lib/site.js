@@ -37,6 +37,51 @@ export const WEBSITE_LD = {
   description: SITE_DESC, inLanguage: 'ru',
 };
 
+// ---------------------------------------------------------------- меню и хлебные крошки
+// Порядок разделов из данных (D.SECTION_ORDER) — экспорт для шаблонов и меню.
+export const SECTION_ORDER = D.SECTION_ORDER;
+
+// Шапка из 5 пунктов (стратегия §4.1). Дропдауны — у трёх разделов с подразделами.
+// Короткие названия разделов совпадают с llms.txt и названиями крошек (§4.3).
+export const SECTION_PATHS = {
+  photo: '/prompty/foto/', life: '/prompty/zhizn/', work: '/prompty/rabota/',
+  texts: '/prompty/teksty/', generate: '/prompty/generaciya/', qwen: '/prompty/qwen/',
+};
+
+export const SECTION_LABELS = {
+  photo: 'Фото и изображения', life: 'Личная жизнь', work: 'Работа',
+  texts: 'Тексты', generate: 'Генерация картинок', qwen: 'Qwen',
+  basics: 'Основы промптинга',   // раздел-гайд: адрес /guides/osnovy-promptinga/ (§3.3)
+};
+
+// Гайды (перенос по блоку «Перенос существующих страниц» §3.3)
+export const GUIDES = [
+  { slug: 's-chego-nachat', path: '/guides/s-chego-nachat/', src: 'start',
+    title: D.START_TITLE, desc: D.START_DESC, label: 'С чего начать' },
+  { slug: 'osnovy-promptinga', path: '/guides/osnovy-promptinga/', src: 'basics',
+    label: 'Основы промптинга' },
+  { slug: 'kakuyu-nejroset-vybrat', path: '/guides/kakuyu-nejroset-vybrat/', src: 'models',
+    title: D.MODELS_TITLE, desc: D.MODELS_DESC, label: 'Какую нейросеть выбрать' },
+  { slug: 'ii-i-pochta', path: '/guides/ii-i-pochta/', src: 'keis',
+    title: D.KEIS_TITLE, desc: D.KEIS_DESC, label: 'Кейс: ИИ и почта' },
+];
+
+// Хлебные крошки: массив {name, href?} — последний элемент (текущая страница) без ссылки.
+// Отдаётся и в разметку, и в BreadcrumbList JSON-LD (§4.3).
+export function crumbs(items) {
+  return items;
+}
+
+export function breadcrumbLd(items) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((c, i) => ({
+      '@type': 'ListItem', position: i + 1, name: c.name,
+      ...(c.href ? { item: SITE_URL + c.href } : {}),
+    })),
+  };
+}
+
 // Яндекс.Метрика — сниппет из build.py, вставляется сразу после <body>
 export const METRIKA = `<!-- Yandex.Metrika counter -->
 <script type="text/javascript">

@@ -1,0 +1,30 @@
+# Ediai.ru
+
+> Практическая база из 211 промптов для нейросетей на русском языке.
+> Промпты проверены вручную, разбиты на 6 категорий и снабжены инструкциями по применению.
+
+## Разделы
+
+- [Промпты](https://ediai.ru/prompty/): карта всех категорий
+- [Фото и изображения](https://ediai.ru/prompty/foto/): 54 промпта
+- [Личная жизнь](https://ediai.ru/prompty/zhizn/): 56 промптов
+- [Работа](https://ediai.ru/prompty/rabota/): 30 промптов
+- [Тексты](https://ediai.ru/prompty/teksty/): 21 промпт
+- [Генерация картинок](https://ediai.ru/prompty/generaciya/): 21 промпт
+- [Qwen](https://ediai.ru/prompty/qwen/): 23 промпта
+
+## Материалы
+
+- [Гайды](https://ediai.ru/guides/): основы промптинга, выбор модели
+- [С чего начать](https://ediai.ru/guides/s-chego-nachat/): путеводитель новичка, 7 шагов
+- [Основы промптинга](https://ediai.ru/guides/osnovy-promptinga/): формула промпта и итерации
+- [Какую нейросеть выбрать](https://ediai.ru/guides/kakuyu-nejroset-vybrat/): сравнение задач и моделей
+- [Кейс: ИИ и почта](https://ediai.ru/guides/ii-i-pochta/): сколько часов экономит ИИ, с цифрами
+- [Инструменты](https://ediai.ru/instrumenty/): обзор моделей
+- [Глоссарий](https://ediai.ru/glossary/): термины ИИ простыми словами
+- [Путь в ИИ](https://ediai.ru/education/studying-AI.html): план обучения с нуля
+
+## О проекте
+
+- [О проекте](https://ediai.ru/o-proekte/): автор и методика проверки
+- [Политика конфиденциальности](https://ediai.ru/politika-konfidencialnosti/): аналитика и cookies

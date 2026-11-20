@@ -24,7 +24,7 @@ const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
     description: SITE_DESC, inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
   { '@type': 'ItemList', name: 'Разделы базы промптов', numberOfItems: D.SECTION_ORDER.length,
     itemListElement: D.SECTION_ORDER.map((k, i) => ({ '@type': 'ListItem', position: i + 1,
-      name: D.SECTIONS[k].plain, url: SITE_URL + '/' + D.SECTIONS[k].file })) },
+      name: D.SECTIONS[k].plain, url: SITE_URL + D.SECTIONS[k].file })) },
   { '@type': 'FAQPage', mainEntity: D.FAQ.map(([q, a]) => ({ '@type': 'Question', name: q,
     acceptedAnswer: { '@type': 'Answer', text: a } })) },
 ] };
@@ -43,11 +43,9 @@ const sourcesGrid = ('<details class="sources"><summary><h2>📖 Источни�
   + '</div></div></details>');
 ---
 
-<Base title={idxTitle} desc={SITE_DESC} path="index.html" ogImg="og/og-index.png" ldGraph={ld(ldGraphObj)}>
-  <a class="skip-link" href="#main">Перейти к содержимому</a>
+<Base title={idxTitle} desc={SITE_DESC} path="/" ogImg="og/og-index.png" ldGraph={ld(ldGraphObj)}>
   <header class="hero">
     <div class="wrap">
-      <span class="logo">⚡ EDIAI.RU · практический ИИ</span>
       <h1>ИИ в личной жизни и работе: {TOTAL} {plural(TOTAL, 'готовый промпт', 'готовых промпта', 'готовых промптов')}, гиды и сравнения</h1>
       <p class="sub">Готовые промпты, путеводитель для новичков, честные сравнения нейросетей и статьи-кейсы с цифрами: переделка фото, генерация изображений, тексты, ИИ в личной жизни и на работе, Qwen и основы промптинга. Скопируйте сценарий, подставьте свои данные вместо <span style="color:var(--ph);font-weight:600">[скобок]</span> — и получите результат за минуты.</p>
       <div class="stats">
@@ -94,7 +92,7 @@ const sourcesGrid = ('<details class="sources"><summary><h2>📖 Источни�
       ))}
     </div>
     <div class="strips"><div class="info-strip"><span class="ic" aria-hidden="true">🛡️</span>
-      <span><b>Этика:</b> переделывайте свои фото или те, на которые получено явное согласие человека; не создавайте дипфейки реальных людей — во многих странах это незаконно; маркируйте изображения, созданные или изменённые ИИ, в рекламе и СМИ. Памятка — в подразделе «Справочник» раздела <a href="photo.html" style="color:#4b3ecf">«Переделка фото»</a>.</span></div></div>
+      <span><b>Этика:</b> переделывайте свои фото или те, на которые получено явное согласие человека; не создавайте дипфейки реальных людей — во многих странах это незаконно; маркируйте изображения, созданные или изменённые ИИ, в рекламе и СМИ. Памятка — в подразделе «Справочник» раздела <a href="/prompty/foto/" style="color:#4b3ecf">«Переделка фото»</a>.</span></div></div>
     <h2 class="hub-h">🧭 С чего начать</h2>
     <div class="pop-grid start-grid">
       {D.START_STEPS.map(([day, t, txt, pg, q]) => (
@@ -102,10 +100,10 @@ const sourcesGrid = ('<details class="sources"><summary><h2>📖 Источни�
           <span class="p-cat">{day}</span><h3>{t}</h3><p set:html={txt} /><span class="p-go">Открыть промпт →</span>
         </a>
       ))}
-      <a class="pop sc sc-all" href="start.html"><span class="p-cat">Путеводитель</span><h3>Первая неделя с ИИ</h3>
+      <a class="pop sc sc-all" href="/guides/s-chego-nachat/"><span class="p-cat">Путеводитель</span><h3>Первая неделя с ИИ</h3>
         <p>Семь шагов-сценариев: от формулы промпта до привычки спрашивать. Проверки и типовые ошибки новичков.</p>
         <span class="p-go">Открыть путеводитель →</span></a>
-      <a class="pop sc sc-all" href="education/studying-AI.html"><span class="p-cat">Обучение с нуля</span><h3>Путь в ИИ: с чайника до инженера</h3>
+      <a class="pop sc sc-all" href="/education/studying-AI.html"><span class="p-cat">Обучение с нуля</span><h3>Путь в ИИ: с чайника до инженера</h3>
         <p>План обучения по уровням: темы, аналогии, примеры и мини-тест. Отмечайте пройденное — прогресс сохранится в браузере.</p>
         <span class="p-go">Открыть план обучения →</span></a>
     </div>
@@ -118,8 +116,8 @@ const sourcesGrid = ('<details class="sources"><summary><h2>📖 Источни�
         ))}
       </table>
     </div>
-    <p class="mini-more"><a href="models.html">Полное сравнение: бесплатные тарифы, русский язык, замены →</a> ·
-      <a href="glossary.html">Глоссарий терминов →</a></p>
+    <p class="mini-more"><a href="/guides/kakuyu-nejroset-vybrat/">Полное сравнение: бесплатные тарифы, русский язык, замены →</a> ·
+      <a href="/glossary/">Глоссарий терминов →</a> · <a href="/prompty/">Карта промптов →</a></p>
     <h2 class="hub-h">📈 Статьи и кейсы</h2>
     <div class="pop-grid">
       <a class="pop case" href={D.KEIS_FILE}><span class="p-cat">Кейс · ИИ на работе</span>
@@ -147,13 +145,26 @@ const sourcesGrid = ('<details class="sources"><summary><h2>📖 Источни�
   </main>
   <footer>
     <div class="wrap">
-      <Fragment set:html={navHtml('index.html', true, D.NAV)} />
+      <Fragment set:html={navHtml('/', true, D.NAV)} />
       <Fragment set:html={D.KNOW_NAV} />
       <Fragment set:html={sourcesGrid} />
       <b>⚡ Ediai — ИИ в личной жизни и работе</b> · {TOTAL} проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.<br>
       Шаблоны основаны на общепризнанных практиках промпт-инжиниринга и официальных гайдах; лучшие результаты даёт итерация: сгенерировали → уточнили → повторили.
+      <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a></div>
     </div>
   </footer>
   <script is:inline set:html={hubDataJs} />
   <script is:inline set:html={HUBJS} />
+  <script is:inline>
+  /* поиск из шапки (формы action="/") подставляет ?q= в глобальный поиск хаба */
+  (function(){
+    var q = new URLSearchParams(location.search).get('q');
+    var input = document.getElementById('hubQ');
+    if (q && input) {
+      input.value = q;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.focus();
+    }
+  })();
+  </script>
 </Base>

@@ -12,7 +12,7 @@ work/site-src/ остаётся ЕДИНЫМ источником данных �
 
 Запуск:  python3 scripts/dump_data.py   (выполняется автоматически перед build)
 """
-import json, os, shutil, sys
+import json, os, re, shutil, sys
 
 HERE   = os.path.dirname(os.path.abspath(__file__))
 ASTRO  = os.path.normpath(os.path.join(HERE, '..'))
@@ -29,6 +29,39 @@ for f in FILES:
 # build.py при импорте читает свои файлы; main() под __main__ не вызывается.
 sys.path.insert(0, SRC)
 import build  # noqa: E402
+
+# ---------------------------------------------------------------- URL-конвенция (фаза 2)
+# Карта переноса адресов (strategy §3.3, блок «Перенос существующих страниц»).
+# Трансформация применяется ко ВСЕМ строкам выгрузки: ссылки внутри KNOW_NAV,
+# strips, banner, foot, sources, POPULAR, KEIS_* конвертируются автоматически.
+URL_MAP = {
+    'index.html':          '/',
+    'photo.html':          '/prompty/foto/',
+    'life.html':           '/prompty/zhizn/',
+    'work.html':           '/prompty/rabota/',
+    'texts.html':          '/prompty/teksty/',
+    'generate.html':       '/prompty/generaciya/',
+    'qwen.html':           '/prompty/qwen/',
+    'basics.html':         '/guides/osnovy-promptinga/',
+    'start.html':          '/guides/s-chego-nachat/',
+    'models.html':         '/guides/kakuyu-nejroset-vybrat/',
+    'keis-ii-pochta.html': '/guides/ii-i-pochta/',
+    'glossary.html':       '/glossary/',
+    'education/studying-AI.html': '/education/studying-AI.html',
+}
+URL_RE = re.compile(
+    r'(?<![\w-])(' + '|'.join(re.escape(k) for k in URL_MAP) + r')'
+)
+
+def transform(obj):
+    """Рекурсивно заменяет старые имена файлов на новые абсолютные адреса."""
+    if isinstance(obj, str):
+        return URL_RE.sub(lambda m: URL_MAP[m.group(1)], obj)
+    if isinstance(obj, dict):
+        return {k: transform(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [transform(v) for v in obj]
+    return obj
 
 dump = {
     # служебные константы и счётчики
@@ -78,7 +111,10 @@ dump = {
     # страницы-разделы (вся конфигурация: заголовки, strips, cats, og, banner, foot…)
     'SECTIONS':   build.SECTIONS,
 }
+dump = transform(dump)
 with open(os.path.join(VENDOR, 'sections.json'), 'w', encoding='utf-8') as f:
     json.dump(dump, f, ensure_ascii=False, indent=1)
+n = len(re.findall(r'[\w-]+\.html', json.dumps(dump, ensure_ascii=False)))
 print('  vendor/sections.json  (' + str(len(json.dumps(dump)) // 1024) + ' КБ)')
-print('OK: вендорные файлы синхронизированы.')
+print('  ссылок со старыми именами файлов осталось: ' + str(n) + ' (должно быть 0, кроме education)')
+print('OK: вендорные файлы синхронизированы, адреса переведены на URL-конвенцию §3.3.')

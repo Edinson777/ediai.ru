@@ -1,0 +1,79 @@
+---
+/** Хаб инструментов /instrumenty/ (стратегия §5.2: обзор моделей, мостик к категориям).
+ *  Страницы моделей /instrumenty/{slug}/ — фаза 4; пока карточки ведут в существующие
+ *  разделы и гайды. Фаза 2, крошки + BreadcrumbList. */
+import Base from '../../layouts/Base.astro';
+import { D, SITE_URL, TOTAL, UPDATED, WEBSITE_LD, breadcrumbLd, crumbs, SECTION_PATHS, SECTION_LABELS } from '../../lib/site.js';
+import { ld } from '../../lib/gen.js';
+
+const path = '/instrumenty/';
+const crumb = crumbs([
+  { name: 'Главная', href: '/' },
+  { name: 'Инструменты' },
+]);
+const models = [
+  { name: 'Qwen', desc: 'Универсальное семейство Alibaba: чат, генерация и редактирование изображений (Qwen-Image), код (Qwen-Coder). Щедрый бесплатный доступ и понимание русского языка.',
+    links: [['Промпты для Qwen', SECTION_PATHS.qwen], ['Основы промптинга', '/guides/osnovy-promptinga/']] },
+  { name: 'ChatGPT', desc: 'Тексты, анализ документов, рассуждения и поиск. Лидер по числу рабочих сценариев: 40–42% запросов — письма и документы. Бесплатный тариф закрывает большинство задач базы.',
+    links: [['Промпты для работы', SECTION_PATHS.work], ['Какую нейросеть выбрать', '/guides/kakuyu-nejroset-vybrat/']] },
+  { name: 'Midjourney', desc: 'Эталон качества генерации изображений. Платный; параметры --ar, --style raw и --no в промптах базы специфичны для Midjourney.',
+    links: [['Генерация изображений', SECTION_PATHS.generate], ['Промпты для Midjourney', SECTION_PATHS.photo]] },
+  { name: 'GigaChat', desc: 'Модель Сбера: сильный русский язык, работа с документами, интеграции для бизнеса. Бесплатный тариф с лимитами.',
+    links: [['Тексты и письма', SECTION_PATHS.texts], ['Сравнение моделей', '/guides/kakuyu-nejroset-vybrat/']] },
+  { name: 'YandexGPT', desc: 'Модель Яндекса: встроена в Алису и Нейро, хороша в русских текстах и бытовых сценариях. Бесплатный доступ через Алису и веб-версию.',
+    links: [['ИИ в личной жизни', SECTION_PATHS.life], ['Сравнение моделей', '/guides/kakuyu-nejroset-vybrat/']] },
+];
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  breadcrumbLd(crumb),
+  { '@type': 'CollectionPage', '@id': SITE_URL + path, url: SITE_URL + path,
+    name: 'Инструменты: обзор нейросетей для задач базы промптов',
+    description: 'Какие модели чем хороши: Qwen, ChatGPT, Midjourney, GigaChat, YandexGPT — возможности, русский язык, бесплатные тарифы и подходящие разделы промптов.',
+    inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
+] };
+---
+
+<Base title={'Инструменты: какая нейросеть для какой задачи | Ediai'}
+      desc={'Обзор моделей для промптов базы: Qwen, ChatGPT, Midjourney, GigaChat, YandexGPT — возможности, русский язык, бесплатные тарифы и подходящие категории промптов.'}
+      path={path} ogImg="og/og-models.png" ldGraph={ld(ldGraphObj)} crumb={crumb}>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="hero">
+    <div class="wrap">
+      <h1>Инструменты: какая нейросеть для какой задачи</h1>
+      <p class="hub-sub">Коротко о моделях, под которые написаны промпты базы: чем каждая хороша, где бесплатный доступ и в какие разделы идти за готовыми сценариями. Полное сравнение — в <a href="/guides/kakuyu-nejroset-vybrat/" style="color:#4b3ecf">гайде «Какую нейросеть выбрать»</a>.</p>
+      <p class="hub-meta">Обновлено {UPDATED} · Страницы моделей — в разработке</p>
+    </div>
+  </header>
+  <main class="wrap" id="main" tabindex="-1">
+    <h2 class="hub-h">🧰 Модели</h2>
+    <div class="pop-grid">
+      {models.map(m => (
+        <div class="pop">
+          <span class="p-cat">Модель</span>
+          <h3>{m.name}</h3>
+          <p>{m.desc}</p>
+          {m.links.map(([label, href]) => (
+            <a class="p-go" href={href}>{label} →</a>
+          ))}
+        </div>
+      ))}
+    </div>
+    <h2 class="hub-h">🎯 Как выбирать под задачу</h2>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица с горизонтальной прокруткой">
+      <table class="cmp">
+        <tr><th>Задача</th><th>Чем решать</th><th>Бесплатный вариант</th></tr>
+        {D.MODELS_MINI.map(([task, models2, free]) => (
+          <tr><td set:html={task} /><td set:html={models2} /><td set:html={free} /></tr>
+        ))}
+      </table>
+    </div>
+    <p class="mini-more"><a href="/guides/kakuyu-nejroset-vybrat/">Полное сравнение моделей →</a> · <a href="/glossary/">Глоссарий терминов →</a> · <a href="/prompty/">Все {TOTAL} промптов →</a></p>
+  </main>
+  <footer>
+    <div class="wrap">
+      <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей, глоссарий и статьи-кейсы с цифрами.<br>
+      Тарифы и возможности нейросетей меняются — сверяйте дату обновления; важные решения проверяйте по первоисточникам.
+    </div>
+      <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a></div>
+  </footer>
+</Base>

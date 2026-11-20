@@ -1,28 +1,31 @@
-# Astro-сборка ediai.ru (фаза 1: старые адреса)
+# Astro-сборка ediai.ru (фаза 2: URL-конвенция §3.3)
 
-Генератор сайта на Astro 5. Полностью повторяет вывод `work/site-src/build.py`
-(проверяется автоматической верификацией), адреса страниц прежние (`photo.html`, …).
-План переезда: [`work/plan-astro.md`](../plan-astro.md).
+Генератор сайта на Astro 5. Повторяет контент `work/site-src/build.py` (проверяется
+автоматической верификацией), адреса — целевые из стратегии: `/prompty/foto/`,
+`/guides/s-chego-nachat/`, `/glossary/`, `/o-proekte/` и т. д. План переезда:
+[`work/plan-astro.md`](../plan-astro.md).
 
 ## Единый источник данных
 
 Данные и стили живут в `work/site-src/` (`data.json`, `sources.json`, `config.json`,
 `style.css`, `app.js`, `hub.js`). Перед каждой сборкой скрипт синхронизации копирует
-их в `src/vendor/` (не коммитится) и выгружает константы `build.py` в
-`src/vendor/sections.json` — импортом из `build.py`, без ручной транскрипции.
+их в `src/vendor/` (не коммитится), выгружает константы `build.py` в
+`src/vendor/sections.json` (импортом из `build.py`, без ручной транскрипции) и
+транслирует старые адреса в новые по карте URL-конвенции (KNOW_NAV, баннеры,
+источники, POPULAR, KEIS_* конвертируются автоматически).
 
 ## Команды
 
 ```bash
 cd work/site-astro
 npm install          # один раз
-npm run build        # vendor-синхронизация + сборка в dist/
-npm run publish      # копировать dist/*.html в корень репозитория (сайт готов к деплою)
-npm run verify       # сравнить dist с текущими файлами корня (title/JSON-LD/карточки/текст)
+npm run build        # vendor-синхронизация + astro build + sitemap/llms.txt
+npm run publish      # dist → корень репозитория; старые .html удаляются
+npm run verify       # сравнить dist со старыми страницами (нормализация URL)
 npm run dev          # локальный дев-сервер с горячей перезагрузкой
 ```
 
-После `npm run publish` имеет смысл прогнать смоук-тесты:
+После `npm run publish` прогнать смоук-тесты:
 
 ```bash
 cd ../site-src/tmp && npm install && node smoke.js
@@ -30,21 +33,32 @@ cd ../site-src/tmp && npm install && node smoke.js
 
 ## Структура
 
-- `src/layouts/Base.astro` — head (SEO/OG/JSON-LD), Метрика, GA4, РСЯ, инлайн CSS;
-- `src/templates/SectionPage.astro` — страница-раздел промптов (7 шт., роут `[slug].astro`);
-- `src/templates/KnowPage.astro` — каркас «Базы знаний» (start/models/glossary/keis);
-- `src/pages/index.astro` — главная-хаб с глобальным поиском (SIDX/SECTMETA + hub.js);
-- `src/pages/404.astro` — 404 (noindex);
-- `src/lib/gen.js` — порт генерирующих функций build.py (карточки, чипы, фильтры ftags);
-- `src/lib/site.js` — константы, счётчики, JSON-LD WebSite, сниппеты Метрики/GA/РСЯ;
-- `scripts/dump_data.py` — синхронизация vendor-файлов из work/site-src;
-- `scripts/publish.mjs` — публикация dist → корень репо, с ЗАПРЕТНЫМ СПИСКОМ
-  (`z/`, `maxbot/`, `pwa/`, `og/`, `education/`, `work/` и служебные файлы не трогаются);
-- `scripts/verify.py` — нормализованное сравнение с текущими страницами.
+- `src/layouts/Base.astro` — head (SEO/OG/JSON-LD), шапка из 5 пунктов с дропдаунами
+  (§4.1), поиск (GET `/` → `?q=` автоподставляется в поиск хаба), бургер + мобильный
+  аккордеон (§4.2), хлебные крошки (§4.3), Метрика/GA4/РСЯ, инлайн CSS;
+- `src/styles/chrome.css` — стили шапки/крошек (основной style.css не тронут);
+- `src/templates/SectionPage.astro` — страница-раздел (6 промpty-категорий +
+  basics-гайд, крошки + BreadcrumbList);
+- `src/templates/KnowPage.astro` — каркас гайдов/глоссария;
+- `src/pages/prompty/` — карта промптов + роут `[slug].astro` 6 категорий;
+- `src/pages/guides/` — хаб + 4 гайда (s-chego-nachat, osnovy-promptinga,
+  kakuyu-nejroset-vybrat, ii-i-pochta);
+- `src/pages/instrumenty/`, `o-proekte.astro`, `politika-konfidencialnosti.astro` —
+  хаб инструментов и вспомогательные страницы (§5.3);
+- `src/pages/index.astro`, `404.astro` — главная-хаб и 404;
+- `src/lib/gen.js` — порт генерирующих функций build.py; `src/lib/site.js` — меню,
+  крошки, JSON-LD, счётчики;
+- `public/.htaccess` — 12 редиректов 301 со старых адресов (Apache за Nginx);
+- `public/robots.txt` — GPTBot/ClaudeBot/PerplexityBot открыты (приложение стратегии);
+- `scripts/gen_meta.py` — sitemap.xml (18 страниц, lastmod) + llms.txt (счётчики из
+  данных, со склонением);
+- `scripts/publish.mjs` — публикация в корень; ЗАПРЕТНЫЙ СПИСОК: `z/`, `maxbot/`,
+  `pwa/`, `og/`, `education/`, `work/`, favicon не трогаются; старые `.html` удаляются;
+- `scripts/verify.py` — нормализованное сравнение dist со старыми страницами.
 
-## Что НЕ делает Astro в фазе 1
+## Что НЕ делает Astro (фаза 2)
 
-- `robots.txt`, `sitemap.xml`, `og/*.png`, favicon — собираются как раньше (build.py / руками);
+- `og/*.png`, favicon — по-прежнему генерируются build.py / лежат в корне;
 - `education/studying-AI.html` — самостоятельная страница, не переносится;
-- адреса страниц не меняются (целевая схема `/prompty/foto/` и т. д. — фаза 2,
-  `build.format: 'directory'` в `astro.config.mjs`).
+- сценарные хабы `/prompty/nejrofotosessiya/` и страницы моделей `/instrumenty/{slug}/`
+  — фаза 4 (в меню помечены «готовятся»).

@@ -1,0 +1,78 @@
+---
+/** Хаб гайдов /guides/ (стратегия §5.2: обзор всех гайдов по рубрикам).
+ *  Фаза 2, крошки + BreadcrumbList. */
+import Base from '../../layouts/Base.astro';
+import { D, SITE_URL, UPDATED, WEBSITE_LD, breadcrumbLd, crumbs, GUIDES } from '../../lib/site.js';
+import { ld } from '../../lib/gen.js';
+
+const path = '/guides/';
+const crumb = crumbs([
+  { name: 'Главная', href: '/' },
+  { name: 'Гайды' },
+]);
+const extra = [
+  { href: '/education/studying-AI.html', cat: 'Обучение с нуля', label: 'Путь в ИИ: с чайника до инженера',
+    text: 'План обучения по уровням: темы, аналогии, примеры и мини-тест с сохранением прогресса.' },
+];
+const guideText = {
+  's-chego-nachat': 'Каждый день — один сценарий на пять минут: от формулы промпта до привычки спрашивать. Ссылки на готовые промпты в разделах базы.',
+  'osnovy-promptinga': 'Формула промпта: роль → задача → контекст → формат → примеры. Итерации, проверки фактов и типовые ошибки новичков.',
+  'kakuyu-nejroset-vybrat': 'Тексты, фото, изображения с нуля, код и строгий JSON: какими моделями решать, где бесплатные тарифы, качество русского языка.',
+  'ii-i-pochta': 'Кейс с цифрами: исследования 2025–2026 годов, расчёт рабочей недели и 7 готовых промптов — от follow-up до exec-summary.',
+};
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  breadcrumbLd(crumb),
+  { '@type': 'CollectionPage', '@id': SITE_URL + path, url: SITE_URL + path,
+    name: 'Гайды по нейросетям: с чего начать, основы промптинга, выбор модели',
+    description: 'Практические материалы Ediai: путеводитель новичка, основы промптинга, сравнение моделей и кейсы с цифрами.',
+    inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
+  { '@type': 'ItemList', name: 'Гайды Ediai',
+    itemListElement: GUIDES.map((g, i) => ({ '@type': 'ListItem', position: i + 1,
+      name: g.label, url: SITE_URL + g.path })) },
+] };
+---
+
+<Base title={'Гайды по нейросетям: основы, выбор модели, кейсы | Ediai'}
+      desc={'Все материалы базы знаний Ediai: с чего начать с ИИ, основы промптинга, какую нейросеть выбрать, кейсы с цифрами. Просто, на русском, с примерами.'}
+      path={path} ogImg="og/og-start.png" ldGraph={ld(ldGraphObj)} crumb={crumb}>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="hero">
+    <div class="wrap">
+      <h1>Гайды по нейросетям</h1>
+      <p class="hub-sub">Практические материалы базы знаний: начните с путеводителя для новичков, разберите формулу промпта, выберите модель под задачи и посчитайте экономию времени с кейсами.</p>
+      <p class="hub-meta">Обновлено {UPDATED} · На русском языке · Бесплатно</p>
+    </div>
+  </header>
+  <main class="wrap" id="main" tabindex="-1">
+    <h2 class="hub-h">📚 Все гайды</h2>
+    <div class="pop-grid">
+      {GUIDES.map(g => (
+        <a class="pop" href={g.path}>
+          <span class="p-cat">{g.src === 'keis' ? 'Кейс' : 'Гайд'}</span>
+          <h3>{g.label}</h3>
+          <p>{guideText[g.slug]}</p>
+          <span class="p-go">Читать →</span>
+        </a>
+      ))}
+      {extra.map(x => (
+        <a class="pop" href={x.href}>
+          <span class="p-cat">{x.cat}</span>
+          <h3>{x.label}</h3>
+          <p>{x.text}</p>
+          <span class="p-go">Открыть →</span>
+        </a>
+      ))}
+    </div>
+    <h2 class="hub-h">🗂 С чего продолжить</h2>
+    <div class="strips"><div class="info-strip"><span class="ic" aria-hidden="true">🗂</span>
+      <span><b>Гайды — не единственный вход:</b> практические промпты живут в <a href="/prompty/" style="color:#4b3ecf">карте промптов</a>, справочник моделей — в разделе <a href="/instrumenty/" style="color:#4b3ecf">«Инструменты»</a>, термины — в <a href="/glossary/" style="color:#4b3ecf">глоссарии</a>.</span></div></div>
+  </main>
+  <footer>
+    <div class="wrap">
+      <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей, глоссарий и статьи-кейсы с цифрами.<br>
+      Тарифы и возможности нейросетей меняются — сверяйте дату обновления; важные решения проверяйте по первоисточникам.
+    </div>
+      <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a></div>
+  </footer>
+</Base>
