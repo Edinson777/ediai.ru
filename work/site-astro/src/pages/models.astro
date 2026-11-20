@@ -1,0 +1,42 @@
+---
+/** Порт know_models() + build_models() из build.py: «Какая нейросеть для чего». */
+import KnowPage from '../templates/KnowPage.astro';
+import { D, SITE_URL, WEBSITE_LD, UPDATED } from '../lib/site.js';
+import { ld } from '../lib/gen.js';
+
+const path = 'models.html';
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  { '@type': 'WebPage', '@id': SITE_URL + '/' + path, url: SITE_URL + '/' + path,
+    name: 'Какая нейросеть для чего: сравнение задач и моделей', description: D.MODELS_DESC,
+    inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
+  { '@type': 'FAQPage', mainEntity: D.MODELS_FAQ.map(([q, a]) => ({ '@type': 'Question',
+    name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+] };
+---
+
+<KnowPage path={path} title={D.MODELS_TITLE} desc={D.MODELS_DESC} ogimg="og/og-models.png" ldGraph={ld(ldGraphObj)} navcur={path}>
+  <section class="hero">
+    <h1>Какая нейросеть для чего: сравнение задач и моделей</h1>
+    <p class="hub-sub">Тексты, фотографии, изображения с нуля, код, анализ и строгий JSON — с бесплатными вариантами и заменами. Тарифы меняются: сверяйте даты обновлений.</p>
+    <p class="hub-meta">Обновлено {UPDATED} · Бесплатные тарифы · Русский язык</p>
+  </section>
+  <div class="strip">
+    <h2>Задача → модель</h2>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица с горизонтальной прокруткой">
+      <table class="cmp">
+        <tr><th>Задача</th><th>Чем решать</th><th>Бесплатный вариант</th></tr>
+        {D.MODELS_MINI.map(([task, models, free]) => (
+          <tr><td set:html={task} /><td set:html={models} /><td set:html={free} /></tr>
+        ))}
+      </table>
+    </div>
+    <h2>Частые вопросы</h2>
+    <div class="faq">
+      {D.MODELS_FAQ.map(([q, a]) => (
+        <details><summary>{q}</summary><p set:html={a} /></details>
+      ))}
+    </div>
+    <p class="p-go"><a href="glossary.html">Глоссарий терминов →</a> · <a href="start.html">С чего начать →</a></p>
+  </div>
+</KnowPage>

@@ -39,7 +39,7 @@ console.log('index.html');
   ok(d.querySelector('.tile-big') !== null, 'крупная плитка «Переделка фото»');
   ok(d.querySelector('.tile-life') !== null, 'крупная плитка «ИИ в личной жизни» (tile-life)');
   ok(d.querySelectorAll('.pop:not(.sc):not(.case):not(.soon)').length === 9, '9 популярных промптов');
-  ok(d.querySelectorAll('.pop.sc').length === 8, 'блок «С чего начать»: 7 шагов + путеводитель');
+  ok(d.querySelectorAll('.pop.sc').length === 9, 'блок «С чего начать»: 7 шагов + путеводитель + план обучения');
   const caseCard = d.querySelector('.pop.case');
   ok(!!caseCard && caseCard.getAttribute('href') === 'keis-ii-pochta.html', 'блок «Статьи и кейсы»: карточка кейса');
   ok(d.querySelector('.pop.soon') !== null, 'блок «Статьи и кейсы»: анонс следующей статьи');
@@ -349,7 +349,7 @@ console.log('keis-ii-pochta.html');
 console.log('sitemap.xml');
 {
   const sm = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sm.match(/<loc>/g) || []).length === 12, 'sitemap: 12 страниц');
+  ok((sm.match(/<loc>/g) || []).length === 13, 'sitemap: 13 страниц (12 + education/studying-AI)');
   ok(sm.includes('keis-ii-pochta.html'), 'sitemap: статья-кейс добавлена');
 }
 

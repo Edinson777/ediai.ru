@@ -1,0 +1,56 @@
+---
+/**
+ * Базовый каркас страницы — порт head_html() + тело из build.py.
+ * Рендерит <html>/<head> (SEO, OG, JSON-LD, инлайн CSS) и <body> со счётчиками.
+ * Содержимое страницы — через <slot/>; футеры собираются на страницах.
+ */
+import { SITE_NAME, SITE_URL, CSS, FAVICON, METRIKA, gtagSnippet, adsSnippet } from '../lib/site.js';
+import { attr } from '../lib/gen.js';
+
+const {
+  title,
+  desc,
+  path,          // 'photo.html' | 'index.html' | …
+  ogImg,         // 'og/og-photo.png'
+  ldGraph,       // готовая ld()-строка JSON-LD
+  ogType = 'website',
+} = Astro.props;
+
+const url = path === 'index.html' ? SITE_URL + '/' : SITE_URL + '/' + path;
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title>
+<meta name="description" content={attr(desc)}>
+<link rel="canonical" href={url}>
+<meta property="og:type" content={ogType}>
+<meta property="og:site_name" content={attr(SITE_NAME)}>
+<meta property="og:title" content={attr(title)}>
+<meta property="og:description" content={attr(desc)}>
+<meta property="og:url" content={url}>
+<meta property="og:image" content={SITE_URL + '/' + ogImg}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={attr(title)}>
+<meta name="twitter:description" content={attr(desc)}>
+<meta name="twitter:image" content={SITE_URL + '/' + ogImg}>
+<meta name="theme-color" content="#f5f6fa">
+<link rel="icon" href={FAVICON}>
+<link rel="icon" type="image/x-icon" href={SITE_URL + '/favicon.ico'} sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href={SITE_URL + '/apple-touch-icon.png'}>
+<script type="application/ld+json" is:inline set:html={ldGraph} />
+<style is:inline set:html={CSS} />
+</head>
+<body>
+<Fragment set:html={METRIKA} />
+<Fragment set:html={gtagSnippet()} />
+<slot />
+<Fragment set:html={adsSnippet()} />
+</body>
+</html>

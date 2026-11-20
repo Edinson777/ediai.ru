@@ -1,0 +1,33 @@
+---
+/** Порт know_glossary() + build_glossary() из build.py: глоссарий терминов. */
+import KnowPage from '../templates/KnowPage.astro';
+import { D, SITE_URL, WEBSITE_LD, UPDATED } from '../lib/site.js';
+import { ld } from '../lib/gen.js';
+
+const path = 'glossary.html';
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  { '@type': 'WebPage', '@id': SITE_URL + '/' + path, url: SITE_URL + '/' + path,
+    name: 'Глоссарий терминов ИИ простыми словами', description: D.GLOSS_DESC,
+    inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
+  { '@type': 'DefinedTermSet', name: 'Глоссарий терминов ИИ',
+    hasPart: D.GLOSSARY.map(([t, d]) => ({ '@type': 'DefinedTerm', name: t, description: d })) },
+] };
+---
+
+<KnowPage path={path} title={D.GLOSS_TITLE} desc={D.GLOSS_DESC} ogimg="og/og-glossary.png" ldGraph={ld(ldGraphObj)} navcur={path}>
+  <section class="hero">
+    <h1>Глоссарий терминов ИИ простыми словами</h1>
+    <p class="hub-sub">Шестнадцать понятий, которые встречаются в статьях и подсказках чат-ботов, — с короткими примерами из практики. Без формул и маркетинга.</p>
+    <p class="hub-meta">Обновлено {UPDATED} · Простыми словами · С примерами</p>
+  </section>
+  <div class="strip">
+    <h2>Термины</h2>
+    <div class="gloss">
+      {D.GLOSSARY.map(([term, d, ex]) => (
+        <div class="term"><b>{term}</b><p set:html={d} /><p class="ex" set:html={ex} /></div>
+      ))}
+    </div>
+    <p class="p-go"><a href="models.html">Какая нейросеть для чего →</a> · <a href="start.html">С чего начать →</a></p>
+  </div>
+</KnowPage>

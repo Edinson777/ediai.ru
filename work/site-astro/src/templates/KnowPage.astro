@@ -1,0 +1,29 @@
+---
+/**
+ * Каркас страниц «Базы знаний» — порт know_page() из build.py.
+ * Отличие от разделов: вверху навигация разделов, футер с текстом базы знаний.
+ */
+import Base from '../layouts/Base.astro';
+import { D } from '../lib/site.js';
+import { navHtml } from '../lib/gen.js';
+
+const { path, title, desc, ogimg, ldGraph, navcur, ogType = 'website' } = Astro.props;
+---
+
+<Base title={title} desc={desc} path={path} ogImg={ogimg} ldGraph={ldGraph} ogType={ogType}>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <main class="wrap" id="main" tabindex="-1">
+    <Fragment set:html={navHtml(navcur, false, D.NAV)} />
+    <Fragment set:html={D.KNOW_NAV} />
+    <slot />
+  </main>
+  <footer>
+    <div class="wrap">
+      <Fragment set:html={navHtml(navcur, true, D.NAV)} />
+      <Fragment set:html={D.KNOW_NAV} />
+      <b>⚡ Ediai — ИИ в личной жизни и работе</b> · база знаний: путеводитель для новичков, сравнения моделей, глоссарий и статьи-кейсы с цифрами.<br>
+      Тарифы и возможности нейросетей меняются — сверяйте дату обновления; важные решения проверяйте по первоисточникам.
+    </div>
+  </footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+</Base>

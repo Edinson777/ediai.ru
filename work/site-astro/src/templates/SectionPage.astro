@@ -1,0 +1,115 @@
+---
+/**
+ * Страница-раздел промптов — порт build_section() из build.py.
+ * Одна на 7 разделов (роут src/pages/[slug].astro, старые адреса *.html).
+ */
+import Base from '../layouts/Base.astro';
+import { D, SITE_URL, SITE_NAME, LASTMOD, BY_SECTION, WEBSITE_LD, APPJS, NOSCRIPT_CSS } from '../lib/site.js';
+import {
+  esc, attr, jsJson, ld, cardHtml, gridHtml, navHtml, statsHtml, tabsHtml,
+  chipsHtml, fchipsHtml, ftags,
+} from '../lib/gen.js';
+
+const { key } = Astro.props;
+const sec = D.SECTIONS[key];
+const prompts = BY_SECTION[key];
+const url = SITE_URL + '/' + sec.file;
+
+// JSON-LD: CollectionPage + ItemList + каждый промпт как Article (контентная аналитика Метрики)
+const articles = prompts.map(p => ({
+  '@type': 'Article',
+  '@id': url + '#' + p.id,
+  headline: p.title,
+  articleBody: p.prompt,
+  description: p.desc,
+  inLanguage: 'ru',
+  datePublished: LASTMOD,
+  dateModified: LASTMOD,
+  keywords: p.tags.join(', '),
+  isPartOf: { '@id': url },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+}));
+
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  { '@type': 'CollectionPage', '@id': url, url: url, name: sec.plain,
+    description: sec.desc, inLanguage: 'ru',
+    datePublished: LASTMOD, dateModified: LASTMOD,
+    isPartOf: { '@id': SITE_URL + '/#website' } },
+  { '@type': 'ItemList', name: sec.plain, numberOfItems: prompts.length,
+    itemListElement: prompts.map((p, i) => ({ '@type': 'ListItem', position: i + 1,
+      name: p.title, url: url + '#' + p.id })) },
+  ...articles ],
+};
+
+const sources = ('<details class="sources"><summary><h2>' + sec.sources_h2 + '</h2>'
+  + '<span class="src-hint">показать список</span></summary>'
+  + '<div class="sources-in"><p class="note">' + sec.sources_note + '</p>'
+  + (sec.sources_body || '') + '</div></details>');
+
+const fch = fchipsHtml(prompts, D.FTAG_META);
+const pageObj = { section: key, tabs: sec.tabs, cats: sec.cats, catOrder: sec.cat_order };
+const promptsJs = prompts.map(p => ({ ...p, f: ftags(p) }));
+const dataJs = 'const PAGE = ' + jsJson(pageObj) + ';\nconst PROMPTS = ' + jsJson(promptsJs) + ';';
+const gold = sec.h1_class.includes('gold');
+---
+
+<Base title={sec.title} desc={sec.desc} path={sec.file} ogImg={'og/og-' + key + '.png'} ldGraph={ld(ldGraphObj)}>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="hero">
+    <div class="wrap">
+      <a class="back-link" href="index.html">← Все разделы</a>
+      <h1 class={gold ? 'gold' : undefined}>{sec.h1}</h1>
+      <p class="sub" set:html={sec.sub} />
+      <Fragment set:html={statsHtml(prompts, sec)} />
+    </div>
+  </header>
+  <section class="controls" aria-label="Поиск и фильтры раздела">
+    <div class="wrap">
+      <div class="search-row">
+        <div class="search-box">
+          <svg fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+          <input id="search" type="search" aria-label="Поиск по промптам раздела" placeholder={sec.placeholder} autocomplete="off">
+          <kbd aria-hidden="true">/</kbd>
+        </div>
+      </div>
+      <Fragment set:html={tabsHtml(prompts, sec)} />
+      <div class="chips-row" id="chipsRow">
+        <button type="button" class="chips-toggle" id="chipsToggle" aria-expanded="false" aria-controls="chips">Подразделы ▾</button>
+        <div class="chips" id="chips" set:html={chipsHtml(prompts)} />
+        {fch && (
+          <div class="fchips" id="fchips" role="group" aria-label="Быстрые фильтры: бесплатно, нужно фото, 5 минут" set:html={fch} />
+        )}
+      </div>
+      <div class="results-line">
+        <span id="results">Показаны все {prompts.length} промпта</span>
+        <span class="mini-btns">
+          <button class="mini-btn" id="expandAll" type="button">⊞ Развернуть все</button>
+          <button class="mini-btn" id="collapseAll" type="button">⊟ Свернуть все</button>
+        </span>
+      </div>
+    </div>
+  </section>
+  <main class="wrap" id="main" tabindex="-1">
+    <div class="strips" set:html={sec.strips} />
+    <Fragment set:html={sec.banner} />
+    <div class="grid" id="grid" data-prerendered="1" set:html={gridHtml(prompts, sec.cats)} />
+    <div class="empty" id="empty">
+      <div class="big" aria-hidden="true">🔍</div>
+      <p>Ничего не найдено. Попробуйте другой запрос.</p>
+    </div>
+  </main>
+  <footer>
+    <div class="wrap">
+      <Fragment set:html={navHtml(sec.file, true, D.NAV)} />
+      <Fragment set:html={D.KNOW_NAV} />
+      <Fragment set:html={sources} />
+      <Fragment set:html={sec.foot} />
+    </div>
+  </footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <button id="toTop" title="Наверх" aria-label="Наверх">↑</button>
+  <noscript><style is:inline set:html={NOSCRIPT_CSS} /></noscript>
+  <script is:inline set:html={dataJs} />
+  <script is:inline set:html={APPJS} />
+</Base>
