@@ -17,7 +17,10 @@
   6. для 11 старых адресов (*.html) создаются заглушки с meta refresh на новые пути
      (.htaccess на GitHub Pages не работает — это Apache-директива);
   7. llms.txt переписывается на абсолютные адреса превью; .htaccess удаляется;
-     добавляется .nojekyll.
+     добавляется .nojekyll;
+  8. счётчики и реклама (Yandex.Metrika, GA4 gtag, Yandex Autoplacement) удаляются
+     целиком по HTML-комментариям-границам — заходы на превью не должны попадать
+     в боевую аналитику.
 
 Выход: dist-ghp готов к публикации в ветку gh-pages. Запуск: python3 scripts/preview_pages.py
 """
@@ -46,6 +49,15 @@ STUBS = {
 # только известные топы — консервативное правило для JSON-строк в inline-скриптах
 TOPS = r'prompty|guides|glossary|instrumenty|o-proekte|politika-konfidencialnosti|education'
 
+# счётчики/реклама: блоки, целиком ограниченные HTML-комментариями (site.js: METRIKA,
+# gtagSnippet, adsSnippet). Удаляются только в превью-сборке.
+COUNTER_RE = re.compile(
+    r'[ \t]*<!-- (?:Yandex\.Metrika counter|Google tag \(gtag\.js\)|Yandex Autoplacement [^>]*?) -->\n?'
+    r'.*?'
+    r'[ \t]*<!-- /(?:Yandex\.Metrika counter|Google tag|Yandex Autoplacement) -->\n?',
+    re.DOTALL)
+COUNTER_DOMAINS = ('mc.yandex.ru', 'googletagmanager.com', 'yandex.ru/ads')
+
 STUB_TMPL = '''<!doctype html>
 <html lang="ru"><head><meta charset="utf-8">
 <title>Страница переехала — Ediai.ru</title>
@@ -67,7 +79,7 @@ def main():
         shutil.rmtree(OUT)
     shutil.copytree(DIST, OUT)
 
-    stats = {'pages': 0, 'href': 0, 'src': 0, 'js': 0, 'noindex': 0}
+    stats = {'pages': 0, 'href': 0, 'src': 0, 'js': 0, 'noindex': 0, 'counters': 0}
     problems = []
 
     for root, dirs, files in os.walk(OUT):
@@ -84,6 +96,12 @@ def main():
                 html = html.replace('src="/', 'src="%s/' % BASE)
                 stats['href'] += n
                 stats['src'] += m
+
+                # счётчики/реклама — целиком по комментариям-границам
+                k = len(COUNTER_RE.findall(html))
+                if k:
+                    html = COUNTER_RE.sub('', html)
+                    stats['counters'] += k
 
                 def repl(mm):
                     stats['js'] += 1
@@ -106,6 +124,9 @@ def main():
                 left_js = re.findall(r'"(/(?:%s)(?=[/?#"]))' % TOPS, html)
                 if left_js:
                     problems.append('%s: остались пути в скриптах %s' % (os.path.relpath(p, OUT), left_js[:3]))
+                for dom in COUNTER_DOMAINS:
+                    if dom in html:
+                        problems.append('%s: остался счётчик %s' % (os.path.relpath(p, OUT), dom))
                 with open(p, 'w', encoding='utf-8') as f:
                     f.write(html)
                 stats['pages'] += 1
@@ -137,7 +158,7 @@ def main():
     with open(os.path.join(OUT, '.nojekyll'), 'w') as f:
         f.write('')
 
-    print('страниц обработано: %(pages)d | href: %(href)d | src: %(src)d | пути в JS: %(js)d | noindex: %(noindex)d | заглушек: %(stubs)d' % stats)
+    print('страниц обработано: %(pages)d | href: %(href)d | src: %(src)d | пути в JS: %(js)d | noindex: %(noindex)d | счётчиков удалено: %(counters)d | заглушек: %(stubs)d' % stats)
     if problems:
         print('ПРОБЛЕМЫ:')
         for pr in problems:
