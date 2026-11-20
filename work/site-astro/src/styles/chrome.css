@@ -1,0 +1,278 @@
+/* =====================================================================
+   Шапка, дропдауны, хлебные крошки (фаза 2, стратегия §4.1–4.3).
+   Подключается ПОСЛЕ основного style.css; префиксы sh-*/cr-* не конфликтуют.
+   ===================================================================== */
+
+:root{
+  --sh-ink:#23244d;
+  --sh-accent:#4b3ecf;
+  --sh-accent-soft:#efedff;
+  --sh-border:#e3e4ef;
+}
+
+.site-header{
+  background:#fff;
+  border-bottom:1px solid var(--sh-border);
+  position:relative;
+  z-index:50;
+}
+.sh-in{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  max-width:1180px;
+  margin:0 auto;
+  padding:10px 16px;
+}
+.sh-logo{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:800;
+  font-size:19px;
+  color:var(--sh-ink);
+  text-decoration:none;
+  white-space:nowrap;
+}
+.sh-logo-d{color:var(--sh-accent);font-weight:700}
+
+/* --- главное меню --- */
+.sh-nav{
+  display:flex;
+  align-items:stretch;
+  gap:4px;
+  flex:1;
+  min-width:0;
+}
+.sh-item{position:relative;display:flex;align-items:center}
+.sh-link{
+  display:flex;
+  align-items:center;
+  padding:10px 12px;
+  font-size:15px;
+  font-weight:600;
+  color:var(--sh-ink);
+  text-decoration:none;
+  border-radius:8px;
+  border-bottom:3px solid transparent;
+}
+.sh-item.active>.sh-link{color:var(--sh-accent)}
+.sh-item.active>.sh-link::after{
+  content:"";
+  position:absolute;
+  left:10px;right:10px;bottom:-11px;
+  height:3px;
+  background:var(--sh-accent);
+  border-radius:2px 2px 0 0;
+}
+.sh-link:hover{background:var(--sh-accent-soft)}
+
+/* тоггл дропдауна (клик для тача и клавиатуры) */
+.sh-toggle{
+  border:0;background:none;cursor:pointer;
+  color:#8a8ca8;font-size:11px;padding:8px 2px;
+  line-height:1;
+}
+.sh-item.drop-open .sh-toggle{transform:rotate(180deg)}
+
+/* --- дропдаун --- */
+.sh-drop{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  min-width:340px;
+  background:#fff;
+  border:1px solid var(--sh-border);
+  border-radius:12px;
+  box-shadow:0 14px 40px rgba(35,36,77,.14);
+  padding:16px;
+  gap:22px;
+}
+.sh-item.drop-open .sh-drop{display:flex}
+/* раскрытие по наведению на десктопе (устройства с ховером) */
+@media (hover:hover){
+  .sh-item.has-drop:hover>.sh-drop{display:flex}
+}
+.sh-drop{flex-wrap:wrap}
+.sh-col{flex:1;min-width:170px}
+.sh-col-t{
+  margin:0 0 6px;
+  font-size:11.5px;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#8a8ca8;
+}
+.sh-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:10px;
+  padding:6px 8px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--sh-ink);
+  text-decoration:none;
+  border-radius:8px;
+}
+.sh-row:hover{background:var(--sh-accent-soft);color:var(--sh-accent)}
+.sh-row .sh-n{
+  font-size:12.5px;
+  font-weight:700;
+  color:#fff;
+  background:var(--sh-accent);
+  border-radius:999px;
+  padding:1px 8px;
+  white-space:nowrap;
+}
+.sh-row .sh-note{font-size:11.5px;font-weight:500;color:#8a8ca8;white-space:nowrap}
+.sh-soon{font-size:12.5px;color:#8a8ca8;line-height:1.5;margin:0 0 10px}
+.sh-card{
+  flex:0 0 200px;
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  justify-content:center;
+  background:linear-gradient(135deg,#f3f1ff,#e9e4ff);
+  border:1px solid #d6cdff;
+  border-radius:12px;
+  padding:14px;
+  font-size:13.5px;
+  line-height:1.45;
+  color:var(--sh-ink);
+  text-decoration:none;
+}
+.sh-card b{font-size:15px;color:var(--sh-accent)}
+.sh-card .sh-go{font-weight:700;color:var(--sh-accent);margin-top:auto}
+
+/* --- поиск в шапке --- */
+.sh-search{flex:0 1 230px}
+.sh-search input{
+  width:100%;
+  border:1px solid var(--sh-border);
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:14px;
+  background:#f7f7fb;
+  color:var(--sh-ink);
+  outline:none;
+}
+.sh-search input:focus{border-color:var(--sh-accent);background:#fff}
+
+/* --- бургер (скрыт на десктопе) --- */
+.sh-burger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  border:1px solid var(--sh-border);
+  background:#fff;
+  border-radius:8px;
+  padding:9px 8px;
+  cursor:pointer;
+}
+.sh-burger span{width:18px;height:2px;background:var(--sh-ink);border-radius:2px;transition:.2s}
+.sh-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.sh-burger.open span:nth-child(2){opacity:0}
+.sh-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* --- мобильная панель --- */
+.sh-mobile{
+  border-top:1px solid var(--sh-border);
+  background:#fff;
+  padding:12px 16px 18px;
+}
+.sh-msearch{margin-bottom:10px}
+.sh-msearch input{
+  width:100%;
+  border:1px solid var(--sh-border);
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:15px;
+  background:#f7f7fb;
+}
+.sh-macc{border-bottom:1px solid var(--sh-border)}
+.sh-mhead{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:0;
+  background:none;
+  padding:12px 2px;
+  font-size:16px;
+  font-weight:700;
+  color:var(--sh-ink);
+  cursor:pointer;
+}
+.sh-mhead.open{color:var(--sh-accent)}
+.sh-mn{
+  font-size:12.5px;
+  font-weight:700;
+  color:#fff;
+  background:var(--sh-accent);
+  border-radius:999px;
+  padding:1px 8px;
+}
+.sh-mbody{padding:0 2px 10px;display:flex;flex-direction:column}
+.sh-mbody a{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 6px;
+  font-size:14.5px;
+  font-weight:600;
+  color:var(--sh-ink);
+  text-decoration:none;
+  border-radius:8px;
+}
+.sh-mbody a:hover{background:var(--sh-accent-soft)}
+.sh-mlink{
+  display:block;
+  padding:12px 2px;
+  font-size:16px;
+  font-weight:700;
+  color:var(--sh-ink);
+  text-decoration:none;
+  border-bottom:1px solid var(--sh-border);
+}
+.sh-mlink:last-child{border-bottom:0}
+
+/* --- хлебные крошки --- */
+.crumbs{padding-top:12px}
+.crumbs ol{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  row-gap:4px;
+  font-size:13.5px;
+}
+.crumbs li{display:flex;align-items:center}
+.cr-sep{margin:0 8px;color:#9a9cb8}
+.crumbs a{color:#61638a;text-decoration:none;font-weight:600}
+.crumbs a:hover{color:var(--sh-accent);text-decoration:underline}
+.crumbs [aria-current]{color:var(--sh-accent);font-weight:700}
+
+/* --- адаптив: до 960px шапка сжимается до логотипа, поиска-иконки и бургера --- */
+@media (max-width:960px){
+  .sh-nav{display:none}
+  .sh-search{display:none}
+  .sh-burger{display:flex}
+  .sh-in{gap:12px;justify-content:space-between}
+}
+@media (max-width:640px){
+  .sh-logo{font-size:17px}
+  .sh-logo-d{display:none}
+}
+
+/* --- служебные ссылки в футере (§4.1: непервичная навигация — в футере) --- */
+.svc-nav{
+  margin-top:14px;
+  font-size:13px;
+  color:#8a8ca8;
+}
+.svc-nav a{color:#8a8ca8;font-weight:600;text-decoration:none}
+.svc-nav a:hover{color:var(--sh-accent);text-decoration:underline}

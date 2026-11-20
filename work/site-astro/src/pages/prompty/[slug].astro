@@ -1,0 +1,21 @@
+---
+/** Роуты 6 разделов промптов: /prompty/foto/, /prompty/zhizn/, /prompty/rabota/,
+ *  /prompty/teksty/, /prompty/generaciya/, /prompty/qwen/ (URL-конвенция §3.3).
+ *  basics здесь НЕ входит — он гайд: /guides/osnovy-promptinga/. */
+import SectionPage from '../../templates/SectionPage.astro';
+import { D, SECTION_ORDER } from '../../lib/site.js';
+
+export function getStaticPaths() {
+  // SECTION_ORDER содержит и 'basics' — исключаем, у него свой роут в /guides/
+  return SECTION_ORDER
+    .filter(key => key !== 'basics')
+    .map(key => ({
+      params: { slug: D.SECTIONS[key].file.split('/')[2] },
+      props: { key },
+    }));
+}
+
+const { key } = Astro.props;
+---
+
+<SectionPage key={key} />

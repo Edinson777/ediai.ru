@@ -1,0 +1,95 @@
+---
+/** Карта промптов /prompty/ (стратегия §5.2: сводная страница, собирает запросы
+ *  «промпты для…» и ведёт во все категории). Фаза 2, крошки + BreadcrumbList. */
+import Base from '../../layouts/Base.astro';
+import { D, SITE_URL, SITE_NAME, TOTAL, WEBSITE_LD, SECTION_ORDER, SECTION_PATHS,
+         SECTION_LABELS, breadcrumbLd, crumbs, GUIDES } from '../../lib/site.js';
+import { ld } from '../../lib/gen.js';
+
+const path = '/prompty/';
+const crumb = crumbs([
+  { name: 'Главная', href: '/' },
+  { name: 'Промпты' },
+]);
+const PROMPTY_KEYS = SECTION_ORDER.filter(k => k !== 'basics');
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  breadcrumbLd(crumb),
+  { '@type': 'CollectionPage', '@id': SITE_URL + path, url: SITE_URL + path,
+    name: 'Карта промптов: все категории базы', description: 'Все ' + TOTAL + ' промптов базы по категориям: фото и изображения, генерация картинок, тексты, личная жизнь, работа, Qwen.',
+    inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
+  { '@type': 'ItemList', name: 'Категории промптов',
+    itemListElement: PROMPTY_KEYS.map((key, i) => ({ '@type': 'ListItem', position: i + 1,
+      name: SECTION_LABELS[key], url: SITE_URL + SECTION_PATHS[key] })) },
+] };
+const catDesc = {
+  photo: 'Переделка фото: портреты и хедшоты, стили, реставрация, предметная съёмка — по вашей фотографии.',
+  generate: 'Изображения с нуля по описанию: иллюстрации, логотипы, обложки, соцсети — для Midjourney, Qwen и DALL-E.',
+  texts: 'Копирайтинг и редактура: посты, статьи по AIDA и PAS, деловые письма, ответы на отзывы.',
+  life: 'Быт и личные дела: меню и рецепты, путешествия, учёба, здоровье, подарки, планирование.',
+  work: 'Рабочие сценарии: письма, отчёты, встречи, резюме, регламенты и планы — с правилами обезличивания.',
+  qwen: 'Промпты под модели Qwen: чат, генерация и редактирование изображений, код — с пилюлями совместимости.',
+};
+---
+
+<Base title={'Промпты для нейросетей: все категории — ' + TOTAL + ' сценариев | Ediai'}
+      desc={'Карта базы промптов: ' + TOTAL + ' готовых сценариев в 6 категориях — фото и изображения, генерация картинок, тексты, личная жизнь, работа, Qwen. Выберите задачу — скопируйте промпт.'}
+      path={path} ogImg="og/og-index.png" ldGraph={ld(ldGraphObj)} crumb={crumb}>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="hero">
+    <div class="wrap">
+      <h1>Карта промптов: {TOTAL} сценариев в {PROMPTY_KEYS.length} категориях</h1>
+      <p class="sub">Выберите задачу — откроется категория со свёрнутыми карточками промптов: нажмите на карточку, скопируйте промпт кнопкой и отправьте в нейросеть. Промпты написаны по-русски, часть с подсветкой <span style="color:var(--ph);font-weight:600">[скобок]</span> под свои данные.</p>
+      <div class="stats">
+        <div class="stat">📚 Всего промптов: <b>{TOTAL}</b></div>
+        <div class="stat">🗂 Категорий: <b>{PROMPTY_KEYS.length}</b></div>
+        <div class="stat">🔄 Обновлено: <b>{D.UPDATED}</b></div>
+      </div>
+    </div>
+  </header>
+  <main class="wrap" id="main" tabindex="-1">
+    <h2 class="hub-h">🗂 Категории</h2>
+    <div class="bento">
+      {PROMPTY_KEYS.map(key => (
+        <a class:list={['tile', { 'tile-big': key === 'photo' }]} href={SECTION_PATHS[key]}>
+          <span class="t-top"><span class="t-ic" aria-hidden="true">{D.SECTIONS[key].h1.split(' ')[0]}</span>
+            <span class="t-count">{D.BY_SECTION_COUNTS[key]} промпта</span></span>
+          <h2>{SECTION_LABELS[key]}</h2>
+          <p>{catDesc[key]}</p>
+          <span class="t-go">Открыть раздел →</span>
+        </a>
+      ))}
+    </div>
+    <h2 class="hub-h">🧭 Материалы и сценарии</h2>
+    <div class="pop-grid">
+      <a class="pop" href="/guides/s-chego-nachat/"><span class="p-cat">Гайд</span>
+        <h3>Первая неделя с ИИ</h3><p>Семь шагов-сценариев: от формулы промпта до привычки спрашивать.</p>
+        <span class="p-go">Читать →</span></a>
+      <a class="pop" href="/guides/osnovy-promptinga/"><span class="p-cat">Гайд</span>
+        <h3>Основы промптинга</h3><p>Формула запроса, итерации, типовые ошибки — на 6 базовых промптах.</p>
+        <span class="p-go">Читать →</span></a>
+      <a class="pop" href="/guides/kakuyu-nejroset-vybrat/"><span class="p-cat">Гайд</span>
+        <h3>Какую нейросеть выбрать</h3><p>Задача → модель: бесплатные тарифы, русский язык, замены.</p>
+        <span class="p-go">Читать →</span></a>
+      <a class="pop" href="/guides/ii-i-pochta/"><span class="p-cat">Кейс</span>
+        <h3>Сколько часов экономит ИИ на почте</h3><p>Цифры исследований и 7 промптов на рабочую неделю.</p>
+        <span class="p-go">Читать →</span></a>
+      <div class="pop soon"><span class="p-cat">Готовятся</span>
+        <h3>Сценарные подборки</h3><p>«Нейрофотосессия», «Промпты по профессиям», «Резюме и собеседования» — уникальные подборки с примерами до/после.</p>
+        <span class="p-go">Скоро</span></div>
+    </div>
+    <h2 class="hub-h">❓ Частые вопросы</h2>
+    <div class="faq">
+      <details><summary>Как пользоваться базой?</summary><p>Откройте категорию, найдите подходящий сценарий через поиск или чипы подразделов, разверните карточку и нажмите «Копировать». Промпт с <span style="color:var(--ph);font-weight:600">[скобками]</span> сначала заполните своими данными — модель получает конкретику вместо догадок.</p></details>
+      <details><summary>Промпты бесплатные?</summary><p>Да, все {TOTAL} промптов — открытый текст без регистрации. Часть моделей на карточках помечена как платная (Midjourney); для каждой категории в гайде «Какую нейросеть выбрать» есть бесплатные варианты.</p></details>
+      <details><summary>Как найти промпт по задаче?</summary><p>Используйте поиск в шапке или на главной: он ищет по названиям, описаниям и тегам всех {TOTAL} промптов. Быстрые фильтры в категориях — «бесплатно», «нужно фото/файл», «5 минут».</p></details>
+    </div>
+  </main>
+  <footer>
+    <div class="wrap">
+      <b>⚡ Ediai — ИИ в личной жизни и работе</b> · {TOTAL} проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.<br>
+      Шаблоны основаны на общепризнанных практиках промпт-инжиниринга и официальных гайдах; лучшие результаты даёт итерация: сгенерировали → уточнили → повторили.
+    </div>
+      <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a></div>
+  </footer>
+</Base>

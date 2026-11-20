@@ -1,0 +1,10 @@
+# зависимости и сборка Astro
+node_modules/
+dist/
+.astro/
+
+# вендорные файлы генерируются скриптом scripts/dump_data.py из work/site-src
+src/vendor/
+
+# системное
+.DS_Store

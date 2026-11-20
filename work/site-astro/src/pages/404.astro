@@ -1,0 +1,54 @@
+---
+/** Порт build_404() из build.py: минимальный head (noindex), без OG/JSON-LD.
+ *  Фаза 2: ссылки на новые адреса (/prompty/{slug}/), служебные ссылки в футере. */
+import { D, SITE_URL, CSS, FAVICON, METRIKA, gtagSnippet } from '../lib/site.js';
+import { navHtml } from '../lib/gen.js';
+
+const tiles = [
+  ['/prompty/foto/', 'Генерация фото', 'Портреты, предметка и атмосферные сцены по описанию'],
+  ['/prompty/zhizn/', 'ИИ в личной жизни', 'Меню, путешествия, учёба, быт и подарки'],
+  ['/prompty/rabota/', 'ИИ на работе', 'Письма, отчёты, встречи, карьера и планы'],
+  ['/guides/s-chego-nachat/', 'База знаний', 'С чего начать, какая нейросеть для чего, глоссарий'],
+];
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Страница не найдена — Ediai</title>
+<meta name="description" content={'Такой страницы нет. Вернитесь на главную Ediai: ' + D.TOTAL + ' готовых промптов для нейросетей и база знаний.'}>
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#f5f6fa">
+<link rel="icon" href={FAVICON}>
+<link rel="icon" type="image/x-icon" href={SITE_URL + '/favicon.ico'} sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href={SITE_URL + '/apple-touch-icon.png'}>
+<style is:inline set:html={CSS} />
+</head>
+<body>
+<Fragment set:html={METRIKA} />
+<Fragment set:html={gtagSnippet()} />
+<main class="wrap" id="main" tabindex="-1">
+  <section class="hero">
+    <h1>404 — такой страницы нет</h1>
+    <p class="hub-sub">Возможно, ссылка устарела или в адресе опечатка. На главной есть поиск по всем {D.TOTAL} промптам, а ниже — основные разделы.</p>
+    <p><a href="/">← Вернуться на главную</a></p>
+  </section>
+  <Fragment set:html={navHtml('/404.html', false, D.NAV)} />
+  <div class="pop-grid">
+    {tiles.map(([f, t, x]) => (
+      <a class="pop" href={f}><h3>{t}</h3><p>{x}</p><span class="p-go">Открыть →</span></a>
+    ))}
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <Fragment set:html={navHtml('/404.html', true, D.NAV)} />
+    <Fragment set:html={D.KNOW_NAV} />
+    <b>⚡ Ediai — ИИ в личной жизни и работе</b>
+    <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a></div>
+  </div>
+</footer>
+</body>
+</html>

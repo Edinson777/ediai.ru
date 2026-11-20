@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Disallow: /404.html
+Disallow: /pwa
+Disallow: /z
+Disallow: /maxbot
+Clean-param: q
+
+# ИИ-краулеры: явно открыты (стратегия, приложение) — путь к цитированию
+# в ChatGPT Search и Perplexity. Google-Extended сознательно НЕ открыт:
+# он отвечает за обучение моделей Google, а не за выдачу; решение за владельцем.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://ediai.ru/sitemap.xml

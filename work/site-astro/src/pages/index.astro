@@ -1,0 +1,170 @@
+---
+/** Порт build_index() из build.py: главная-хаб с глобальным поиском. */
+import Base from '../layouts/Base.astro';
+import { D, SITE_URL, SITE_DESC, UPDATED, TOTAL, WEBSITE_LD, HUBJS } from '../lib/site.js';
+import { esc, attr, jsJson, ld, plural, navHtml } from '../lib/gen.js';
+
+const navByFile = Object.fromEntries(D.NAV.map(([f, label]) => [f, label]));
+const sectmeta = Object.fromEntries(D.SECTION_ORDER.map(k =>
+  [k, { f: D.SECTIONS[k].file, n: navByFile[D.SECTIONS[k].file] }]));
+
+// глобальный поиск: компактный индекс всех промптов (без текстов — страницу не раздуваем)
+import dataJson from '../vendor/data.json';
+const sidxData = dataJson.prompts.map(p => ({
+  i: p.id, t: p.title, s: p.section, c: p.sub, d: p.desc, g: p.tags.join(' '),
+}));
+const hubDataJs = 'const SIDX = ' + jsJson(sidxData) + ';\nconst SECTMETA = ' + jsJson(sectmeta) + ';';
+
+const idxTitle = 'ИИ в личной жизни и работе — готовые промпты, гиды, сравнения | Ediai';
+
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  { '@type': 'WebPage', '@id': SITE_URL + '/', url: SITE_URL + '/',
+    name: 'ИИ в личной жизни и работе — ' + TOTAL + ' готовых промптов, гиды и сравнения',
+    description: SITE_DESC, inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
+  { '@type': 'ItemList', name: 'Разделы базы промптов', numberOfItems: D.SECTION_ORDER.length,
+    itemListElement: D.SECTION_ORDER.map((k, i) => ({ '@type': 'ListItem', position: i + 1,
+      name: D.SECTIONS[k].plain, url: SITE_URL + D.SECTIONS[k].file })) },
+  { '@type': 'FAQPage', mainEntity: D.FAQ.map(([q, a]) => ({ '@type': 'Question', name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a } })) },
+] };
+
+const sourcesGrid = ('<details class="sources"><summary><h2>📖 Источники</h2>'
+  + '<span class="src-hint">показать список</span></summary>'
+  + '<div class="sources-in">'
+  + '<p class="note">' + D.SRC.base_note + '</p>'
+  + '<div class="sources-grid">'
+  + '<div><h3>🎨 Генерация изображений</h3>' + D.SRC.img_ul + '</div>'
+  + '<div><h3 class="txt-head">✍️ Написание текстов</h3>' + D.SRC.txt_ul + '</div>'
+  + '<div><h3 class="life-head">🏡 ИИ в личной жизни</h3>' + D.SRC.life_ul + '</div>'
+  + '<div><h3 class="work-head">💼 ИИ на работе</h3>' + D.SRC.work_ul + '</div>'
+  + '<div><h3 class="qw-head">🤖 Qwen</h3>' + D.SRC.qw_ul + '</div>'
+  + '<div><h3 class="ph-head">📸 Переделка фото</h3>' + D.SRC.photo_ul + '</div>'
+  + '</div></div></details>');
+---
+
+<Base title={idxTitle} desc={SITE_DESC} path="/" ogImg="og/og-index.png" ldGraph={ld(ldGraphObj)}>
+  <header class="hero">
+    <div class="wrap">
+      <h1>ИИ в личной жизни и работе: {TOTAL} {plural(TOTAL, 'готовый промпт', 'готовых промпта', 'готовых промптов')}, гиды и сравнения</h1>
+      <p class="sub">Готовые промпты, путеводитель для новичков, честные сравнения нейросетей и статьи-кейсы с цифрами: переделка фото, генерация изображений, тексты, ИИ в личной жизни и на работе, Qwen и основы промптинга. Скопируйте сценарий, подставьте свои данные вместо <span style="color:var(--ph);font-weight:600">[скобок]</span> — и получите результат за минуты.</p>
+      <div class="stats">
+        <div class="stat">📚 Всего промптов: <b>{TOTAL}</b></div>
+        <div class="stat">🗂 Разделов: <b>{D.SECTION_ORDER.length}</b></div>
+        <div class="stat">🔄 Обновлено: <b>{UPDATED}</b></div>
+      </div>
+    </div>
+  </header>
+  <main class="wrap" id="main" tabindex="-1">
+    <h2 class="hub-h">🔎 Найти сценарий</h2>
+    <div class="hub-search" id="hubSearch">
+      <div class="search-box">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="hubQ" type="search" aria-label={'Поиск по всем ' + TOTAL + ' промптам базы'} placeholder={'Поиск по всем ' + TOTAL + ' промптам: резюме, хедшот, холодильник, отчёт…'} autocomplete="off">
+        <kbd aria-hidden="true">/</kbd>
+      </div>
+      <p class="hub-search-hint" id="hubHint">Начните вводить задачу — подходящие сценарии появятся здесь и откроются карточкой в нужном разделе. Хоткей «/», Esc — сброс.</p>
+      <div class="hub-res" id="hubRes" aria-live="polite" hidden></div>
+      <noscript><style is:inline set:html={'.hub-search .search-box,#hubHint{display:none!important}'} />
+        <p class="hub-search-hint">Поиск работает с включённым JavaScript. Все {TOTAL} {plural(TOTAL, 'промпт', 'промпта', 'промптов')} доступны и без него — выберите раздел ниже: карточки и тексты промптов отрендерены статически.</p></noscript>
+    </div>
+    <h2 class="hub-h" id="razdely">🗂 Разделы</h2>
+    <div class="bento">
+      {D.TILES.map(t => {
+        const n = D.BY_SECTION_COUNTS[t.key];
+        const sec = D.SECTIONS[t.key];
+        return (
+          <a class:list={['tile', { 'tile-big': !!t.big, [t.cls || '']: !!t.cls }]} href={sec.file}>
+            <span class="t-top"><span class="t-ic" aria-hidden="true">{t.icon}</span>
+              <span class="t-count">{n} {n !== 1 ? 'промпта' : 'промпт'}</span></span>
+            <h2>{t.name}</h2>
+            <p set:html={t.text} />
+            {t.subs && <ul class="t-subs">{t.subs.map(s => <li>{s}</li>)}</ul>}
+            <span class="t-go">Открыть раздел →</span>
+          </a>
+        );
+      })}
+    </div>
+    <h2 class="hub-h">⚡ Как пользоваться</h2>
+    <div class="steps">
+      {D.STEPS.map(([t, txt], i) => (
+        <div class="step"><span class="s-n" aria-hidden="true">{i + 1}</span><b>{t}</b><p set:html={txt} /></div>
+      ))}
+    </div>
+    <div class="strips"><div class="info-strip"><span class="ic" aria-hidden="true">🛡️</span>
+      <span><b>Этика:</b> переделывайте свои фото или те, на которые получено явное согласие человека; не создавайте дипфейки реальных людей — во многих странах это незаконно; маркируйте изображения, созданные или изменённые ИИ, в рекламе и СМИ. Памятка — в подразделе «Справочник» раздела <a href="/prompty/foto/" style="color:#4b3ecf">«Переделка фото»</a>.</span></div></div>
+    <h2 class="hub-h">🧭 С чего начать</h2>
+    <div class="pop-grid start-grid">
+      {D.START_STEPS.map(([day, t, txt, pg, q]) => (
+        <a class="pop sc" href={pg + '?q=' + encodeURIComponent(q)}>
+          <span class="p-cat">{day}</span><h3>{t}</h3><p set:html={txt} /><span class="p-go">Открыть промпт →</span>
+        </a>
+      ))}
+      <a class="pop sc sc-all" href="/guides/s-chego-nachat/"><span class="p-cat">Путеводитель</span><h3>Первая неделя с ИИ</h3>
+        <p>Семь шагов-сценариев: от формулы промпта до привычки спрашивать. Проверки и типовые ошибки новичков.</p>
+        <span class="p-go">Открыть путеводитель →</span></a>
+      <a class="pop sc sc-all" href="/education/studying-AI.html"><span class="p-cat">Обучение с нуля</span><h3>Путь в ИИ: с чайника до инженера</h3>
+        <p>План обучения по уровням: темы, аналогии, примеры и мини-тест. Отмечайте пройденное — прогресс сохранится в браузере.</p>
+        <span class="p-go">Открыть план обучения →</span></a>
+    </div>
+    <h2 class="hub-h">🎯 Какая нейросеть для чего</h2>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица с горизонтальной прокруткой">
+      <table class="cmp">
+        <tr><th>Задача</th><th>Чем решать</th><th>Бесплатный вариант</th></tr>
+        {D.MODELS_MINI.map(([task, models, free]) => (
+          <tr><td set:html={task} /><td set:html={models} /><td set:html={free} /></tr>
+        ))}
+      </table>
+    </div>
+    <p class="mini-more"><a href="/guides/kakuyu-nejroset-vybrat/">Полное сравнение: бесплатные тарифы, русский язык, замены →</a> ·
+      <a href="/glossary/">Глоссарий терминов →</a> · <a href="/prompty/">Карта промптов →</a></p>
+    <h2 class="hub-h">📈 Статьи и кейсы</h2>
+    <div class="pop-grid">
+      <a class="pop case" href={D.KEIS_FILE}><span class="p-cat">Кейс · ИИ на работе</span>
+        <h3>Сколько часов экономит ИИ на письмах и документах</h3>
+        <p>Цифры исследований OpenAI, NBER, Microsoft и hh.ru, пример расчёта рабочей недели и 7 готовых промптов: от follow-up до exec-summary и протокола встречи.</p>
+        <span class="p-go">Читать кейс →</span></a>
+      <div class="pop soon"><span class="p-cat">Готовится</span><h3>«Неделя ИИ-меню: что вышло»</h3>
+        <p>Следующий кейс — про быт: меню из того, что есть в холодильнике, список покупок и экономия в цифрах. Промпты — в разделе «ИИ в личной жизни».</p><span class="p-go">Скоро</span></div>
+    </div>
+    <h2 class="hub-h">🔥 Популярные промпты</h2>
+    <div class="pop-grid">
+      {D.POPULAR.map(([f, q, cat, title, desc]) => (
+        <a class="pop" href={f + '?q=' + encodeURIComponent(q)}>
+          <span class="p-cat">{cat}</span><h3>{title}</h3>
+          <p set:html={desc} /><span class="p-go">Открыть промпт →</span>
+        </a>
+      ))}
+    </div>
+    <h2 class="hub-h">❓ Частые вопросы</h2>
+    <div class="faq">
+      {D.FAQ.map(([q, a]) => (
+        <details><summary>{q}</summary><p set:html={a} /></details>
+      ))}
+    </div>
+  </main>
+  <footer>
+    <div class="wrap">
+      <Fragment set:html={navHtml('/', true, D.NAV)} />
+      <Fragment set:html={D.KNOW_NAV} />
+      <Fragment set:html={sourcesGrid} />
+      <b>⚡ Ediai — ИИ в личной жизни и работе</b> · {TOTAL} проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.<br>
+      Шаблоны основаны на общепризнанных практиках промпт-инжиниринга и официальных гайдах; лучшие результаты даёт итерация: сгенерировали → уточнили → повторили.
+      <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a></div>
+    </div>
+  </footer>
+  <script is:inline set:html={hubDataJs} />
+  <script is:inline set:html={HUBJS} />
+  <script is:inline>
+  /* поиск из шапки (формы action="/") подставляет ?q= в глобальный поиск хаба */
+  (function(){
+    var q = new URLSearchParams(location.search).get('q');
+    var input = document.getElementById('hubQ');
+    if (q && input) {
+      input.value = q;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.focus();
+    }
+  })();
+  </script>
+</Base>

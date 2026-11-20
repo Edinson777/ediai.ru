@@ -1,0 +1,39 @@
+---
+/** Хаб глоссария (порт know_glossary() + build_glossary() из build.py).
+ *  Фаза 2: адрес /glossary/, крошки + BreadcrumbList, абсолютные ссылки. */
+import KnowPage from '../../templates/KnowPage.astro';
+import { D, SITE_URL, WEBSITE_LD, UPDATED, breadcrumbLd, crumbs } from '../../lib/site.js';
+import { ld } from '../../lib/gen.js';
+
+const path = '/glossary/';
+const crumb = crumbs([
+  { name: 'Главная', href: '/' },
+  { name: 'Глоссарий' },
+]);
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  breadcrumbLd(crumb),
+  { '@type': 'WebPage', '@id': SITE_URL + path, url: SITE_URL + path,
+    name: 'Глоссарий терминов ИИ простыми словами', description: D.GLOSS_DESC,
+    inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
+  { '@type': 'DefinedTermSet', name: 'Глоссарий терминов ИИ',
+    hasPart: D.GLOSSARY.map(([t, d]) => ({ '@type': 'DefinedTerm', name: t, description: d })) },
+] };
+---
+
+<KnowPage path={path} title={D.GLOSS_TITLE} desc={D.GLOSS_DESC} ogimg="og/og-glossary.png" ldGraph={ld(ldGraphObj)} navcur={path} crumb={crumb}>
+  <section class="hero">
+    <h1>Глоссарий терминов ИИ простыми словами</h1>
+    <p class="hub-sub">Шестнадцать понятий, которые встречаются в статьях и подсказках чат-ботов, — с короткими примерами из практики. Без формул и маркетинга.</p>
+    <p class="hub-meta">Обновлено {UPDATED} · Простыми словами · С примерами</p>
+  </section>
+  <div class="strip">
+    <h2>Термины</h2>
+    <div class="gloss">
+      {D.GLOSSARY.map(([term, d, ex]) => (
+        <div class="term"><b>{term}</b><p set:html={d} /><p class="ex" set:html={ex} /></div>
+      ))}
+    </div>
+    <p class="p-go"><a href="/guides/kakuyu-nejroset-vybrat/">Какая нейросеть для чего →</a> · <a href="/guides/s-chego-nachat/">С чего начать →</a> · <a href="/instrumenty/">Обзор моделей →</a></p>
+  </div>
+</KnowPage>
