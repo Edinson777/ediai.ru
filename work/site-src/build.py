@@ -272,6 +272,7 @@ def nav_html(current, footer=False):
 
 # База знаний: сквозная перелинковка во всех футерах (и вверху страниц базы знаний)
 KNOW_NAV = ('<div class="know-nav"><b>📚 База знаний:</b> <a href="start.html">С чего начать</a> · '
+            '<a href="education/studying-AI.html">Путь в ИИ</a> · '
             '<a href="models.html">Какая нейросеть для чего</a> · <a href="glossary.html">Глоссарий</a> · '
             '<a href="keis-ii-pochta.html">Статьи и кейсы</a></div>')
 
@@ -1217,6 +1218,9 @@ def build_index():
       '    <a class="pop sc sc-all" href="start.html"><span class="p-cat">Путеводитель</span><h3>Первая неделя с ИИ</h3>'
       '<p>Семь шагов-сценариев: от формулы промпта до привычки спрашивать. Проверки и типовые ошибки новичков.</p>'
       '<span class="p-go">Открыть путеводитель →</span></a>\n'
+      '    <a class="pop sc sc-all" href="education/studying-AI.html"><span class="p-cat">Обучение с нуля</span><h3>Путь в ИИ: с чайника до инженера</h3>'
+      '<p>План обучения по уровням: темы, аналогии, примеры и мини-тест. Отмечайте пройденное — прогресс сохранится в браузере.</p>'
+      '<span class="p-go">Открыть план обучения →</span></a>\n'
       '  </div>\n'
       '  <h2 class="hub-h">🎯 Какая нейросеть для чего</h2>\n'
       '  <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица с горизонтальной прокруткой">\n    <table class="cmp">\n'
@@ -1246,15 +1250,23 @@ def build_index():
 
 # ---------------------------------------------------------------- служебные файлы
 def robots_txt():
-    return ('User-agent: *\nAllow: /\nDisallow: /404.html\nClean-param: q\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n')
+    # Личные разделы (z/ — личный склад, pwa/ и maxbot/ — служебные) закрыты
+    # от поисковиков: синхронизировано с ручной правкой robots.txt 2026-11.
+    return ('User-agent: *\nAllow: /\nDisallow: /404.html\n'
+            'Disallow: /pwa\nDisallow: /z\nDisallow: /maxbot\n'
+            'Clean-param: q\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n')
 
 def sitemap_xml():
+    # Кортеж: (файл, priority[, lastmod]) — третий элемент перекрывает общий LASTMOD.
     pages = [('index.html','1.0')] + [(SECTIONS[k]['file'],'0.8') for k in SECTION_ORDER] + \
-            [('start.html','0.7'),('models.html','0.7'),('glossary.html','0.6'),(KEIS_FILE,'0.7')]
-    urls = ''.join(
-      '  <url><loc>' + SITE_URL + '/' + f + '</loc><lastmod>' + LASTMOD + '</lastmod>'
-      '<changefreq>weekly</changefreq><priority>' + pr + '</priority></url>\n'
-      for f, pr in pages)
+            [('start.html','0.7'),('models.html','0.7'),('glossary.html','0.6'),(KEIS_FILE,'0.7'),
+             ('education/studying-AI.html','0.7','2026-11-20')]
+    urls = ''
+    for p in pages:
+        f, pr = p[0], p[1]
+        lm = p[2] if len(p) > 2 else LASTMOD
+        urls += ('  <url><loc>' + SITE_URL + '/' + f + '</loc><lastmod>' + lm +
+                 '</lastmod><changefreq>weekly</changefreq><priority>' + pr + '</priority></url>\n')
     return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
             + urls + '</urlset>\n')
 
