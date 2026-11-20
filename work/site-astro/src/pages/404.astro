@@ -29,7 +29,7 @@ const tiles = [
 <body>
 <Fragment set:html={METRIKA} />
 <Fragment set:html={gtagSnippet()} />
-<main class="wrap" id="main" tabindex="-1">
+<main class="wrap" id="main" tabindex="-1" data-pagefind-ignore>
   <section class="hero">
     <h1>404 — такой страницы нет</h1>
     <p class="hub-sub">Возможно, ссылка устарела или в адресе опечатка. На главной есть поиск по всем {D.TOTAL} промптам, а ниже — основные разделы.</p>
@@ -47,7 +47,7 @@ const tiles = [
     <Fragment set:html={navHtml('/404.html', true, D.NAV)} />
     <Fragment set:html={D.KNOW_NAV} />
     <b>⚡ Ediai — ИИ в личной жизни и работе</b>
-    <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a></div>
+    <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a> · <a href="/poisk/">Поиск</a></div>
   </div>
 </footer>
 </body>

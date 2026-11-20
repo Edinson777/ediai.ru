@@ -1,0 +1,132 @@
+---
+/** Фаза 3, шаг 5: страница полнотекстового поиска /poisk/ (план §3 «Автосервисы»).
+ *  Индекс строит pagefind после сборки (`pagefind --site dist` в npm run build);
+ *  в dev-режиме /pagefind/pagefind.js отсутствует — показываем подсказку.
+ *  Поддержка ?q=: поиск запускается автоматически из адресной строки.
+ *  Для зеркала на GitHub Pages baseUrl определяется по location.pathname. */
+import Base from '../layouts/Base.astro';
+import { SITE_URL, TOTAL, WEBSITE_LD, breadcrumbLd, crumbs } from '../lib/site.js';
+import { ld } from '../lib/gen.js';
+
+const path = '/poisk/';
+const crumb = crumbs([
+  { name: 'Главная', href: '/' },
+  { name: 'Поиск' },
+]);
+const ldGraphObj = { '@context': 'https://schema.org', '@graph': [
+  WEBSITE_LD,
+  breadcrumbLd(crumb),
+  { '@type': 'WebPage', '@id': SITE_URL + path, url: SITE_URL + path,
+    name: 'Поиск по Ediai: ' + TOTAL + ' промптов, гайды и глоссарий',
+    description: 'Полнотекстовый поиск по всем разделам Ediai: промпты, гайды, термины глоссария и страницы моделей.',
+    inLanguage: 'ru', isPartOf: { '@id': SITE_URL + '/#website' } },
+] };
+---
+
+<Base title="Поиск по сайту Ediai — промпты, гайды, глоссарий"
+      desc={'Полнотекстовый поиск по всем разделам Ediai: ' + TOTAL + ' промптов для нейросетей, гайды, глоссарий и страницы моделей. Найдите нужный сценарий за пару секунд.'}
+      path={path} ogImg="og/og-index.png" ldGraph={ld(ldGraphObj)} crumb={crumb}>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <main class="wrap" id="main" tabindex="-1">
+    <section class="hero">
+      <h1>Поиск по сайту</h1>
+      <p class="hub-sub">Полнотекстовый поиск по {TOTAL} промптам, гайдам, глоссарию и разделам базы. Ищет по названиям, описаниям и тексту промптов.</p>
+    </section>
+    <div class="strip ps">
+      <form class="ps-form" id="psForm" role="search">
+        <input type="search" id="psInput" placeholder="Например: аватар, резюме, холодильник…" autocomplete="off" aria-label="Поисковый запрос">
+      </form>
+      <p class="ps-status" id="psStatus">Загружаю поисковый индекс…</p>
+      <div class="ps-results" id="psResults"></div>
+    </div>
+  </main>
+  <footer>
+    <div class="wrap">
+      <b>⚡ Ediai — ИИ в личной жизни и работе</b> · {TOTAL} проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.
+    </div>
+    <div class="svc-nav"><a href="/o-proekte/">О проекте</a> · <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a> · <a href="/poisk/">Поиск</a></div>
+  </footer>
+</Base>
+
+<script is:inline>
+(function(){
+"use strict";
+/* Клиентский поиск на pagefind (индекс — dist/pagefind/, собирается после build).
+ * Никаких внешних сервисов: pagefind.js лежит рядом с сайтом. pagefind.js — ES-модуль
+ * (export {search, options…}), подключается динамическим import() с catch для dev-режима. */
+var input  = document.getElementById('psInput');
+var status = document.getElementById('psStatus');
+var out    = document.getElementById('psResults');
+var form   = document.getElementById('psForm');
+var timer  = null;
+var NOT_READY = 'Поисковый индекс не найден (dev-режим?): соберите сайт — npm run build.';
+var IDLE = 'Введите не менее двух символов — например, «аватар» или «письмо».';
+var LOADING = 'Загружаю поисковый индекс…';
+var EMPTY = function(q){ return 'По запросу «' + q + '» ничего не найдено. Попробуйте другое слово — например, «аватар», «резюме» или «холодильник».'; };
+
+/* Зеркало GitHub Pages живёт по под-пути /ediai.ru/ — все адреса результатов с ним. */
+var BASE = location.pathname.indexOf('/ediai.ru/') === 0 ? '/ediai.ru/' : '/';
+
+function esc(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+function render(res, q){
+  if (!res.length) { status.textContent = EMPTY(q); out.innerHTML = ''; return; }
+  status.textContent = 'Найдено: ' + res.length;
+  out.innerHTML = res.map(function(r){
+    return '<a class="ps-item" href="' + esc(r.url) + '">'
+      + '<b>' + esc(r.title) + '</b>'
+      + '<span class="ps-path">' + esc(r.url) + '</span>'
+      + (r.excerpt ? '<span class="ps-ex">' + r.excerpt + '</span>' : '')
+      + '</a>';
+  }).join('');
+}
+
+var pfmod = null;  /* namespace модуля pagefind */
+
+async function run(q){
+  if (!pfmod) { status.textContent = LOADING; return; }
+  q = (q || '').trim();
+  if (q.length < 2) { status.textContent = IDLE; out.innerHTML = ''; return; }
+  var search = await pfmod.search(q);
+  var top = search.results.slice(0, 30);
+  var res = [];
+  for (var i = 0; i < top.length; i++) {
+    var d = await top[i].data();
+    res.push({
+      url: d.url,
+      title: (d.meta && d.meta.title) ? d.meta.title : d.url,
+      excerpt: d.excerpt,
+    });
+  }
+  render(res, q);
+}
+
+function boot(){
+  pfmod.options({ baseUrl: BASE });
+  status.textContent = IDLE;
+  /* ?q= — авто-запуск из адресной строки (ссылки «Поиск» и хаб-поиск) */
+  var pre = new URLSearchParams(location.search).get('q');
+  if (pre) {
+    input.value = pre;
+    run(pre);
+  }
+}
+input.addEventListener('input', function(){
+  clearTimeout(timer);
+  var q = input.value;
+  timer = setTimeout(function(){ run(q); }, 250);
+});
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  clearTimeout(timer);
+  run(input.value);
+});
+
+import('/pagefind/pagefind.js').then(function(mod){
+  pfmod = mod;
+  boot();
+}).catch(function(){
+  status.textContent = NOT_READY;
+});
+})();
+</script>

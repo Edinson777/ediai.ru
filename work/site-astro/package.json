@@ -7,12 +7,16 @@
   "scripts": {
     "vendor": "python3 scripts/dump_data.py",
     "dev": "npm run vendor && astro dev",
-    "build": "npm run vendor && astro build && python3 scripts/gen_meta.py",
+    "build": "npm run vendor && astro build && python3 scripts/gen_meta.py && npx pagefind --site dist --exclude-selectors \"header.site-header, nav.crumbs, footer\"",
     "preview": "astro preview",
     "publish": "node scripts/publish.mjs",
     "verify": "python3 scripts/verify.py"
   },
   "dependencies": {
     "astro": "^5.7.0"
+  },
+  "devDependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "pagefind": "^1.6.0"
   }
 }

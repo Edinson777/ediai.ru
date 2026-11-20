@@ -127,6 +127,7 @@ NEW_PAGES = [
     ('instrumenty/index.html', '/instrumenty/'),
     ('o-proekte/index.html', '/o-proekte/'),
     ('politika-konfidencialnosti/index.html', '/politika-konfidencialnosti/'),
+    ('poisk/index.html', '/poisk/'),
 ]
 
 def strip_chrome(soup):
@@ -262,6 +263,45 @@ def main():
     else:
         total += 1
         print('FAIL 404.html')
+
+    # фаза 3 (автосервисы): pagefind-индекс, страница /poisk/, rss.xml
+    pf_dir = os.path.join(DIST, 'pagefind')
+    if os.path.exists(os.path.join(pf_dir, 'pagefind.js')) and os.path.exists(os.path.join(pf_dir, 'pagefind-entry.json')):
+        pf_files = sum(len(fs) for _r, _d, fs in os.walk(pf_dir))
+        print('OK   pagefind/ (индекс на месте: %d файлов)' % pf_files)
+    else:
+        total += 1
+        print('FAIL pagefind/: нет pagefind.js или pagefind-entry.json — прогоните pagefind --site dist')
+    poisk_path = os.path.join(DIST, 'poisk', 'index.html')
+    if os.path.exists(poisk_path):
+        b = soup_of(poisk_path)
+        with open(poisk_path, encoding='utf-8') as f:
+            raw = f.read()
+        # загрузчик pagefind.js — динамический (pf.src в inline-скрипте, onerror для dev)
+        h1 = b.find_all('h1')
+        if '/pagefind/pagefind.js' in raw and len(h1) == 1:
+            print('OK   /poisk/: загрузчик pagefind.js, один h1')
+        else:
+            total += 1
+            print('FAIL /poisk/: загрузчик=%s, h1=%d' % ('/pagefind/pagefind.js' in raw, len(h1)))
+    else:
+        total += 1
+        print('FAIL /poisk/: страницы нет в dist')
+    rss_path = os.path.join(DIST, 'rss.xml')
+    import xml.etree.ElementTree as ET
+    if os.path.exists(rss_path):
+        items = ET.parse(rss_path).getroot().findall('.//item')
+        links = [it.findtext('link') or '' for it in items]
+        need = {SITE + p for p in ('/guides/s-chego-nachat', '/guides/osnovy-promptinga',
+                                   '/guides/kakuyu-nejroset-vybrat', '/guides/ii-i-pochta')}
+        if len(items) == 4 and need <= set(links):
+            print('OK   rss.xml: 4 гайда, все ссылки на месте')
+        else:
+            total += 1
+            print('FAIL rss.xml: items=%d, недостающие ссылки %s' % (len(items), sorted(need - set(links))))
+    else:
+        total += 1
+        print('FAIL rss.xml: файла нет в dist')
     print()
     if total:
         print('ИТОГ: %d расхождений. См. выше.' % total)

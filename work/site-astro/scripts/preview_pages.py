@@ -46,8 +46,9 @@ STUBS = {
     'glossary.html': '/glossary/',
 }
 
-# только известные топы — консервативное правило для JSON-строк в inline-скриптах
-TOPS = r'prompty|guides|glossary|instrumenty|o-proekte|politika-konfidencialnosti|education'
+# известные топы для JSON-строк в inline-скриптах; pagefind — динамический import()
+# загрузчика поиска на /poisk/ (фаза 3); URL самих результатов правит baseUrl в pagefind
+TOPS = r'prompty|guides|glossary|instrumenty|o-proekte|politika-konfidencialnosti|education|pagefind'
 
 # счётчики/реклама: блоки, целиком ограниченные HTML-комментариями (site.js: METRIKA,
 # gtagSnippet, adsSnippet). Удаляются только в превью-сборке.
@@ -105,8 +106,13 @@ def main():
 
                 def repl(mm):
                     stats['js'] += 1
-                    return '"%s%s' % (BASE, mm.group(1))
-                html = re.sub(r'"(/(?:%s)(?=[/?#"]))' % TOPS, repl, html)
+                    return '%s%s%s' % (mm.group(1), BASE, mm.group(2))
+                # строки в скриптах в двойных И одинарных кавычках (import('/pagefind/…'))
+                html = re.sub(r'(["\'])(/(?:%s)(?=[/?#"\']))' % TOPS, repl, html)
+
+                # ссылка на RSS в head — на абсолютный адрес превью (иначе ведёт на боевой домен)
+                html = html.replace('https://ediai.ru/rss.xml',
+                                    'https://edinson777.github.io/ediai.ru/rss.xml')
 
                 if 'noindex' not in html:
                     if '<head>' not in html:
@@ -121,9 +127,9 @@ def main():
                 left = re.findall(r'href="/(?!ediai\.ru)[^"]*"', html)
                 if left:
                     problems.append('%s: остались href=%s' % (os.path.relpath(p, OUT), left[:3]))
-                left_js = re.findall(r'"(/(?:%s)(?=[/?#"]))' % TOPS, html)
+                left_js = re.findall(r'(["\'])(/(?:%s)(?=[/?#"\']))' % TOPS, html)
                 if left_js:
-                    problems.append('%s: остались пути в скриптах %s' % (os.path.relpath(p, OUT), left_js[:3]))
+                    problems.append('%s: остались пути в скриптах %s' % (os.path.relpath(p, OUT), [a[1] for a in left_js[:3]]))
                 for dom in COUNTER_DOMAINS:
                     if dom in html:
                         problems.append('%s: остался счётчик %s' % (os.path.relpath(p, OUT), dom))
@@ -143,13 +149,14 @@ def main():
                 '# Основной сайт: https://ediai.ru (robots.txt — в корне боевого репозитория)\n'
                 'User-agent: *\nDisallow: /\n')
 
-    # llms.txt: абсолютные адреса превью, чтобы ссылки были рабочими
-    llms = os.path.join(OUT, 'llms.txt')
-    if os.path.exists(llms):
-        with open(llms, encoding='utf-8') as f:
-            t = f.read()
-        with open(llms, 'w', encoding='utf-8') as f:
-            f.write(t.replace('https://ediai.ru/', 'https://edinson777.github.io/ediai.ru/'))
+    # llms.txt и rss.xml: абсолютные адреса превью, чтобы ссылки были рабочими
+    for name in ('llms.txt', 'rss.xml'):
+        fpath = os.path.join(OUT, name)
+        if os.path.exists(fpath):
+            with open(fpath, encoding='utf-8') as f:
+                t = f.read()
+            with open(fpath, 'w', encoding='utf-8') as f:
+                f.write(t.replace('https://ediai.ru/', 'https://edinson777.github.io/ediai.ru/'))
 
     # .htaccess не нужен (Pages его игнорирует), .nojekyll — отключить Jekyll
     ht = os.path.join(OUT, '.htaccess')

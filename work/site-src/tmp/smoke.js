@@ -417,7 +417,7 @@ console.log('guides/ii-i-pochta');
 console.log('sitemap.xml / llms.txt / .htaccess');
 {
   const sm = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sm.match(/<loc>/g) || []).length === 18, 'sitemap: 18 страниц (12 старых → 17 новых + education)');
+  ok((sm.match(/<loc>/g) || []).length === 19, 'sitemap: 19 страниц (17 новых + education + /poisk/)');
   ok(sm.includes('https://ediai.ru/prompty/foto/'), 'sitemap: новый адрес фото-раздела');
   ok(!sm.includes('.html</loc>') || sm.includes('/education/studying-AI.html'), 'sitemap: каталоги, из .html только education');
   const lt = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
@@ -471,6 +471,33 @@ console.log('404, favicon, apple-touch-icon');
   ok(rb.includes('Disallow: /z') && rb.includes('Disallow: /maxbot') && rb.includes('Disallow: /pwa'), 'robots.txt: служебные папки закрыты');
   const sm = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
   ok(!sm.includes('404.html'), 'sitemap.xml: без 404');
+}
+
+/* ---------- 7. Фаза 3: поиск /poisk/, pagefind/, rss.xml ---------- */
+console.log('фаза 3: /poisk/, pagefind/, rss.xml');
+{
+  const pk = fs.readFileSync(path.join(SITE, 'poisk', 'index.html'), 'utf8');
+  ok(pk.includes("import('/pagefind/pagefind.js')"), 'poisk: загрузчик pagefind.js (import)');
+  ok(/<h1>Поиск по сайту<\/h1>/.test(pk), 'poisk: один h1');
+  ok(pk.includes('id="psInput"') && pk.includes('id="psResults"'), 'poisk: поле поиска и контейнер результатов');
+  ok(pk.includes('rel="canonical" href="https://ediai.ru/poisk/"'), 'poisk: canonical /poisk/');
+  ok(/<nav class="crumbs[^"]*"/.test(pk), 'poisk: хлебные крошки');
+  ok(pk.includes('application/ld+json'), 'poisk: JSON-LD на месте');
+  ok(pk.includes('href="/poisk/">Поиск</a>'), 'poisk: ссылка в своём футере');
+  const hub = fs.readFileSync(path.join(SITE, 'prompty/foto/index.html'), 'utf8');
+  ok(hub.includes('href="/poisk/">Поиск</a>'), 'футеры: ссылка «Поиск» на страницах');
+  ok(hub.includes('rel="alternate" type="application/rss+xml"'), 'head: RSS alternate');
+  ok(hub.includes('href="/poisk/">Поиск по сайту</a>'), 'мобильное меню: «Поиск по сайту»');
+  ok(fs.existsSync(path.join(SITE, 'pagefind', 'pagefind-entry.json')) && fs.existsSync(path.join(SITE, 'pagefind', 'pagefind.js')),
+     'pagefind/: pagefind-entry.json + pagefind.js в корне');
+  ok(fs.existsSync(path.join(SITE, 'pagefind', 'fragment')), 'pagefind/: фрагменты индекса');
+  const rss = fs.readFileSync(path.join(SITE, 'rss.xml'), 'utf8');
+  ok((rss.match(/<item>/g) || []).length === 4, 'rss.xml: 4 гайда');
+  ok(['/guides/s-chego-nachat', '/guides/osnovy-promptinga', '/guides/kakuyu-nejroset-vybrat', '/guides/ii-i-pochta']
+      .every(g => rss.includes('https://ediai.ru' + g + '<')), 'rss.xml: все ссылки гайдов');
+  ok(rss.includes('<pubDate>'), 'rss.xml: pubDate заполнен');
+  const sm3 = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
+  ok(sm3.includes('<loc>https://ediai.ru/poisk/</loc>'), 'sitemap: /poisk/ в карте');
 }
 
 console.log(fails ? ('\nПРОВАЛЕНО ПРОВЕРОК: ' + fails) : '\nВСЕ ПРОВЕРКИ ПРОЙДЕНЫ');

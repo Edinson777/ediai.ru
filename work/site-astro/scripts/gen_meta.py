@@ -39,6 +39,7 @@ SITEMAP = [
     ('/glossary/', 0.6, D['LASTMOD']),
     ('/o-proekte/', 0.5, TODAY),
     ('/politika-konfidencialnosti/', 0.3, TODAY),
+    ('/poisk/', 0.5, TODAY),
     ('/education/studying-AI.html', 0.7, TODAY),
 ]
 
