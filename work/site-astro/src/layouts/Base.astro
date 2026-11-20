@@ -50,7 +50,12 @@ const toolsItems = [
 
 // мобильный аккордеон: те же пункты, разделы с подразделами раскрываются
 const mobilePrompts = promptItems;
-const mobileGuides = GUIDES.map(g => ({ href: g.path, label: g.label }));
+// «Обучение с нуля» (курс «Путь в ИИ») — первый пункт подменю «Гайды»:
+// и в дропдауне шапки, и в мобильном аккордеоне
+const mobileGuides = [
+  { href: '/education/studying-ai/', label: 'Обучение с нуля' },
+  ...GUIDES.map(g => ({ href: g.path, label: g.label })),
+];
 ---
 
 <!DOCTYPE html>
@@ -117,7 +122,7 @@ const mobileGuides = GUIDES.map(g => ({ href: g.path, label: g.label }));
           </a>
         </div>
       </div>
-      <div class:list={['sh-item', { 'has-drop': true, 'active': isActive('/guides/') }]}>
+      <div class:list={['sh-item', { 'has-drop': true, 'active': isActive('/guides/') || curPath.startsWith('/education/') }]}>
         <a class="sh-link" href="/guides/">Гайды</a>
         <button type="button" class="sh-toggle" aria-expanded="false" aria-label="Подменю «Гайды»">▾</button>
         <div class="sh-drop">
