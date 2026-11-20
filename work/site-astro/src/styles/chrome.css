@@ -276,3 +276,67 @@
 }
 .svc-nav a{color:#8a8ca8;font-weight:600;text-decoration:none}
 .svc-nav a:hover{color:var(--sh-accent);text-decoration:underline}
+
+/* --- страница поиска /poisk/ (фаза 3, pagefind; префикс ps-*) --- */
+.ps-form{
+  display:flex;
+  gap:10px;
+}
+.ps-form input{
+  flex:1;
+  font:inherit;
+  font-size:17px;
+  padding:12px 16px;
+  border:1px solid var(--sh-border);
+  border-radius:10px;
+  background:#fff;
+  color:var(--sh-ink);
+}
+.ps-form input:focus{
+  outline:2px solid var(--sh-accent);
+  outline-offset:1px;
+  border-color:var(--sh-accent);
+}
+.ps-status{
+  color:#8a8ca8;
+  font-size:14px;
+  margin:12px 0 18px;
+}
+.ps-item{
+  display:block;
+  padding:14px 16px;
+  border:1px solid var(--sh-border);
+  border-radius:12px;
+  margin-bottom:10px;
+  color:inherit;
+  text-decoration:none;
+}
+.ps-item:hover{
+  border-color:var(--sh-accent);
+  background:var(--sh-accent-soft);
+}
+.ps-item b{
+  display:block;
+  font-size:16px;
+}
+.ps-path{
+  display:block;
+  color:#8a8ca8;
+  font-size:12px;
+  margin-top:2px;
+  word-break:break-all;
+}
+.ps-ex{
+  display:block;
+  font-size:14px;
+  color:#555770;
+  margin-top:6px;
+}
+.ps-ex mark{
+  background:#fff3c4;
+  padding:0 2px;
+  border-radius:3px;
+}
+@media (max-width:640px){
+  .ps-form{flex-direction:column}
+}

@@ -78,6 +78,7 @@ const mobileGuides = GUIDES.map(g => ({ href: g.path, label: g.label }));
 <link rel="icon" href={FAVICON}>
 <link rel="icon" type="image/x-icon" href={SITE_URL + '/favicon.ico'} sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href={SITE_URL + '/apple-touch-icon.png'}>
+<link rel="alternate" type="application/rss+xml" title="Ediai — гайды и сценарии" href={SITE_URL + '/rss.xml'}>
 <script type="application/ld+json" is:inline set:html={ldGraph} />
 <style is:inline set:html={CSS} />
 <style is:inline set:html={chromeCss} />
@@ -184,6 +185,7 @@ const mobileGuides = GUIDES.map(g => ({ href: g.path, label: g.label }));
     </div>
     <a class="sh-mlink" href="/glossary/">Глоссарий</a>
     <a class="sh-mlink" href="/o-proekte/">О проекте</a>
+    <a class="sh-mlink" href="/poisk/">Поиск по сайту</a>
   </div>
 </header>
 {crumb && (
