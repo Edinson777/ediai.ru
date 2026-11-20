@@ -1,0 +1,4 @@
+# Превью на GitHub Pages — индексация запрещена.
+# Основной сайт: https://ediai.ru (robots.txt — в корне боевого репозитория)
+User-agent: *
+Disallow: /

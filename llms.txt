@@ -1,0 +1,30 @@
+# Ediai.ru
+
+> Практическая база из 211 промптов для нейросетей на русском языке.
+> Промпты проверены вручную, разбиты на 6 категорий и снабжены инструкциями по применению.
+
+## Разделы
+
+- [Промпты](https://edinson777.github.io/ediai.ru/prompty/): карта всех категорий
+- [Фото и изображения](https://edinson777.github.io/ediai.ru/prompty/foto/): 54 промпта
+- [Личная жизнь](https://edinson777.github.io/ediai.ru/prompty/zhizn/): 56 промптов
+- [Работа](https://edinson777.github.io/ediai.ru/prompty/rabota/): 30 промптов
+- [Тексты](https://edinson777.github.io/ediai.ru/prompty/teksty/): 21 промпт
+- [Генерация картинок](https://edinson777.github.io/ediai.ru/prompty/generaciya/): 21 промпт
+- [Qwen](https://edinson777.github.io/ediai.ru/prompty/qwen/): 23 промпта
+
+## Материалы
+
+- [Гайды](https://edinson777.github.io/ediai.ru/guides/): основы промптинга, выбор модели
+- [С чего начать](https://edinson777.github.io/ediai.ru/guides/s-chego-nachat/): путеводитель новичка, 7 шагов
+- [Основы промптинга](https://edinson777.github.io/ediai.ru/guides/osnovy-promptinga/): формула промпта и итерации
+- [Какую нейросеть выбрать](https://edinson777.github.io/ediai.ru/guides/kakuyu-nejroset-vybrat/): сравнение задач и моделей
+- [Кейс: ИИ и почта](https://edinson777.github.io/ediai.ru/guides/ii-i-pochta/): сколько часов экономит ИИ, с цифрами
+- [Инструменты](https://edinson777.github.io/ediai.ru/instrumenty/): обзор моделей
+- [Глоссарий](https://edinson777.github.io/ediai.ru/glossary/): термины ИИ простыми словами
+- [Путь в ИИ](https://edinson777.github.io/ediai.ru/education/studying-ai/): план обучения с нуля
+
+## О проекте
+
+- [О проекте](https://edinson777.github.io/ediai.ru/o-proekte/): автор и методика проверки
+- [Политика конфиденциальности](https://edinson777.github.io/ediai.ru/politika-konfidencialnosti/): аналитика и cookies
