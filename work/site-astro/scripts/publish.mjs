@@ -89,13 +89,40 @@ if (!files.length) {
 }
 
 let copied = 0;
+let relinked = 0;
+
+/**
+ * Этап-2 правка для зеркала GitHub Pages (project site):
+ * зеркало обслуживается по /ediai.ru/, а корнеотносительные ссылки
+ * (/guides/…) на нём ведут в корень домена → 404. Переводим внутренние
+ * href/src/action в пути ОТНОСИТЕЛЬНО страницы: работает и на ediai.ru
+ * (корень домена), и на зеркале (под /ediai.ru/). Внешние абсолютные
+ * URL, якоря #, data:-URI и протокол-относительные // не трогаем.
+ */
+function relativize(html, depth) {
+  const prefix = '../'.repeat(depth);
+  return html.replace(/(\s(?:href|src|action)=)"(\/[^"]*)"/g, (m, attr, path) => {
+    if (path.startsWith('//')) return m;                    // протокол-относительный внешний
+    if (path === '/') return `${attr}"${prefix || './'}"`;  // ссылка на корень сайта
+    return `${attr}"${prefix}${path.slice(1)}"`;
+  });
+}
+
 for (const file of files) {
   const rel = relative(DIST, file);
   if (!guard(rel)) continue;
   const target = join(ROOT, rel);
   mkdirSync(dirname(target), { recursive: true });
-  writeFileSync(target, readFileSync(file));
+  let content = readFileSync(file);
+  if (rel.endsWith('.html')) {
+    const depth = dirname(rel) === '.' ? 0 : rel.split(sep).length - 1;
+    const before = content.toString('utf8');
+    const after = relativize(before, depth);
+    if (after !== before) relinked++;
+    content = Buffer.from(after, 'utf8');
+  }
+  writeFileSync(target, content);
   copied++;
   console.log('  ' + rel);
 }
-console.log('OK: скопировано ' + copied + ' файлов (HTML + robots/sitemap/llms/.htaccess), удалено старых: ' + removed + '.');
+console.log('OK: скопировано ' + copied + ' файлов, ссылки релятивизированы в ' + relinked + ' HTML, удалено старых: ' + removed + '.');

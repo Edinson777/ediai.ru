@@ -12,8 +12,25 @@ function ok(cond, msg){
   else    { console.log('  ✗ FAIL: ' + msg); fails++; }
 }
 
+/* publish.mjs релятивизирует внутренние href/src/action (для зеркала Pages
+   по /ediai.ru/). Здесь — инверсия: приводим ссылки к корнеотносительному
+   виду, чтобы все проверки могли использовать канонические адреса /x/y/. */
+function normLinks(html, file){
+  const depth = path.dirname(file) === '.' ? 0 : file.split('/').length - 1;
+  return html.replace(/(\s(?:href|src|action)=)"([^"]*)"/g, (m, attr, v) => {
+    if (!v || v.startsWith('/') || v.startsWith('#') || /^[a-z]+:/.test(v)) return m;
+    if (v === './') return attr + '"/"';
+    let rest = v;
+    for (let i = 0; i < depth; i++) {
+      if (!rest.startsWith('../')) return m;   // чужой путь — не трогаем
+      rest = rest.slice(3);
+    }
+    return attr + '"/' + rest + '"';
+  });
+}
+
 function load(file, query){
-  const html = fs.readFileSync(path.join(SITE, file), 'utf8');
+  const html = normLinks(fs.readFileSync(path.join(SITE, file), 'utf8'), file);
   const dom = new JSDOM(html, {
     runScripts: 'dangerously',
     pretendToBeVisual: true,
@@ -457,7 +474,7 @@ console.log('404, favicon, apple-touch-icon');
   ok(h4.includes('404 — такой страницы нет'), '404: заголовок на месте');
   ok(/name="robots" content="noindex,follow"/.test(h4), '404: noindex,follow');
   ok(!h4.includes('rel="canonical"'), '404: без canonical (не конкурирует с страницами)');
-  ok(h4.includes('href="/"') && h4.includes('/prompty/foto/'), '404: навигация домой и в разделы');
+  ok(h4.includes('href="./"') && h4.includes('prompty/foto/'), '404: навигация домой и в разделы');
   ok(h4.includes('metrika/tag.js?id=114035585') && h4.includes('G-P1BDWZ1D1Q'), '404: оба счётчика (видны битые ссылки)');
   const ico = fs.readFileSync(path.join(SITE, 'favicon.ico'));
   ok(ico[0] === 0 && ico[1] === 0 && ico[2] === 1 && ico[3] === 0 && ico.readUInt16LE(4) === 3,
@@ -484,11 +501,11 @@ console.log('фаза 3: /poisk/, pagefind/, rss.xml');
   ok(pk.includes('rel="canonical" href="https://ediai.ru/poisk/"'), 'poisk: canonical /poisk/');
   ok(/<nav class="crumbs[^"]*"/.test(pk), 'poisk: хлебные крошки');
   ok(pk.includes('application/ld+json'), 'poisk: JSON-LD на месте');
-  ok(pk.includes('href="/poisk/">Поиск</a>'), 'poisk: ссылка в своём футере');
+  ok(/href="(\.\.\/)*poisk\/">Поиск<\/a>/.test(pk), 'poisk: ссылка в своём футере');
   const hub = fs.readFileSync(path.join(SITE, 'prompty/foto/index.html'), 'utf8');
-  ok(hub.includes('href="/poisk/">Поиск</a>'), 'футеры: ссылка «Поиск» на страницах');
+  ok(/href="(\.\.\/)*poisk\/">Поиск<\/a>/.test(hub), 'футеры: ссылка «Поиск» на страницах');
   ok(hub.includes('rel="alternate" type="application/rss+xml"'), 'head: RSS alternate');
-  ok(hub.includes('href="/poisk/">Поиск по сайту</a>'), 'мобильное меню: «Поиск по сайту»');
+  ok(/href="(\.\.\/)*poisk\/">Поиск по сайту<\/a>/.test(hub), 'мобильное меню: «Поиск по сайту»');
   ok(fs.existsSync(path.join(SITE, 'pagefind', 'pagefind-entry.json')) && fs.existsSync(path.join(SITE, 'pagefind', 'pagefind.js')),
      'pagefind/: pagefind-entry.json + pagefind.js в корне');
   ok(fs.existsSync(path.join(SITE, 'pagefind', 'fragment')), 'pagefind/: фрагменты индекса');
