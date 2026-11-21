@@ -89,6 +89,7 @@ const bridgeCss = `
     <a href="/prompty/">ИИ</a>
     <a href="/digital/">Цифровая жизнь</a>
     <a href="/instrumenty/">Инструменты</a>
+    <a href="/education/studying-AI.html">Обучение</a>
   </nav>
   <form class="e-search" action="/poisk/" method="get" role="search">
     <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" autocomplete="off">
@@ -110,7 +111,7 @@ const bridgeCss = `
 )}
 <slot />
 {chrome && (
-<footer class="nh-footer"><div class="e-wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="/"><span class="brand-symbol">E.</span><span><span class="brand-word">EDIAI</span><span class="brand-sub">разумнее с деньгами · увереннее с технологиями</span></span></a><p>Практический портал о финансах, искусственном интеллекте и цифровой жизни. Понятно о сложном — полезно в повседневных решениях.</p></div><div><h4>Направления</h4><div class="footer-links"><a href="/finansy/">Финансы</a><a href="/prompty/">Искусственный интеллект</a><a href="/digital/">Цифровая жизнь</a><a href="/instrumenty/">Инструменты</a></div></div><div><h4>EDIAI</h4><div class="footer-links"><a href="/guides/s-chego-nachat/">С чего начать</a><a href="/guides/">Материалы</a><a href="/glossary/">Глоссарий</a><a href="/o-proekte/">О проекте</a><a href="/poisk/">Поиск</a></div></div></div><div class="footer-bottom"><span>© {SITE_NAME} · ediai.ru</span><span>Материалы о финансах носят информационный характер и не являются инвестиционной рекомендацией.</span></div></div></footer>
+<footer class="nh-footer"><div class="e-wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="/"><span class="brand-symbol">E.</span><span><span class="brand-word">EDIAI</span><span class="brand-sub">разумнее с деньгами · увереннее с технологиями</span></span></a><p>Практический портал о финансах, искусственном интеллекте и цифровой жизни. Понятно о сложном — полезно в повседневных решениях.</p></div><div><h4>Направления</h4><div class="footer-links"><a href="/finansy/">Финансы</a><a href="/prompty/">ИИ</a><a href="/digital/">Цифровая жизнь</a><a href="/instrumenty/">Инструменты</a></div></div><div><h4>EDIAI</h4><div class="footer-links"><a href="/guides/s-chego-nachat/">С чего начать</a><a href="/guides/">Материалы</a><a href="/education/studying-AI.html">Обучение</a><a href="/glossary/">Глоссарий</a><a href="/o-proekte/">О проекте</a><a href="/poisk/">Поиск</a></div></div></div><div class="footer-bottom"><span>© {SITE_NAME} · ediai.ru</span><span>Материалы о финансах носят информационный характер и не являются инвестиционной рекомендацией.</span></div></div></footer>
 )}
 <Fragment set:html={adsSnippet()} />
 </body>

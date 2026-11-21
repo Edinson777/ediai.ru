@@ -57,10 +57,10 @@ console.log('шапка/футер нового каркаса (на prompty/fot
   ok(head !== null, 'шапка: header.e-head-bar > .e-head (липкая, как на главной)');
   ok(d.querySelector('.site-header, .sh-nav, .sh-burger') === null, 'шапка: старый каркас sh-* убран');
   const nav = [...head.querySelectorAll('.e-nav a')];
-  ok(JSON.stringify(nav.map(a => a.textContent.trim())) === JSON.stringify(['Финансы','ИИ','Цифровая жизнь','Инструменты']),
-     'шапка: 4 пункта — ' + nav.map(a => a.textContent.trim()).join(' / '));
-  ok(JSON.stringify(nav.map(a => a.getAttribute('href'))) === JSON.stringify(['/finansy/','/prompty/','/digital/','/instrumenty/']),
-     'шапка: адреса пунктов (нормализованные)');
+  ok(JSON.stringify(nav.map(a => a.textContent.trim())) === JSON.stringify(['Финансы','ИИ','Цифровая жизнь','Инструменты','Обучение']),
+     'шапка: 5 пунктов — ' + nav.map(a => a.textContent.trim()).join(' / '));
+  ok(JSON.stringify(nav.map(a => a.getAttribute('href'))) === JSON.stringify(['/finansy/','/prompty/','/digital/','/instrumenty/','/education/studying-AI.html']),
+     'шапка: адреса пунктов, «Обучение» ведёт на курс (нормализованные)');
   ok(head.querySelector('.brand .brand-symbol').textContent === 'E.', 'шапка: брендовый символ E.');
   const search = head.querySelector('form.e-search');
   ok(search !== null && search.getAttribute('action') === '/poisk/' && !!search.querySelector('input[name="q"]'),
