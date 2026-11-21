@@ -7,3 +7,6 @@ __pycache__/
 .DS_Store
 .arena/
 uploads/
+work/site-astro/node_modules/
+work/site-astro/dist/
+work/site-src/tmp/shots-redesign/
