@@ -22,6 +22,11 @@ const {
   ldGraph,       // готовая ld()-строка JSON-LD
   ogType = 'website',
   crumb = null,  // хлебные крошки [{name, href?}] или null (главная)
+  chrome = true,   // false → без шапки Base (новые страницы редизайна со своей шапкой)
+  themeColor = '#f5f6fa', // цвет темы браузера (новые страницы — #f3f0e8)
+  extraCss = null, // CSS-строка новых страниц, инлайнится ПОСЛЕ chrome.css
+  bodyClass = '',  // класс корневого body (новые страницы — e-body)
+  baseCss = true,  // false → не подключать старые style.css/chrome.css (новые страницы несут только свой CSS)
 } = Astro.props;
 
 const url = SITE_URL + path;
@@ -74,19 +79,21 @@ const mobileGuides = GUIDES.map(g => ({ href: g.path, label: g.label }));
 <meta name="twitter:title" content={attr(title)}>
 <meta name="twitter:description" content={attr(desc)}>
 <meta name="twitter:image" content={SITE_URL + '/' + ogImg}>
-<meta name="theme-color" content="#f5f6fa">
+<meta name="theme-color" content={themeColor}>
 <link rel="icon" href={FAVICON}>
 <link rel="icon" type="image/x-icon" href={SITE_URL + '/favicon.ico'} sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href={SITE_URL + '/apple-touch-icon.png'}>
 <link rel="alternate" type="application/rss+xml" title="Ediai — гайды и сценарии" href={SITE_URL + '/rss.xml'}>
 <script type="application/ld+json" is:inline set:html={ldGraph} />
-<style is:inline set:html={CSS} />
-<style is:inline set:html={chromeCss} />
+{baseCss && <style is:inline set:html={CSS} />}
+{baseCss && <style is:inline set:html={chromeCss} />}
+{extraCss && <style is:inline set:html={extraCss} />}
 </head>
-<body>
+<body class={bodyClass}>
 <Fragment set:html={METRIKA} />
 <Fragment set:html={gtagSnippet()} />
 <a class="skip-link" href="#main">Перейти к содержимому</a>
+{chrome && (
 <header class="site-header">
   <div class="wrap sh-in">
     <a class="sh-logo" href="/" aria-label="Ediai — на главную">⚡ <span>Ediai<span class="sh-logo-d">.ru</span></span></a>
@@ -188,7 +195,8 @@ const mobileGuides = GUIDES.map(g => ({ href: g.path, label: g.label }));
     <a class="sh-mlink" href="/poisk/">Поиск по сайту</a>
   </div>
 </header>
-{crumb && (
+)}
+{chrome && crumb && (
 <nav class="crumbs wrap" aria-label="Хлебные крошки">
   <ol>
     {crumb.map((c, i) => (

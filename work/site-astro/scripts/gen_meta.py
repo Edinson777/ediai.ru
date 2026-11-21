@@ -23,6 +23,12 @@ TODAY = datetime.date.today().isoformat()
 # 404.html в sitemap не попадает (noindex), education/ — добавляем отдельно.
 SITEMAP = [
     ('/', 1.0, D['LASTMOD']),
+    ('/finansy/', 0.8, TODAY),
+    ('/finansy/podushka-bezopasnosti/', 0.7, TODAY),
+    ('/finansy/pds-vklad-nakopitelnyj-schet/', 0.7, TODAY),
+    ('/finansy/iis-3-nalogovye-lgoty/', 0.7, TODAY),
+    ('/digital/', 0.8, TODAY),
+    ('/digital/podozritelnoe-soobshchenie/', 0.7, TODAY),
     ('/prompty/', 0.8, D['LASTMOD']),
     ('/prompty/foto/', 0.8, D['LASTMOD']),
     ('/prompty/generaciya/', 0.8, D['LASTMOD']),
@@ -94,14 +100,23 @@ def plural(n):
 def pc(key):
     return str(c[key]) + ' ' + plural(c[key])
 
-llms = f"""# Ediai.ru
+llms = f"""# Ediai.ru (EDIAI)
 
-> Практическая база из {D['TOTAL']} промптов для нейросетей на русском языке.
-> Промпты проверены вручную, разбиты на 6 категорий и снабжены инструкциями по применению.
+> EDIAI — практический портал о финансах, искусственном интеллекте и цифровой
+> жизни для взрослых 30–70 лет. Ядро ИИ-направления — {D['TOTAL']} проверенных
+> промптов для нейросетей на русском языке; финансовое направление — понятные
+> материалы о накоплениях, ИИС-3, ПДС и налоговых вычетах со ссылками на
+> официальные источники. Слоган: «Разумнее с деньгами. Увереннее с технологиями».
 
-## Разделы
+## Направления
 
-- [Промпты]({SITE}/prompty/): карта всех категорий
+- [Финансы]({SITE}/finansy/): накопления, ИИС-3, ПДС, вклады — без обещаний доходности
+- [Искусственный интеллект]({SITE}/prompty/): карта всех категорий промптов
+- [Цифровая жизнь]({SITE}/digital/): безопасность и уверенность в интернете
+- [Инструменты]({SITE}/instrumenty/): обзор моделей и инструменты
+
+## ИИ-направление
+
 - [Фото и изображения]({SITE}/prompty/foto/): {pc('photo')}
 - [Личная жизнь]({SITE}/prompty/zhizn/): {pc('life')}
 - [Работа]({SITE}/prompty/rabota/): {pc('work')}
@@ -109,14 +124,23 @@ llms = f"""# Ediai.ru
 - [Генерация картинок]({SITE}/prompty/generaciya/): {pc('generate')}
 - [Qwen]({SITE}/prompty/qwen/): {pc('qwen')}
 
-## Материалы
+## Финансовое направление
+
+- [Подушка безопасности]({SITE}/finansy/podushka-bezopasnosti/): сколько и где держать резерв
+- [ПДС, вклад или накопительный счёт]({SITE}/finansy/pds-vklad-nakopitelnyj-schet/): сравнение мест для денег
+- [ИИС-3: налоговые льготы]({SITE}/finansy/iis-3-nalogovye-lgoty/): вычеты, сроки, чек-лист перед открытием
+
+## Цифровая жизнь
+
+- [Как распознать подозрительное сообщение]({SITE}/digital/podozritelnoe-soobshchenie/): признаки и план действий
+
+## Материалы ИИ-направления
 
 - [Гайды]({SITE}/guides/): основы промптинга, выбор модели
 - [С чего начать]({SITE}/guides/s-chego-nachat/): путеводитель новичка, 7 шагов
 - [Основы промптинга]({SITE}/guides/osnovy-promptinga/): формула промпта и итерации
 - [Какую нейросеть выбрать]({SITE}/guides/kakuyu-nejroset-vybrat/): сравнение задач и моделей
 - [Кейс: ИИ и почта]({SITE}/guides/ii-i-pochta/): сколько часов экономит ИИ, с цифрами
-- [Инструменты]({SITE}/instrumenty/): обзор моделей
 - [Глоссарий]({SITE}/glossary/): термины ИИ простыми словами
 - [Путь в ИИ]({SITE}/education/studying-AI.html): план обучения с нуля
 

@@ -1,0 +1,61 @@
+---
+/**
+ * Каркас материалов и хабов редизайна (новый слой, этап 1).
+ * Использует Base с chrome={false}: своя крошка-строка, герой, футер.
+ * dir: 'finansy' (лесной герой) | 'digital' (тёмный герой) | material-режим
+ * через prop hero="white".
+ */
+import Base from './Base.astro';
+import { SITE_NAME } from '../lib/site.js';
+import tokensCss from '../styles/tokens.css?raw';
+import newpagesCss from '../styles/newpages.css?raw';
+
+const {
+  title, desc, path, ogImg, ldGraph,
+  hero = 'material',           // 'finansy' | 'digital' | 'material'
+  eyebrow,                      // надзаголовок героя
+  badge, badgeClass = '',       // бейдж направления (необязательно)
+  dateLabel, readTime,          // метаданные материала (необязательно)
+  crumb = [],                   // хлебные крошки [{name, href?}]
+} = Astro.props;
+
+const extraCss = tokensCss + '\n' + newpagesCss;
+---
+
+<Base title={title} desc={desc} path={path} ogImg={ogImg} ldGraph={ldGraph}
+      chrome={false} baseCss={false} themeColor="#f3f0e8" extraCss={extraCss} bodyClass="e-body">
+<header class="e-head">
+  <a class="brand" href="/" aria-label="EDIAI — на главную"><span class="brand-symbol">E.</span><span><span class="brand-word">EDIAI</span><span class="brand-sub">разумнее с деньгами · увереннее с технологиями</span></span></a>
+  <nav class="e-nav" aria-label="Главное меню">
+    <a href="/finansy/">Финансы</a>
+    <a href="/prompty/">ИИ</a>
+    <a href="/digital/">Цифровая жизнь</a>
+    <a href="/instrumenty/">Инструменты</a>
+  </nav>
+  <a class="btn btn-dark e-cta" href="/guides/s-chego-nachat/">Найти полезное ↗</a>
+</header>
+<main class="e-wrap" id="main" tabindex="-1">
+<nav class="crumbs e-crumbs" aria-label="Хлебные крошки">
+  <ol>
+    {crumb.map((c, i) => (
+      <li>
+        {c.href ? <a href={c.href}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<section class="nh-hero {hero}">
+  <div class="e-eyebrow">{eyebrow}</div>
+  {(badge || dateLabel) && (
+  <div class="nh-meta">
+    {badge && <span class:list={['nh-badge', badgeClass]}>{badge}</span>}
+    {dateLabel && <span>{dateLabel}</span>}
+    {readTime && <span>{readTime}</span>}
+  </div>
+  )}
+  <slot name="hero" />
+</section>
+<slot />
+</main>
+<footer class="nh-footer"><div class="e-wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="/"><span class="brand-symbol">E.</span><span><span class="brand-word">EDIAI</span><span class="brand-sub">разумнее с деньгами · увереннее с технологиями</span></span></a><p>Практический портал о финансах, искусственном интеллекте и цифровой жизни. Понятно о сложном — полезно в повседневных решениях.</p></div><div><h4>Направления</h4><div class="footer-links"><a href="/finansy/">Финансы</a><a href="/prompty/">Искусственный интеллект</a><a href="/digital/">Цифровая жизнь</a><a href="/instrumenty/">Инструменты</a></div></div><div><h4>EDIAI</h4><div class="footer-links"><a href="/guides/s-chego-nachat/">С чего начать</a><a href="/guides/">Материалы</a><a href="/glossary/">Глоссарий</a><a href="/o-proekte/">О проекте</a><a href="/poisk/">Поиск</a><a href="mailto:hello@ediai.ru">Контакты</a></div></div></div><div class="footer-bottom"><span>© {SITE_NAME} · ediai.ru</span><span>Материалы о финансах носят информационный характер и не являются инвестиционной рекомендацией.</span></div></div></footer>
+</Base>

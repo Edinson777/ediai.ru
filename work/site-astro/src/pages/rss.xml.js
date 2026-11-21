@@ -1,24 +1,48 @@
-/** Фаза 3, шаг 5: RSS-лента (@astrojs/rss, план §3 «Автосервисы»).
- *  Лента гайдов; сценарные страницы добавляются в items в фазе 4
- *  (Content Collections, src/content/scenarios/).
- *  Дата: LASTMOD из данных (ISO) — UPDATED текстовый («ноябрь 2026»), в pubDate не годится. */
+/** RSS-лента: гайды ИИ-направления + материалы финансового и цифрового направлений
+ *  (этап 1 редизайна). Content Collections (фаза 4) заменит ручной список items. */
 import rss from '@astrojs/rss';
 import { GUIDES, D, UPDATED } from '../lib/site.js';
 
 const UPDATED_DATE = new Date(D.LASTMOD + 'T12:00:00Z');
 
+/** Новые материалы редизайна: направление, слаг, заголовок, описание. */
+const REDESIGN = [
+  ['Финансы', '/finansy/podushka-bezopasnosti/',
+    'Подушка безопасности: сколько и где держать',
+    'Как рассчитать резерв на 3–6 месяцев расходов, где его хранить и как собрать за год без надрыва.'],
+  ['Финансы', '/finansy/pds-vklad-nakopitelnyj-schet/',
+    'ПДС, вклад или накопительный счёт: как выбрать место для денег',
+    'Доступ к деньгам, доходность, господдержка и риски трёх базовых инструментов — таблицей.'],
+  ['Финансы', '/finansy/iis-3-nalogovye-lgoty/',
+    'ИИС-3: налоговые льготы и что проверить перед открытием счёта',
+    'Две льготы сразу, вычет до 52 000 ₽ в год, минимальный срок 5 лет и чек-лист перед открытием.'],
+  ['Цифровая жизнь', '/digital/podozritelnoe-soobshchenie/',
+    'Как распознать подозрительное сообщение',
+    'Три признака мошеннического сообщения, правило одной минуты и план действий, если уже нажали.'],
+];
+
 export function GET(context) {
   return rss({
-    title: 'Ediai.ru — гайды и сценарии',
-    description: 'Как применять нейросети в личной жизни и работе: гайды, кейсы и сценарные подборки Ediai. ' + D.TOTAL + ' промптов на русском языке.',
+    title: 'EDIAI — разумнее с деньгами. Увереннее с технологиями.',
+    description: 'Практический портал о финансах, искусственном интеллекте и цифровой жизни: понятные материалы, инструменты и ' + D.TOTAL + ' готовых промптов для нейросетей.',
     site: context.site,
-    items: GUIDES.map(g => ({
-      title: g.label,
-      // osnovy-promptinga собирается из старой basics-страницы без desc в GUIDES
-      description: g.desc || 'Формула промпта: роль, задача, контекст и итерации.',
-      link: g.path,
-      pubDate: UPDATED_DATE,
-    })),
+    items: [
+      ...REDESIGN.map(([dir, link, t, d]) => ({
+        title: t,
+        description: d,
+        link,
+        pubDate: UPDATED_DATE,
+        categories: [dir],
+      })),
+      ...GUIDES.map(g => ({
+        title: g.label,
+        // osnovy-promptinga собирается из старой basics-страницы без desc в GUIDES
+        description: g.desc || 'Формула промпта: роль, задача, контекст и итерации.',
+        link: g.path,
+        pubDate: UPDATED_DATE,
+        categories: ['ИИ'],
+      })),
+    ],
     customData: '<language>ru</language>',
     trailingSlash: false,
   });
