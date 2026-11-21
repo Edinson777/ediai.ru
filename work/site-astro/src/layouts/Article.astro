@@ -32,7 +32,9 @@ const extraCss = tokensCss + '\n' + newpagesCss;
     <a href="/digital/">Цифровая жизнь</a>
     <a href="/instrumenty/">Инструменты</a>
   </nav>
-  <a class="btn btn-dark e-cta" href="/guides/s-chego-nachat/">Найти полезное ↗</a>
+  <form class="e-search" action="/poisk/" method="get" role="search">
+    <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" autocomplete="off">
+  </form>
 </header>
 <main class="e-wrap" id="main" tabindex="-1">
 <nav class="crumbs e-crumbs" aria-label="Хлебные крошки">

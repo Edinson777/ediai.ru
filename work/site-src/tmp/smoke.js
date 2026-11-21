@@ -62,8 +62,10 @@ console.log('шапка/футер нового каркаса (на prompty/fot
   ok(JSON.stringify(nav.map(a => a.getAttribute('href'))) === JSON.stringify(['/finansy/','/prompty/','/digital/','/instrumenty/']),
      'шапка: адреса пунктов (нормализованные)');
   ok(head.querySelector('.brand .brand-symbol').textContent === 'E.', 'шапка: брендовый символ E.');
-  const cta = head.querySelector('.e-cta');
-  ok(cta !== null && cta.getAttribute('href') === '/guides/s-chego-nachat/', 'шапка: CTA ведёт в «С чего начать»');
+  const search = head.querySelector('form.e-search');
+  ok(search !== null && search.getAttribute('action') === '/poisk/' && !!search.querySelector('input[name="q"]'),
+     'шапка: поиск — GET-форма на /poisk/ с параметром q');
+  ok(d.querySelector('.e-cta') === null, 'шапка: кнопка «Найти полезное» убрана (решение владельца)');
   const crumbs = d.querySelectorAll('nav.e-crumbs li');
   ok(crumbs.length === 3, 'крошки: Главная → Промпты → категория (3 элемента)');
   ok(crumbs[0].querySelector('a').getAttribute('href') === '/', 'крошка 1 — главная');
