@@ -53,8 +53,8 @@ console.log('шапка/футер нового каркаса (на prompty/fot
 {
   const dom = load('prompty/foto/index.html');
   const d = dom.window.document;
-  const head = d.querySelector('header.e-head');
-  ok(head !== null, 'шапка: header.e-head нового каркаса');
+  const head = d.querySelector('header.e-head-bar .e-head');
+  ok(head !== null, 'шапка: header.e-head-bar > .e-head (липкая, как на главной)');
   ok(d.querySelector('.site-header, .sh-nav, .sh-burger') === null, 'шапка: старый каркас sh-* убран');
   const nav = [...head.querySelectorAll('.e-nav a')];
   ok(JSON.stringify(nav.map(a => a.textContent.trim())) === JSON.stringify(['Финансы','ИИ','Цифровая жизнь','Инструменты']),

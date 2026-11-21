@@ -179,6 +179,20 @@ for path in ('/finansy/', '/digital/'):
         fail(path + ': нет FAQPage в JSON-LD')
 print('хабы редизайна: CollectionPage + FAQPage')
 
+# единая липкая шапка на всех неком-главной страницах (решение владельца, 21.11.2026)
+ncss = open('src/styles/newpages.css', encoding='utf-8').read()
+if '.e-head-bar' not in ncss or 'position:sticky' not in ncss:
+    fail('css: нет липкого бара .e-head-bar')
+if not re.search(r'\.e-head\s+a\{text-decoration:none\}', ncss):
+    fail('css: нет сброса подчёркиваний в шапке')
+for path in ('/prompty/', '/finansy/iis-3-nalogovye-lgoty/', '/glossary/', '/guides/'):
+    bb = soup_of(os.path.join(DIST, path.lstrip('/'), 'index.html'))
+    if not bb.select_one('header.e-head-bar .e-head'):
+        fail(path + ': нет липкого бара шапки')
+    if bb.select_one('.e-cta, .header-cta'):
+        fail(path + ': CTA «Найти полезное» вернулся в шапку')
+print('шапка: липкий бар .e-head-bar на хабе, материале и старых страницах')
+
 for path in ('/finansy/podushka-bezopasnosti/', '/finansy/pds-vklad-nakopitelnyj-schet/',
              '/finansy/iis-3-nalogovye-lgoty/', '/digital/podozritelnoe-soobshchenie/'):
     bb = soup_of(os.path.join(DIST, path.lstrip('/'), 'index.html'))

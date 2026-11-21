@@ -82,7 +82,7 @@ const bridgeCss = `
 <Fragment set:html={gtagSnippet()} />
 <a class="skip-link" href="#main">Перейти к содержимому</a>
 {chrome && (
-<header class="e-head">
+<header class="e-head-bar"><div class="e-head">
   <a class="brand" href="/" aria-label="EDIAI — на главную"><span class="brand-symbol">E.</span><span><span class="brand-word">EDIAI</span><span class="brand-sub">разумнее с деньгами · увереннее с технологиями</span></span></a>
   <nav class="e-nav" aria-label="Главное меню">
     <a href="/finansy/">Финансы</a>
@@ -93,7 +93,7 @@ const bridgeCss = `
   <form class="e-search" action="/poisk/" method="get" role="search">
     <input type="search" name="q" placeholder="Поиск по сайту…" aria-label="Поиск по сайту" autocomplete="off">
   </form>
-</header>
+</div></header>
 )}
 {chrome && crumb && (
 <div class="wrap">
