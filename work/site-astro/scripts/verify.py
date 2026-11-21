@@ -158,9 +158,9 @@ if not b.select_one('#copyPrompt') or not b.select_one('#toast'):
 for inp in ('initial', 'monthly', 'rate', 'years', 'total'):
     if not b.select_one('#' + inp):
         fail('/: калькулятор без #' + inp)
-form = b.select_one('.search-modal form')
+form = b.select_one('header form.e-search')
 if not form or form.get('action') != '/poisk/' or not form.select_one('input[name="q"]'):
-    fail('/: модальный поиск не ведёт в /poisk/?q=')
+    fail('/: поиск в шапке не ведёт в /poisk/?q=')
 if not b.select_one('.tools-grid .tool-card.calc[href="#calculator"]'):
     fail('/: карточка калькулятора без якоря #calculator')
 if old_links_ok(b):

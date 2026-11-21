@@ -142,14 +142,10 @@ console.log('index.html: калькулятор, копирование, мод�
   d.getElementById('copyPrompt').dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
   await tick(60);
   ok(d.getElementById('toast').classList.contains('show'), 'копирование: тост показан');
-  /* модальный поиск: форма ведёт в /poisk/?q=, Escape закрывает */
-  d.getElementById('openSearch').dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
-  ok(d.getElementById('searchModal').classList.contains('open'), 'поиск: модалка открылась');
-  const form = d.querySelector('.search-modal form');
-  ok(form.getAttribute('action') === '/poisk/' && form.querySelector('input[name="q"]'), 'поиск: GET-форма на /poisk/ с параметром q');
-  ok(d.querySelectorAll('#searchResults a[href^="/"]').length >= 6, 'поиск: подсказки с живыми ссылками');
-  d.dispatchEvent(new w.KeyboardEvent('keydown', {key:'Escape', bubbles:true}));
-  ok(!d.getElementById('searchModal').classList.contains('open'), 'поиск: Escape закрыл модалку');
+  /* поиск в шапке главной: pill-форма → /poisk/?q=, единый паттерн с другими страницами */
+  const hs = d.querySelector('header form.e-search');
+  ok(hs !== null && hs.getAttribute('action') === '/poisk/' && !!hs.querySelector('input[name="q"]'), 'поиск: GET-форма в шапке на /poisk/ с параметром q');
+  ok(d.querySelector('.header-cta, .search-modal') === null, 'шапка главной: CTA и модалка поиска убраны (единый поиск)');
   /* мобильное меню */
   d.getElementById('menuBtn').dispatchEvent(new w.MouseEvent('click', {bubbles:true}));
   ok(d.getElementById('mobileNav').classList.contains('open'), 'мобильное меню открывается');
