@@ -7,7 +7,7 @@
   "scripts": {
     "vendor": "python3 scripts/dump_data.py",
     "dev": "npm run vendor && astro dev",
-    "build": "npm run vendor && astro build && python3 scripts/gen_meta.py && npx pagefind --site dist --exclude-selectors \"header.site-header, nav.crumbs, footer\"",
+    "build": "npm run vendor && astro build && python3 scripts/gen_meta.py && npx pagefind --site dist --exclude-selectors \".e-head, .e-crumbs, footer\"",
     "preview": "astro preview",
     "publish": "node scripts/publish.mjs",
     "verify": "python3 scripts/verify.py"

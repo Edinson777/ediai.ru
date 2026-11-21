@@ -48,27 +48,34 @@ const tick = ms => new Promise(r => setTimeout(r, ms));
 (async () => {
 
 /* ---------- 0. Шапка и хлебные крошки (фаза 2) ---------- */
-console.log('шапка и крошки (на prompty/foto)');
+/* ---------- 0. Шапка, крошки и футер нового каркаса (этап 2, шаг 2) ---------- */
+console.log('шапка/футер нового каркаса (на prompty/foto)');
 {
   const dom = load('prompty/foto/index.html');
   const d = dom.window.document;
-  const items = [...d.querySelectorAll('.sh-nav > .sh-item')];
-  ok(items.length === 5, 'шапка: 5 пунктов меню');
-  const labels = items.map(i => i.querySelector('.sh-link').textContent.trim());
-  ok(JSON.stringify(labels) === JSON.stringify(['Промпты','Гайды','Инструменты','Глоссарий','О проекте']),
-     'шапка: пункты ' + labels.join(' / '));
-  ok(d.querySelectorAll('.sh-nav .sh-item.has-drop').length === 3, 'шапка: дропдауны у 3 разделов');
-  ok([...d.querySelectorAll('.sh-nav .sh-drop a[href]')].every(a => !a.getAttribute('href').includes('.html') || a.getAttribute('href').startsWith('/education/')), 'шапка: в дропдаунах нет мёртвых ссылок на *.html');
-  ok(d.querySelector('.sh-drop .sh-row[href="/prompty/foto/"]') !== null, 'шапка: 6 категорий промптов с адресами');
-  ok(!!d.querySelector('.sh-search input[name="q"]') && d.querySelector('.sh-search').getAttribute('action') === '/', 'шапка: поиск — форма GET на главную');
-  ok(!!d.querySelector('.sh-burger') && d.getElementById('shMobile').hidden === true, 'шапка: бургер + скрытая мобильная панель');
-  ok(d.querySelectorAll('.sh-macc').length === 3, 'мобильная панель: 3 аккордеона');
-  const crumbs = d.querySelectorAll('nav.crumbs li');
+  const head = d.querySelector('header.e-head');
+  ok(head !== null, 'шапка: header.e-head нового каркаса');
+  ok(d.querySelector('.site-header, .sh-nav, .sh-burger') === null, 'шапка: старый каркас sh-* убран');
+  const nav = [...head.querySelectorAll('.e-nav a')];
+  ok(JSON.stringify(nav.map(a => a.textContent.trim())) === JSON.stringify(['Финансы','ИИ','Цифровая жизнь','Инструменты']),
+     'шапка: 4 пункта — ' + nav.map(a => a.textContent.trim()).join(' / '));
+  ok(JSON.stringify(nav.map(a => a.getAttribute('href'))) === JSON.stringify(['/finansy/','/prompty/','/digital/','/instrumenty/']),
+     'шапка: адреса пунктов (нормализованные)');
+  ok(head.querySelector('.brand .brand-symbol').textContent === 'E.', 'шапка: брендовый символ E.');
+  const cta = head.querySelector('.e-cta');
+  ok(cta !== null && cta.getAttribute('href') === '/guides/s-chego-nachat/', 'шапка: CTA ведёт в «С чего начать»');
+  const crumbs = d.querySelectorAll('nav.e-crumbs li');
   ok(crumbs.length === 3, 'крошки: Главная → Промпты → категория (3 элемента)');
   ok(crumbs[0].querySelector('a').getAttribute('href') === '/', 'крошка 1 — главная');
   const ldF = JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent);
   ok(ldF['@graph'].some(n => n['@type'] === 'BreadcrumbList' && n.itemListElement.length === 3), 'BreadcrumbList из 3 узлов в JSON-LD');
-  ok(d.querySelector('.sh-item.active .sh-link').textContent === 'Промпты', 'активный раздел подсвечен (aria/класс active)');
+  const foot = d.querySelector('footer.nh-footer');
+  ok(foot !== null, 'футер: footer.nh-footer общего каркаса');
+  const fl = [...foot.querySelectorAll('.footer-links a')].map(a => a.getAttribute('href'));
+  ok(['/poisk/','/glossary/','/o-proekte/','/guides/','/finansy/','/digital/','/instrumenty/'].every(h => fl.includes(h)),
+     'футер: все ссылки направлений и служебные');
+  ok(foot.textContent.includes('инвестиционной рекомендацией'), 'футер: дисклеймер финансов');
+  ok(!foot.textContent.includes('Контакты') && !foot.textContent.includes('hello@'), 'футер: без контактов (решение владельца)');
 }
 
 /* ---------- 1. Главная (редизайн v3): статична, без JS-ошибок ---------- */
@@ -78,7 +85,7 @@ console.log('index.html (редизайн)');
   const d = dom.window.document;
   ok(d.querySelectorAll('h1').length === 1, 'ровно один <h1>');
   ok(d.querySelector('h1').textContent.includes('Разумнее'), 'h1 — слоган новой концепции');
-  ok(d.querySelectorAll('nav.crumbs').length === 0, 'на главной нет хлебных крошек');
+  ok(d.querySelectorAll('nav.e-crumbs').length === 0, 'на главной нет хлебных крошек');
   ok([...d.querySelectorAll('header nav a')].every(a => !a.getAttribute('href').includes('#')),
      'шапка редизайна: ссылки на разделы, не на якоря');
   ok(d.querySelector('.hero-actions .btn-dark[href="/finansy/"]') !== null, 'hero: кнопка в /finansy/');
@@ -218,7 +225,7 @@ console.log('prompty/foto');
   const srcP = d.querySelector('details.sources');
   ok(!!srcP && !srcP.open, 'источники раздела: спойлер, свёрнут');
   ok(d.querySelector('meta[name="theme-color"]').content === '#f3f0e8', 'theme-color светлый (новая палитра, этап 2)');
-  ok(d.querySelector('style').textContent.includes('.card-top{display:flex;flex-direction:column'), 'карточка: заголовок 1-й строкой, значки ИИ 2-й');
+  ok([...d.querySelectorAll('style')].some(s => s.textContent.includes('.card-top{display:flex;flex-direction:column')), 'карточка: заголовок 1-й строкой, значки ИИ 2-й');
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), 'Метрика 114035585 на разделе');
   ok(d.documentElement.innerHTML.includes('yandex.ru/ads/system/ap-loader.js'), 'автореклама РСЯ на разделе');
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/watch/114035585'), 'noscript-маячок Метрики');
@@ -342,7 +349,7 @@ for (const [file, h1part, checks] of [
     '7 шагов-сценариев': d.querySelectorAll('.gstep').length === 7,
     'ссылки ведут на промпты разделов': [...d.querySelectorAll('.gstep a')].every(a => /\?q=/.test(a.getAttribute('href'))),
     'HowTo в JSON-LD': JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent)['@graph'].some(n => n['@type'] === 'HowTo'),
-    'крошки: Главная → Гайды → С чего начать': [...d.querySelectorAll('nav.crumbs a')].map(a=>a.getAttribute('href')).join(' ') === '/ /guides/',
+    'крошки: Главная → Гайды → С чего начать': [...d.querySelectorAll('nav.e-crumbs a')].map(a=>a.getAttribute('href')).join(' ') === '/ /guides/',
   })],
   ['guides/kakuyu-nejroset-vybrat/index.html', 'Какая нейросеть для чего', d => ({
     'таблица: 7 задач': d.querySelectorAll('.cmp tr').length === 8,
@@ -393,7 +400,7 @@ for (const [file, h1part, extra] of [
   const w = dom.window, d = w.document;
   await tick(30);
   ok(d.querySelectorAll('h1').length === 1 && d.querySelector('h1').textContent.toLowerCase().includes(h1part.toLowerCase()), file + ': один h1 «' + h1part + '»');
-  ok(d.querySelector('nav.crumbs') !== null, file + ': хлебные крошки');
+  ok(d.querySelector('nav.e-crumbs') !== null, file + ': хлебные крошки');
   const ldN = JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent);
   ok(ldN['@graph'].some(n => n['@type'] === 'BreadcrumbList'), file + ': BreadcrumbList в JSON-LD');
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), file + ': Метрика');
@@ -499,13 +506,13 @@ console.log('фаза 3: /poisk/, pagefind/, rss.xml');
   ok(/<h1>Поиск по сайту<\/h1>/.test(pk), 'poisk: один h1');
   ok(pk.includes('id="psInput"') && pk.includes('id="psResults"'), 'poisk: поле поиска и контейнер результатов');
   ok(pk.includes('rel="canonical" href="https://ediai.ru/poisk/"'), 'poisk: canonical /poisk/');
-  ok(/<nav class="crumbs[^"]*"/.test(pk), 'poisk: хлебные крошки');
+  ok(/<nav class="(?:e-)?crumbs[^"]*"/.test(pk), 'poisk: хлебные крошки');
   ok(pk.includes('application/ld+json'), 'poisk: JSON-LD на месте');
   ok(/href="(\.\.\/)*poisk\/">Поиск<\/a>/.test(pk), 'poisk: ссылка в своём футере');
   const hub = fs.readFileSync(path.join(SITE, 'prompty/foto/index.html'), 'utf8');
   ok(/href="(\.\.\/)*poisk\/">Поиск<\/a>/.test(hub), 'футеры: ссылка «Поиск» на страницах');
   ok(hub.includes('rel="alternate" type="application/rss+xml"'), 'head: RSS alternate');
-  ok(/href="(\.\.\/)*poisk\/">Поиск по сайту<\/a>/.test(hub), 'мобильное меню: «Поиск по сайту»');
+  ok(/href="(\.\.\/)*glossary\/">Глоссарий<\/a>/.test(hub) && /href="(\.\.\/)*o-proekte\/">О проекте<\/a>/.test(hub), 'футер: Глоссарий и О проекте на страницах');
   ok(fs.existsSync(path.join(SITE, 'pagefind', 'pagefind-entry.json')) && fs.existsSync(path.join(SITE, 'pagefind', 'pagefind.js')),
      'pagefind/: pagefind-entry.json + pagefind.js в корне');
   ok(fs.existsSync(path.join(SITE, 'pagefind', 'fragment')), 'pagefind/: фрагменты индекса');

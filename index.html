@@ -47,62 +47,8 @@ const modal=$('#searchModal'),input=$('#searchInput'),results=$('#searchResults'
 $('#openSearch').addEventListener('click',()=>{modal.classList.add('open');input.focus()});$('#closeSearch').addEventListener('click',()=>modal.classList.remove('open'));modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open')});
 const sLinks=[...results.querySelectorAll('a')];
 input.addEventListener('input',()=>{const q=input.value.trim().toLocaleLowerCase('ru');let shown=0;sLinks.forEach(a=>{const hit=!q||a.textContent.toLocaleLowerCase('ru').includes(q);a.style.display=hit?'':'none';if(hit)shown++});if(q&&!shown){if(!results.querySelector('.no-hint')){const s=document.createElement('span');s.className='no-hint';s.style.cssText='font-size:12px;color:var(--muted)';s.textContent='Прямых подсказок нет — нажмите Enter, и поиск по всему сайту выполнится автоматически.';results.appendChild(s)}}else{const h=results.querySelector('.no-hint');if(h)h.remove()}});
-</script>  <!-- Yandex Autoplacement 20335162 -->
+</script>   <!-- Yandex Autoplacement 20335162 -->
 <script src="https://yandex.ru/ads/system/context.js" async></script>
 <script data-page-id="20335162" src="https://yandex.ru/ads/system/ap-loader.js" async></script>
 <!-- /Yandex Autoplacement -->
- <script>
-(function(){
-"use strict";
-/* Шапка: дропдауны по клику (тач/клавиатура), наведение — через CSS; мобильный аккордеон. */
-var burger = document.querySelector('.sh-burger');
-var panel  = document.getElementById('shMobile');
-if (burger && panel) {
-  burger.addEventListener('click', function(){
-    var open = panel.hidden;
-    panel.hidden = !open;
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    burger.classList.toggle('open', open);
-  });
-}
-document.querySelectorAll('.sh-item.has-drop').forEach(function(item){
-  var btn = item.querySelector('.sh-toggle');
-  if (!btn) return;
-  btn.addEventListener('click', function(e){
-    e.stopPropagation();
-    var open = item.classList.toggle('drop-open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    document.querySelectorAll('.sh-item.drop-open').forEach(function(o){
-      if (o !== item) { o.classList.remove('drop-open');
-        var b = o.querySelector('.sh-toggle'); if (b) b.setAttribute('aria-expanded','false'); }
-    });
-  });
-});
-document.addEventListener('click', function(e){
-  if (!e.target.closest('.sh-item.has-drop')) {
-    document.querySelectorAll('.sh-item.drop-open').forEach(function(o){
-      o.classList.remove('drop-open');
-      var b = o.querySelector('.sh-toggle'); if (b) b.setAttribute('aria-expanded','false');
-    });
-  }
-});
-document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.sh-item.drop-open').forEach(function(o){
-      o.classList.remove('drop-open');
-      var b = o.querySelector('.sh-toggle'); if (b) b.setAttribute('aria-expanded','false');
-    });
-    if (burger && !panel.hidden) burger.click();
-  }
-});
-document.querySelectorAll('[data-macc] .sh-mhead').forEach(function(head){
-  head.addEventListener('click', function(){
-    var body = head.nextElementSibling;
-    var open = body.hidden;
-    body.hidden = !open;
-    head.setAttribute('aria-expanded', open ? 'true' : 'false');
-    head.classList.toggle('open', open);
-  });
-});
-})();
-</script> </body> </html>
+ </body></html>

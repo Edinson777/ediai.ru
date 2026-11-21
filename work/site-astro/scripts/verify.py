@@ -115,7 +115,7 @@ for path, abs_path in pages:
                 json.loads(s.string)
             except Exception as e:
                 fail(path + ': JSON-LD не разбирается (%s)' % e)
-    if path != '/' and not b.select_one('nav.crumbs'):
+    if path != '/' and not b.select_one('nav.e-crumbs'):
         fail(path + ': нет хлебных крошек')
     bad = old_links_ok(b)
     if bad:

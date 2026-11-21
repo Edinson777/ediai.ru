@@ -1,4 +1,27 @@
 <!DOCTYPE html><html lang="ru"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Политика конфиденциальности | Ediai</title><meta name="description" content="Какие данные собирает ediai.ru и зачем: счётчики Яндекс.Метрики и Google Analytics 4, cookies, обезличивание. Как отключить сбор аналитики."><link rel="canonical" href="https://ediai.ru/politika-konfidencialnosti/"><meta property="og:type" content="website"><meta property="og:site_name" content="EDIAI"><meta property="og:title" content="Политика конфиденциальности | Ediai"><meta property="og:description" content="Какие данные собирает ediai.ru и зачем: счётчики Яндекс.Метрики и Google Analytics 4, cookies, обезличивание. Как отключить сбор аналитики."><meta property="og:url" content="https://ediai.ru/politika-konfidencialnosti/"><meta property="og:image" content="https://ediai.ru/og/og-index.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="ru_RU"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Политика конфиденциальности | Ediai"><meta name="twitter:description" content="Какие данные собирает ediai.ru и зачем: счётчики Яндекс.Метрики и Google Analytics 4, cookies, обезличивание. Как отключить сбор аналитики."><meta name="twitter:image" content="https://ediai.ru/og/og-index.png"><meta name="theme-color" content="#f3f0e8"><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"><link rel="icon" type="image/x-icon" href="https://ediai.ru/favicon.ico" sizes="16x16 32x32 48x48"><link rel="apple-touch-icon" href="https://ediai.ru/apple-touch-icon.png"><link rel="alternate" type="application/rss+xml" title="Ediai — гайды и сценарии" href="https://ediai.ru/rss.xml"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ediai.ru/#website","name":"EDIAI","url":"https://ediai.ru/","description":"EDIAI — практический портал о финансах, искусственном интеллекте и цифровой жизни: понятные материалы, инструменты и готовые сценарии для тех, кто хочет больше пользы от денег и технологий. Бесплатно, без регистрации.","inLanguage":"ru"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://ediai.ru/"},{"@type":"ListItem","position":2,"name":"Политика конфиденциальности"}]},{"@type":"WebPage","@id":"https://ediai.ru/politika-konfidencialnosti/","url":"https://ediai.ru/politika-konfidencialnosti/","name":"Политика конфиденциальности Ediai","description":"Какие данные собирает сайт ediai.ru (Яндекс.Метрика, Google Analytics 4), зачем и как ими управлять.","inLanguage":"ru","isPartOf":{"@id":"https://ediai.ru/#website"}}]}</script><style>/* =====================================================================
+   Дизайн-токены новой концепции EDIAI (из прототипа v3).
+   Подключается ТОЛЬКО к новым страницам редизайна (этап 1): главная,
+   /finansy/, /digital/ и материалы. Старые страницы продолжают жить на
+   старом style.css — глобальная склейка токенов и старых переменных
+   произойдёт в этапе 2 (перекраска), чтобы не трогать работающие разделы.
+   ===================================================================== */
+:root{
+  --paper:#f3f0e8;
+  --white:#fffefa;
+  --ink:#20241f;
+  --muted:#687067;
+  --line:#dddcd2;
+  --forest:#244b3d;
+  --deep:#17372d;
+  --orange:#d96340;
+  --orange-pale:#f4e5d9;
+  --lav:#6b61b7;
+  --lav-pale:#e9e6f5;
+  --sage:#dfe8dd;
+  --max:1220px;
+  --shadow:0 18px 55px #20241f16;
+}
+</style><style>/* =====================================================================
    «База промптов для ИИ» — общий стиль всех страниц. СВЕТЛАЯ ТЕМА.
    Контрасты мелкого текста подобраны под WCAG AA на светлом фоне.
    Мобильная панель: табы в один скроллящийся ряд, подразделы под кнопку,
@@ -528,348 +551,186 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
 /* нечётное число плиток: последняя занимает всю строку bento */
 .bento>.tile:last-child{grid-column:1/-1}
 </style><style>/* =====================================================================
-   Шапка, дропдауны, хлебные крошки (фаза 2, стратегия §4.1–4.3).
-   Подключается ПОСЛЕ основного style.css; префиксы sh-*/cr-* не конфликтуют.
+   Новые страницы редизайна (этап 1): хабы /finansy/, /digital/ и материалы.
+   Токены — те же, что у прототипа; префиксы e- и nh- не конфликтуют со старым
+   style.css, который загружается раньше и перекрывается этим файлом.
    ===================================================================== */
 
-:root{
-  --sh-ink:#20241f;
-  --sh-accent:#244b3d;
-  --sh-accent-soft:#dfe8dd;
-  --sh-border:#dddcd2;
-}
+/* --- каркас страницы --- */
+.e-body{background:var(--paper);color:var(--ink);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;margin:0}
+.e-body a{color:inherit;text-decoration:none}
+.e-wrap{width:min(var(--max),calc(100% - 56px));margin:auto}
+.e-eyebrow{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.e-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--orange);margin-right:8px;vertical-align:1px}
 
-.site-header{
-  background:#fff;
-  border-bottom:1px solid var(--sh-border);
-  position:relative;
-  z-index:50;
+/* --- skip-link (перенос из старого style.css: новые страницы не несут старый CSS) --- */
+.skip-link{
+  position:absolute;left:-9999px;top:8px;z-index:200;
+  background:var(--orange);color:#fff;font-weight:700;font-size:14px;
+  padding:10px 18px;border-radius:10px;text-decoration:none
 }
-.sh-in{
+.skip-link:focus{left:12px}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+/* --- шапка материалов --- */
+.e-head{
+  height:78px;
   display:flex;
   align-items:center;
-  gap:18px;
-  max-width:1180px;
-  margin:0 auto;
-  padding:10px 16px;
-}
-.sh-logo{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-weight:800;
-  font-size:19px;
-  color:var(--sh-ink);
-  text-decoration:none;
-  white-space:nowrap;
-}
-.sh-logo-d{color:var(--sh-accent);font-weight:700}
-
-/* --- главное меню --- */
-.sh-nav{
-  display:flex;
-  align-items:stretch;
-  gap:4px;
-  flex:1;
-  min-width:0;
-}
-.sh-item{position:relative;display:flex;align-items:center}
-.sh-link{
-  display:flex;
-  align-items:center;
-  padding:10px 12px;
-  font-size:15px;
-  font-weight:600;
-  color:var(--sh-ink);
-  text-decoration:none;
-  border-radius:8px;
-  border-bottom:3px solid transparent;
-}
-.sh-item.active>.sh-link{color:var(--sh-accent)}
-.sh-item.active>.sh-link::after{
-  content:"";
-  position:absolute;
-  left:10px;right:10px;bottom:-11px;
-  height:3px;
-  background:var(--sh-accent);
-  border-radius:2px 2px 0 0;
-}
-.sh-link:hover{background:var(--sh-accent-soft)}
-
-/* тоггл дропдауна (клик для тача и клавиатуры) */
-.sh-toggle{
-  border:0;background:none;cursor:pointer;
-  color:#7d8377;font-size:11px;padding:8px 2px;
-  line-height:1;
-}
-.sh-item.drop-open .sh-toggle{transform:rotate(180deg)}
-
-/* --- дропдаун --- */
-.sh-drop{
-  display:none;
-  position:absolute;
-  top:100%;
-  left:0;
-  min-width:340px;
-  background:#fff;
-  border:1px solid var(--sh-border);
-  border-radius:12px;
-  box-shadow:0 14px 40px rgba(32,36,31,.14);
-  padding:16px;
-  gap:22px;
-}
-.sh-item.drop-open .sh-drop{display:flex}
-/* раскрытие по наведению на десктопе (устройства с ховером) */
-@media (hover:hover){
-  .sh-item.has-drop:hover>.sh-drop{display:flex}
-}
-.sh-drop{flex-wrap:wrap}
-.sh-col{flex:1;min-width:170px}
-.sh-col-t{
-  margin:0 0 6px;
-  font-size:11.5px;
-  font-weight:800;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  color:#7d8377;
-}
-.sh-row{
-  display:flex;
   justify-content:space-between;
-  align-items:baseline;
-  gap:10px;
-  padding:6px 8px;
-  font-size:14px;
-  font-weight:600;
-  color:var(--sh-ink);
-  text-decoration:none;
-  border-radius:8px;
+  gap:20px;
+  width:min(var(--max),calc(100% - 56px));
+  margin:auto;
 }
-.sh-row:hover{background:var(--sh-accent-soft);color:var(--sh-accent)}
-.sh-row .sh-n{
-  font-size:12.5px;
-  font-weight:700;
-  color:#fff;
-  background:var(--sh-accent);
-  border-radius:999px;
-  padding:1px 8px;
-  white-space:nowrap;
-}
-.sh-row .sh-note{font-size:11.5px;font-weight:500;color:#7d8377;white-space:nowrap}
-.sh-soon{font-size:12.5px;color:#7d8377;line-height:1.5;margin:0 0 10px}
-.sh-card{
-  flex:0 0 200px;
-  align-self:stretch;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  justify-content:center;
-  background:linear-gradient(135deg,#ecf1e9,#e4ecdf);
-  border:1px solid #c3d2bc;
-  border-radius:12px;
-  padding:14px;
-  font-size:13.5px;
-  line-height:1.45;
-  color:var(--sh-ink);
-  text-decoration:none;
-}
-.sh-card b{font-size:15px;color:var(--sh-accent)}
-.sh-card .sh-go{font-weight:700;color:var(--sh-accent);margin-top:auto}
-
-/* --- поиск в шапке --- */
-.sh-search{flex:0 1 230px}
-.sh-search input{
-  width:100%;
-  border:1px solid var(--sh-border);
-  border-radius:999px;
-  padding:8px 14px;
-  font-size:14px;
-  background:#f7f5ef;
-  color:var(--sh-ink);
-  outline:none;
-}
-.sh-search input:focus{border-color:var(--sh-accent);background:#fff}
-
-/* --- бургер (скрыт на десктопе) --- */
-.sh-burger{
-  display:none;
-  flex-direction:column;
-  gap:4px;
-  border:1px solid var(--sh-border);
-  background:#fff;
-  border-radius:8px;
-  padding:9px 8px;
-  cursor:pointer;
-}
-.sh-burger span{width:18px;height:2px;background:var(--sh-ink);border-radius:2px;transition:.2s}
-.sh-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-.sh-burger.open span:nth-child(2){opacity:0}
-.sh-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-
-/* --- мобильная панель --- */
-.sh-mobile{
-  border-top:1px solid var(--sh-border);
-  background:#fff;
-  padding:12px 16px 18px;
-}
-.sh-msearch{margin-bottom:10px}
-.sh-msearch input{
-  width:100%;
-  border:1px solid var(--sh-border);
-  border-radius:10px;
-  padding:10px 14px;
-  font-size:15px;
-  background:#f7f5ef;
-}
-.sh-macc{border-bottom:1px solid var(--sh-border)}
-.sh-mhead{
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border:0;
-  background:none;
-  padding:12px 2px;
-  font-size:16px;
-  font-weight:700;
-  color:var(--sh-ink);
-  cursor:pointer;
-}
-.sh-mhead.open{color:var(--sh-accent)}
-.sh-mn{
-  font-size:12.5px;
-  font-weight:700;
-  color:#fff;
-  background:var(--sh-accent);
-  border-radius:999px;
-  padding:1px 8px;
-}
-.sh-mbody{padding:0 2px 10px;display:flex;flex-direction:column}
-.sh-mbody a{
-  display:flex;
-  justify-content:space-between;
-  padding:8px 6px;
-  font-size:14.5px;
-  font-weight:600;
-  color:var(--sh-ink);
-  text-decoration:none;
-  border-radius:8px;
-}
-.sh-mbody a:hover{background:var(--sh-accent-soft)}
-.sh-mlink{
-  display:block;
-  padding:12px 2px;
-  font-size:16px;
-  font-weight:700;
-  color:var(--sh-ink);
-  text-decoration:none;
-  border-bottom:1px solid var(--sh-border);
-}
-.sh-mlink:last-child{border-bottom:0}
-
-/* --- хлебные крошки --- */
-.crumbs{padding-top:12px}
-.crumbs ol{
-  list-style:none;
-  margin:0;
-  padding:0;
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  row-gap:4px;
-  font-size:13.5px;
-}
-.crumbs li{display:flex;align-items:center}
-.cr-sep{margin:0 8px;color:#8b9184}
-.crumbs a{color:#5d6456;text-decoration:none;font-weight:600}
-.crumbs a:hover{color:var(--sh-accent);text-decoration:underline}
-.crumbs [aria-current]{color:var(--sh-accent);font-weight:700}
-
-/* --- адаптив: до 960px шапка сжимается до логотипа, поиска-иконки и бургера --- */
-@media (max-width:960px){
-  .sh-nav{display:none}
-  .sh-search{display:none}
-  .sh-burger{display:flex}
-  .sh-in{gap:12px;justify-content:space-between}
-}
-@media (max-width:640px){
-  .sh-logo{font-size:17px}
-  .sh-logo-d{display:none}
+.e-nav{display:flex;align-items:center;gap:20px;font-size:13px;font-weight:700}
+.e-nav a{color:#4c554c;position:relative;padding:8px 0}
+.e-nav a:hover{color:var(--orange)}
+.e-nav a:hover:after{content:"";position:absolute;left:0;bottom:2px;height:2px;width:100%;background:var(--orange);border-radius:2px}
+.e-cta{flex:none;padding:11px 16px;font-size:12px}
+@media(max-width:700px){
+  .e-head{width:calc(100% - 32px);height:64px}
+  .e-nav{display:none}
+  .e-head .e-cta{display:none}
 }
 
-/* --- служебные ссылки в футере (§4.1: непервичная навигация — в футере) --- */
-.svc-nav{
-  margin-top:14px;
-  font-size:13px;
-  color:#7d8377;
-}
-.svc-nav a{color:#7d8377;font-weight:600;text-decoration:none}
-.svc-nav a:hover{color:var(--sh-accent);text-decoration:underline}
+/* --- крошки в новом стиле --- */
+.e-crumbs{padding-top:16px}
+.e-crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px;font-size:12.5px;font-weight:650}
+.e-crumbs li{display:flex;align-items:center}
+.e-crumbs a{color:var(--muted)}
+.e-crumbs a:hover{color:var(--orange);text-decoration:underline}
+.e-crumbs [aria-current]{color:var(--ink)}
+.e-crumbs li+li:before{content:"→";margin:0 8px;color:#b8b8ab}
 
-/* --- страница поиска /poisk/ (фаза 3, pagefind; префикс ps-*) --- */
-.ps-form{
-  display:flex;
-  gap:10px;
+/* --- герой хаба и материала --- */
+.nh-hero{border-radius:5px 27px 27px 27px;padding:46px 44px;margin:26px 0 34px;position:relative;overflow:hidden}
+.nh-hero.finansy{background:var(--forest);color:#fff}
+.nh-hero.digital{background:var(--ink);color:#fff}
+.nh-hero.material{background:var(--white);border:1px solid var(--line)}
+.nh-hero .e-eyebrow{color:#c8d0c5}
+.nh-hero.material .e-eyebrow{color:var(--muted)}
+.nh-hero h1{font-size:clamp(34px,4.6vw,54px);line-height:1.04;letter-spacing:-.055em;margin:14px 0 16px;max-width:760px}
+.nh-hero .nh-lead{font-size:16.5px;line-height:1.65;max-width:640px;margin:0}
+.nh-hero.finansy .nh-lead,.nh-hero.digital .nh-lead{color:#ffffffcc}
+.nh-hero.material .nh-lead{color:#545d53;font-size:17px}
+.nh-meta{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:#d4dfd6}
+.nh-hero.material .nh-meta{color:var(--muted)}
+.nh-badge{padding:6px 12px;border-radius:99px;background:#ffffff2b}
+.nh-hero.material .nh-badge{background:var(--orange-pale);color:#8b4a2f}
+.nh-badge.lav{background:var(--lav-pale);color:#4b4380}
+.nh-hero:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:var(--orange);opacity:.9;right:52px;bottom:-96px}
+.nh-hero.finansy:after{background:#ffffff1f;width:340px;height:340px;right:-60px;top:-120px}
+.nh-hero.digital:after{background:var(--lav);opacity:.55;right:-30px;bottom:-110px}
+
+/* --- секции и карточки --- */
+.e-section{padding:34px 0}
+.e-h2{font-size:clamp(26px,3.4vw,38px);line-height:1.06;letter-spacing:-.05em;margin:8px 0 6px}
+.e-sub{color:var(--muted);font-size:14px;max-width:520px;margin:0}
+.e-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.e-card{background:var(--white);border:1px solid var(--line);border-radius:17px;padding:22px;display:flex;flex-direction:column;min-height:170px;transition:transform .2s,box-shadow .2s}
+.e-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.e-card .tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:850;color:var(--muted)}
+.e-card h3{font-size:19px;line-height:1.15;letter-spacing:-.03em;margin:12px 0 8px}
+.e-card p{font-size:12.5px;color:#596259;margin:0}
+.e-card .go{margin-top:auto;padding-top:16px;font-size:11px;font-weight:850;color:var(--orange)}
+.e-card.lav .go{color:var(--lav)}
+.e-card.soon{background:transparent;border-style:dashed;color:var(--muted)}
+.e-card.soon h3{color:var(--muted)}
+.e-card.wide{grid-column:1/-1}
+
+/* --- список «что внутри» --- */
+.e-list{display:grid;grid-template-columns:1fr;gap:10px;margin:18px 0 0;padding:0;list-style:none}
+.e-list li{background:var(--white);border:1px solid var(--line);border-radius:13px;padding:14px 18px;font-size:14px}
+.e-list li b{color:var(--ink)}
+.e-list li span{color:#596259}
+
+/* --- тело материала --- */
+.prose{max-width:760px;margin:0 auto}
+.prose h2{font-size:clamp(24px,3vw,32px);letter-spacing:-.04em;line-height:1.1;margin:44px 0 14px}
+.prose h3{font-size:19px;letter-spacing:-.02em;margin:30px 0 10px}
+.prose p{margin:0 0 16px;color:#333a33;font-size:16px}
+.prose ul,.prose ol{margin:0 0 16px;padding-left:22px;color:#333a33}
+.prose li{margin-bottom:8px}
+.prose a{color:var(--orange);font-weight:650;text-decoration:underline;text-decoration-color:#d9634066;text-underline-offset:3px}
+.prose a:hover{text-decoration-color:var(--orange)}
+.prose strong{color:var(--ink)}
+
+.check-list{list-style:none;padding:0;margin:20px 0}
+.check-list li{background:var(--white);border:1px solid var(--line);border-radius:13px;padding:14px 18px 14px 46px;margin-bottom:10px;position:relative;font-size:15px}
+.check-list li:before{content:"✓";position:absolute;left:16px;top:13px;width:20px;height:20px;border-radius:50%;background:var(--sage);color:var(--forest);display:grid;place-items:center;font-size:12px;font-weight:900}
+
+.e-note{background:var(--orange-pale);border-radius:5px 18px 18px 18px;padding:18px 22px;margin:24px 0;font-size:14px;line-height:1.6}
+.e-note b{color:#8b4a2f}
+.e-note.sage{background:var(--sage)}
+.e-note.sage b{color:var(--forest)}
+.e-note.lav{background:var(--lav-pale)}
+.e-note.lav b{color:#4b4380}
+
+.e-table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:17px;background:var(--white)}
+table.e-table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+.e-table th{background:var(--forest);color:#fff;text-align:left;padding:13px 16px;font-size:12.5px;letter-spacing:.04em}
+.e-table td{padding:12px 16px;border-top:1px solid var(--line);vertical-align:top;color:#333a33}
+.e-table td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
+
+.e-faq{margin:26px 0}
+.e-faq details{background:var(--white);border:1px solid var(--line);border-radius:13px;margin-bottom:10px;padding:0 18px}
+.e-faq summary{cursor:pointer;font-weight:700;font-size:15px;padding:15px 0;list-style:none}
+.e-faq summary::-webkit-details-marker{display:none}
+.e-faq summary:before{content:"+";display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--paper);margin-right:10px;text-align:center;line-height:22px;font-weight:900;color:var(--orange)}
+.e-faq details[open] summary:before{content:"–"}
+.e-faq details p{font-size:14px;color:#596259;padding:0 0 15px;margin:0}
+
+.e-disc{border:1px solid var(--line);border-left:4px solid var(--orange);border-radius:0 13px 13px 0;background:var(--white);padding:14px 18px;font-size:12.5px;color:var(--muted);margin:30px 0 0}
+.e-src{font-size:12.5px;color:var(--muted);margin-top:14px}
+.e-src a{text-decoration:underline}
+
+/* --- что читать дальше --- */
+.e-next{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:34px 0 0}
+.e-next a{background:var(--white);border:1px solid var(--line);border-radius:17px;padding:20px;display:flex;flex-direction:column;gap:8px;font-size:14px;transition:transform .2s,box-shadow .2s}
+.e-next a:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.e-next .tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:850;color:var(--muted)}
+.e-next b{font-size:15px;letter-spacing:-.02em;line-height:1.2}
+
+/* --- футер (общий с главной) --- */
+.nh-footer{background:#e7e4da;padding:39px 0 22px;margin-top:56px}
+.footer-top{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:35px}
+.footer-brand p{font-size:12px;color:#656d63;max-width:340px;margin:15px 0 0}
+.nh-footer h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 13px}
+.footer-links{display:grid;gap:8px}
+.footer-links a{font-size:12px;color:#596258}
+.footer-links a:hover{color:var(--orange)}
+.footer-bottom{margin-top:30px;padding-top:15px;border-top:1px solid #d0d0c5;color:#74796f;font-size:10px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;min-width:185px;color:var(--ink)}
+.brand-symbol{width:38px;height:38px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:20px;font-weight:900;letter-spacing:-.1em;border-radius:11px 11px 11px 3px}
+.brand-word{font-size:22px;font-weight:900;letter-spacing:.075em;line-height:1}
+.brand-sub{display:block;margin-top:5px;color:#73776d;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:99px;padding:13px 19px;font-size:13px;font-weight:800;border:1px solid transparent;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-dark{background:var(--ink);color:white}
+.e-body a.btn-dark{color:#fff}
+
+@media(max-width:940px){
+  .e-grid{grid-template-columns:1fr 1fr}
+  .nh-hero{padding:36px 30px}
 }
-.ps-form input{
-  flex:1;
-  font:inherit;
-  font-size:17px;
-  padding:12px 16px;
-  border:1px solid var(--sh-border);
-  border-radius:10px;
-  background:#fff;
-  color:var(--sh-ink);
+@media(max-width:700px){
+  .e-wrap{width:calc(100% - 32px)}
+  .e-grid{grid-template-columns:1fr}
+  .e-next{grid-template-columns:1fr}
+  .nh-hero{padding:28px 22px;border-radius:5px 22px 22px 22px}
+  .nh-hero:after{display:none}
+  .footer-top{grid-template-columns:1fr 1fr;gap:24px}
+  .footer-brand{grid-column:1/-1}
 }
-.ps-form input:focus{
-  outline:2px solid var(--sh-accent);
-  outline-offset:1px;
-  border-color:var(--sh-accent);
-}
-.ps-status{
-  color:#7d8377;
-  font-size:14px;
-  margin:12px 0 18px;
-}
-.ps-item{
-  display:block;
-  padding:14px 16px;
-  border:1px solid var(--sh-border);
-  border-radius:12px;
-  margin-bottom:10px;
-  color:inherit;
-  text-decoration:none;
-}
-.ps-item:hover{
-  border-color:var(--sh-accent);
-  background:var(--sh-accent-soft);
-}
-.ps-item b{
-  display:block;
-  font-size:16px;
-}
-.ps-path{
-  display:block;
-  color:#7d8377;
-  font-size:12px;
-  margin-top:2px;
-  word-break:break-all;
-}
-.ps-ex{
-  display:block;
-  font-size:14px;
-  color:#565c52;
-  margin-top:6px;
-}
-.ps-ex mark{
-  background:#fff3c4;
-  padding:0 2px;
-  border-radius:3px;
-}
-@media (max-width:640px){
-  .ps-form{flex-direction:column}
-}
-</style></head> <body class> <!-- Yandex.Metrika counter -->
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
+
+.e-head{width:min(1200px,calc(100% - 56px));padding:0 20px}
+.nh-footer .e-wrap{width:min(1200px,calc(100% - 56px));padding:0 20px}
+.nh-footer{border-top:0;text-align:left;font-size:16px;line-height:1.45;color:var(--ink)}
+@media(max-width:700px){
+  .e-head{width:calc(100% - 32px);padding:0 16px}
+  .nh-footer .e-wrap{width:calc(100% - 32px);padding:0 16px}
+}</style></head> <body class> <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
         m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -892,63 +753,8 @@ table.cmp{width:100%;border-collapse:collapse;font-size:13.6px;min-width:640px}
   gtag('config', 'G-P1BDWZ1D1Q');
 </script>
 <!-- /Google tag -->
- <a class="skip-link" href="#main">Перейти к содержимому</a> <header class="site-header"> <div class="wrap sh-in"> <a class="sh-logo" href="../" aria-label="Ediai — на главную">⚡ <span>Ediai<span class="sh-logo-d">.ru</span></span></a> <nav class="sh-nav" aria-label="Главное меню"> <div class="sh-item has-drop"> <a class="sh-link" href="../prompty/">Промпты</a> <button type="button" class="sh-toggle" aria-expanded="false" aria-label="Подменю «Промпты»">▾</button> <div class="sh-drop"> <div class="sh-col"> <p class="sh-col-t">Категории</p> <a class="sh-row" href="../prompty/foto/"> <span>Фото и изображения</span><span class="sh-n">54</span> </a><a class="sh-row" href="../prompty/generaciya/"> <span>Генерация картинок</span><span class="sh-n">21</span> </a><a class="sh-row" href="../prompty/teksty/"> <span>Тексты</span><span class="sh-n">21</span> </a><a class="sh-row" href="../prompty/zhizn/"> <span>Личная жизнь</span><span class="sh-n">56</span> </a><a class="sh-row" href="../prompty/rabota/"> <span>Работа</span><span class="sh-n">30</span> </a><a class="sh-row" href="../prompty/qwen/"> <span>Qwen</span><span class="sh-n">23</span> </a> </div> <div class="sh-col"> <p class="sh-col-t">Сценарии</p> <p class="sh-soon">Готовятся: «Нейрофотосессия», «Промпты по профессиям», «ИИ и почта» — сценарные подборки с примерами до/после.</p> <p class="sh-col-t">Материалы</p> <a class="sh-row" href="../guides/ii-i-pochta/"><span>Кейс: сколько часов экономит ИИ на почте</span></a> <a class="sh-row" href="../guides/s-chego-nachat/"><span>Первая неделя с ИИ</span></a> </div> <a class="sh-card" href="../prompty/"> <b>Вся база — 211 промптов</b> <span>Карта раздела: все категории, сценарии и материалы в одном месте</span> <span class="sh-go">Открыть →</span> </a> </div> </div> <div class="sh-item has-drop"> <a class="sh-link" href="../guides/">Гайды</a> <button type="button" class="sh-toggle" aria-expanded="false" aria-label="Подменю «Гайды»">▾</button> <div class="sh-drop"> <div class="sh-col"> <a class="sh-row" href="../guides/s-chego-nachat/"><span>С чего начать</span></a><a class="sh-row" href="../guides/osnovy-promptinga/"><span>Основы промптинга</span></a><a class="sh-row" href="../guides/kakuyu-nejroset-vybrat/"><span>Какую нейросеть выбрать</span></a><a class="sh-row" href="../guides/ii-i-pochta/"><span>Кейс: ИИ и почта</span></a> </div> </div> </div> <div class="sh-item has-drop"> <a class="sh-link" href="../instrumenty/">Инструменты</a> <button type="button" class="sh-toggle" aria-expanded="false" aria-label="Подменю «Инструменты»">▾</button> <div class="sh-drop"> <div class="sh-col"> <a class="sh-row" href="../prompty/qwen/"><span>Qwen</span><span class="sh-note">промпты и подсказки совместимости</span></a><a class="sh-row" href="../guides/kakuyu-nejroset-vybrat/"><span>ChatGPT</span><span class="sh-note">страницы моделей — в разработке</span></a><a class="sh-row" href="../prompty/generaciya/"><span>Midjourney</span><span class="sh-note">промпты генерации изображений</span></a><a class="sh-row" href="../guides/kakuyu-nejroset-vybrat/"><span>GigaChat</span><span class="sh-note">сравнение моделей</span></a><a class="sh-row" href="../guides/kakuyu-nejroset-vybrat/"><span>YandexGPT</span><span class="sh-note">сравнение моделей</span></a> </div> </div> </div> <div class="sh-item"> <a class="sh-link" href="../glossary/">Глоссарий</a> </div> <div class="sh-item"> <a class="sh-link" href="../o-proekte/">О проекте</a> </div> </nav> <form class="sh-search" action="../" method="get" role="search"> <input type="search" name="q" placeholder="Поиск по 211 промптам…" aria-label="Поиск по сайту" autocomplete="off"> </form> <button type="button" class="sh-burger" aria-expanded="false" aria-controls="shMobile" aria-label="Открыть меню"> <span></span><span></span><span></span> </button> </div> <div class="sh-mobile" id="shMobile" hidden> <form class="sh-msearch" action="../" method="get" role="search"> <input type="search" name="q" placeholder="Поиск по 211 промптам…" aria-label="Поиск по сайту" autocomplete="off"> </form> <div class="sh-macc" data-macc> <button type="button" class="sh-mhead" aria-expanded="false">Промпты <span class="sh-mn">211</span></button> <div class="sh-mbody" hidden> <a href="../prompty/">Карта промптов</a> <a href="../prompty/foto/">Фото и изображения <span class="sh-mn">54</span></a><a href="../prompty/generaciya/">Генерация картинок <span class="sh-mn">21</span></a><a href="../prompty/teksty/">Тексты <span class="sh-mn">21</span></a><a href="../prompty/zhizn/">Личная жизнь <span class="sh-mn">56</span></a><a href="../prompty/rabota/">Работа <span class="sh-mn">30</span></a><a href="../prompty/qwen/">Qwen <span class="sh-mn">23</span></a> </div> </div> <div class="sh-macc" data-macc> <button type="button" class="sh-mhead" aria-expanded="false">Гайды</button> <div class="sh-mbody" hidden> <a href="../guides/">Все гайды</a> <a href="../guides/s-chego-nachat/">С чего начать</a><a href="../guides/osnovy-promptinga/">Основы промптинга</a><a href="../guides/kakuyu-nejroset-vybrat/">Какую нейросеть выбрать</a><a href="../guides/ii-i-pochta/">Кейс: ИИ и почта</a> </div> </div> <div class="sh-macc" data-macc> <button type="button" class="sh-mhead" aria-expanded="false">Инструменты</button> <div class="sh-mbody" hidden> <a href="../instrumenty/">Обзор моделей</a> <a href="../prompty/qwen/">Qwen</a> <a href="../guides/kakuyu-nejroset-vybrat/">Какую нейросеть выбрать</a> </div> </div> <a class="sh-mlink" href="../glossary/">Глоссарий</a> <a class="sh-mlink" href="../o-proekte/">О проекте</a> <a class="sh-mlink" href="../poisk/">Поиск по сайту</a> </div> </header> <nav class="crumbs wrap" aria-label="Хлебные крошки"> <ol> <li>  <a href="../">Главная</a> </li><li> <span class="cr-sep" aria-hidden="true">→</span> <span aria-current="page">Политика конфиденциальности</span> </li> </ol> </nav>  <a class="skip-link" href="#main">Перейти к содержимому</a> <main class="wrap" id="main" tabindex="-1"> <section class="hero"> <h1>Политика конфиденциальности</h1> <p class="hub-sub">Коротко и по-человечески: какие данные собирает сайт ediai.ru, зачем они нужны и как управлять их сбором. Политика действует для всех страниц сайта.</p> <p class="hub-meta">Обновлено: ноябрь 2026</p> </section> <div class="strip"> <h2>Какие данные мы собираем</h2> <p>Сайт не требует регистрации и не запрашивает личные данные: ни имя, ни телефон, ни адрес почты вы не вводите. Вся аналитика — обезличенная и собирается двумя счётчиками:</p> <ul> <li><b>Яндекс.Метрика</b> (ID 114035585): посещения страниц, источники переходов, поведение (включая вебвизор — запись движений курсора и прокруток), события копирования промптов и пустых поисков. Условия: <a href="https://yandex.ru/legal/metrica_terms/" rel="noopener nofollow" target="_blank">yandex.ru/legal/metrica_terms</a>.</li> <li><b>Google Analytics 4</b> (если включён в конфигурации): аналогичная обезличенная статистика. Условия: <a href="https://policies.google.com/privacy" rel="noopener nofollow" target="_blank">policies.google.com/privacy</a>.</li> <li><b>Рекламный блок РСЯ</b> (если включён): Яндекс может использовать cookie для показа авторекламы; персональных данных сайт при этом не передаёт.</li> </ul> <h2>Cookies</h2> <p>Счётчики используют cookie — небольшие файлы браузера, чтобы отличать визиты друг от друга и не считать один и тот же визит бесконечно. Кроме аналитики, сайт сохраняет в localStorage только ваши собственные настройки интерфейса (например, прогресс в учебном материале «Путь в ИИ») — эти данные не покидают ваш браузер.</p> <h2>Что мы НЕ делаем</h2> <ul> <li>Не продаём и не передаём данные третьим лицам — аналитика обрабатывается самими системами (Яндекс, Google) на их условиях.</li> <li>Не связываем аналитику с личностью: у нас нет ни логинов, ни профилей, ни баз пользователей.</li> <li>Не собираем содержимое копируемых промптов: событие фиксирует только факт нажатия кнопки и раздел, без текста запроса.</li> </ul> <h2>Как отключить сбор</h2> <ul> <li>Запрет cookie в настройках браузера (например, в Chrome: Настройки → Конфиденциальность → Файлы cookie).</li> <li>Расширения-блокировщики (uBlock Origin и подобные) отключают скрипты Метрики и GA4.</li> <li>Отказ от вебвизора Яндекс.Метрики — через <a href="https://yandex.ru/support/metrica/code/opt-out.html" rel="noopener nofollow" target="_blank">официальную инструкцию Яндекса</a>.</li> </ul> <h2>Изменения политики</h2> <p>Если состав счётчиков изменится, эта страница обновится, а дата наверху — пересмотрится. Вопросы по политике: раздел <a href="../o-proekte/" style="color:#244b3d">«О проекте»</a>.</p> </div> </main> <footer> <div class="wrap"> <b>⚡ Ediai — ИИ в личной жизни и работе</b> · 211 проверенных сценариев и промптов: изображения, тексты, редактирование фото, гиды и сравнения.
-</div> <div class="svc-nav"><a href="../o-proekte/">О проекте</a> · <a href="../politika-konfidencialnosti/">Политика конфиденциальности</a> · <a href="../poisk/">Поиск</a></div> </footer>  <!-- Yandex Autoplacement 20335162 -->
+ <a class="skip-link" href="#main">Перейти к содержимому</a> <header class="e-head"> <a class="brand" href="../" aria-label="EDIAI — на главную"><span class="brand-symbol">E.</span><span><span class="brand-word">EDIAI</span><span class="brand-sub">разумнее с деньгами · увереннее с технологиями</span></span></a> <nav class="e-nav" aria-label="Главное меню"> <a href="../finansy/">Финансы</a> <a href="../prompty/">ИИ</a> <a href="../digital/">Цифровая жизнь</a> <a href="../instrumenty/">Инструменты</a> </nav> <a class="btn btn-dark e-cta" href="../guides/s-chego-nachat/">Найти полезное ↗</a> </header> <div class="wrap"> <nav class="e-crumbs" aria-label="Хлебные крошки"> <ol> <li> <a href="../">Главная</a> </li><li> <span aria-current="page">Политика конфиденциальности</span> </li> </ol> </nav> </div>  <a class="skip-link" href="#main">Перейти к содержимому</a> <main class="wrap" id="main" tabindex="-1"> <section class="hero"> <h1>Политика конфиденциальности</h1> <p class="hub-sub">Коротко и по-человечески: какие данные собирает сайт ediai.ru, зачем они нужны и как управлять их сбором. Политика действует для всех страниц сайта.</p> <p class="hub-meta">Обновлено: ноябрь 2026</p> </section> <div class="strip"> <h2>Какие данные мы собираем</h2> <p>Сайт не требует регистрации и не запрашивает личные данные: ни имя, ни телефон, ни адрес почты вы не вводите. Вся аналитика — обезличенная и собирается двумя счётчиками:</p> <ul> <li><b>Яндекс.Метрика</b> (ID 114035585): посещения страниц, источники переходов, поведение (включая вебвизор — запись движений курсора и прокруток), события копирования промптов и пустых поисков. Условия: <a href="https://yandex.ru/legal/metrica_terms/" rel="noopener nofollow" target="_blank">yandex.ru/legal/metrica_terms</a>.</li> <li><b>Google Analytics 4</b> (если включён в конфигурации): аналогичная обезличенная статистика. Условия: <a href="https://policies.google.com/privacy" rel="noopener nofollow" target="_blank">policies.google.com/privacy</a>.</li> <li><b>Рекламный блок РСЯ</b> (если включён): Яндекс может использовать cookie для показа авторекламы; персональных данных сайт при этом не передаёт.</li> </ul> <h2>Cookies</h2> <p>Счётчики используют cookie — небольшие файлы браузера, чтобы отличать визиты друг от друга и не считать один и тот же визит бесконечно. Кроме аналитики, сайт сохраняет в localStorage только ваши собственные настройки интерфейса (например, прогресс в учебном материале «Путь в ИИ») — эти данные не покидают ваш браузер.</p> <h2>Что мы НЕ делаем</h2> <ul> <li>Не продаём и не передаём данные третьим лицам — аналитика обрабатывается самими системами (Яндекс, Google) на их условиях.</li> <li>Не связываем аналитику с личностью: у нас нет ни логинов, ни профилей, ни баз пользователей.</li> <li>Не собираем содержимое копируемых промптов: событие фиксирует только факт нажатия кнопки и раздел, без текста запроса.</li> </ul> <h2>Как отключить сбор</h2> <ul> <li>Запрет cookie в настройках браузера (например, в Chrome: Настройки → Конфиденциальность → Файлы cookie).</li> <li>Расширения-блокировщики (uBlock Origin и подобные) отключают скрипты Метрики и GA4.</li> <li>Отказ от вебвизора Яндекс.Метрики — через <a href="https://yandex.ru/support/metrica/code/opt-out.html" rel="noopener nofollow" target="_blank">официальную инструкцию Яндекса</a>.</li> </ul> <h2>Изменения политики</h2> <p>Если состав счётчиков изменится, эта страница обновится, а дата наверху — пересмотрится. Вопросы по политике: раздел <a href="../o-proekte/" style="color:#244b3d">«О проекте»</a>.</p> </div> </main>  <footer class="nh-footer"><div class="e-wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="../"><span class="brand-symbol">E.</span><span><span class="brand-word">EDIAI</span><span class="brand-sub">разумнее с деньгами · увереннее с технологиями</span></span></a><p>Практический портал о финансах, искусственном интеллекте и цифровой жизни. Понятно о сложном — полезно в повседневных решениях.</p></div><div><h4>Направления</h4><div class="footer-links"><a href="../finansy/">Финансы</a><a href="../prompty/">Искусственный интеллект</a><a href="../digital/">Цифровая жизнь</a><a href="../instrumenty/">Инструменты</a></div></div><div><h4>EDIAI</h4><div class="footer-links"><a href="../guides/s-chego-nachat/">С чего начать</a><a href="../guides/">Материалы</a><a href="../glossary/">Глоссарий</a><a href="../o-proekte/">О проекте</a><a href="../poisk/">Поиск</a></div></div></div><div class="footer-bottom"><span>© EDIAI · ediai.ru</span><span>Материалы о финансах носят информационный характер и не являются инвестиционной рекомендацией.</span></div></div></footer> <!-- Yandex Autoplacement 20335162 -->
 <script src="https://yandex.ru/ads/system/context.js" async></script>
 <script data-page-id="20335162" src="https://yandex.ru/ads/system/ap-loader.js" async></script>
 <!-- /Yandex Autoplacement -->
- <script>
-(function(){
-"use strict";
-/* Шапка: дропдауны по клику (тач/клавиатура), наведение — через CSS; мобильный аккордеон. */
-var burger = document.querySelector('.sh-burger');
-var panel  = document.getElementById('shMobile');
-if (burger && panel) {
-  burger.addEventListener('click', function(){
-    var open = panel.hidden;
-    panel.hidden = !open;
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    burger.classList.toggle('open', open);
-  });
-}
-document.querySelectorAll('.sh-item.has-drop').forEach(function(item){
-  var btn = item.querySelector('.sh-toggle');
-  if (!btn) return;
-  btn.addEventListener('click', function(e){
-    e.stopPropagation();
-    var open = item.classList.toggle('drop-open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    document.querySelectorAll('.sh-item.drop-open').forEach(function(o){
-      if (o !== item) { o.classList.remove('drop-open');
-        var b = o.querySelector('.sh-toggle'); if (b) b.setAttribute('aria-expanded','false'); }
-    });
-  });
-});
-document.addEventListener('click', function(e){
-  if (!e.target.closest('.sh-item.has-drop')) {
-    document.querySelectorAll('.sh-item.drop-open').forEach(function(o){
-      o.classList.remove('drop-open');
-      var b = o.querySelector('.sh-toggle'); if (b) b.setAttribute('aria-expanded','false');
-    });
-  }
-});
-document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.sh-item.drop-open').forEach(function(o){
-      o.classList.remove('drop-open');
-      var b = o.querySelector('.sh-toggle'); if (b) b.setAttribute('aria-expanded','false');
-    });
-    if (burger && !panel.hidden) burger.click();
-  }
-});
-document.querySelectorAll('[data-macc] .sh-mhead').forEach(function(head){
-  head.addEventListener('click', function(){
-    var body = head.nextElementSibling;
-    var open = body.hidden;
-    body.hidden = !open;
-    head.setAttribute('aria-expanded', open ? 'true' : 'false');
-    head.classList.toggle('open', open);
-  });
-});
-})();
-</script> </body> </html>
+ </body></html>
