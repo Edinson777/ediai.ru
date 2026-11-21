@@ -200,7 +200,7 @@ console.log('prompty/foto');
   ok(d.querySelector('meta[property="og:image"]') !== null, 'og:image');
   const srcP = d.querySelector('details.sources');
   ok(!!srcP && !srcP.open, 'источники раздела: спойлер, свёрнут');
-  ok(d.querySelector('meta[name="theme-color"]').content === '#f5f6fa', 'theme-color светлый');
+  ok(d.querySelector('meta[name="theme-color"]').content === '#f3f0e8', 'theme-color светлый (новая палитра, этап 2)');
   ok(d.querySelector('style').textContent.includes('.card-top{display:flex;flex-direction:column'), 'карточка: заголовок 1-й строкой, значки ИИ 2-й');
   ok(d.documentElement.innerHTML.includes('mc.yandex.ru/metrika/tag.js?id=114035585'), 'Метрика 114035585 на разделе');
   ok(d.documentElement.innerHTML.includes('yandex.ru/ads/system/ap-loader.js'), 'автореклама РСЯ на разделе');
