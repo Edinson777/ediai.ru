@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Flint — дневник тренировок</title>
-  <meta name="description" content="Офлайн-дневник силовых тренировок. Данные хранятся на устройстве, синхронизация подключается в следующем этапе.">
+  <meta name="description" content="Офлайн-дневник силовых тренировок с синхронизацией на ваш Яндекс Диск: календарь, подходы, библиотека упражнений.">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0F172A">
   <link rel="manifest" href="manifest.webmanifest">
@@ -17,6 +17,10 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <div id="offline-banner" class="offline-banner hidden" role="status">
+    Нет сети — записи сохраняются на устройстве и уйдут на Диск при подключении
+  </div>
+
   <header class="topbar">
     <div class="brand">
       <h1>Flint</h1>
@@ -29,57 +33,74 @@
   </header>
 
   <main>
-    <section id="form-section" class="card" aria-labelledby="form-title">
-      <h2 id="form-title">Новая тренировка</h2>
-      <form id="workout-form" novalidate>
-        <div class="row two">
-          <label>Дата
-            <input type="date" id="f-date" required>
-          </label>
-          <label>Название
-            <input type="text" id="f-title" placeholder="Например: верх — жим" maxlength="80">
-          </label>
-        </div>
+    <!-- Календарь + тренировки выбранного дня -->
+    <section id="screen-day" class="screen" data-screen="day"></section>
+    <!-- Карточка тренировки: упражнения -->
+    <section id="screen-workout" class="screen" data-screen="workout"></section>
+    <!-- Выбор упражнения из библиотеки -->
+    <section id="screen-pick" class="screen" data-screen="pick"></section>
+    <!-- Упражнение: список подходов + прошлый раз -->
+    <section id="screen-ex" class="screen" data-screen="ex"></section>
+    <!-- Отдельный экран ввода подхода -->
+    <section id="screen-set" class="screen" data-screen="set"></section>
+    <!-- Библиотека упражнений -->
+    <section id="screen-library" class="screen" data-screen="library"></section>
 
-        <h3>Упражнения</h3>
-        <div id="ex-list"></div>
-        <button type="button" id="add-ex" class="btn ghost small">+ Добавить упражнение</button>
-
+    <!-- Ещё: аккаунт, синхронизация, резервная копия -->
+    <section class="screen" data-screen="more" id="screen-more">
+      <section class="card tools" aria-labelledby="acc-title">
+        <h2 id="acc-title">Аккаунт</h2>
+        <p id="auth-status" class="muted small-note">Проверяем вход…</p>
         <div class="form-actions">
-          <button type="submit" class="btn primary" id="save-btn">Сохранить</button>
-          <button type="button" class="btn ghost hidden" id="cancel-edit">Отмена</button>
+          <button type="button" id="login-btn" class="btn primary hidden">Войти через Яндекс ID</button>
+          <button type="button" id="logout-btn" class="btn ghost hidden">Выйти</button>
         </div>
-        <p id="form-error" class="error hidden" role="alert"></p>
-      </form>
-    </section>
+      </section>
 
-    <section id="list-section" aria-labelledby="list-title">
-      <div class="list-head">
-        <h2 id="list-title">История</h2>
-        <span id="stat" class="muted"></span>
-      </div>
-      <div id="workout-list"></div>
-      <p id="empty" class="muted empty">Пока пусто. Добавьте первую тренировку — форма выше.</p>
-    </section>
+      <section class="card tools" id="sync-section" aria-labelledby="sync-title">
+        <h2 id="sync-title">Синхронизация — Яндекс Диск</h2>
+        <p class="muted small-note">Копия журнала и справочника хранится в папке приложения на вашем
+          Яндекс Диске (<code>app:/flint-backup.json</code>). Перед каждой отправкой данные
+          объединяются с копией: побеждает более новая правка, правки с других устройств
+          не затираются, удаления разносятся метками.</p>
+        <p id="sync-status" class="sync-status muted" aria-live="polite">—</p>
+        <div class="form-actions">
+          <button type="button" id="sync-push-btn" class="btn ghost">Отправить на Диск</button>
+          <button type="button" id="sync-pull-btn" class="btn ghost">Загрузить с Диска</button>
+        </div>
+      </section>
 
-    <section class="card tools">
-      <h2>Резервная копия</h2>
-      <p class="muted small-note">Данные хранятся только на этом устройстве (IndexedDB). Экспорт — JSON-файл, импорт — восстановление из файла (заменяет текущие данные).</p>
-      <div class="form-actions">
-        <button type="button" id="export-btn" class="btn ghost">Экспорт JSON</button>
-        <button type="button" id="import-btn" class="btn ghost">Импорт JSON</button>
-        <input type="file" id="import-file" accept="application/json,.json" class="hidden">
-      </div>
-    </section>
+      <section class="card tools">
+        <h2>Резервная копия</h2>
+        <p class="muted small-note">Данные хранятся на этом устройстве (IndexedDB). Экспорт —
+          JSON-файл, импорт — восстановление из файла (заменяет текущие данные).</p>
+        <div class="form-actions">
+          <button type="button" id="export-btn" class="btn ghost">Экспорт JSON</button>
+          <button type="button" id="import-btn" class="btn ghost">Импорт JSON</button>
+          <input type="file" id="import-file" accept="application/json,.json" class="hidden">
+        </div>
+      </section>
 
-    <p id="ios-hint" class="muted ios-hint hidden">Установка на iPhone: «Поделиться» → «На экран «Домой»».</p>
+      <p id="ios-hint" class="muted ios-hint hidden">Установка на iPhone: «Поделиться» → «На экран «Домой»».</p>
+      <p class="muted small-note pad">Flint v1.5.1 · этап 5 — календарь, подходы, библиотека упражнений</p>
+    </section>
   </main>
 
-  <footer class="foot muted">
-    Flint · этап 1 — офлайн-журнал · синхронизация с Яндекс Диском подключается в этапе 3
-  </footer>
+  <nav class="tabbar" aria-label="Разделы">
+    <button type="button" class="tab" data-tab="day" data-hash="#/day">
+      <span class="tab-ico">🏋️</span><span class="tab-label">Дневники</span>
+    </button>
+    <button type="button" class="tab" data-tab="library" data-hash="#/library">
+      <span class="tab-ico">📖</span><span class="tab-label">Справочники</span>
+    </button>
+    <button type="button" class="tab" data-tab="more" data-hash="#/more">
+      <span class="tab-ico">⚙️</span><span class="tab-label">Ещё</span>
+    </button>
+  </nav>
 
   <script src="js/db.js" defer></script>
+  <script src="js/app-sync.js" defer></script>
+  <script src="js/journal.js" defer></script>
   <script src="js/app.js" defer></script>
 </body>
 </html>

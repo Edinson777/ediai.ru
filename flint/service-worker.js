@@ -1,9 +1,13 @@
-/* Flint — service worker, этап 1 (офлайн-журнал).
- * Стратегии: навигации — сеть с фолбэком на кэш (офлайн), ресурсы — кэш с обновлением.
- * При изменении файлов приложения поднять VERSION — кэш заменится целиком. */
+/* Flint — service worker, этап 5 (календарь, подходы, библиотека).
+ * Стратегии: навигации и код приложения (js/css/манифест) — СЕТЬ ПЕРВАЯ (после
+ * деплоя браузер сразу получает свежую пару HTML+JS; офлайном — кэш);
+ * иконки — кэш → сеть. Запросы в /oauth/ не кэшируются никогда (вход, API
+ * сессий и Диска). При изменении файлов приложения поднять VERSION — старый
+ * кэш заменится целиком, а открытые страницы один раз перезагрузятся
+ * (см. controllerchange в js/app.js). */
 'use strict';
 
-const VERSION = 'flint-v1.0.0';
+const VERSION = 'flint-v1.5.1';
 const CACHE = `${VERSION}-shell`;
 
 const PRECACHE = [
@@ -11,6 +15,8 @@ const PRECACHE = [
   'index.html',
   'css/styles.css',
   'js/db.js',
+  'js/app-sync.js',
+  'js/journal.js',
   'js/app.js',
   'manifest.webmanifest',
   'icons/icon-192.png',
@@ -40,22 +46,29 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  if (url.pathname.includes('/oauth/')) return; // вход и API сессий — только сеть, без кэша
 
-  // Навигации: сначала сеть (свежая версия), при офлайне — кэш приложения
-  if (request.mode === 'navigate') {
+  // Код приложения: сначала сеть (свежая версия после деплоя), при офлайне — кэш.
+  // Навигации в кэш не кладём: это может быть login.php или ошибка.
+  const netFirst = request.mode === 'navigate' || /\.(js|css|webmanifest)(\?|$)/.test(url.pathname);
+  if (netFirst) {
     event.respondWith(
       fetch(request)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put('index.html', copy));
+          if (res.ok && request.mode !== 'navigate') {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(request, copy));
+          }
           return res;
         })
-        .catch(() => caches.match('index.html'))
+        .catch(() => request.mode === 'navigate'
+          ? caches.match('index.html')
+          : caches.match(request))
     );
     return;
   }
 
-  // Ресурсы: кэш → сеть; успешный сетевой ответ обновляет кэш
+  // Остальное (иконки): кэш → сеть; успешный сетевой ответ обновляет кэш
   event.respondWith(
     caches.match(request).then((cached) => {
       const network = fetch(request)
