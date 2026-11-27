@@ -1,0 +1,745 @@
+/* Flint — стили (этап 5: календарь, подходы, библиотека, таб-бар).
+ * Светлая тема по умолчанию, тёмная — по системе или переключателю
+ * (data-theme на <html>). */
+
+:root {
+  --bg: #F8FAFC;
+  --card: #FFFFFF;
+  --text: #0F172A;
+  --muted: #64748B;
+  --line: #E2E8F0;
+  --accent: #F97316;
+  --accent-soft: #FFF7ED;
+  --danger: #DC2626;
+  --danger-soft: #FEF2F2;
+  --ok: #0D9488;
+  --radius: 14px;
+  --shadow: 0 1px 3px rgba(15, 23, 42, .08);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    --bg: #0F172A;
+    --card: #1E293B;
+    --text: #F1F5F9;
+    --muted: #94A3B8;
+    --line: #334155;
+    --accent: #FB923C;
+    --accent-soft: #2A2118;
+    --danger: #F87171;
+    --danger-soft: #2C1A1A;
+    --ok: #2DD4BF;
+    --shadow: 0 1px 3px rgba(0, 0, 0, .4);
+  }
+}
+
+html[data-theme="dark"] {
+  --bg: #0F172A;
+  --card: #1E293B;
+  --text: #F1F5F9;
+  --muted: #94A3B8;
+  --line: #334155;
+  --accent: #FB923C;
+  --accent-soft: #2A2118;
+  --danger: #F87171;
+  --danger-soft: #2C1A1A;
+  --ok: #2DD4BF;
+  --shadow: 0 1px 3px rgba(0, 0, 0, .4);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; touch-action: manipulation; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* touch-action: манипуляции (тап, свайп) — двойной тап не зумит страницу
+     (v1.7.9); пинч остаётся для доступности */
+  touch-action: manipulation;
+  padding-bottom: calc(46px + env(safe-area-inset-bottom));
+  /* Страница всегда занимает весь экран (этап 7.3): на коротких экранах
+     низ больше не «поднимается» — фон тянется до таббара */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+button { font: inherit; color: inherit; }
+.muted { color: var(--muted); }
+.hidden { display: none !important; }
+
+/* ---------- шапка ---------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 10px;
+  /* В установленном приложении iOS статус-бар полупрозрачный и лежит ПОВЕРХ
+     страницы (viewport-fit=cover + black-translucent): без этого отступа шапка
+     уезжает под часы/батарею и «первая строка не видна» (этап 7.2). */
+  padding-top: calc(14px + env(safe-area-inset-top, 0px));
+}
+.brand h1 { margin: 0; font-size: 1.5rem; letter-spacing: .5px; }
+.brand .subtitle { margin: 0; font-size: .8rem; color: var(--muted); }
+.topbar-actions { display: flex; gap: 8px; align-items: center; }
+
+.btn {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn.ghost { background: transparent; }
+.btn.small { padding: 7px 12px; font-size: .9rem; }
+.icon-btn { padding: 8px 10px; }
+.btn:disabled { opacity: .5; cursor: default; }
+.mini-btn {
+  border: none; background: transparent; color: var(--muted);
+  cursor: pointer; padding: 6px 8px; border-radius: 8px; font-size: .95rem;
+}
+.mini-btn:hover { background: var(--accent-soft); }
+.mini-btn.danger { color: var(--danger); }
+
+/* ---------- офлайн-баннер ---------- */
+
+.offline-banner {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 40;
+  background: #FEF3C7;
+  color: #92400E;
+  border-bottom: 1px solid #FDE68A;
+  padding: 8px 16px;
+  font-size: .85rem;
+  text-align: center;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .offline-banner {
+    background: #3B2F0B;
+    color: #FCD34D;
+    border-bottom-color: #533F13;
+  }
+}
+html[data-theme="dark"] .offline-banner {
+  background: #3B2F0B;
+  color: #FCD34D;
+  border-bottom-color: #533F13;
+}
+
+/* ---------- экраны ---------- */
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 14px;
+  width: 100%;
+  flex: 1 0 auto; /* основной столбец растягивается на весь остаток экрана */
+  display: flex;
+  flex-direction: column;
+}
+.screen { display: none; }
+.screen.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* контентный экран растягивает свою область до таббара */
+}
+
+.scr-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0 12px;
+}
+.scr-title { margin: 0; font-size: 1.25rem; }
+.scr-title.center { text-align: center; width: 100%; }
+.scr-btn {
+  border: none; background: transparent; cursor: pointer;
+  color: var(--accent); font-size: 1.8rem; line-height: 1;
+  padding: 4px 10px; border-radius: 10px;
+}
+.scr-btn.danger { color: var(--danger); font-size: 1.3rem; }
+.scr-btn:active { background: var(--accent-soft); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  margin-bottom: 14px;
+}
+.card h2 { margin: 0 0 8px; font-size: 1.1rem; }
+.card h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.form-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.small-note { font-size: .82rem; margin: 0 0 10px; }
+.pad { padding: 0 4px 16px; }
+.empty { text-align: center; padding: 18px 0; }
+input, select, textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+}
+input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 10px; }
+
+/* ---------- календарь ---------- */
+
+.calendar {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 8px 6px;
+  margin-bottom: 10px;
+}
+/* Компактный календарь (этап 7.1): меньше ячейки и отступы */
+.cal-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.cal-wd { text-align: center; font-size: .68rem; color: var(--muted); padding: 2px 0; }
+.cal-day {
+  border: none; background: transparent; cursor: pointer;
+  position: relative;
+  min-height: 32px;
+  border-radius: 8px;
+  font-size: .88rem;
+  color: var(--text);
+}
+.cal-day.empty { cursor: default; }
+.cal-day.today { font-weight: 700; color: var(--accent); }
+.cal-day.sel { background: var(--accent-soft); outline: 1.5px solid var(--accent); }
+.cal-dot {
+  position: absolute; left: 50%; bottom: 2px;
+  transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--ok);
+}
+
+.day-item {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  text-align: left;
+}
+.di-check {
+  flex: 0 0 auto;
+  width: 30px; height: 30px;
+  border: 2px solid var(--ok);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ok); font-size: .9rem;
+}
+.di-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.di-head { display: flex; align-items: baseline; gap: 8px; font-size: .95rem; }
+.di-time { margin-left: auto; }
+.di-title { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.fab-wrap { text-align: center; padding: 10px 0 20px; margin-top: auto; } /* прижать «+» к низу на коротких экранах */
+.fab {
+  background: var(--card);
+  border: 2px solid var(--ok);
+  color: var(--ok);
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 32px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+.fab:active { background: var(--accent-soft); }
+
+/* ---------- тренировка ---------- */
+
+.wo-meta input { font-size: 1.05rem; margin-bottom: 10px; }
+.wo-stats { display: flex; gap: 14px; flex-wrap: wrap; font-size: .88rem; }
+
+.ex-list { margin-bottom: 6px; }
+.ex-item {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.avatar {
+  flex: 0 0 auto;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  overflow: hidden;
+}
+/* миниатюра упражнения в круглом аватаре (v1.7.4) */
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avatar.plus { font-size: 1.3rem; }
+.exi-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.exi-name { font-weight: 600; }
+.exi-sets { font-size: .85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.exi-vol { font-size: .8rem; white-space: nowrap; }
+
+/* ---------- подходы (экран упражнения) ---------- */
+
+.ex-head .ex-title { font-size: 1.15rem; }
+.ex-head p { margin: 0; font-size: .9rem; }
+
+.sets-head, .set-row {
+  display: grid;
+  grid-template-columns: 6px 30px 1fr 1fr 36px;
+  gap: 10px;
+  align-items: center;
+}
+.sets-head {
+  color: var(--muted);
+  font-size: .82rem;
+  padding: 8px 10px;
+}
+.sets-head span:first-child { width: 6px; }
+.sets-head span:nth-child(3), .sets-head span:nth-child(4) { text-align: center; }
+.sets-list { margin-bottom: 12px; }
+.set-row {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 12px 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.set-row .set-bar { width: 5px; height: 26px; border-radius: 3px; }
+.set-n { color: var(--muted); }
+.set-w, .set-r { text-align: center; font-size: 1.05rem; }
+.set-row .mini-btn { justify-self: end; }
+
+.prev-note {
+  width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 6px 0 10px;
+  cursor: pointer;
+  font-size: .9rem;
+}
+.prev-note .chev { color: var(--accent); font-size: 1.2rem; }
+/* Прошлый раз: те же строки, но приглушённые и без крестика — тап подставляет
+   значения в новый подход (этап 7.1, как в референсе) */
+.prev-table { margin-bottom: 4px; }
+.set-row.prev {
+  color: var(--muted);
+  grid-template-columns: 6px 30px 1fr 1fr;
+}
+.set-row.prev .set-w, .set-row.prev .set-r { color: var(--muted); }
+.set-row.prev .set-bar { opacity: .75; }
+
+/* Заголовок-секция в карточке упражнения */
+.ex-sec { margin: 4px 2px 6px; }
+/* Серая схема прошлого раза под названием: «4×8» */
+.ex-scheme { margin: 6px 0 2px; font-size: 1.15rem; letter-spacing: .04em; }
+/* Круглая кнопка «Техника» рядом с названием (этап 7.1) */
+.ex-info {
+  flex: 0 0 auto;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--muted);
+  background: transparent;
+  color: var(--muted);
+  font: italic 600 .95rem/1 inherit;
+  cursor: pointer;
+}
+.ex-info:active { color: var(--accent); border-color: var(--accent); }
+/* История выполнения в карточке упражнения базы (этап 7.1) */
+.hist-row {
+  display: flex; align-items: baseline; gap: 12px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  padding: 8px 2px;
+  font: inherit;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+.hist-row:last-of-type { border-bottom: none; }
+.hist-date { font-weight: 600; white-space: nowrap; }
+.hist-sets { flex: 1; min-width: 0; }
+/* Подпись о предзаполнении на экране подхода */
+.set-from { text-align: center; margin: -6px 0 14px; font-size: .85rem; }
+
+/* ---------- вкладки карточки упражнения: Инфо · История · Прогресс ---------- */
+
+.card-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.ctab {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted);
+  border-radius: 10px;
+  padding: 9px 4px;
+  font: inherit;
+  font-size: .9rem;
+  cursor: pointer;
+}
+.ctab.on {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+/* График весов (SVG без библиотек) */
+.prog-svg { width: 100%; height: auto; display: block; margin-top: 6px; }
+.pg-grid { stroke: var(--line); stroke-width: 1; }
+.pg-line { stroke: var(--accent); stroke-width: 2; fill: none; stroke-linejoin: round; }
+.pg-dot { fill: var(--accent); }
+.pg-lab { fill: var(--muted); font-size: 9px; }
+
+/* ---------- экран подхода ---------- */
+
+.set-exname { text-align: center; margin: 0 0 14px; font-size: .95rem; }
+.stepper { margin-bottom: 18px; }
+.step-label {
+  display: block;
+  text-align: center;
+  color: var(--muted);
+  font-size: .95rem;
+  margin-bottom: 8px;
+}
+.step-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 6px 0;
+}
+.step-btn {
+  flex: 0 0 auto;
+  width: 56px; height: 56px;
+  border: none;
+  background: transparent;
+  color: var(--ok);
+  font-size: 2rem;
+  cursor: pointer;
+  border-radius: 12px;
+}
+.step-btn:active { background: var(--accent-soft); }
+.step-row input {
+  flex: 1;
+  text-align: center;
+  font-size: 1.7rem;
+  border: none;
+  background: transparent;
+  padding: 6px 0;
+}
+.step-row input:focus { outline: none; }
+
+.eff-row {
+  display: flex;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.eff-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--eff, var(--text));
+  padding: 12px 2px;
+  font-size: .88rem;
+  cursor: pointer;
+  border-right: 1px solid var(--line);
+}
+.eff-btn:last-child { border-right: none; }
+.eff-btn.on { background: var(--eff, var(--accent)); color: #fff; font-weight: 600; }
+
+.set-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+.set-actions .btn { flex: 1; padding: 14px; text-transform: uppercase; letter-spacing: .5px; }
+
+/* ---------- библиотека ---------- */
+
+.lib-add { display: flex; gap: 10px; align-items: center; }
+.lib-add input { flex: 1; }
+.lib-add .btn { flex: 0 0 auto; }
+.lib-list { margin-bottom: 8px; }
+.lib-item {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+.lib-item .avatar { width: 36px; height: 36px; font-size: .95rem; }
+.lib-name { flex: 1; min-width: 0; overflow-wrap: anywhere; } /* полное название, без обрезки (этап 7.1) */
+.lib-item.create .lib-name { color: var(--ok); }
+
+/* ---------- этап 6: вкладки справочника и база упражнений ---------- */
+
+.seg {
+  display: flex;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+/* три вкладки с длинными названиями — на узких экранах чуть плотнее */
+@media (max-width: 380px) {
+  .seg-btn { font-size: .78rem; padding: 10px 2px; }
+}
+.seg-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  padding: 10px 0;
+  font: inherit;
+  cursor: pointer;
+}
+.seg-btn.on {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.chip-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+  scrollbar-width: none;
+}
+.chip-row::-webkit-scrollbar { display: none; }
+.chip {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: .88rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.chip.on {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.lib-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lib-sub {
+  color: var(--muted);
+  font-size: .82rem;
+  overflow-wrap: anywhere; /* мышцы/оборудование тоже целиком (этап 7.1) */
+}
+.done-badge {
+  flex: 0 0 auto;
+  min-width: 26px;
+  text-align: center;
+  border: 1px solid var(--ok);
+  color: var(--ok);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: .8rem;
+}
+.base-note { margin: 6px 0 8px; }
+
+/* карточка упражнения базы */
+.bx-head .bx-name { margin: 0 0 10px; font-size: 1.2rem; line-height: 1.3; }
+/* сдвоенный кадр «старт+финиш» на всю ширину карточки (v1.7.5) */
+.bx-pics { padding: 8px; }
+.bx-pics img { width: 100%; height: auto; display: block; border-radius: 8px; }
+/* «Спросить Алису» — диплинк на Яндекс-поиск (v1.7.6) */
+.ext-link {
+  display: block;
+  margin: 8px 0 4px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.ext-link:active { opacity: .7; }
+.ask-box .small-note { margin: 2px 0 0; font-size: .8rem; }
+.bx-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.bx-chip {
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: .82rem;
+}
+.bx-chip.hl {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.bx-h {
+  margin: 0 0 10px;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+}
+.bx-steps { margin: 0; padding-left: 20px; }
+.bx-steps li { margin-bottom: 8px; }
+.bx-steps li:last-child { margin-bottom: 0; }
+.bx-mus { margin: 0 0 6px; }
+.bx-mus:last-child { margin-bottom: 0; }
+.note-box {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.note-box .bx-note { margin: 0; }
+
+.ex-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ex-title-row .ex-title { flex: 1; }
+
+/* ---------- этап 7: группы мышц и программы ---------- */
+
+.grp { margin-bottom: 10px; }
+.grp-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  cursor: pointer;
+  font: inherit;
+  color: var(--text);
+  text-align: left;
+}
+.grp-head .chev {
+  color: var(--muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform .15s ease;
+  display: inline-block;
+}
+.grp.open .grp-head .chev { transform: rotate(90deg); }
+.grp-name { flex: 1; font-weight: 600; text-transform: capitalize; }
+.grp-count { color: var(--muted); font-size: .85rem; }
+.grp-body { padding: 8px 2px 2px; }
+.grp-more { padding: 4px 12px; }
+.btn.wide { width: 100%; }
+
+/* ---------- синхронизация / ещё ---------- */
+
+.sync-status { font-size: .88rem; margin: 0 0 4px; min-height: 1.2em; }
+#sync-section code {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1px 5px;
+  font-size: .85em;
+}
+.ios-hint { text-align: center; padding: 4px 0 12px; }
+
+/* ---------- таб-бар ---------- */
+
+.tabbar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 30;
+  display: flex;
+  background: var(--card);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  background: transparent;
+  border: none;
+  padding: 4px 0 3px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: .62rem;
+}
+.tab .tab-ico { font-size: 1.02rem; line-height: 1; }
+.tab.on { color: var(--accent); }
+
+/* ---------- toast ---------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 52px);
+  transform: translate(-50%, 12px);
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .25);
+  padding: 10px 16px;
+  font-size: .9rem;
+  opacity: 0;
+  transition: opacity .3s, transform .3s;
+  z-index: 50;
+  max-width: min(90vw, 480px);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- узкие экраны ---------- */
+
+@media (max-width: 380px) {
+  .eff-btn { font-size: .78rem; padding: 10px 1px; }
+  .set-w, .set-r { font-size: .95rem; }
+}
