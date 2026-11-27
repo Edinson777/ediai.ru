@@ -1,14 +1,17 @@
-/* Flint — синхронизация с Яндекс Диском (этап 5: тренировки с подходами +
- * библиотека упражнений в одном файле формата 3).
+/* Flint — синхронизация с Яндекс Диском (этап 7: тренировки, библиотека и
+ * программы в одном файле формата 4).
  * Форматы файла на Диске:
  *   1 — этап 3: {workouts: [{id, date, exercises: [{name, weight, reps, sets}]}]}
  *   2 — этап 4: то же + метки удаления {deleted, deletedAt}
  *   3 — этап 5: {workouts: [...v3: exercises: [{id, name, sets: [{id, weight,
  *       reps, effort, comment}]]}], exercises: [библиотека]}
- * Все три формата нормализуются в v3 при чтении (FlintDB.migrateWorkout),
- * старые файлы читаются без конвертации на сервере. Слияние — LWW по штампу:
- * у живой записи updatedAt, у удалённой deletedAt; счётчики в текстах статуса —
- * только по живым записям. Библиотека сливается отдельно тем же правилом. */
+ *   4 — этап 7: то же + programs: [{id, name, workouts: [{id, name,
+ *       exercises: [{name, exerciseId?, baseId?}]}]}]
+ * Все форматы нормализуются при чтении (FlintDB.migrateWorkout); у файлов без
+ * поля programs слияние программ просто не находит записей — ничего не теряется.
+ * Слияние — LWW по штампу: у живой записи updatedAt, у удалённой deletedAt;
+ * счётчики в текстах статуса — только по живым записям. Библиотека и программы
+ * сливаются отдельно тем же правилом. */
 window.FlintSync = (function () {
   'use strict';
 
@@ -47,6 +50,17 @@ window.FlintSync = (function () {
 
   function isValidExercise(e) {
     return e && typeof e.id === 'string' && typeof e.name === 'string';
+  }
+
+  /* Программа: контейнер шаблонов тренировок. Ссылки на упражнения шаблона —
+     {name, exerciseId?, baseId?}: name обязателен, остальное — необязательные
+     связи (старые записи без них валидны). */
+  function isValidProgram(p) {
+    return p && typeof p.id === 'string' && typeof p.name === 'string'
+      && Array.isArray(p.workouts)
+      && p.workouts.every((t) => t && typeof t.id === 'string' && typeof t.name === 'string'
+        && Array.isArray(t.exercises)
+        && t.exercises.every((e) => e && typeof e.name === 'string'));
   }
 
   /* Штамп события: у удалённой записи — время удаления, у живой — правка. */
@@ -90,6 +104,28 @@ window.FlintSync = (function () {
     let updated = 0;
     for (const r of remote) {
       if (!isValidExercise(r)) continue;
+      const l = map.get(r.id);
+      if (!l) {
+        map.set(r.id, r);
+        if (!r.deleted) added++;
+      } else if (stampOf(r) > stampOf(l)) {
+        map.set(r.id, r);
+        if (!r.deleted) updated++;
+      }
+    }
+    return { list: Array.from(map.values()), added, updated };
+  }
+
+  /* Слияние программ: тот же LWW, ключ — id (этап 7). */
+  function mergePrograms(local, remote) {
+    const map = new Map();
+    for (const p of local) {
+      if (isValidProgram(p)) map.set(p.id, p);
+    }
+    let added = 0;
+    let updated = 0;
+    for (const r of remote) {
+      if (!isValidProgram(r)) continue;
       const l = map.get(r.id);
       if (!l) {
         map.set(r.id, r);
@@ -216,11 +252,12 @@ window.FlintSync = (function () {
     if (ui && ui.pushBtn) ui.pushBtn.disabled = true;
     setSyncStatus(manual ? 'Отправляем на Диск…' : 'Отправляем изменения на Диск…');
     try {
-      const [localW, localE] = await Promise.all([
-        window.FlintDB.getAll(), window.FlintDB.getAllExercises(),
+      const [localW, localE, localP] = await Promise.all([
+        window.FlintDB.getAll(), window.FlintDB.getAllExercises(), window.FlintDB.getAllPrograms(),
       ]);
       let mergedW = localW;
       let mergedE = localE;
+      let mergedP = localP;
       let mergeNote = '';
       const pr = await syncApi('pull');
       if (pr.res.status === 401) {
@@ -231,17 +268,21 @@ window.FlintSync = (function () {
         if (pr.j.exists && pr.j.data) {
           const mw = mergeWorkouts(localW, (pr.j.data.workouts || []));
           const me = mergeExercises(localE, (pr.j.data.exercises || []));
-          if (mw.added || mw.updated || me.added || me.updated) {
+          const mp = mergePrograms(localP, (pr.j.data.programs || []));
+          if (mw.added || mw.updated || me.added || me.updated || mp.added || mp.updated) {
             await Promise.all([
               window.FlintDB.replaceAll(mw.list),
               window.FlintDB.replaceAllExercises(me.list),
+              window.FlintDB.replaceAllPrograms(mp.list),
             ]);
             if (window.FlintJournal) window.FlintJournal.renderAll();
             mergeNote = `; объединено: +${mw.added} тренировок, ${mw.updated} обновлено`
-              + (me.added || me.updated ? `, упражнений ${me.added}/${me.updated}` : '');
+              + (me.added || me.updated ? `, упражнений ${me.added}/${me.updated}` : '')
+              + (mp.added || mp.updated ? `, программ ${mp.added}/${mp.updated}` : '');
           }
           mergedW = mw.list;
           mergedE = me.list;
+          mergedP = mp.list;
         }
       } else {
         setSyncStatus('Не получилось объединить с Диском: ' + diskErrText(pr.j, pr.res) + ' — отправка отложена.');
@@ -251,10 +292,11 @@ window.FlintSync = (function () {
 
       const body = JSON.stringify({
         app: 'flint',
-        format: 3,
+        format: 4,
         exportedAt: new Date().toISOString(),
         workouts: mergedW,
         exercises: mergedE,
+        programs: mergedP,
       });
       if (body.length > PUSH_MAX) {
         setSyncStatus('Журнал крупнее 5 МБ — сервер не примет. Экспортируйте файл и почистите записи.');
@@ -314,12 +356,13 @@ window.FlintSync = (function () {
         if (manual && window.FlintUI) window.FlintUI.toast('На Диске нет копии');
         return;
       }
-      const [localW, localE] = await Promise.all([
-        window.FlintDB.getAll(), window.FlintDB.getAllExercises(),
+      const [localW, localE, localP] = await Promise.all([
+        window.FlintDB.getAll(), window.FlintDB.getAllExercises(), window.FlintDB.getAllPrograms(),
       ]);
       const mw = mergeWorkouts(localW, (j.data && j.data.workouts) || []);
       const me = mergeExercises(localE, (j.data && j.data.exercises) || []);
-      if (!mw.added && !mw.updated && !me.added && !me.updated) {
+      const mp = mergePrograms(localP, (j.data && j.data.programs) || []);
+      if (!mw.added && !mw.updated && !me.added && !me.updated && !mp.added && !mp.updated) {
         setSyncStatus('Всё актуально: на Диске нет записей новее локальных.');
         if (manual && window.FlintUI) window.FlintUI.toast('Данные уже актуальны');
         return;
@@ -327,10 +370,12 @@ window.FlintSync = (function () {
       await Promise.all([
         window.FlintDB.replaceAll(mw.list),
         window.FlintDB.replaceAllExercises(me.list),
+        window.FlintDB.replaceAllPrograms(mp.list),
       ]);
       if (window.FlintJournal) window.FlintJournal.renderAll();
       setSyncStatus(`Загружено с Диска: тренировок +${mw.added}, обновлено ${mw.updated}`
-        + (me.added || me.updated ? `; упражнений +${me.added}, обновлено ${me.updated}` : '') + '.');
+        + (me.added || me.updated ? `; упражнений +${me.added}, обновлено ${me.updated}` : '')
+        + (mp.added || mp.updated ? `; программ +${mp.added}, обновлено ${mp.updated}` : '') + '.');
       if (manual && window.FlintUI) window.FlintUI.toast(`Загружено: +${mw.added}, обновлено ${mw.updated}`);
       markDirty(); // объединённая версия отличается от копии — уводим её на Диск
     } catch (e) {
@@ -352,8 +397,8 @@ window.FlintSync = (function () {
       setSyncStatus('—');
       return;
     }
-    Promise.all([window.FlintDB.getAll(), window.FlintDB.getAllExercises()]).then(([w, e]) => {
-      if (!w.length && !e.length) {
+    Promise.all([window.FlintDB.getAll(), window.FlintDB.getAllExercises(), window.FlintDB.getAllPrograms()]).then(([w, e, p]) => {
+      if (!w.length && !e.length && !p.length) {
         pullNow(false);
       } else if (dirty) {
         pushNow(false);
@@ -369,13 +414,14 @@ window.FlintSync = (function () {
     if (!pushTimer || !authState.auth || !navigator.onLine || syncBusy) return;
     clearTimeout(pushTimer);
     pushTimer = null;
-    Promise.all([window.FlintDB.getAll(), window.FlintDB.getAllExercises()]).then(([w, e]) => {
+    Promise.all([window.FlintDB.getAll(), window.FlintDB.getAllExercises(), window.FlintDB.getAllPrograms()]).then(([w, e, p]) => {
       const body = JSON.stringify({
         app: 'flint',
-        format: 3,
+        format: 4,
         exportedAt: new Date().toISOString(),
         workouts: w,
         exercises: e,
+        programs: p,
       });
       if (body.length > 60000) return;
       fetch('oauth/api.php?action=push', {
@@ -409,6 +455,7 @@ window.FlintSync = (function () {
   return {
     mergeWorkouts,
     mergeExercises,
+    mergePrograms,
     isValidWorkout,
     isValidExercise,
     toV3,

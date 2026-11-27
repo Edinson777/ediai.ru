@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>Flint — дневник тренировок</title>
   <meta name="description" content="Офлайн-дневник силовых тренировок с синхронизацией на ваш Яндекс Диск: календарь, подходы, библиотека упражнений.">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC">
@@ -39,12 +39,24 @@
     <section id="screen-workout" class="screen" data-screen="workout"></section>
     <!-- Выбор упражнения из библиотеки -->
     <section id="screen-pick" class="screen" data-screen="pick"></section>
+    <!-- Куда добавить упражнение из карточки (v1.7.8): выбор тренировки -->
+    <section id="screen-addto" class="screen" data-screen="addto"></section>
     <!-- Упражнение: список подходов + прошлый раз -->
     <section id="screen-ex" class="screen" data-screen="ex"></section>
     <!-- Отдельный экран ввода подхода -->
     <section id="screen-set" class="screen" data-screen="set"></section>
     <!-- Библиотека упражнений -->
     <section id="screen-library" class="screen" data-screen="library"></section>
+    <!-- Карточка упражнения из базы (техника, мышцы, примечание) -->
+    <section id="screen-baseex" class="screen" data-screen="baseex"></section>
+    <!-- Карточка «своего» упражнения: те же вкладки Инфо · История · Прогресс -->
+    <section id="screen-myex" class="screen" data-screen="myex"></section>
+    <!-- Старт тренировки: выбрать программу → тренировку, или пустая -->
+    <section id="screen-start" class="screen" data-screen="start"></section>
+    <!-- Программа: список тренировок-шаблонов -->
+    <section id="screen-program" class="screen" data-screen="program"></section>
+    <!-- Шаблон тренировки программы: упражнения и порядок -->
+    <section id="screen-progw" class="screen" data-screen="progw"></section>
 
     <!-- Ещё: аккаунт, синхронизация, резервная копия -->
     <section class="screen" data-screen="more" id="screen-more">
@@ -82,7 +94,7 @@
       </section>
 
       <p id="ios-hint" class="muted ios-hint hidden">Установка на iPhone: «Поделиться» → «На экран «Домой»».</p>
-      <p class="muted small-note pad">Flint v1.5.1 · этап 5 — календарь, подходы, библиотека упражнений</p>
+      <p class="muted small-note pad">Flint v1.7.4 · этап 7 — миниатюры (873 шт) и сдвоенные кадры + «Спросить Алису» · старт всегда локально · добавление в текущую тренировку · без зума и компактный таббар (v1.7.9)</p>
     </section>
   </main>
 
@@ -99,6 +111,7 @@
   </nav>
 
   <script src="js/db.js" defer></script>
+  <script src="js/exercise-db.js" defer></script>
   <script src="js/app-sync.js" defer></script>
   <script src="js/journal.js" defer></script>
   <script src="js/app.js" defer></script>

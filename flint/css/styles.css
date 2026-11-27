@@ -48,13 +48,22 @@ html[data-theme="dark"] {
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; touch-action: manipulation; }
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
   font: 16px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  /* touch-action: манипуляции (тап, свайп) — двойной тап не зумит страницу
+     (v1.7.9); пинч остаётся для доступности */
+  touch-action: manipulation;
+  padding-bottom: calc(46px + env(safe-area-inset-bottom));
+  /* Страница всегда занимает весь экран (этап 7.3): на коротких экранах
+     низ больше не «поднимается» — фон тянется до таббара */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 button { font: inherit; color: inherit; }
 .muted { color: var(--muted); }
@@ -68,6 +77,10 @@ button { font: inherit; color: inherit; }
   justify-content: space-between;
   gap: 12px;
   padding: 14px 16px 10px;
+  /* В установленном приложении iOS статус-бар полупрозрачный и лежит ПОВЕРХ
+     страницы (viewport-fit=cover + black-translucent): без этого отступа шапка
+     уезжает под часы/батарею и «первая строка не видна» (этап 7.2). */
+  padding-top: calc(14px + env(safe-area-inset-top, 0px));
 }
 .brand h1 { margin: 0; font-size: 1.5rem; letter-spacing: .5px; }
 .brand .subtitle { margin: 0; font-size: .8rem; color: var(--muted); }
@@ -98,7 +111,7 @@ button { font: inherit; color: inherit; }
 
 .offline-banner {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 40;
   background: #FEF3C7;
   color: #92400E;
@@ -122,9 +135,21 @@ html[data-theme="dark"] .offline-banner {
 
 /* ---------- экраны ---------- */
 
-main { max-width: 720px; margin: 0 auto; padding: 0 14px; }
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 14px;
+  width: 100%;
+  flex: 1 0 auto; /* основной столбец растягивается на весь остаток экрана */
+  display: flex;
+  flex-direction: column;
+}
 .screen { display: none; }
-.screen.active { display: block; }
+.screen.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* контентный экран растягивает свою область до таббара */
+}
 
 .scr-top {
   display: flex;
@@ -176,26 +201,27 @@ label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 10
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 10px 8px;
-  margin-bottom: 14px;
+  padding: 8px 6px;
+  margin-bottom: 10px;
 }
+/* Компактный календарь (этап 7.1): меньше ячейки и отступы */
 .cal-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-.cal-wd { text-align: center; font-size: .72rem; color: var(--muted); padding: 4px 0; }
+.cal-wd { text-align: center; font-size: .68rem; color: var(--muted); padding: 2px 0; }
 .cal-day {
   border: none; background: transparent; cursor: pointer;
   position: relative;
-  min-height: 44px;
-  border-radius: 10px;
-  font-size: .95rem;
+  min-height: 32px;
+  border-radius: 8px;
+  font-size: .88rem;
   color: var(--text);
 }
 .cal-day.empty { cursor: default; }
 .cal-day.today { font-weight: 700; color: var(--accent); }
 .cal-day.sel { background: var(--accent-soft); outline: 1.5px solid var(--accent); }
 .cal-dot {
-  position: absolute; left: 50%; bottom: 4px;
+  position: absolute; left: 50%; bottom: 2px;
   transform: translateX(-50%);
-  width: 5px; height: 5px; border-radius: 50%;
+  width: 4px; height: 4px; border-radius: 50%;
   background: var(--ok);
 }
 
@@ -224,7 +250,7 @@ label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 10
 .di-time { margin-left: auto; }
 .di-title { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.fab-wrap { text-align: center; padding: 10px 0 20px; }
+.fab-wrap { text-align: center; padding: 10px 0 20px; margin-top: auto; } /* прижать «+» к низу на коротких экранах */
 .fab {
   background: var(--card);
   border: 2px solid var(--ok);
@@ -263,7 +289,10 @@ label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 10
   border: 1px solid var(--line);
   display: flex; align-items: center; justify-content: center;
   font-weight: 700;
+  overflow: hidden;
 }
+/* миниатюра упражнения в круглом аватаре (v1.7.4) */
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .avatar.plus { font-size: 1.3rem; }
 .exi-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
 .exi-name { font-weight: 600; }
@@ -313,22 +342,81 @@ label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 10
   font-size: .9rem;
 }
 .prev-note .chev { color: var(--accent); font-size: 1.2rem; }
-.prev-sets {
-  background: var(--card);
-  border: 1px dashed var(--line);
-  border-radius: 12px;
-  padding: 10px;
-  margin-bottom: 12px;
-  font-size: .92rem;
+/* Прошлый раз: те же строки, но приглушённые и без крестика — тап подставляет
+   значения в новый подход (этап 7.1, как в референсе) */
+.prev-table { margin-bottom: 4px; }
+.set-row.prev {
+  color: var(--muted);
+  grid-template-columns: 6px 30px 1fr 1fr;
 }
-.prev-row {
-  display: grid;
-  grid-template-columns: 30px 1fr 1fr;
-  gap: 10px;
-  padding: 4px 0;
+.set-row.prev .set-w, .set-row.prev .set-r { color: var(--muted); }
+.set-row.prev .set-bar { opacity: .75; }
+
+/* Заголовок-секция в карточке упражнения */
+.ex-sec { margin: 4px 2px 6px; }
+/* Серая схема прошлого раза под названием: «4×8» */
+.ex-scheme { margin: 6px 0 2px; font-size: 1.15rem; letter-spacing: .04em; }
+/* Круглая кнопка «Техника» рядом с названием (этап 7.1) */
+.ex-info {
+  flex: 0 0 auto;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--muted);
+  background: transparent;
+  color: var(--muted);
+  font: italic 600 .95rem/1 inherit;
+  cursor: pointer;
+}
+.ex-info:active { color: var(--accent); border-color: var(--accent); }
+/* История выполнения в карточке упражнения базы (этап 7.1) */
+.hist-row {
+  display: flex; align-items: baseline; gap: 12px;
+  width: 100%;
+  background: transparent;
+  border: none;
   border-bottom: 1px solid var(--line);
+  padding: 8px 2px;
+  font: inherit;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
 }
-.prev-row:last-child { border-bottom: none; }
+.hist-row:last-of-type { border-bottom: none; }
+.hist-date { font-weight: 600; white-space: nowrap; }
+.hist-sets { flex: 1; min-width: 0; }
+/* Подпись о предзаполнении на экране подхода */
+.set-from { text-align: center; margin: -6px 0 14px; font-size: .85rem; }
+
+/* ---------- вкладки карточки упражнения: Инфо · История · Прогресс ---------- */
+
+.card-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.ctab {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted);
+  border-radius: 10px;
+  padding: 9px 4px;
+  font: inherit;
+  font-size: .9rem;
+  cursor: pointer;
+}
+.ctab.on {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+/* График весов (SVG без библиотек) */
+.prog-svg { width: 100%; height: auto; display: block; margin-top: 6px; }
+.pg-grid { stroke: var(--line); stroke-width: 1; }
+.pg-line { stroke: var(--accent); stroke-width: 2; fill: none; stroke-linejoin: round; }
+.pg-dot { fill: var(--accent); }
+.pg-lab { fill: var(--muted); font-size: 9px; }
 
 /* ---------- экран подхода ---------- */
 
@@ -416,8 +504,178 @@ label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 10
   text-align: left;
 }
 .lib-item .avatar { width: 36px; height: 36px; font-size: .95rem; }
-.lib-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lib-name { flex: 1; min-width: 0; overflow-wrap: anywhere; } /* полное название, без обрезки (этап 7.1) */
 .lib-item.create .lib-name { color: var(--ok); }
+
+/* ---------- этап 6: вкладки справочника и база упражнений ---------- */
+
+.seg {
+  display: flex;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+/* три вкладки с длинными названиями — на узких экранах чуть плотнее */
+@media (max-width: 380px) {
+  .seg-btn { font-size: .78rem; padding: 10px 2px; }
+}
+.seg-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  padding: 10px 0;
+  font: inherit;
+  cursor: pointer;
+}
+.seg-btn.on {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.chip-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+  scrollbar-width: none;
+}
+.chip-row::-webkit-scrollbar { display: none; }
+.chip {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: .88rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.chip.on {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.lib-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lib-sub {
+  color: var(--muted);
+  font-size: .82rem;
+  overflow-wrap: anywhere; /* мышцы/оборудование тоже целиком (этап 7.1) */
+}
+.done-badge {
+  flex: 0 0 auto;
+  min-width: 26px;
+  text-align: center;
+  border: 1px solid var(--ok);
+  color: var(--ok);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: .8rem;
+}
+.base-note { margin: 6px 0 8px; }
+
+/* карточка упражнения базы */
+.bx-head .bx-name { margin: 0 0 10px; font-size: 1.2rem; line-height: 1.3; }
+/* сдвоенный кадр «старт+финиш» на всю ширину карточки (v1.7.5) */
+.bx-pics { padding: 8px; }
+.bx-pics img { width: 100%; height: auto; display: block; border-radius: 8px; }
+/* «Спросить Алису» — диплинк на Яндекс-поиск (v1.7.6) */
+.ext-link {
+  display: block;
+  margin: 8px 0 4px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.ext-link:active { opacity: .7; }
+.ask-box .small-note { margin: 2px 0 0; font-size: .8rem; }
+.bx-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.bx-chip {
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: .82rem;
+}
+.bx-chip.hl {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.bx-h {
+  margin: 0 0 10px;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+}
+.bx-steps { margin: 0; padding-left: 20px; }
+.bx-steps li { margin-bottom: 8px; }
+.bx-steps li:last-child { margin-bottom: 0; }
+.bx-mus { margin: 0 0 6px; }
+.bx-mus:last-child { margin-bottom: 0; }
+.note-box {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.note-box .bx-note { margin: 0; }
+
+.ex-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ex-title-row .ex-title { flex: 1; }
+
+/* ---------- этап 7: группы мышц и программы ---------- */
+
+.grp { margin-bottom: 10px; }
+.grp-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  cursor: pointer;
+  font: inherit;
+  color: var(--text);
+  text-align: left;
+}
+.grp-head .chev {
+  color: var(--muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform .15s ease;
+  display: inline-block;
+}
+.grp.open .grp-head .chev { transform: rotate(90deg); }
+.grp-name { flex: 1; font-weight: 600; text-transform: capitalize; }
+.grp-count { color: var(--muted); font-size: .85rem; }
+.grp-body { padding: 8px 2px 2px; }
+.grp-more { padding: 4px 12px; }
+.btn.wide { width: 100%; }
 
 /* ---------- синхронизация / ещё ---------- */
 
@@ -447,15 +705,15 @@ label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 10
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
   background: transparent;
   border: none;
-  padding: 8px 0 6px;
+  padding: 4px 0 3px;
   color: var(--muted);
   cursor: pointer;
-  font-size: .72rem;
+  font-size: .62rem;
 }
-.tab .tab-ico { font-size: 1.25rem; }
+.tab .tab-ico { font-size: 1.02rem; line-height: 1; }
 .tab.on { color: var(--accent); }
 
 /* ---------- toast ---------- */
@@ -463,7 +721,7 @@ label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 10
 .toast {
   position: fixed;
   left: 50%;
-  bottom: calc(env(safe-area-inset-bottom) + 72px);
+  bottom: calc(env(safe-area-inset-bottom) + 52px);
   transform: translate(-50%, 12px);
   background: var(--card);
   color: var(--text);

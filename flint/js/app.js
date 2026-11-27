@@ -1,13 +1,13 @@
-/* Flint — каркас приложения (этап 5): темы, service worker, вход через
- * Яндекс ID, офлайн-баннер, экспорт/импорт, вкладки.
+/* Flint — каркас приложения (этап 7): темы, service worker, вход через
+ * Яндекс ID, офлайн-баннер, экспорт/импорт (с программами), вкладки.
  * Экраны журнала — в js/journal.js, синхронизация — в js/app-sync.js,
- * хранилище — в js/db.js. */
+ * хранилище — в js/db.js, база упражнений — в js/exercise-db.js. */
 (function () {
   'use strict';
 
   const $ = (sel) => document.querySelector(sel);
 
-  console.log('Flint: интерфейс v1.5.1');
+  console.log('Flint: интерфейс v1.7.9');
 
   /* После деплоя новый service worker перехватывает управление — страница
      один раз перезагружается, чтобы HTML и JS гарантированно были одной
@@ -156,12 +156,12 @@
   }
 
   async function exportJSON() {
-    const [w, e] = await Promise.all([
-      window.FlintDB.getActive(), window.FlintDB.getActiveExercises(),
+    const [w, e, p] = await Promise.all([
+      window.FlintDB.getActive(), window.FlintDB.getActiveExercises(), window.FlintDB.getActivePrograms(),
     ]);
     const payload = {
-      app: 'flint', format: 3, exportedAt: new Date().toISOString(),
-      workouts: w, exercises: e,
+      app: 'flint', format: 4, exportedAt: new Date().toISOString(),
+      workouts: w, exercises: e, programs: p,
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
@@ -185,11 +185,13 @@
     const bad = norm.filter((w) => !window.FlintSync.isValidWorkout(w)).length;
     if (bad) { alert(`В файле ${bad} некорректных записей — импорт отменён.`); return; }
     const lib = data && Array.isArray(data.exercises) ? data.exercises : [];
-    if (!confirm(`Заменить текущие данные на ${norm.length} тренировок${lib.length ? ' и ' + lib.length + ' упражнений справочника' : ''} из файла?`)) return;
+    const progs = data && Array.isArray(data.programs) ? data.programs.filter((p) => p && typeof p.id === 'string' && typeof p.name === 'string' && Array.isArray(p.workouts)) : [];
+    if (!confirm(`Заменить текущие данные на ${norm.length} тренировок${lib.length ? ' и ' + lib.length + ' упражнений справочника' : ''}${progs.length ? ' и ' + progs.length + ' программ' : ''} из файла?`)) return;
     try {
       await Promise.all([
         window.FlintDB.replaceAll(norm),
         window.FlintDB.replaceAllExercises(lib.filter((e) => e && typeof e.id === 'string' && typeof e.name === 'string')),
+        window.FlintDB.replaceAllPrograms(progs),
       ]);
       window.FlintJournal.renderAll();
       window.FlintSync.markDirty();
@@ -208,6 +210,15 @@
   });
 
   /* ---------- запуск ---------- */
+
+  /* «Экран съезжает вверх» при открытии (этап 7.1): браузер после наших
+     рендеров восстанавливает старую позицию скролла (перезагрузка, возврат
+     из кэша вкладок). Запрещаем автовосстановление и принудительно
+     возвращаемся наверх при показе страницы — включая возврат из bfcache. */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.addEventListener('pageshow', () => {
+    requestAnimationFrame(() => window.scrollTo(0, 0));
+  });
 
   window.FlintSync.init({
     section: $('#sync-section'),
@@ -241,6 +252,8 @@
   readyPromise.then(async () => {
     clearTimeout(hintTimer);
     window.FlintJournal.init();
+    // журнал отрисовался асинхронно — ещё раз прижимаем к верху после рендера
+    requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, 0)));
     const s = await refreshAuth();
     const params = new URLSearchParams(location.search);
     window.FlintSync.syncAfterAuth(s);

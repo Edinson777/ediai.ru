@@ -1,4 +1,4 @@
-/* Flint — слой данных (IndexedDB). Этап 5: подходы и библиотека упражнений.
+/* Flint — слой данных (IndexedDB). Этап 7: подходы, библиотека, программы.
  * Хранилища:
  *  - «workouts»: тренировки. Упражнение внутри тренировки — запись с массивом
  *    подходов sets: [{id, weight, reps, effort, comment}]; effort —
@@ -6,19 +6,24 @@
  *    (deleted/deletedAt), как в этапе 4.
  *  - «exercises»: библиотека упражнений {id, name, createdAt, updatedAt,
  *    deleted?, deletedAt?} — тоже с метками удаления (разъезжаются по Диску).
+ *  - «programs» (этап 7): программы {id, name, v:1, workouts: [{id, name,
+ *    exercises: [{exerciseId?, baseId?, name}]}], createdAt, updatedAt,
+ *    deleted?, deletedAt?} — шаблоны тренировок; при старте из программы
+ *    упражнения копируются в живую тренировку, сама программа не меняется.
  * Миграция этапов 1–4 (упражнение = {name, weight, reps, sets}) выполняется
  * один раз при открытии базы: старое упражнение становится записью с одним
  * подходом. id при миграции вычисляются ДЕТЕРМИНИРОВАННО (хэш содержимого),
  * чтобы два устройства, мигрировавшие независимо, получили одинаковые id и
  * слияние не создало дублей.
- * getAll/getActive работают с обоими хранилищами (параметр store). */
+ * getAll/getActive работают с любым хранилищем (параметр store). */
 (function () {
   'use strict';
 
   const DB_NAME = 'flint';
-  const DB_VERSION = 2;
+  const DB_VERSION = 3;
   const WORKOUTS = 'workouts';
   const EXERCISES = 'exercises';
+  const PROGRAMS = 'programs';
 
   let dbPromise = null;
 
@@ -34,6 +39,9 @@
         }
         if (!db.objectStoreNames.contains(EXERCISES)) {
           db.createObjectStore(EXERCISES, { keyPath: 'id' });
+        }
+        if (!db.objectStoreNames.contains(PROGRAMS)) {
+          db.createObjectStore(PROGRAMS, { keyPath: 'id' });
         }
       };
       // Другая вкладка этого браузера держит базу старой версии — обновление
@@ -139,8 +147,8 @@
 
   async function getAll(store) {
     const db = await openDB();
-    if (store === EXERCISES) {
-      return reqToPromise(db.transaction(EXERCISES).objectStore(EXERCISES).getAll());
+    if (store === EXERCISES || store === PROGRAMS) {
+      return reqToPromise(db.transaction(store).objectStore(store).getAll());
     }
     const all = await reqToPromise(db.transaction(WORKOUTS).objectStore(WORKOUTS).getAll());
     return sortDesc(all);
@@ -148,7 +156,7 @@
 
   async function getActive(store) {
     const all = await getAll(store);
-    return store === EXERCISES
+    return store === EXERCISES || store === PROGRAMS
       ? all.filter((x) => !x.deleted).sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ru'))
       : sortDesc(all.filter((w) => !w.deleted));
   }
@@ -176,7 +184,9 @@
         const rec = req.result
           || (store === EXERCISES
             ? { id, name: '', createdAt: 0, updatedAt: 0 }
-            : { id, date: '1970-01-01', title: '', exercises: [], createdAt: 0, updatedAt: 0 });
+            : store === PROGRAMS
+              ? { id, name: '', workouts: [], createdAt: 0, updatedAt: 0 }
+              : { id, date: '1970-01-01', title: '', exercises: [], createdAt: 0, updatedAt: 0 });
         st.put(Object.assign({}, rec, { deleted: true, deletedAt: Date.now() }));
       };
       t.oncomplete = () => resolve(true);
@@ -210,18 +220,25 @@
     ready,
     WORKOUTS,
     EXERCISES,
+    PROGRAMS,
     getAll: () => getAll(WORKOUTS),
     getActive: () => getActive(WORKOUTS),
     getAllExercises: () => getAll(EXERCISES),
     getActiveExercises: () => getActive(EXERCISES),
+    getAllPrograms: () => getAll(PROGRAMS),
+    getActivePrograms: () => getActive(PROGRAMS),
     get: (id) => get(WORKOUTS, id),
     getExercise: (id) => get(EXERCISES, id),
+    getProgram: (id) => get(PROGRAMS, id),
     put: (w) => put(WORKOUTS, w),
     putExercise: (e) => put(EXERCISES, e),
+    putProgram: (p) => put(PROGRAMS, p),
     remove: (id) => remove(WORKOUTS, id),
     removeExercise: (id) => remove(EXERCISES, id),
+    removeProgram: (id) => remove(PROGRAMS, id),
     replaceAll: (list) => replaceAll(WORKOUTS, list),
     replaceAllExercises: (list) => replaceAll(EXERCISES, list),
+    replaceAllPrograms: (list) => replaceAll(PROGRAMS, list),
     stableHash,
     migrateWorkout,
   };
